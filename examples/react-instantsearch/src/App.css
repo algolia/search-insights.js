@@ -1,0 +1,37 @@
+body { font-family: helvetica, arial, sans-serif; }
+
+em { background: cyan; font-style: normal }
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.twoColumns {
+  display: grid;
+  grid-template-columns: 49% 49%;
+  grid-gap: 2%
+}
+
+.ais-Hits__root {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 5%;
+  margin-bottom: 1em;
+}
+
+.ais-Hits__root div {
+  background: #efefef;
+  margin-bottom: .5em;
+  padding: .5em;
+  min-height: 100px;
+}
+
+.ais-SearchBox__root {
+  margin-bottom: 2em;
+}
+
+.ais-Pagination__root {
+  text-align:center;
+  margin: 0 auto;
+}
