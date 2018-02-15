@@ -17,7 +17,7 @@ Once a search has been initialized and the queryID received, the library current
 ### <a name="loading"></a>Loading and initializing the library
 
 Insights library can be either loaded via jsDelivr CDN or directly bundled with your application.
-We recommend loading the library by adding the snippet below to all pages where you wish to track search
+We recommend loading the library by adding the snippet below to all pages where you wish to track
 search analytics.
 
 ```html
@@ -72,6 +72,7 @@ To retrieve the queryID from the helper instance and pass it to search insights 
 <details>
  <summary>Older versions of InstantSearch.js or Algoliasearch-helper</summary>
  To access queryID from the older versions it's required to access the _rawResults property on the helper.
+ 
   ```js
   // Initialize search analytics - 
   // should be called after the UI has rendered
@@ -81,6 +82,7 @@ To retrieve the queryID from the helper instance and pass it to search insights 
     getQueryID: () => search.helper.lastResults && search.helper.lastResults._rawResults[0].queryID
   })
   ```
+  
 </details>
 
 ### Reporting click events
