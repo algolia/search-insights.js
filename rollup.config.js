@@ -19,6 +19,7 @@ export default {
       browser: true,
       preferBuiltins: false,
     }),
+    buble(),
     commonjs(),
     uglify(),
     filesize(),

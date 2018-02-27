@@ -1,6 +1,9 @@
 import objectAssignPolyfill from './polyfills/objectAssign.js';
 import objectKeysPolyfill from './polyfills/objectKeys.js';
 
+objectKeysPolyfill();
+objectAssignPolyfill();
+
 import { processQueue } from './_processQueue';
 import { sendEvent, ReportEvent } from './_sendEvent';
 import { StorageManager } from './_storageManager';
@@ -11,9 +14,6 @@ import { initSearch, initSearchParams } from './_initSearch';
 import { ClickReport, click } from './click';
 import { ConversionReport, conversion } from './conversion';
 import { SearchReport, search } from './search';
-
-objectKeysPolyfill();
-objectAssignPolyfill();
 
 type Queue = {
   queue: string[][];
