@@ -1,5 +1,5 @@
-import objectAssignPolyfill from './polyfills/objectAssign';
-import objectKeysPolyfill from './polyfills/objectKeys';
+import objectAssignPolyfill from './polyfills/objectAssign.js';
+import objectKeysPolyfill from './polyfills/objectKeys.js';
 
 import { processQueue } from './_processQueue';
 import { sendEvent, ReportEvent } from './_sendEvent';
