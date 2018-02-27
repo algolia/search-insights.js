@@ -1,6 +1,6 @@
 {
   "name": "search-insights",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Search analytics by Algolia",
   "jsdelivr": "dist/search-insights.min.js",
   "scripts": {
