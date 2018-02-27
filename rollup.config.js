@@ -1,4 +1,4 @@
-import buble from 'rollup-plugin-buble';
+
 import filesize from 'rollup-plugin-filesize';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
@@ -19,7 +19,6 @@ export default {
       browser: true,
       preferBuiltins: false,
     }),
-    buble(),
     commonjs(),
     uglify(),
     filesize(),
