@@ -1,6 +1,7 @@
 # Insights
 <!-- [START badges] -->
-[![Build Status](https://travis-ci.com/algolia/search-insights.js.svg?token=xSE7bJnvaeTRSGevyTux&branch=master)](https://travis-ci.com/algolia/search-insights.js) [![npm version](https://badge.fury.io/js/search-insights.js.svg)](https://badge.fury.io/js/search-insights.js)
+[![Build Status](https://travis-ci.com/algolia/algolia-insights.svg?token=xSE7bJnvaeTRSGevyTux&branch=master)](https://travis-ci.com/algolia/algolia-insights)
+[![npm version](https://badge.fury.io/js/search-insights.svg)](https://badge.fury.io/js/search-insights)
 <!-- [END badges] -->
 
 Library for detecting front-end search metrics
