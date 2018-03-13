@@ -89,7 +89,7 @@ To retrieve the queryID from the helper instance and pass it to search insights 
 ### Reporting click events
 To report a click event, you have to call `aa('click',{objectID: clickedObjectID, position: positionOfElement})`. 
 The argument passed to click function is an object containing the __objectID__ and the __absolute__ position of the element. An optional parameter that can be passed is also a queryID value. This is useful for when you are doing a multi-index search and want to report different types of queryID parameters, depending on where the user has clicked inside the DOM.
-- __objectdID__: It is the ID of the result that has been clicked. *required
+- __objectID__: It is the ID of the result that has been clicked. *required
 - __position__: absolute position of the clicked element inside the DOM. (The value is 1 based and not 0 based!) *required
 - __queryID__: optional queryID parameter that overrides the getQueryID function *optional
 
