@@ -1,6 +1,6 @@
 
 # InstantSearch example
-This example describes how to implement the algolia-insights library with the InstantSearch.js library. It does not cover [loading the library itself](https://github.com/algolia/algolia-insights/blob/master/README.md#loading). Nor does it cover the larger subject of the [InstantSearch library](https://community.algolia.com/instantsearch.js/v2/getting-started.html/).
+This example describes how to implement the algolia-insights library with the InstantSearch.js library. It does not cover [loading the library itself](https://github.com/algolia/search-insights.js#loading-and-initializing-the-library). Nor does it cover the larger subject of the [InstantSearch library](https://community.algolia.com/instantsearch.js/v2/getting-started.html/).
 
 ## Enabling queryID response
 To enable the queryID response from the search API, InstantSearch.js enables setting custom queryParameters when you instantiate your search instance like so:
