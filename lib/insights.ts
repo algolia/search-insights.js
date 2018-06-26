@@ -1,5 +1,5 @@
-import objectAssignPolyfill from './polyfills/objectAssign.js';
-import objectKeysPolyfill from './polyfills/objectKeys.js';
+import objectAssignPolyfill from './polyfills/objectAssign';
+import objectKeysPolyfill from './polyfills/objectKeys';
 
 objectKeysPolyfill();
 objectAssignPolyfill();
@@ -17,16 +17,16 @@ import { SearchReport, search } from './search';
 
 type Queue = {
   queue: string[][];
-}
+};
 
 type AnalyticsFunction = {
   [key: string]: (fnName: string, fnArgs: any[]) => void;
-}
+};
 
 type AlgoliaAnalyticsObject = Queue | AnalyticsFunction;
 
 declare global {
-  interface Window { 
+  interface Window {
     AlgoliaAnalyticsObject: AlgoliaAnalyticsObject;
   }
 }
@@ -39,12 +39,15 @@ class AlgoliaAnalytics {
   _applicationID: string;
   _userID: string;
 
-  // LocalStorage 
+  // LocalStorage
   storageManager: StorageManager;
 
   // Private methods
   private processQueue: () => void;
-  private sendEvent: (eventType: ReportEvent, data: ClickReport | ConversionReport) => void;
+  private sendEvent: (
+    eventType: ReportEvent,
+    data: ClickReport | ConversionReport
+  ) => void;
   private _hasCredentials: boolean = false;
 
   // Public methods
@@ -56,10 +59,12 @@ class AlgoliaAnalytics {
 
   constructor(options?: any) {
     // Exit on old browsers or if script is not ran in browser
-    if(!document.addEventListener || !window){
-      throw new Error('Browser does not support eventlistener or there is no window object.')
+    if (!document.addEventListener || !window) {
+      throw new Error(
+        'Browser does not support eventlistener or there is no window object.'
+      );
     }
-    
+
     // Init storage manager
     this.storageManager = new StorageManager();
 
@@ -81,6 +86,6 @@ class AlgoliaAnalytics {
   }
 }
 
-const AlgoliaInsights = new AlgoliaAnalytics()
+const AlgoliaInsights = new AlgoliaAnalytics();
 
-export default AlgoliaInsights
+export default AlgoliaInsights;
