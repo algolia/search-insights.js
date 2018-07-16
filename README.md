@@ -1,6 +1,6 @@
 # Insights
 <!-- [START badges] -->
-[![Build Status](https://travis-ci.com/algolia/algolia-insights.svg?token=xSE7bJnvaeTRSGevyTux&branch=master)](https://travis-ci.com/algolia/algolia-insights)
+[![Build Status](https://travis-ci.org/algolia/search-insights.js.svg?branch=master)](https://travis-ci.org/algolia/search-insights.js)
 [![npm version](https://badge.fury.io/js/search-insights.svg)](https://badge.fury.io/js/search-insights)
 <!-- [END badges] -->
 
