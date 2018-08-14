@@ -37,8 +37,10 @@ export function click(params: ClickReport) {
   }
 
   // Abort if no queryID
-  throw new Error(`No queryID was retrieved, please check the implementation and provide either a getQueryID function
+  if (!queryID) {
+    throw new Error(`No queryID was retrieved, please check the implementation and provide either a getQueryID function
     or call the search method that will return the queryID parameter`);
+  }
 
   // Store click to localstorage
   this.storageManager.storeClick(params.objectID, queryID);

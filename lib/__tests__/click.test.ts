@@ -48,6 +48,6 @@ describe('Click method', () => {
     (AlgoliaInsights as any).sendEvent = jest.fn()
     AlgoliaInsights.click(clickParams);
 
-    expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalledWith('click', clickParams});
+    expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalledWith('click', clickParams);
   }
 });
