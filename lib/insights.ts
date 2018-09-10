@@ -53,8 +53,8 @@ class AlgoliaAnalytics {
   // Public methods
   public init: (params: initParams) => void;
   public initSearch: (params: initSearchParams) => void;
-  public click: (params: ClickReport) => void;
-  public conversion: (params: ConversionReport) => void;
+  public click: (params?: Partial<ClickReport>) => void;
+  public conversion: (params?: Partial<ConversionReport>) => void;
   public search: (params: SearchReport) => void;
 
   constructor(options?: any) {

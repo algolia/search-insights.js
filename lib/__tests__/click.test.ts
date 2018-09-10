@@ -42,12 +42,12 @@ describe('Click method', () => {
   })
 
   test('Should call sendEvent with proper params', () => {
-    const clickParams = {position: 1, objectID: '2', queryID: 5}
+    const clickParams = {position: 1, objectID: '2', queryID: 'testing'}
 
     AlgoliaInsights.init(credentials);
-    AlgoliaInsights.sendEvent = jest.fn()
+    (AlgoliaInsights as any).sendEvent = jest.fn()
     AlgoliaInsights.click(clickParams);
 
-    expect(AlgoliaInsights.sendEvent).toHaveBeenCalledWith('click', clickParams});
+    expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalledWith('click', clickParams);
   }
 });
