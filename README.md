@@ -23,13 +23,15 @@ search analytics.
 
 ```html
   <script>
-    !function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e.aa=e.aa||function(){(e.aa.queue=e.aa.queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],i.async=1,i.src="https://cdn.jsdelivr.net/npm/search-insights@0.0.15",c.parentNode.insertBefore(i,c)}(window,document,"script",0,"aa");
+    !function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e.aa=e.aa||function(){(e.aa.queue=e.aa.queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],i.async=1,i.onload=initLib,i.src="https://cdn.jsdelivr.net/npm/search-insights@0.0.15",c.parentNode.insertBefore(i,c)}(window,document,"script",0,"aa");
 
     // Initialize library
-    aa('init', {
-      applicationID: 'APPLICATION_ID',
-      apiKey: 'SEARCH_API_KEY'
-    })
+    const initLib = () => {
+      aa('init', {
+        applicationID: 'APPLICATION_ID',
+        apiKey: 'SEARCH_API_KEY'
+      });
+    }
   </script>
 ```
 
