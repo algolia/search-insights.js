@@ -1,4 +1,3 @@
-import AlgoliaInsights from './../insights'
 import AlgoliaInsights from '../insights';
 
 const credentials = {
