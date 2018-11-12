@@ -41,6 +41,4 @@ testServer.post('/1/conversion', function (req, res) {
   }, timeout)
 })
 
-testServer.listen('8080')
-
 module.exports = testServer

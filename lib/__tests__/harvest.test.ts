@@ -1,3 +1,4 @@
+import * as testServer from '../../server/server.js';
 import AlgoliaInsights from './../insights'
 const puppeteer = require('puppeteer');
 
@@ -43,7 +44,9 @@ describe('Library initialisation', () => {
 })
 
 describe('Integration tests', () => {
+  let handle = null;
   beforeAll(async () => {
+    handle = testServer.listen(8080);
     browser = await puppeteer.launch({
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
@@ -57,6 +60,7 @@ describe('Integration tests', () => {
   });
 
   afterAll(() => {
+    handle.close();
     browser.close();
   });
 
@@ -102,7 +106,7 @@ describe('Integration tests', () => {
     expect(data).toHaveProperty('queryID')
     expect(requestClick.queryID).toBe(data.queryID)
 
-    expect(requestClick.objectID).toBe('81')
+    expect(requestClick).toHaveProperty('objectID')
     expect(requestClick).toHaveProperty('queryID')
     expect(requestClick).toHaveProperty('timestamp')
     expect(requestClick.position).toBe(2)
