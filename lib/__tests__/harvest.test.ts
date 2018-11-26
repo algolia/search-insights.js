@@ -46,7 +46,16 @@ describe('Library initialisation', () => {
 describe('Integration tests', () => {
   let handle = null;
   beforeAll(async () => {
-    handle = testServer.listen(8080);
+    await new Promise((resolve, reject) => {
+      handle = testServer.listen(8080, (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve()
+      });
+    });
+
     browser = await puppeteer.launch({
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
