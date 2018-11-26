@@ -5,14 +5,14 @@ objectKeysPolyfill();
 objectAssignPolyfill();
 
 import { processQueue } from './_processQueue';
-import { sendEvent, ReportEvent } from './_sendEvent';
+import { sendEvent, InsightsEventTypes } from './_sendEvent';
 import { StorageManager } from './_storageManager';
 import { userID } from './_cookieUtils';
 
 import { initParams, init } from './init';
 import { initSearch, initSearchParams } from './_initSearch';
-import { ClickReport, click } from './click';
-import { ConversionReport, conversion } from './conversion';
+import { InsightsSearchClickEvent, click } from './click';
+import { InsightsSearchConversionEvent, conversion } from './conversion';
 
 type Queue = {
   queue: string[][];
@@ -44,16 +44,16 @@ class AlgoliaAnalytics {
   // Private methods
   private processQueue: () => void;
   private sendEvent: (
-    eventType: ReportEvent,
-    data: ClickReport | ConversionReport
+    eventType: InsightsEventTypes,
+    data: InsightsSearchClickEvent | InsightsSearchConversionEvent
   ) => void;
   private _hasCredentials: boolean = false;
 
   // Public methods
   public init: (params: initParams) => void;
   public initSearch: (params: initSearchParams) => void;
-  public click: (params?: Partial<ClickReport>) => void;
-  public conversion: (params?: Partial<ConversionReport>) => void;
+  public click: (params?: Partial<InsightsSearchClickEvent>) => void;
+  public conversion: (params?: Partial<InsightsSearchConversionEvent>) => void;
 
   constructor(options?: any) {
     // Exit on old browsers or if script is not ran in browser

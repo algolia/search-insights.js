@@ -1,6 +1,6 @@
-import { AnalyticsEvent } from './_sendEvent';
+import { InsightsEvent } from './_sendEvent';
 
-export interface ClickReport extends AnalyticsEvent {
+export interface InsightsSearchClickEvent extends InsightsEvent {
   objectID: string | number;
   position: number;
   queryID?: string;
@@ -8,9 +8,9 @@ export interface ClickReport extends AnalyticsEvent {
 
 /**
  * Sends a click report
- * @param params: ClickReport
+ * @param params: InsightsSearchClickEvent
  */
-export function click(params: ClickReport) {
+export function click(params: InsightsSearchClickEvent) {
   if (!this._hasCredentials) {
     throw new Error(
       "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
