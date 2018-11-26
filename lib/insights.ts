@@ -13,7 +13,6 @@ import { initParams, init } from './init';
 import { initSearch, initSearchParams } from './_initSearch';
 import { ClickReport, click } from './click';
 import { ConversionReport, conversion } from './conversion';
-import { SearchReport, search } from './search';
 
 type Queue = {
   queue: string[][];
@@ -55,7 +54,6 @@ class AlgoliaAnalytics {
   public initSearch: (params: initSearchParams) => void;
   public click: (params?: Partial<ClickReport>) => void;
   public conversion: (params?: Partial<ConversionReport>) => void;
-  public search: (params: SearchReport) => void;
 
   constructor(options?: any) {
     // Exit on old browsers or if script is not ran in browser
@@ -77,7 +75,6 @@ class AlgoliaAnalytics {
     this.initSearch = initSearch.bind(this);
     this.click = click.bind(this);
     this.conversion = conversion.bind(this);
-    this.search = search.bind(this);
 
     this._userID = userID();
 
