@@ -1,15 +1,15 @@
-import { AnalyticsEvent } from './_sendEvent';
+import { InsightsEvent } from './_sendEvent';
 
-export interface ConversionReport extends AnalyticsEvent {
+export interface InsightsSearchConversionEvent extends InsightsEvent {
   objectID: string | number;
   queryID: string;
 }
 
 /**
  * Checks params for conversion report and sends query
- * @param params ConversionReport
+ * @param params InsightsSearchConversionEvent
  */
-export function conversion(params: ConversionReport) {
+export function conversion(params: InsightsSearchConversionEvent) {
   if (!this._hasCredentials) {
     throw new Error(
       "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"

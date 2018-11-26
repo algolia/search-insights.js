@@ -1,6 +1,5 @@
-import { ClickReport } from './click';
-import { ConversionReport } from './conversion';
-import { SearchReport } from './search';
+import { InsightsSearchClickEvent } from './click';
+import { InsightsSearchConversionEvent } from './conversion';
 
 declare var process : {
   env: {
@@ -8,20 +7,20 @@ declare var process : {
   }
 }
 
-export type AnalyticsEvent = {
+export type InsightsEvent = {
   userID: string;
   timestamp: number;
   indexName: string;
 }
 
-export type ReportEvent = 'search'|'click'|'conversion'
+export type InsightsEventTypes = 'click'|'conversion'
 
 /**
  *  Sends data to endpoint
  * @param eventType 'click'|'conversion'
- * @param eventData ConversionReport|ClickReport
+ * @param eventData InsightsSearchConversionEvent|InsightsSearchClickEvent
  */
-export function sendEvent(eventType: ReportEvent, eventData: ClickReport | ConversionReport | SearchReport) {
+export function sendEvent(eventType: InsightsEventTypes, eventData: InsightsSearchClickEvent | InsightsSearchConversionEvent) {
 
   // Add client timestamp and userID
   eventData.timestamp = Date.now()
@@ -37,7 +36,7 @@ export function sendEvent(eventType: ReportEvent, eventData: ClickReport | Conve
   const supportsNavigator = navigator && typeof navigator.sendBeacon === 'function';
 
   // Always try sending data through sendbeacon
-  if(supportsNavigator && eventType !== 'search'){
+  if(supportsNavigator){
     navigator.sendBeacon(reportingURL, JSON.stringify(eventData));
 
   } else {
