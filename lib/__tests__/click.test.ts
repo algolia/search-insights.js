@@ -48,5 +48,5 @@ describe('Click method', () => {
     AlgoliaInsights.click(clickParams);
 
     expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalledWith('click', clickParams);
-  }
+  })
 });
