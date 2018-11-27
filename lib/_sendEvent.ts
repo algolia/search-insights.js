@@ -34,13 +34,12 @@ export function sendEvent(
   bulkSendEvent(this._applicationID, this.apiKey, [eventData]);
 }
 
-export function bulkSendEvent(
+function bulkSendEvent(
   applicationID: string,
   apiKey: string,
   events: InsightsEvent[]
 ) {
 
-  // Origin
   const reportingQueryOrigin =
     process.env.NODE_ENV === "production"
       ? `https://insights.algolia.io/1/events`
