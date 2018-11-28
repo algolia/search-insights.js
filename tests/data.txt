@@ -1,2 +1,7 @@
 {"objectID":"81","position":2,"queryID":"63c49a92c151f15001aae3ad42286dc2","timestamp":1518197121357,"userID":"43fed8a6-7b64-424d-a764-1361e3aa103b"}
 {"objectID":"81","position":2,"queryID":"dbe249ff408164942554c386e3f4dc91","timestamp":1519729943581,"userID":"bcd71638-c214-4252-82a6-98bae87d8c8f"}
+{"events":[{"objectID":"3828012","position":2,"queryID":"4b651d9561b170654f47393513453adc","timestamp":1543347839993,"userID":"c7e40344-1b3b-43d8-90cd-ee3589a0ef5b","eventType":"click"}]}
+{"events":[{"objectID":"3828012","position":2,"queryID":"a0864a59fa63c0b285f5aed922efaf82","timestamp":1543397657957,"userID":"94362288-9586-4fac-aa50-40d0448495ce","eventType":"click"}]}
+{"events":[{"objectID":"3828012","position":2,"queryID":"2e5aca7ee0c66bace036b80431f66645","timestamp":1543397806002,"userID":"c9a3c3f7-dfe0-48ae-9de1-59307b65457e","eventType":"click"}]}
+{"events":[{"objectID":"3828012","position":2,"queryID":"0ab5fdaea8208e841a54c6e18ee5b8f0","timestamp":1543397831790,"userID":"f8f04754-fa5e-4f31-92b3-01861906b224","eventType":"click"}]}
+{"events":[{"objectID":"3828012","position":2,"queryID":"368db440728f76d4013aee3db434d5da","timestamp":1543397881547,"userID":"b87f8841-7502-42ce-a9e7-d4914b666f3c","eventType":"click"}]}
