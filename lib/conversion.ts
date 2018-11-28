@@ -1,6 +1,9 @@
-import { InsightsEvent } from "./_sendEvent";
+export interface InsightsSearchConversionEvent {
+  eventName: string;
+  userID: string;
+  timestamp: number;
+  indexName: string;
 
-export interface InsightsSearchConversionEvent extends InsightsEvent {
   objectID: string | number;
   queryID: string;
 }

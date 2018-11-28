@@ -41,7 +41,8 @@ describe("sendEvent", () => {
     });
     it("should pass over the payload with multiple events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
-        objectID: "1"
+        objectID: "1",
+        position: 3
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
@@ -49,7 +50,8 @@ describe("sendEvent", () => {
         events: [
           expect.objectContaining({
             eventType: "click",
-            objectID: "1",
+            objectID: ["1"],
+            position: [3],
             userID: "42",
             timestamp: expect.any(Number)
           })
@@ -84,7 +86,8 @@ describe("sendEvent", () => {
     });
     it("should send the correct payload", () => {
       (AlgoliaInsights as any).sendEvent("click", {
-        objectID: "1"
+        objectID: "1",
+        position: 3
       });
       const payload = JSON.parse(sendBeacon.mock.calls[0][1]);
 
@@ -92,7 +95,8 @@ describe("sendEvent", () => {
         events: [
           expect.objectContaining({
             eventType: "click",
-            objectID: "1",
+            objectID: ["1"],
+            position: [3],
             userID: "42",
             timestamp: expect.any(Number)
           })
