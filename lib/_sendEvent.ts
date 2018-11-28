@@ -31,7 +31,7 @@ export function sendEvent(
   eventData.eventType = eventType;
   // TODO: check eventType is matching eventData
 
-  bulkSendEvent(this._applicationID, this.apiKey, [eventData]);
+  bulkSendEvent(this._applicationID, this._apiKey, [eventData]);
 }
 
 function bulkSendEvent(
@@ -39,13 +39,10 @@ function bulkSendEvent(
   apiKey: string,
   events: InsightsEvent[]
 ) {
-
   const reportingQueryOrigin =
     process.env.NODE_ENV === 'production' ? `https://insights.algolia.io/1/events` : `http://localhost:8080/1/events`;
   // Auth query
-  const reportingURL =
-    reportingQueryOrigin +
-    `?X-Algolia-Application-Id=${applicationID}&X-Algolia-API-Key=${apiKey}`;
+  const reportingURL = `${reportingQueryOrigin}?X-Algolia-Application-Id=${applicationID}&X-Algolia-API-Key=${apiKey}`;
 
   // Detect navigator support
   const supportsNavigator = navigator && typeof navigator.sendBeacon === 'function';

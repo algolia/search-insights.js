@@ -1,4 +1,4 @@
-import { InsightsEvent } from './_sendEvent';
+import { InsightsEvent } from "./_sendEvent";
 
 export interface InsightsSearchConversionEvent extends InsightsEvent {
   objectID: string | number;
@@ -16,11 +16,11 @@ export function conversion(params: InsightsSearchConversionEvent) {
     );
   } else if (!params) {
     throw new Error(
-      'No parameters were sent to conversion event, please provide an objectID'
+      "No parameters were sent to conversion event, please provide an objectID"
     );
   } else if (!params.objectID) {
     throw new Error(
-      'No objectID was sent to conversion event, please provide an objectID'
+      "No objectID was sent to conversion event, please provide an objectID"
     );
   }
 
@@ -30,7 +30,7 @@ export function conversion(params: InsightsSearchConversionEvent) {
     : this.storageManager.getConversionObjectID(params.objectID);
 
   // Reassign params
-  const conversionParams = Object.assign(params, { queryID: queryID });
+  const conversionParams = Object.assign(params, { queryID });
 
   // Could not retrieve queryID from localStorage -> CTR through search event likely did not happen,
   // -> consider that conversion did not come from search and exit.
@@ -40,5 +40,5 @@ export function conversion(params: InsightsSearchConversionEvent) {
   }
 
   // Send event
-  this.sendEvent('conversion', conversionParams);
+  this.sendEvent("conversion", conversionParams);
 }

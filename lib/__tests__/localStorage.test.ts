@@ -12,8 +12,8 @@ describe("LocalStorageManager", () => {
   });
 
   it("should clean old clicks", () => {
-    const currentTimeStamp = new Date().getTime(),
-      hour = 1000 * 60 * 60;
+    const currentTimeStamp = new Date().getTime();
+    const hour = 1000 * 60 * 60;
 
     const initialStore: Store = {
       queryID_0: {
