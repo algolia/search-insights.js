@@ -1,4 +1,4 @@
-import { InsightsEvent } from './_sendEvent';
+import { InsightsEvent } from "./_sendEvent";
 
 export interface InsightsSearchClickEvent extends InsightsEvent {
   objectID: string | number;
@@ -17,22 +17,22 @@ export function click(params: InsightsSearchClickEvent) {
     );
   } else if (!params) {
     throw new Error(
-      'No params were sent to click function, please provide an objectID and position to be reported'
+      "No params were sent to click function, please provide an objectID and position to be reported"
     );
   } else if (!params.objectID) {
     throw new Error(
-      'required objectID parameter was not sent, click event can not be properly attributed'
+      "required objectID parameter was not sent, click event can not be properly attributed"
     );
   } else if (!params.position) {
     throw new Error(
-      'required position parameter was not sent, click event position can not be properly sent without'
+      "required position parameter was not sent, click event position can not be properly sent without"
     );
   }
 
   // Get last queryID
   let queryID = params.queryID;
 
-  if (typeof this.getQueryID === 'function' && !queryID) {
+  if (typeof this.getQueryID === "function" && !queryID) {
     queryID = this.getQueryID() || this._lastQueryID;
   }
 
@@ -49,5 +49,5 @@ export function click(params: InsightsSearchClickEvent) {
   const clickParams = Object.assign({}, params, { queryID });
 
   // Send event
-  this.sendEvent('click', clickParams);
+  this.sendEvent("click", clickParams);
 }

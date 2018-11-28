@@ -1,3 +1,5 @@
+/* tslint:disable */
+
 /**
  * ES5 Object.assign polyfill
  * src:

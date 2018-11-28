@@ -1,3 +1,5 @@
+/* tslint:disable */
+
 export default function objectKeysPolyfill() {
   if (!Object.keys) {
     Object.keys = (function() {

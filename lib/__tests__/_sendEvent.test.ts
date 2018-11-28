@@ -58,7 +58,7 @@ describe("sendEvent", () => {
     });
   });
 
-  describe("with sendBeacon", function() {
+  describe("with sendBeacon", () => {
     let sendBeacon;
     beforeEach(() => {
       sendBeacon = window.navigator.sendBeacon = jest.fn();

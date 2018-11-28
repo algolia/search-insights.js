@@ -1,18 +1,18 @@
-import objectAssignPolyfill from './polyfills/objectAssign';
-import objectKeysPolyfill from './polyfills/objectKeys';
+import objectAssignPolyfill from "./polyfills/objectAssign";
+import objectKeysPolyfill from "./polyfills/objectKeys";
 
 objectKeysPolyfill();
 objectAssignPolyfill();
 
-import { processQueue } from './_processQueue';
-import { sendEvent, InsightsEventTypes } from './_sendEvent';
-import { StorageManager } from './_storageManager';
-import { userID } from './_cookieUtils';
+import { processQueue } from "./_processQueue";
+import { sendEvent, InsightsEventTypes } from "./_sendEvent";
+import { StorageManager } from "./_storageManager";
+import { userID } from "./_cookieUtils";
 
-import { initParams, init } from './init';
-import { initSearch, initSearchParams } from './_initSearch';
-import { InsightsSearchClickEvent, click } from './click';
-import { InsightsSearchConversionEvent, conversion } from './conversion';
+import { InitParams, init } from "./init";
+import { initSearch, InitSearchParams } from "./_initSearch";
+import { InsightsSearchClickEvent, click } from "./click";
+import { InsightsSearchConversionEvent, conversion } from "./conversion";
 
 type Queue = {
   queue: string[][];
@@ -50,8 +50,8 @@ class AlgoliaAnalytics {
   private _hasCredentials: boolean = false;
 
   // Public methods
-  public init: (params: initParams) => void;
-  public initSearch: (params: initSearchParams) => void;
+  public init: (params: InitParams) => void;
+  public initSearch: (params: InitSearchParams) => void;
   public click: (params?: Partial<InsightsSearchClickEvent>) => void;
   public conversion: (params?: Partial<InsightsSearchConversionEvent>) => void;
 
@@ -59,7 +59,7 @@ class AlgoliaAnalytics {
     // Exit on old browsers or if script is not ran in browser
     if (!document.addEventListener || !window) {
       throw new Error(
-        'Browser does not support eventlistener or there is no window object.'
+        "Browser does not support eventlistener or there is no window object."
       );
     }
 
