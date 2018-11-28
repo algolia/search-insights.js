@@ -152,8 +152,8 @@ describe("Integration tests", () => {
         const {
           events: [event]
         } = payload;
-        expect(event.objectID).toBe(objectID);
-        expect(event.position).toBe(2);
+        expect(event.objectID).toEqual([objectID]);
+        expect(event.position).toEqual([2]);
       });
       it("should include an timestamp", () => {
         const {
