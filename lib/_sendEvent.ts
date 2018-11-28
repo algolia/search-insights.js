@@ -1,5 +1,5 @@
-import { InsightsSearchClickEvent } from "./click";
-import { InsightsSearchConversionEvent } from "./conversion";
+import { InsightsSearchClickEvent } from './click';
+import { InsightsSearchConversionEvent } from './conversion';
 
 declare var process: {
   env: {
@@ -7,7 +7,7 @@ declare var process: {
   };
 };
 
-export type InsightsEventTypes = "click" | "conversion";
+export type InsightsEventTypes = 'click' | 'conversion';
 export type InsightsEvent = {
   eventType: InsightsEventTypes;
   eventName: string;
@@ -41,17 +41,14 @@ function bulkSendEvent(
 ) {
 
   const reportingQueryOrigin =
-    process.env.NODE_ENV === "production"
-      ? `https://insights.algolia.io/1/events`
-      : `http://localhost:8080/1/events`;
+    process.env.NODE_ENV === 'production' ? `https://insights.algolia.io/1/events` : `http://localhost:8080/1/events`;
   // Auth query
   const reportingURL =
     reportingQueryOrigin +
     `?X-Algolia-Application-Id=${applicationID}&X-Algolia-API-Key=${apiKey}`;
 
   // Detect navigator support
-  const supportsNavigator =
-    navigator && typeof navigator.sendBeacon === "function";
+  const supportsNavigator = navigator && typeof navigator.sendBeacon === 'function';
 
   const data = { events };
 
@@ -63,7 +60,7 @@ function bulkSendEvent(
     const report = new XMLHttpRequest();
 
     // Open connection
-    report.open("POST", reportingURL);
+    report.open('POST', reportingURL);
 
     // Save queryID if event is search
     report.send(JSON.stringify(data));
