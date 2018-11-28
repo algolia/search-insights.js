@@ -38,7 +38,7 @@
     "html-replace-webpack-plugin": "^2.2.8",
     "html-webpack-plugin": "^2.30.1",
     "instantsearch.js": "^2.4.1",
-    "jest": "^22.0.5",
+    "jest": "^23.6.0",
     "jest-localstorage-mock": "^2.1.0",
     "lunr": "^2.1.5",
     "node-sass": "^4.7.2",
@@ -90,7 +90,8 @@
       "jsx",
       "json",
       "node"
-    ]
+    ],
+    "prettierPath": "prettier"
   },
   "dependencies": {}
 }
