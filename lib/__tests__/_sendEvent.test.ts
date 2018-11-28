@@ -1,4 +1,5 @@
 import AlgoliaInsights from "../insights";
+import * as url from "url";
 
 const url = require("url");
 
