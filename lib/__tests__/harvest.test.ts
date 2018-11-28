@@ -169,20 +169,22 @@ describe('Integration tests', () => {
     });
   }
 
-  async function captureNetworkWhile(callback)  {
-    const capture = new Promise<{ request: any; payload: any }>((resolve, reject) => {
-      page.on('request', interceptedRequest => {
-        if (interceptedRequest.url().includes('localhost:8080')) {
-          const event = {
-            request: interceptedRequest,
-            payload: JSON.parse(interceptedRequest.postData())
-          };
-          resolve(event);
-        } else {
-          reject(new Error('expected url to be localhost:8080'));
-        }
-      });
-    });
+  async function captureNetworkWhile(callback) {
+    const capture = new Promise<{ request: any; payload: any }>(
+      (resolve, reject) => {
+        page.on("request", interceptedRequest => {
+          if (interceptedRequest.url().includes("localhost:8080")) {
+            const event = {
+              request: interceptedRequest,
+              payload: JSON.parse(interceptedRequest.postData())
+            };
+            resolve(event);
+          } else {
+            reject(new Error("expected url to be localhost:8080"));
+          }
+        });
+      }
+    );
     await callback();
     return capture;
   }

@@ -1,27 +1,31 @@
-
-export default function objectKeysPolyfill(){
+export default function objectKeysPolyfill() {
   if (!Object.keys) {
     Object.keys = (function() {
-      'use strict';
+      "use strict";
       var hasOwnProperty = Object.prototype.hasOwnProperty,
-          hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
-          dontEnums = [
-            'toString',
-            'toLocaleString',
-            'valueOf',
-            'hasOwnProperty',
-            'isPrototypeOf',
-            'propertyIsEnumerable',
-            'constructor'
-          ],
-          dontEnumsLength = dontEnums.length;
+        hasDontEnumBug = !{ toString: null }.propertyIsEnumerable("toString"),
+        dontEnums = [
+          "toString",
+          "toLocaleString",
+          "valueOf",
+          "hasOwnProperty",
+          "isPrototypeOf",
+          "propertyIsEnumerable",
+          "constructor"
+        ],
+        dontEnumsLength = dontEnums.length;
 
       return function(obj) {
-        if (typeof obj !== 'function' && (typeof obj !== 'object' || obj === null)) {
-          throw new TypeError('Object.keys called on non-object');
+        if (
+          typeof obj !== "function" &&
+          (typeof obj !== "object" || obj === null)
+        ) {
+          throw new TypeError("Object.keys called on non-object");
         }
 
-        var result = [], prop, i;
+        var result = [],
+          prop,
+          i;
 
         for (prop in obj) {
           if (hasOwnProperty.call(obj, prop)) {
@@ -38,6 +42,6 @@ export default function objectKeysPolyfill(){
         }
         return result;
       };
-    }());
+    })();
   }
 }
