@@ -32,6 +32,8 @@ describe("sendEvent", () => {
     });
     it("should make a post request to /1/events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        indexName: "my-index",
         objectID: "1"
       });
       expect(XMLHttpRequest.open).toHaveBeenCalledTimes(1);
@@ -41,6 +43,8 @@ describe("sendEvent", () => {
     });
     it("should pass over the payload with multiple events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        indexName: "my-index",
         objectID: "1",
         position: 3
       });
@@ -50,6 +54,8 @@ describe("sendEvent", () => {
         events: [
           expect.objectContaining({
             eventType: "click",
+            eventName: "my-event",
+            indexName: "my-index",
             objectID: ["1"],
             position: [3]
           })
@@ -68,6 +74,8 @@ describe("sendEvent", () => {
     });
     it("should use sendBeacon when available", () => {
       (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        indexName: "my-index",
         objectID: "1"
       });
       expect(sendBeacon).toHaveBeenCalledTimes(1);
@@ -76,6 +84,8 @@ describe("sendEvent", () => {
     });
     it("should call sendBeacon with /1/event", () => {
       (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        indexName: "my-index",
         objectID: "1"
       });
       const [requestURL] = sendBeacon.mock.calls[0];
@@ -84,6 +94,8 @@ describe("sendEvent", () => {
     });
     it("should send the correct payload", () => {
       (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        indexName: "my-index",
         objectID: "1",
         position: 3
       });
@@ -93,6 +105,8 @@ describe("sendEvent", () => {
         events: [
           expect.objectContaining({
             eventType: "click",
+            eventName: "my-event",
+            indexName: "my-index",
             objectID: ["1"],
             position: [3],
             userID: "mock-user-id",
@@ -103,9 +117,73 @@ describe("sendEvent", () => {
     });
   });
 
-  describe("payload formatting", () => {
+  describe("eventName", () => {
+    it("should throw if no eventName passed", () => {
+      expect(() => {
+        (AlgoliaInsights as any).sendEvent("click", {
+          indexName: "my-index"
+        });
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"expected required parameter \`eventName\` to be a string"`
+      );
+    });
+    it("should throw if no eventName passed", () => {
+      expect(() => {
+        (AlgoliaInsights as any).sendEvent("click", {
+          eventName: 3,
+          indexName: "my-index"
+        });
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"expected required parameter \`eventName\` to be a string"`
+      );
+    });
+  });
+
+  describe("indexName", () => {
+    it("should throw if no indexName passed", () => {
+      expect(() => {
+        (AlgoliaInsights as any).sendEvent("click", {
+          eventName: "my-event"
+        });
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"expected required parameter \`indexName\` to be a string"`
+      );
+    });
+    it("should throw if no indexName is not a string", () => {
+      expect(() => {
+        (AlgoliaInsights as any).sendEvent("click", {
+          eventName: "my-event",
+          indexName: 2
+        });
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"expected required parameter \`indexName\` to be a string"`
+      );
+    });
+  });
+
+  describe("objectID and position", () => {
+    it("should support single objectID and position", () => {
+      (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        indexName: "my-index",
+        objectID: "1",
+        position: 3,
+      });
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            objectID: ["1"],
+            position: [3]
+          })
+        ]
+      });
+    });
     it("should support multiple objectID and position", () => {
       (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        indexName: "my-index",
         objectID: ["1", "2"],
         position: [3, 5]
       });
@@ -123,6 +201,8 @@ describe("sendEvent", () => {
     it("should throw and error when objectID and position are not the same size", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
+          eventName: "my-event",
+          indexName: "my-index",
           objectID: ["1", "2"],
           position: [3]
         });
@@ -130,8 +210,14 @@ describe("sendEvent", () => {
         `"objectID and position need to be of the same size"`
       );
     });
+  });
+
+  describe("timestamp", () => {
     it("should add a timestamp if not provided", () => {
-      (AlgoliaInsights as any).sendEvent("click", {});
+      (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        indexName: "my-index"
+      });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
@@ -143,7 +229,11 @@ describe("sendEvent", () => {
       });
     });
     it("should pass over provided timestamp", () => {
-      (AlgoliaInsights as any).sendEvent("click", { timestamp: 1984 });
+      (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        indexName: "my-index",
+        timestamp: 1984
+      });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
@@ -154,20 +244,14 @@ describe("sendEvent", () => {
         ]
       });
     });
-    it("should pass over provided indexName", () => {
-      (AlgoliaInsights as any).sendEvent("click", { indexName: "my-index" });
-      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
-      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
-      expect(payload).toEqual({
-        events: [
-          expect.objectContaining({
-            indexName: "my-index"
-          })
-        ]
-      });
-    });
+  });
+
+  describe("userID", () => {
     it("should add a userID if not provided", () => {
-      (AlgoliaInsights as any).sendEvent("click", {});
+      (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        indexName: "my-index"
+      });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
@@ -179,7 +263,11 @@ describe("sendEvent", () => {
       });
     });
     it("should pass over provided userID", () => {
-      (AlgoliaInsights as any).sendEvent("click", { userID: "007" });
+      (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        indexName: "my-index",
+        userID: "007"
+      });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
