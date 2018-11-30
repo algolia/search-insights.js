@@ -97,11 +97,20 @@ export default {
       // prefix = page (0-based) * hitsPerPage
       // position is 1-based
       const position = this.prefix + index + 1;
-      window.aa("click", { objectID, position });
+      window.aa("click", {
+        eventName: "hit-clicked",
+        indexName: process.env.INDEX_NAME,
+        objectID,
+        position
+      });
     },
     // reporting a conversion
     convert({ result: { objectID } }) {
-      window.aa("conversion", { objectID });
+      window.aa("conversion", {
+        eventName: "hit-converted",
+        indexName: process.env.INDEX_NAME,
+        objectID
+      });
     },
   },
   computed: {

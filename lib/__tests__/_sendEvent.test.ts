@@ -167,7 +167,7 @@ describe("sendEvent", () => {
         eventName: "my-event",
         indexName: "my-index",
         objectID: "1",
-        position: 3,
+        position: 3
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
