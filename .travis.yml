@@ -22,3 +22,7 @@ before_script:
 - yarn lint
 script:
 - yarn test
+addons:
+  artifacts:
+    paths:
+    - ./dist/
