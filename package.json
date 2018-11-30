@@ -21,7 +21,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^22.0.1",
+    "@types/jest": "^23.3.10",
     "@types/jsdom": "^11.0.4",
     "@types/puppeteer": "^1.0.0",
     "algoliasearch": "^3.24.9",
@@ -90,8 +90,7 @@
       "jsx",
       "json",
       "node"
-    ],
-    "prettierPath": "prettier"
+    ]
   },
   "dependencies": {}
 }

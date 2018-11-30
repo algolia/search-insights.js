@@ -1,5 +1,4 @@
-import { InsightsSearchClickEvent } from "./click";
-import { InsightsSearchConversionEvent } from "./conversion";
+import objectContaining = jasmine.objectContaining;
 
 declare var process: {
   env: {
@@ -16,9 +15,9 @@ export type InsightsEvent = {
   timestamp: number;
   indexName: string;
 
-  query?: string;
-  objectID?: (string | number)[];
-  position?: (number)[];
+  queryID?: string;
+  objectID?: (string | number) | (string | number)[];
+  position?: number | number[];
 };
 
 /**
@@ -28,25 +27,33 @@ export type InsightsEvent = {
  */
 export function sendEvent(
   eventType: InsightsEventTypes,
-  eventData: InsightsSearchClickEvent | InsightsSearchConversionEvent
+  eventData: InsightsEvent
 ) {
   // Add client timestamp and userID
   const event: InsightsEvent = {
     eventType,
     eventName: eventData.eventName,
-    userID: this._userID,
-    timestamp: Date.now(),
+    userID: eventData.userID || this._userID,
+    timestamp: eventData.timestamp || Date.now(),
     indexName: eventData.indexName
   };
 
   if (typeof eventData.queryID === "string") {
     event.queryID = eventData.queryID;
   }
-  if (typeof eventData.objectID === "string") {
+  if (!Array.isArray(eventData.objectID)) {
     event.objectID = [eventData.objectID];
+  } else {
+    event.objectID = eventData.objectID;
   }
-  if (typeof eventData.position === "number") {
+  if (!Array.isArray(eventData.position)) {
     event.position = [eventData.position];
+  } else {
+    event.position = eventData.position;
+  }
+
+  if (event.objectID.length !== event.position.length) {
+    throw new Error("objectID and position need to be of the same size");
   }
   // TODO: check eventType is matching eventData
 
