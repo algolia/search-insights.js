@@ -2,7 +2,7 @@ import AlgoliaInsights from "../insights";
 import * as url from "url";
 
 jest.mock("../_cookieUtils", () => ({
-  userID: jest.fn(() => "42")
+  userID: jest.fn(() => "mock-user-id")
 }));
 
 const credentials = {
@@ -51,9 +51,7 @@ describe("sendEvent", () => {
           expect.objectContaining({
             eventType: "click",
             objectID: ["1"],
-            position: [3],
-            userID: "42",
-            timestamp: expect.any(Number)
+            position: [3]
           })
         ]
       });
@@ -97,8 +95,97 @@ describe("sendEvent", () => {
             eventType: "click",
             objectID: ["1"],
             position: [3],
-            userID: "42",
+            userID: "mock-user-id",
             timestamp: expect.any(Number)
+          })
+        ]
+      });
+    });
+  });
+
+  describe("payload formatting", () => {
+    it("should support multiple objectID and position", () => {
+      (AlgoliaInsights as any).sendEvent("click", {
+        objectID: ["1", "2"],
+        position: [3, 5]
+      });
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            objectID: ["1", "2"],
+            position: [3, 5]
+          })
+        ]
+      });
+    });
+    it("should throw and error when objectID and position are not the same size", () => {
+      expect(() => {
+        (AlgoliaInsights as any).sendEvent("click", {
+          objectID: ["1", "2"],
+          position: [3]
+        });
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"objectID and position need to be of the same size"`
+      );
+    });
+    it("should add a timestamp if not provided", () => {
+      (AlgoliaInsights as any).sendEvent("click", {});
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            timestamp: expect.any(Number)
+          })
+        ]
+      });
+    });
+    it("should pass over provided timestamp", () => {
+      (AlgoliaInsights as any).sendEvent("click", { timestamp: 1984 });
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            timestamp: 1984
+          })
+        ]
+      });
+    });
+    it("should pass over provided indexName", () => {
+      (AlgoliaInsights as any).sendEvent("click", { indexName: "my-index" });
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            indexName: "my-index"
+          })
+        ]
+      });
+    });
+    it("should add a userID if not provided", () => {
+      (AlgoliaInsights as any).sendEvent("click", {});
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            userID: "mock-user-id"
+          })
+        ]
+      });
+    });
+    it("should pass over provided userID", () => {
+      (AlgoliaInsights as any).sendEvent("click", { userID: "007" });
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            userID: "007"
           })
         ]
       });
