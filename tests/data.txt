@@ -2,5 +2,3 @@
 {"objectID":"81","position":2,"queryID":"dbe249ff408164942554c386e3f4dc91","timestamp":1519729943581,"userID":"bcd71638-c214-4252-82a6-98bae87d8c8f"}
 {"events":[{"objectID":"3828012","position":2,"queryID":"d805d41243319c0d2fb4e0a4a3a666a9","timestamp":1543420719930,"userID":"cbbf8eba-d8a5-4269-b3d0-7448617eee6e","eventType":"click"}]}
 {"events":[{"objectID":"3828012","position":2,"queryID":"f904bf83e00f3753038f5902a7ade1c2","timestamp":1543420848078,"userID":"2e59c250-354d-4665-ae11-ff18a1aef0ca","eventType":"click"}]}
-{"events":[{"eventType":"click","userID":"45b43a1e-f4b1-4731-a2e8-c1f9d7800cdd","timestamp":1543586800019,"queryID":"c000aa37e04de4e3d7d4915d6cfb5a46","objectID":["3828012"],"position":[2]}]}
-{"events":[{"eventType":"click","userID":"69426c52-da2d-4d7f-95a0-fe0a8648ed3e","timestamp":1543587179193,"queryID":"02b3210034b95f2bced751e864b04b5f","objectID":["3828012"],"position":[2]}]}

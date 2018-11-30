@@ -29,6 +29,8 @@ const Hits = connectHits(
           <button
             onClick={() => {
               window.aa('click', {
+                eventName: "hit-clicked",
+                indexName: process.env.INDEX_NAME,
                 objectID: hit.objectID,
                 position:
                   searchResults.hitsPerPage * searchResults.page + index + 1,
@@ -40,6 +42,8 @@ const Hits = connectHits(
           <button
             onClick={() => {
               window.aa('conversion', {
+                eventName: "hit-converted",
+                indexName: process.env.INDEX_NAME,
                 objectID: hit.objectID,
               });
             }}
