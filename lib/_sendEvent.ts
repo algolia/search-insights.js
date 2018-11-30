@@ -1,4 +1,4 @@
-import objectContaining = jasmine.objectContaining;
+import { isNumber, isUndefined, isString, isFunction } from "./utils/index";
 
 declare var process: {
   env: {
@@ -12,7 +12,7 @@ export type InsightsEvent = {
 
   eventName: string;
   userID: string;
-  timestamp: number;
+  timestamp: number; // TODO: we should allow Date object as well?
   indexName: string;
 
   queryID?: string;
@@ -30,6 +30,21 @@ export function sendEvent(
   eventData: InsightsEvent
 ) {
   // Add client timestamp and userID
+
+  // mandatory params
+  if (!isString(eventData.eventName)) {
+    throw TypeError("expected required parameter `eventName` to be a string");
+  }
+  if (!isString(eventData.indexName)) {
+    throw TypeError("expected required parameter `indexName` to be a string");
+  }
+  if (!isUndefined(eventData.timestamp) && !isNumber(eventData.timestamp)) {
+    throw TypeError("expected optional parameter `timestamp` to be a string");
+  }
+  if (!isUndefined(eventData.userID) && !isString(eventData.userID)) {
+    throw TypeError("expected optional parameter `userID` to be a string");
+  }
+
   const event: InsightsEvent = {
     eventType,
     eventName: eventData.eventName,
@@ -38,7 +53,8 @@ export function sendEvent(
     indexName: eventData.indexName
   };
 
-  if (typeof eventData.queryID === "string") {
+  // optional params
+  if (isString(eventData.queryID)) {
     event.queryID = eventData.queryID;
   }
   if (!Array.isArray(eventData.objectID)) {
@@ -73,8 +89,7 @@ function bulkSendEvent(
   const reportingURL = `${reportingQueryOrigin}?X-Algolia-Application-Id=${applicationID}&X-Algolia-API-Key=${apiKey}`;
 
   // Detect navigator support
-  const supportsNavigator =
-    navigator && typeof navigator.sendBeacon === "function";
+  const supportsNavigator = navigator && isFunction(navigator.sendBeacon);
 
   const data = { events };
 

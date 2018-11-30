@@ -110,11 +110,13 @@ describe("Integration tests", () => {
       data = await getPageResponse();
       await page.waitFor(1000);
     });
+
     describe("loading", () => {
       it("should retrieve a queryID on page load", async () => {
         expect(data).toHaveProperty("queryID");
       });
     });
+
     describe("click", () => {
       let request;
       let payload;
