@@ -6,9 +6,9 @@ declare var process: {
   };
 };
 
-export type InsightsEventTypes = "click" | "conversion";
+export type InsightsEventType = "click" | "conversion";
 export type InsightsEvent = {
-  eventType: InsightsEventTypes;
+  eventType: InsightsEventType;
 
   eventName: string;
   userID: string;
@@ -22,11 +22,11 @@ export type InsightsEvent = {
 
 /**
  *  Sends data to endpoint
- * @param eventType InsightsEventTypes
+ * @param eventType InsightsEventType
  * @param eventData InsightsSearchClickEvent|InsightsSearchConversionEvent
  */
 export function sendEvent(
-  eventType: InsightsEventTypes,
+  eventType: InsightsEventType,
   eventData: InsightsEvent
 ) {
   // Add client timestamp and userID
@@ -39,7 +39,7 @@ export function sendEvent(
     throw TypeError("expected required parameter `indexName` to be a string");
   }
   if (!isUndefined(eventData.timestamp) && !isNumber(eventData.timestamp)) {
-    throw TypeError("expected optional parameter `timestamp` to be a string");
+    throw TypeError("expected optional parameter `timestamp` to be a number");
   }
   if (!isUndefined(eventData.userID) && !isString(eventData.userID)) {
     throw TypeError("expected optional parameter `userID` to be a string");
