@@ -5,7 +5,7 @@ objectKeysPolyfill();
 objectAssignPolyfill();
 
 import { processQueue } from "./_processQueue";
-import { sendEvent, InsightsEventTypes } from "./_sendEvent";
+import { sendEvent, InsightsEventType } from "./_sendEvent";
 import { StorageManager } from "./_storageManager";
 import { userID } from "./_cookieUtils";
 
@@ -44,7 +44,7 @@ class AlgoliaAnalytics {
   // Private methods
   private processQueue: () => void;
   private sendEvent: (
-    eventType: InsightsEventTypes,
+    eventType: InsightsEventType,
     data: InsightsSearchClickEvent | InsightsSearchConversionEvent
   ) => void;
   private _hasCredentials: boolean = false;
