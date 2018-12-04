@@ -4,10 +4,9 @@ export interface InsightsSearchClickEvent {
   timestamp: number;
   indexName: string;
 
-  objectID: string | number;
-  position: number;
-
-  queryID?: string;
+  queryID: string;
+  objectID: (string | number)[];
+  position: number[];
 }
 
 /**
@@ -22,7 +21,7 @@ export function click(params: InsightsSearchClickEvent) {
   }
   if (!params) {
     throw new Error(
-      "No params were sent to click function, please provide an objectID and position to be reported"
+      "No params were sent to click function, please provide `queryID`,  `objectID` and `position` to be reported"
     );
   }
   if (!params.objectID) {

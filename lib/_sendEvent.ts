@@ -12,12 +12,12 @@ export type InsightsEvent = {
 
   eventName: string;
   userID: string;
-  timestamp: number; // TODO: we should allow Date object as well?
+  timestamp: number;
   indexName: string;
 
   queryID?: string;
-  objectID?: (string | number) | (string | number)[];
-  position?: number | number[];
+  objectID?: (string | number)[];
+  position?: number[];
 };
 
 /**
@@ -54,24 +54,32 @@ export function sendEvent(
   };
 
   // optional params
-  if (isString(eventData.queryID)) {
+  if (!isUndefined(eventData.queryID)) {
+    if (!isString(eventData.queryID)) {
+      throw TypeError("expected optional parameter `queryID` to be a string");
+    }
     event.queryID = eventData.queryID;
   }
-  if (!Array.isArray(eventData.objectID)) {
-    event.objectID = [eventData.objectID];
-  } else {
+
+  if (!isUndefined(eventData.objectID)) {
+    if (!Array.isArray(eventData.objectID)) {
+      throw TypeError("expected optional parameter `objectID` to be an array");
+    }
     event.objectID = eventData.objectID;
   }
-  if (!Array.isArray(eventData.position)) {
-    event.position = [eventData.position];
-  } else {
+
+  if (!isUndefined(eventData.position)) {
+    if (!Array.isArray(eventData.position)) {
+      throw TypeError("expected optional parameter `position` to be an array");
+    }
+    if (isUndefined(eventData.objectID)) {
+      throw new Error("Cannot use `position` without providing `objectID`");
+    }
+    if (eventData.objectID.length !== eventData.position.length) {
+      throw new Error("objectID and position need to be of the same size");
+    }
     event.position = eventData.position;
   }
-
-  if (event.objectID.length !== event.position.length) {
-    throw new Error("objectID and position need to be of the same size");
-  }
-  // TODO: check eventType is matching eventData
 
   bulkSendEvent(this._applicationID, this._apiKey, [event]);
 }

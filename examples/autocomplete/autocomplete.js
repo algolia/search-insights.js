@@ -1,5 +1,7 @@
 require('./autocomplete.scss');
 
+// TODO: update autocomplete to support objectID as an array
+
 window.addEventListener('load', () => {
   var client = algoliasearch(process.env.APP_ID, process.env.API_KEY);
   var index = client.initIndex(process.env.INDEX_NAME);
