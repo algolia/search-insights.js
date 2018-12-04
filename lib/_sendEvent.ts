@@ -10,7 +10,7 @@ declare var process : {
 
 export type AnalyticsEvent = {
   userID: string;
-  timestamp: number;
+  timestamp?: number;
   indexName: string;
 }
 
@@ -23,8 +23,7 @@ export type ReportEvent = 'search'|'click'|'conversion'
  */
 export function sendEvent(eventType: ReportEvent, eventData: ClickReport | ConversionReport | SearchReport) {
 
-  // Add client timestamp and userID
-  eventData.timestamp = Date.now()
+  // Add client userID
   eventData.userID = this._userID;
 
   // Origin
