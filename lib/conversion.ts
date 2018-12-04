@@ -4,8 +4,8 @@ export interface InsightsSearchConversionEvent {
   timestamp: number;
   indexName: string;
 
-  objectID: string | number;
-  queryID: string;
+  queryID?: string;
+  objectID?: (string | number)[];
 }
 
 /**

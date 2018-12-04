@@ -168,8 +168,8 @@ document.addEventListener('click', (e) => {
     aa('click', {
       eventName: "hit-clicked",
       indexName: process.env.INDEX_NAME,
-      objectID: e.target.getAttribute('data-objectid'),
-      position: parseInt(e.target.getAttribute('data-position'))
+      objectID: [e.target.getAttribute('data-objectid')],
+      position: [parseInt(e.target.getAttribute('data-position'))]
     })
 
   } else if(e.target.matches('.button-convert')) {
@@ -177,7 +177,7 @@ document.addEventListener('click', (e) => {
     aa('conversion', {
       eventName: "hit-converted",
       indexName: process.env.INDEX_NAME,
-      objectID: e.target.getAttribute('data-objectid')
+      objectID: [e.target.getAttribute('data-objectid')]
     })
   }
 })

@@ -50,7 +50,7 @@ describe("sendEvent", () => {
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            eventType: "click",
+            eventType: "click"
           })
         ]
       });
@@ -145,24 +145,6 @@ describe("sendEvent", () => {
   });
 
   describe("objectID and position", () => {
-    it("should support single objectID and position", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
-        eventName: "my-event",
-        indexName: "my-index",
-        objectID: "1",
-        position: 3
-      });
-      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
-      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
-      expect(payload).toEqual({
-        events: [
-          expect.objectContaining({
-            objectID: ["1"],
-            position: [3]
-          })
-        ]
-      });
-    });
     it("should support multiple objectID and position", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
@@ -191,6 +173,17 @@ describe("sendEvent", () => {
         });
       }).toThrowErrorMatchingInlineSnapshot(
         `"objectID and position need to be of the same size"`
+      );
+    });
+    it("should throw and error when positions supplied but not objectID", () => {
+      expect(() => {
+        (AlgoliaInsights as any).sendEvent("click", {
+          eventName: "my-event",
+          indexName: "my-index",
+          position: [3]
+        });
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"Cannot use \`position\` without providing \`objectID\`"`
       );
     });
   });
