@@ -108,7 +108,6 @@ describe('Integration tests', () => {
 
     expect(requestClick).toHaveProperty('objectID')
     expect(requestClick).toHaveProperty('queryID')
-    expect(requestClick).toHaveProperty('timestamp')
     expect(requestClick.position).toBe(2)
   })
 })
