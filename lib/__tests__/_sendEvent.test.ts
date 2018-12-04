@@ -33,8 +33,7 @@ describe("sendEvent", () => {
     it("should make a post request to /1/events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index",
-        objectID: "1"
+        indexName: "my-index"
       });
       expect(XMLHttpRequest.open).toHaveBeenCalledTimes(1);
       const [verb, requestUrl] = XMLHttpRequest.open.mock.calls[0];
@@ -44,9 +43,7 @@ describe("sendEvent", () => {
     it("should pass over the payload with multiple events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index",
-        objectID: "1",
-        position: 3
+        indexName: "my-index"
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
@@ -54,10 +51,6 @@ describe("sendEvent", () => {
         events: [
           expect.objectContaining({
             eventType: "click",
-            eventName: "my-event",
-            indexName: "my-index",
-            objectID: ["1"],
-            position: [3]
           })
         ]
       });
@@ -75,8 +68,7 @@ describe("sendEvent", () => {
     it("should use sendBeacon when available", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index",
-        objectID: "1"
+        indexName: "my-index"
       });
       expect(sendBeacon).toHaveBeenCalledTimes(1);
       expect(XMLHttpRequest.open).not.toHaveBeenCalled();
@@ -85,8 +77,7 @@ describe("sendEvent", () => {
     it("should call sendBeacon with /1/event", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index",
-        objectID: "1"
+        indexName: "my-index"
       });
       const [requestURL] = sendBeacon.mock.calls[0];
 
@@ -95,22 +86,14 @@ describe("sendEvent", () => {
     it("should send the correct payload", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index",
-        objectID: "1",
-        position: 3
+        indexName: "my-index"
       });
       const payload = JSON.parse(sendBeacon.mock.calls[0][1]);
 
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            eventType: "click",
-            eventName: "my-event",
-            indexName: "my-index",
-            objectID: ["1"],
-            position: [3],
-            userID: "mock-user-id",
-            timestamp: expect.any(Number)
+            eventType: "click"
           })
         ]
       });
