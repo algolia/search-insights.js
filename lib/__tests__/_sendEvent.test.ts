@@ -33,7 +33,7 @@ describe("sendEvent", () => {
     it("should make a post request to /1/events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index"
       });
       expect(XMLHttpRequest.open).toHaveBeenCalledTimes(1);
       const [verb, requestUrl] = XMLHttpRequest.open.mock.calls[0];
@@ -43,7 +43,7 @@ describe("sendEvent", () => {
     it("should pass over the payload with multiple events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index"
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
@@ -68,7 +68,7 @@ describe("sendEvent", () => {
     it("should use sendBeacon when available", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index"
       });
       expect(sendBeacon).toHaveBeenCalledTimes(1);
       expect(XMLHttpRequest.open).not.toHaveBeenCalled();
@@ -77,7 +77,7 @@ describe("sendEvent", () => {
     it("should call sendBeacon with /1/event", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index"
       });
       const [requestURL] = sendBeacon.mock.calls[0];
 
@@ -86,7 +86,7 @@ describe("sendEvent", () => {
     it("should send the correct payload", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index"
       });
       const payload = JSON.parse(sendBeacon.mock.calls[0][1]);
 
@@ -104,7 +104,7 @@ describe("sendEvent", () => {
     it("should throw if no eventName passed", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
-          indexName: "my-index"
+          index: "my-index"
         });
       }).toThrowErrorMatchingInlineSnapshot(
         `"expected required parameter \`eventName\` to be a string"`
@@ -114,7 +114,7 @@ describe("sendEvent", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: 3,
-          indexName: "my-index"
+          index: "my-index"
         });
       }).toThrowErrorMatchingInlineSnapshot(
         `"expected required parameter \`eventName\` to be a string"`
@@ -122,24 +122,24 @@ describe("sendEvent", () => {
     });
   });
 
-  describe("indexName", () => {
-    it("should throw if no indexName passed", () => {
+  describe("index", () => {
+    it("should throw if no index passed", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: "my-event"
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"expected required parameter \`indexName\` to be a string"`
+        `"expected required parameter \`index\` to be a string"`
       );
     });
-    it("should throw if no indexName is not a string", () => {
+    it("should throw if no index is not a string", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: "my-event",
-          indexName: 2
+          index: 2
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"expected required parameter \`indexName\` to be a string"`
+        `"expected required parameter \`index\` to be a string"`
       );
     });
   });
@@ -148,7 +148,7 @@ describe("sendEvent", () => {
     it("should support multiple objectID and position", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index",
+        index: "my-index",
         objectID: ["1", "2"],
         position: [3, 5]
       });
@@ -167,7 +167,7 @@ describe("sendEvent", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: "my-event",
-          indexName: "my-index",
+          index: "my-index",
           objectID: ["1", "2"],
           position: [3]
         });
@@ -179,7 +179,7 @@ describe("sendEvent", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: "my-event",
-          indexName: "my-index",
+          index: "my-index",
           position: [3]
         });
       }).toThrowErrorMatchingInlineSnapshot(
@@ -192,7 +192,7 @@ describe("sendEvent", () => {
     it("should add a timestamp if not provided", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index"
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
@@ -207,7 +207,7 @@ describe("sendEvent", () => {
     it("should pass over provided timestamp", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index",
+        index: "my-index",
         timestamp: 1984
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
@@ -226,7 +226,7 @@ describe("sendEvent", () => {
     it("should add a userID if not provided", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index"
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
@@ -241,7 +241,7 @@ describe("sendEvent", () => {
     it("should pass over provided userID", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index",
+        index: "my-index",
         userID: "007"
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
