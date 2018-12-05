@@ -1,57 +1,76 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>InstantSearch</title>
+    <script>
+      !(function(e, a, t, n, s, i, c) {
+        (e.AlgoliaAnalyticsObject = s),
+          (e.aa =
+            e.aa ||
+            function() {
+              (e.aa.queue = e.aa.queue || []).push(arguments);
+            }),
+          (i = a.createElement(t)),
+          (c = a.getElementsByTagName(t)[0]),
+          (i.async = 1),
+          (i.src = "@@SCRIPT_SRC"),
+          c.parentNode.insertBefore(i, c);
+      })(window, document, "script", 0, "aa");
 
-<head>
-  <meta charset="UTF-8">
-  <title>InstantSearch</title>
-  <script>
-    !function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e.aa=e.aa||function(){(e.aa.queue=e.aa.queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],i.async=1,i.src="@@SCRIPT_SRC",c.parentNode.insertBefore(i,c)}(window,document,"script",0,"aa");
+      aa("init", {
+        apiKey: "@@API_KEY",
+        applicationID: "@@APP_ID"
+      });
+    </script>
+  </head>
 
-    aa('init', {
-      apiKey: '@@API_KEY',
-      applicationID: '@@APP_ID'
-    })
-  </script>
-
-<body>
-  <div class="container-fluid">
-    <header class="content-wrapper">
-      <a href="./" class="logo">amazing</a>
-      <div class="input-group">
-        <input type="text" class="form-control" id="q" />
-        <span class="input-group-btn">
-            <button class="btn btn-default"><i class="fa fa-search"></i></button>
+  <body>
+    <div class="container-fluid">
+      <header class="content-wrapper">
+        <a href="./" class="logo">amazing</a>
+        <div class="input-group">
+          <input type="text" class="form-control" id="q" />
+          <span class="input-group-btn">
+            <button class="btn btn-default">
+              <i class="fa fa-search"></i>
+            </button>
           </span>
-      </div>
-    </header>
-    <div class="content-wrapper">
-      <aside>
-        <div id="clear-all"></div>
-        <section class="facet-wrapper">
-          <div class="facet-category-title" class="facet">Show results for</div>
-          <div id="categories"></div>
-        </section>
-        <section class="facet-wrapper">
-          <div class="facet-category-title">Refine by</div>
-          <div id="materials" class="facet"></div>
-          <div id="colors" class="facet"></div>
-          <div id="rating" class="facet"></div>
-          <div id="prices" class="facet"></div>
-        </section>
-        <div class="thank-you"> Data courtesy of <a href="https://developer.bestbuy.com/">Best Buy</a>
-      </aside>
-      <div class="results-wrapper">
-        <section id="results-topbar">
-          <div class="sort-by">
-            <label>Sort by</label>
-            <div id="sort-by-selector"></div>
+        </div>
+      </header>
+      <div class="content-wrapper">
+        <aside>
+          <div id="clear-all"></div>
+          <section class="facet-wrapper">
+            <div class="facet-category-title" class="facet">
+              Show results for
+            </div>
+            <div id="categories"></div>
+          </section>
+          <section class="facet-wrapper">
+            <div class="facet-category-title">Refine by</div>
+            <div id="materials" class="facet"></div>
+            <div id="colors" class="facet"></div>
+            <div id="rating" class="facet"></div>
+            <div id="prices" class="facet"></div>
+          </section>
+          <div class="thank-you">
+            Data courtesy of
+            <a href="https://developer.bestbuy.com/">Best Buy</a>
           </div>
-          <div id="stats" class="text-muted"></div>
-        </section>
-        <main id="hits" data-algolia-hitscontainer="mainhits"></main>
-        <section id="pagination"></section>
+        </aside>
+        <div class="results-wrapper">
+          <section id="results-topbar">
+            <div class="sort-by">
+              <label>Sort by</label>
+              <div id="sort-by-selector"></div>
+            </div>
+            <div id="stats" class="text-muted"></div>
+          </section>
+          <main id="hits" data-algolia-hitscontainer="mainhits"></main>
+          <section id="pagination"></section>
+        </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>
