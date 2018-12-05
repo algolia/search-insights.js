@@ -2,7 +2,7 @@ export interface InsightsSearchConversionEvent {
   eventName: string;
   userID: string;
   timestamp: number;
-  indexName: string;
+  index: string;
 
   queryID?: string;
   objectID?: (string | number)[];

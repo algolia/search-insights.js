@@ -43,7 +43,7 @@ const Hits = connectHits(
             onClick={() => {
               window.aa('conversion', {
                 eventName: "hit-converted",
-                indexName: process.env.INDEX_NAME,
+                index: process.env.INDEX_NAME,
                 objectID: [hit.objectID],
               });
             }}
@@ -62,7 +62,7 @@ class App extends Component {
       <InstantSearch
         appId={process.env.APP_ID}
         apiKey={process.env.API_KEY}
-        indexName={process.env.INDEX_NAME}>
+        index={process.env.INDEX_NAME}>
         <Configure hitsPerPage={8} clickAnalytics />
         <Analytics />
 

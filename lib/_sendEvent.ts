@@ -13,7 +13,7 @@ export type InsightsEvent = {
   eventName: string;
   userID: string;
   timestamp: number;
-  indexName: string;
+  index: string;
 
   queryID?: string;
   objectID?: (string | number)[];
@@ -35,8 +35,8 @@ export function sendEvent(
   if (!isString(eventData.eventName)) {
     throw TypeError("expected required parameter `eventName` to be a string");
   }
-  if (!isString(eventData.indexName)) {
-    throw TypeError("expected required parameter `indexName` to be a string");
+  if (!isString(eventData.index)) {
+    throw TypeError("expected required parameter `index` to be a string");
   }
   if (!isUndefined(eventData.timestamp) && !isNumber(eventData.timestamp)) {
     throw TypeError("expected optional parameter `timestamp` to be a number");
@@ -50,7 +50,7 @@ export function sendEvent(
     eventName: eventData.eventName,
     userID: eventData.userID || this._userID,
     timestamp: eventData.timestamp || Date.now(),
-    indexName: eventData.indexName
+    index: eventData.index
   };
 
   // optional params

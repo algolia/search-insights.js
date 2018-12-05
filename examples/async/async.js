@@ -169,14 +169,14 @@ document.addEventListener("click", e => {
   if (e.target.matches(".button-click")) {
     aa("click", {
       eventName: "hit-clicked",
-      indexName: process.env.INDEX_NAME,
+      index: process.env.INDEX_NAME,
       objectID: [e.target.getAttribute("data-objectid")],
       position: [parseInt(e.target.getAttribute("data-position"))]
     });
   } else if (e.target.matches(".button-convert")) {
     aa("conversion", {
       eventName: "hit-converted",
-      indexName: process.env.INDEX_NAME,
+      index: process.env.INDEX_NAME,
       objectID: [e.target.getAttribute("data-objectid")]
     });
   }
