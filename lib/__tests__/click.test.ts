@@ -6,14 +6,6 @@ const credentials = {
 };
 
 describe("Click method", () => {
-  test("Should throw if init was not called", () => {
-    expect(() => {
-      AlgoliaInsights.click();
-    }).toThrowError(
-      "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
-    );
-  });
-
   test("Should throw if queryID, objectIDs or positions are not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {

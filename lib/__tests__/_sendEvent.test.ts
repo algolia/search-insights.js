@@ -33,7 +33,8 @@ describe("sendEvent", () => {
     it("should make a post request to /1/events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        index: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       expect(XMLHttpRequest.open).toHaveBeenCalledTimes(1);
       const [verb, requestUrl] = XMLHttpRequest.open.mock.calls[0];
@@ -43,7 +44,8 @@ describe("sendEvent", () => {
     it("should pass over the payload with multiple events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        index: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
@@ -68,7 +70,8 @@ describe("sendEvent", () => {
     it("should use sendBeacon when available", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        index: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       expect(sendBeacon).toHaveBeenCalledTimes(1);
       expect(XMLHttpRequest.open).not.toHaveBeenCalled();
@@ -77,7 +80,8 @@ describe("sendEvent", () => {
     it("should call sendBeacon with /1/event", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        index: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       const [requestURL] = sendBeacon.mock.calls[0];
 
@@ -86,7 +90,8 @@ describe("sendEvent", () => {
     it("should send the correct payload", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        index: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       const payload = JSON.parse(sendBeacon.mock.calls[0][1]);
 
@@ -97,6 +102,17 @@ describe("sendEvent", () => {
           })
         ]
       });
+    });
+  });
+
+  describe("init", () => {
+    it("should throw if init was not called", () => {
+      expect(() => {
+        (AlgoliaInsights as any)._hasCredentials = false;
+        (AlgoliaInsights as any).sendEvent();
+      }).toThrowError(
+        "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
+      );
     });
   });
 
@@ -183,7 +199,7 @@ describe("sendEvent", () => {
           positions: [3]
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"Cannot use \`positions\` without providing \`objectIDs\`"`
+        `"cannot use \`positions\` without providing \`objectIDs\`"`
       );
     });
   });
@@ -192,7 +208,8 @@ describe("sendEvent", () => {
     it("should add a timestamp if not provided", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        index: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
@@ -208,6 +225,7 @@ describe("sendEvent", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
+        objectIDs: ["1"],
         timestamp: 1984
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
@@ -226,7 +244,8 @@ describe("sendEvent", () => {
     it("should add a userID if not provided", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        index: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
@@ -242,6 +261,7 @@ describe("sendEvent", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
+        objectIDs: ["1"],
         userID: "007"
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
@@ -253,6 +273,46 @@ describe("sendEvent", () => {
           })
         ]
       });
+    });
+  });
+  describe("filters", () => {
+    it("should pass over provided filters", () => {
+      (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        index: "my-index",
+        filters: ["brand:Apple"]
+      });
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            filters: ["brand:Apple"]
+          })
+        ]
+      });
+    });
+    it("should throw and error when objectIDs and filter are both provided", () => {
+      expect(() => {
+        (AlgoliaInsights as any).sendEvent("click", {
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1", "2"],
+          filters: ["brand:Apple"]
+        });
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"cannot use \`objectIDs\` and \`filters\` for the same event"`
+      );
+    });
+    it("should throw and error when neither objectIDs or filters are provided", () => {
+      expect(() => {
+        (AlgoliaInsights as any).sendEvent("click", {
+          eventName: "my-event",
+          index: "my-index"
+        });
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"expected either \`objectIDs\` or \`filters\` to be provided"`
+      );
     });
   });
 });

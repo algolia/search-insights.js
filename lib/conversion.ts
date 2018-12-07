@@ -13,11 +13,6 @@ export interface InsightsSearchConversionEvent {
  * @param params InsightsSearchConversionEvent
  */
 export function conversion(params: InsightsSearchConversionEvent) {
-  if (!this._hasCredentials) {
-    throw new Error(
-      "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
-    );
-  }
   if (!params) {
     throw new Error(
       "No params were sent to conversion function, please provide `queryID` and `objectIDs` to be reported"
