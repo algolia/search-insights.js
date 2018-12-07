@@ -34,12 +34,6 @@ export function conversion(params: InsightsSearchConversionEvent) {
     );
   }
 
-  // Get associated queryID
-  const queryID = params.queryID;
-
-  // Reassign params
-  const conversionParams = Object.assign(params, { queryID });
-
   // Send event
-  this.sendEvent("conversion", conversionParams);
+  this.sendEvent("conversion", params);
 }
