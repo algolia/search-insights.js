@@ -26,12 +26,12 @@ export function click(params: InsightsSearchClickEvent) {
   }
   if (!params.objectIDs) {
     throw new Error(
-      "required objectIDs parameter was not sent, click event can not be properly attributed"
+      "required objectIDs parameter was not sent, click event can not be properly sent without"
     );
   }
   if (!params.positions) {
     throw new Error(
-      "required positions parameter was not sent, click event positions can not be properly sent without"
+      "required positions parameter was not sent, click event can not be properly sent without"
     );
   }
 
