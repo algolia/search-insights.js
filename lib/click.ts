@@ -40,22 +40,6 @@ export function click(params: InsightsSearchClickEvent) {
     );
   }
 
-  // Get last queryID
-  let queryID = params.queryID;
-
-  if (typeof this.getQueryID === "function" && !queryID) {
-    queryID = this.getQueryID() || this._lastQueryID;
-  }
-
-  // Abort if no queryID
-  if (!queryID) {
-    throw new Error(`No queryID was retrieved, please check the implementation and provide either a getQueryID function
-    or call the search method that will return the queryID parameter`);
-  }
-
-  // Merge queryID to params
-  const clickParams = Object.assign({}, params, { queryID });
-
   // Send event
-  this.sendEvent("click", clickParams);
+  this.sendEvent("click", params);
 }
