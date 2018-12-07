@@ -17,17 +17,20 @@ export function conversion(params: InsightsSearchConversionEvent) {
     throw new Error(
       "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
     );
-  } else if (!params) {
+  }
+  if (!params) {
     throw new Error(
-      "No parameters were sent to conversion event, please provide a queryID and objectIDs"
+      "No params were sent to conversion function, please provide `queryID` and `objectIDs` to be reported"
     );
-  } else if (!params.queryID) {
+  }
+  if (!params.queryID) {
     throw new Error(
-      "No parameters were sent to conversion event, please provide a queryID"
+      "required queryID parameter was not sent, conversion event can not be properly sent without"
     );
-  } else if (!params.objectIDs) {
+  }
+  if (!params.objectIDs) {
     throw new Error(
-      "No objectIDs was sent to conversion event, please provide objectIDs"
+      "required objectIDs parameter was not sent, conversion event can not be properly sent without"
     );
   }
 

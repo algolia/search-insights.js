@@ -24,6 +24,11 @@ export function click(params: InsightsSearchClickEvent) {
       "No params were sent to click function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
     );
   }
+  if (!params.queryID) {
+    throw new Error(
+      "required queryID parameter was not sent, click event can not be properly sent without"
+    );
+  }
   if (!params.objectIDs) {
     throw new Error(
       "required objectIDs parameter was not sent, click event can not be properly sent without"
