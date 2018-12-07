@@ -14,44 +14,44 @@ describe("Click method", () => {
     );
   });
 
-  test("Should throw if objectID and position are not sent", () => {
+  test("Should throw if objectIDs and positions are not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
       AlgoliaInsights.click();
     }).toThrowError(
-      "No params were sent to click function, please provide `queryID`,  `objectID` and `position` to be reported"
+      "No params were sent to click function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
     );
   });
 
-  test("Should throw if objectID is not sent", () => {
+  test("Should throw if objectIDs is not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
-      AlgoliaInsights.click({ objectID: [1] });
+      AlgoliaInsights.click({ objectIDs: [1] });
     }).toThrowError(
-      "required position parameter was not sent, click event position can not be properly sent without"
+      "required positions parameter was not sent, click event positions can not be properly sent without"
     );
   });
 
-  test("Should throw if position is not sent", () => {
+  test("Should throw if positions is not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
-      AlgoliaInsights.click({ position: [1] });
+      AlgoliaInsights.click({ positions: [1] });
     }).toThrowError(
-      "required objectID parameter was not sent, click event can not be properly attributed"
+      "required objectIDs parameter was not sent, click event can not be properly attributed"
     );
   });
 
-  test("Should throw if position is not sent", () => {
+  test("Should throw if positions is not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
-      AlgoliaInsights.click({ position: [1] });
+      AlgoliaInsights.click({ positions: [1] });
     }).toThrowError(
-      "required objectID parameter was not sent, click event can not be properly attributed"
+      "required objectIDs parameter was not sent, click event can not be properly attributed"
     );
   });
 
   test("Should call sendEvent with proper params", () => {
-    const clickParams = { position: [1], objectID: ["2"], queryID: "testing" };
+    const clickParams = { positions: [1], objectIDs: ["2"], queryID: "testing" };
 
     AlgoliaInsights.init(credentials);
     (AlgoliaInsights as any).sendEvent = jest.fn();

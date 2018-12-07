@@ -5,8 +5,8 @@ export interface InsightsSearchClickEvent {
   index: string;
 
   queryID: string;
-  objectID: (string | number)[];
-  position: number[];
+  objectIDs: (string | number)[];
+  positions: number[];
 }
 
 /**
@@ -21,17 +21,17 @@ export function click(params: InsightsSearchClickEvent) {
   }
   if (!params) {
     throw new Error(
-      "No params were sent to click function, please provide `queryID`,  `objectID` and `position` to be reported"
+      "No params were sent to click function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
     );
   }
-  if (!params.objectID) {
+  if (!params.objectIDs) {
     throw new Error(
-      "required objectID parameter was not sent, click event can not be properly attributed"
+      "required objectIDs parameter was not sent, click event can not be properly attributed"
     );
   }
-  if (!params.position) {
+  if (!params.positions) {
     throw new Error(
-      "required position parameter was not sent, click event position can not be properly sent without"
+      "required positions parameter was not sent, click event positions can not be properly sent without"
     );
   }
 
@@ -47,9 +47,6 @@ export function click(params: InsightsSearchClickEvent) {
     throw new Error(`No queryID was retrieved, please check the implementation and provide either a getQueryID function
     or call the search method that will return the queryID parameter`);
   }
-
-  // Store click to localstorage
-  this.storageManager.storeClick(params.objectID, queryID);
 
   // Merge queryID to params
   const clickParams = Object.assign({}, params, { queryID });

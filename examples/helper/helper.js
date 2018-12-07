@@ -24,10 +24,10 @@ helper.on("result", function(content) {
 const hit = (hit, index) => {
   return `
     <div className="col-3">${hit.name}
-      <button onclick="aa('click',{objectID: [${
+      <button onclick="aa('click',{objectIDs: [${
         hit.objectID
-      }], position: [${index + 1}]})">Click</button>
-      <button onclick="aa('conversion',{objectID: [${
+      }], positions: [${index + 1}]})">Click</button>
+      <button onclick="aa('conversion',{objectIDs: [${
         hit.objectID
       }]})">Conversion</button>
     </div>`;

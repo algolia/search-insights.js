@@ -100,8 +100,8 @@ export default {
       window.aa("click", {
         eventName: "hit-clicked",
         index: process.env.INDEX_NAME,
-        objectID: [objectID],
-        position: [position]
+        objectIDs: [objectID],
+        positions: [position]
       });
     },
     // reporting a conversion
@@ -109,7 +109,7 @@ export default {
       window.aa("conversion", {
         eventName: "hit-converted",
         index: process.env.INDEX_NAME,
-        objectID: [objectID]
+        objectIDs: [objectID]
       });
     },
   },
