@@ -128,7 +128,7 @@ describe("Integration tests", () => {
           );
           await button.click();
           objectIDs = await page.evaluate(
-            elem => elem.getAttribute("data-objectID"),
+            elem => elem.getAttribute("data-object-id"),
             button
           );
         });

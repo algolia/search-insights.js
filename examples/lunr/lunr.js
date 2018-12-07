@@ -35,7 +35,7 @@ var hitTemplate = (hit, i) => `
   </div>
   <button objectID="${hit.objectID}" position="${i +
   1}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
-  <a data-objectID="${hit.objectID}" position="${i +
+  <a data-object-id="${hit.objectID}" position="${i +
   1}" href="http://localhost:8080/product.html" class="button-click" style="background: blue;padding: 10px 12px; color: white;">VIEW ITEM</a>
   <button objectID="${
     hit.objectID
