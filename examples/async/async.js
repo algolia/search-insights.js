@@ -45,12 +45,12 @@ var hitTemplate = hit => `
     <div class="product-desc-wrapper">
       <div class="product-name">${hit._highlightResult.name.value}</div>
     </div>
-    <button data-queryid="${hit._queryID}" data-objectid="${
+    <button data-query-id="${hit._queryID}" data-object-id="${
   hit.objectID
 }" data-position="${
   hit._hitPosition
 }" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
-    <button data-queryid="${hit._queryID}" data-objectid="${
+    <button data-query-id="${hit._queryID}" data-object-id="${
   hit.objectID
 }" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
   </article>`;
@@ -179,16 +179,16 @@ document.addEventListener("click", e => {
     aa("click", {
       eventName: "hit-clicked",
       index: process.env.INDEX_NAME,
-      queryID: e.target.getAttribute("data-queryid"),
-      objectIDs: [e.target.getAttribute("data-objectid")],
+      queryID: e.target.getAttribute("data-query-id"),
+      objectIDs: [e.target.getAttribute("data-object-id")],
       positions: [parseInt(e.target.getAttribute("data-position"))]
     });
   } else if (e.target.matches(".button-convert")) {
     aa("conversion", {
       eventName: "hit-converted",
       index: process.env.INDEX_NAME,
-      queryID: e.target.getAttribute("data-queryid"),
-      objectIDs: [e.target.getAttribute("data-objectid")]
+      queryID: e.target.getAttribute("data-query-id"),
+      objectIDs: [e.target.getAttribute("data-object-id")]
     });
   }
 });
