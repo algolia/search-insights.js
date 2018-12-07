@@ -120,15 +120,15 @@ describe("Integration tests", () => {
     describe("click", () => {
       let request;
       let payload;
-      let objectID;
+      let objectIDs;
       beforeAll(async () => {
         const event = await captureNetworkWhile(async () => {
           const button = await page.$(
             ".ais-hits--item:nth-child(2) .button-click"
           );
           await button.click();
-          objectID = await page.evaluate(
-            elem => elem.getAttribute("data-objectid"),
+          objectIDs = await page.evaluate(
+            elem => elem.getAttribute("data-objectID"),
             button
           );
         });
@@ -150,12 +150,12 @@ describe("Integration tests", () => {
         expect(event).toHaveProperty("queryID");
         expect(event.queryID).toEqual(data.queryID);
       });
-      it("should include the correct objectID and position", () => {
+      it("should include the correct objectIDs and positions", () => {
         const {
           events: [event]
         } = payload;
-        expect(event.objectID).toEqual([objectID]);
-        expect(event.position).toEqual([2]);
+        expect(event.objectIDs).toEqual([objectIDs]);
+        expect(event.positions).toEqual([2]);
       });
       it("should include an timestamp", () => {
         const {

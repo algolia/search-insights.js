@@ -144,46 +144,46 @@ describe("sendEvent", () => {
     });
   });
 
-  describe("objectID and position", () => {
-    it("should support multiple objectID and position", () => {
+  describe("objectIDs and positions", () => {
+    it("should support multiple objectIDs and positions", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
-        objectID: ["1", "2"],
-        position: [3, 5]
+        objectIDs: ["1", "2"],
+        positions: [3, 5]
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            objectID: ["1", "2"],
-            position: [3, 5]
+            objectIDs: ["1", "2"],
+            positions: [3, 5]
           })
         ]
       });
     });
-    it("should throw and error when objectID and position are not the same size", () => {
+    it("should throw and error when objectIDs and positions are not the same size", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: "my-event",
           index: "my-index",
-          objectID: ["1", "2"],
-          position: [3]
+          objectIDs: ["1", "2"],
+          positions: [3]
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"objectID and position need to be of the same size"`
+        `"objectIDs and positions need to be of the same size"`
       );
     });
-    it("should throw and error when positions supplied but not objectID", () => {
+    it("should throw and error when positionss supplied but not objectIDs", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: "my-event",
           index: "my-index",
-          position: [3]
+          positions: [3]
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"Cannot use \`position\` without providing \`objectID\`"`
+        `"Cannot use \`positions\` without providing \`objectIDs\`"`
       );
     });
   });

@@ -31,8 +31,8 @@ const Hits = connectHits(
               window.aa('click', {
                 eventName: "hit-clicked",
                 indexName: process.env.INDEX_NAME,
-                objectID: [hit.objectID],
-                position:
+                objectIDs: [hit.objectID],
+                positions:
                   [searchResults.hitsPerPage * searchResults.page + index + 1],
               });
             }}
@@ -44,7 +44,7 @@ const Hits = connectHits(
               window.aa('conversion', {
                 eventName: "hit-converted",
                 index: process.env.INDEX_NAME,
-                objectID: [hit.objectID],
+                objectIDs: [hit.objectID],
               });
             }}
           >

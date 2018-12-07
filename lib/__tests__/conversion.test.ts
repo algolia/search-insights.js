@@ -13,45 +13,34 @@ it("Should throw if init was not called", () => {
   );
 });
 
-it("Should throw if objectID is not sent", () => {
+it("Should throw if no params are sent", () => {
   expect(() => {
     AlgoliaInsights.init(credentials);
     AlgoliaInsights.conversion();
   }).toThrowError(
-    "No parameters were sent to conversion event, please provide an objectID"
+    "No parameters were sent to conversion event, please provide a queryID and objectIDs"
   );
 });
 
-it("Should throw if no queryID is set in storage", () => {
+it("Should throw if no queryID has been passed", () => {
   (AlgoliaInsights as any).sendEvent = jest.fn();
   AlgoliaInsights.init(credentials);
 
   expect(() => {
-    AlgoliaInsights.conversion({ objectID: "12345" });
+    AlgoliaInsights.conversion({ objectIDs: ["12345"] });
     expect((AlgoliaInsights as any).sendEvent).not.toHaveBeenCalled();
   }).toThrowError(
-    `No queryID was retrieved, please check the implementation and provide either a getQueryID function
-    or call the conversion method that will return the queryID parameter`
+    "No parameters were sent to conversion event, please provide a queryID"
   );
-});
-
-it("Should send conversion event with proper queryID", () => {
-  (AlgoliaInsights as any).sendEvent = jest.fn();
-  AlgoliaInsights.init(credentials);
-  AlgoliaInsights.storageManager.getConversionObjectID = jest.fn(() => ({
-    queryID: "queryID"
-  }));
-  AlgoliaInsights.conversion({ objectID: "12345", queryID: "queryID" });
-  expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalled();
 });
 
 it("Should send allow passing of queryID", () => {
   (AlgoliaInsights as any).sendEvent = jest.fn();
   AlgoliaInsights.init(credentials);
-  AlgoliaInsights.conversion({ objectID: "12345", queryID: "test" });
+  AlgoliaInsights.conversion({ objectIDs: ["12345"], queryID: "test" });
   expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalled();
   expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalledWith(
     "conversion",
-    { objectID: "12345", queryID: "test" }
+    { objectIDs: ["12345"], queryID: "test" }
   );
 });

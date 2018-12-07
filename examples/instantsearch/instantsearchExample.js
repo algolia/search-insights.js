@@ -171,14 +171,14 @@ document.addEventListener("click", e => {
     window.aa("click", {
       eventName: "hit-clicked",
       index: process.env.INDEX_NAME,
-      objectID: [e.target.getAttribute("data-objectid")],
-      position: [parseInt(e.target.getAttribute("data-position"))]
+      objectIDs: [e.target.getAttribute("data-objectid")],
+      positions: [parseInt(e.target.getAttribute("data-position"))]
     });
   } else if (e.target.matches(".button-convert")) {
     window.aa("conversion", {
       eventName: "hit-converted",
       index: process.env.INDEX_NAME,
-      objectID: [e.target.getAttribute("data-objectid")]
+      objectIDs: [e.target.getAttribute("data-objectid")]
     });
   }
 });

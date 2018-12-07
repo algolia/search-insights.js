@@ -16,8 +16,8 @@ export type InsightsEvent = {
   index: string;
 
   queryID?: string;
-  objectID?: (string | number)[];
-  position?: number[];
+  objectIDs?: (string | number)[];
+  positions?: number[];
 };
 
 /**
@@ -61,24 +61,24 @@ export function sendEvent(
     event.queryID = eventData.queryID;
   }
 
-  if (!isUndefined(eventData.objectID)) {
-    if (!Array.isArray(eventData.objectID)) {
-      throw TypeError("expected optional parameter `objectID` to be an array");
+  if (!isUndefined(eventData.objectIDs)) {
+    if (!Array.isArray(eventData.objectIDs)) {
+      throw TypeError("expected optional parameter `objectIDs` to be an array");
     }
-    event.objectID = eventData.objectID;
+    event.objectIDs = eventData.objectIDs;
   }
 
-  if (!isUndefined(eventData.position)) {
-    if (!Array.isArray(eventData.position)) {
-      throw TypeError("expected optional parameter `position` to be an array");
+  if (!isUndefined(eventData.positions)) {
+    if (!Array.isArray(eventData.positions)) {
+      throw TypeError("expected optional parameter `positions` to be an array");
     }
-    if (isUndefined(eventData.objectID)) {
-      throw new Error("Cannot use `position` without providing `objectID`");
+    if (isUndefined(eventData.objectIDs)) {
+      throw new Error("Cannot use `positions` without providing `objectIDs`");
     }
-    if (eventData.objectID.length !== eventData.position.length) {
-      throw new Error("objectID and position need to be of the same size");
+    if (eventData.objectIDs.length !== eventData.positions.length) {
+      throw new Error("objectIDs and positions need to be of the same size");
     }
-    event.position = eventData.position;
+    event.positions = eventData.positions;
   }
 
   bulkSendEvent(this._applicationID, this._apiKey, [event]);
