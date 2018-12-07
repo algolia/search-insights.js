@@ -45,10 +45,14 @@ var hitTemplate = hit => `
     <div class="product-desc-wrapper">
       <div class="product-name">${hit._highlightResult.name.value}</div>
     </div>
-    <button data-objectid="${hit.objectID}" data-position="${hit.hitPosition}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
-    <button data-objectid="${
-      hit.objectID
-    }" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
+    <button data-queryid="${hit.queryID}" data-objectid="${
+  hit.objectID
+}" data-position="${
+  hit.hitPosition
+}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
+    <button data-queryid="${hit.queryID}" data-objectid="${
+  hit.objectID
+}" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
   </article>`;
 
 var noResultsTemplate = `<div class="text-center">No results found matching <strong>{{query}}</strong>.</div>`;
@@ -175,6 +179,7 @@ document.addEventListener("click", e => {
     aa("click", {
       eventName: "hit-clicked",
       index: process.env.INDEX_NAME,
+      queryID: e.target.getAttribute("data-queryid"),
       objectIDs: [e.target.getAttribute("data-objectid")],
       positions: [parseInt(e.target.getAttribute("data-position"))]
     });
@@ -182,6 +187,7 @@ document.addEventListener("click", e => {
     aa("conversion", {
       eventName: "hit-converted",
       index: process.env.INDEX_NAME,
+      queryID: e.target.getAttribute("data-queryid"),
       objectIDs: [e.target.getAttribute("data-objectid")]
     });
   }
