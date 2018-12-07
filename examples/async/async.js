@@ -45,8 +45,7 @@ var hitTemplate = hit => `
     <div class="product-desc-wrapper">
       <div class="product-name">${hit._highlightResult.name.value}</div>
     </div>
-    <button data-objectid="${hit.objectID}" data-position="${hit.__hitIndex +
-  1}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
+    <button data-objectid="${hit.objectID}" data-position="${hit.hitPosition}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
     <button data-objectid="${
       hit.objectID
     }" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
@@ -80,6 +79,12 @@ search.addWidget(
       item: hitTemplate
     },
     transformData: function(hit) {
+      var result = search.helper.lastResults;
+      var offset = result.hitsPerPage * result.page;
+
+      hit.queryID = result.queryID;
+      hit.hitPosition = offset + hit.__hitIndex + 1;
+
       hit.stars = [];
       for (var i = 1; i <= 5; ++i) {
         hit.stars.push(i <= hit.rating);
