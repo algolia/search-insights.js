@@ -175,7 +175,7 @@ describe("sendEvent", () => {
         `"objectIDs and positions need to be of the same size"`
       );
     });
-    it("should throw and error when positionss supplied but not objectIDs", () => {
+    it("should throw and error when positions supplied but not objectIDs", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: "my-event",
