@@ -110,7 +110,7 @@ describe("sendEvent", () => {
         `"expected required parameter \`eventName\` to be a string"`
       );
     });
-    it("should throw if no eventName passed", () => {
+    it("should throw if eventName is not a string", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: 3,
