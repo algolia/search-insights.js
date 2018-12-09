@@ -1,3 +1,5 @@
+import { InsightsEvent } from "./_sendEvent";
+
 export interface InsightsSearchClickEvent {
   eventName: string;
   userID: string;
@@ -10,18 +12,13 @@ export interface InsightsSearchClickEvent {
 }
 
 /**
- * Sends a click report
+ * Sends a click report in the context of search
  * @param params: InsightsSearchClickEvent
  */
-export function click(params: InsightsSearchClickEvent) {
-  if (!this._hasCredentials) {
-    throw new Error(
-      "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
-    );
-  }
+export function clickedObjectIDInSearch(params: InsightsSearchClickEvent) {
   if (!params) {
     throw new Error(
-      "No params were sent to click function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
+      "No params were sent to clickedObjectIDInSearch function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
     );
   }
   if (!params.queryID) {
@@ -40,6 +37,61 @@ export function click(params: InsightsSearchClickEvent) {
     );
   }
 
-  // Send event
-  this.sendEvent("click", params);
+  this.sendEvent("click", params as InsightsEvent);
+}
+
+export interface InsightsClickObjectIDsEvent {
+  eventName: string;
+  userID: string;
+  timestamp: number;
+  index: string;
+
+  objectIDs: (string | number)[];
+}
+
+/**
+ * Sends a click report using objectIDs
+ * @param params: InsightsClickObjectIDsEvent
+ */
+export function clickedObjectID(params: InsightsClickObjectIDsEvent) {
+  if (!params) {
+    throw new Error(
+      "No params were sent to clickedObjectID function, please provide `objectIDs` to be reported"
+    );
+  }
+  if (!params.objectIDs) {
+    throw new Error(
+      "required `objectIDs` parameter was not sent, click event can not be properly sent without"
+    );
+  }
+
+  this.sendEvent("click", params as InsightsEvent);
+}
+
+export interface InsightsClickFiltersEvent {
+  eventName: string;
+  userID: string;
+  timestamp: number;
+  index: string;
+
+  filters: string[];
+}
+
+/**
+ * Sends a click report using filters
+ * @param params: InsightsClickFiltersEvent
+ */
+export function clickedFilters(params: InsightsClickFiltersEvent) {
+  if (!params) {
+    throw new Error(
+      "No params were sent to clickedFilters function, please provide `filters` to be reported"
+    );
+  }
+  if (!params.filters) {
+    throw new Error(
+      "required `filters` parameter was not sent, click event can not be properly sent without"
+    );
+  }
+
+  this.sendEvent("click", params as InsightsEvent);
 }

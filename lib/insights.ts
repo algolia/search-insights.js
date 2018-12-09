@@ -5,13 +5,20 @@ objectKeysPolyfill();
 objectAssignPolyfill();
 
 import { processQueue } from "./_processQueue";
-import { sendEvent, InsightsEventType } from "./_sendEvent";
+import { sendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
 import { StorageManager } from "./_storageManager";
 import { userID } from "./_cookieUtils";
 
 import { InitParams, init } from "./init";
 import { initSearch, InitSearchParams } from "./_initSearch";
-import { InsightsSearchClickEvent, click } from "./click";
+import {
+  InsightsSearchClickEvent,
+  clickedObjectIDInSearch,
+  clickedObjectID,
+  clickedFilters,
+  InsightsClickFiltersEvent,
+  InsightsClickObjectIDsEvent
+} from "./click";
 import { InsightsSearchConversionEvent, conversion } from "./conversion";
 
 type Queue = {
@@ -45,14 +52,16 @@ class AlgoliaAnalytics {
   private processQueue: () => void;
   private sendEvent: (
     eventType: InsightsEventType,
-    data: InsightsSearchClickEvent | InsightsSearchConversionEvent
+    data: InsightsEvent
   ) => void;
   private _hasCredentials: boolean = false;
 
   // Public methods
   public init: (params: InitParams) => void;
   public initSearch: (params: InitSearchParams) => void;
-  public click: (params?: Partial<InsightsSearchClickEvent>) => void;
+  public clickedObjectIDInSearch: (params?: InsightsSearchClickEvent) => void;
+  public clickedObjectID: (params?: InsightsClickObjectIDsEvent) => void;
+  public clickedFilters: (params?: InsightsClickFiltersEvent) => void;
   public conversion: (params?: Partial<InsightsSearchConversionEvent>) => void;
 
   constructor(options?: any) {
@@ -73,7 +82,11 @@ class AlgoliaAnalytics {
     // Bind public methods to `this` class
     this.init = init.bind(this);
     this.initSearch = initSearch.bind(this);
-    this.click = click.bind(this);
+
+    this.clickedObjectIDInSearch = clickedObjectIDInSearch.bind(this);
+    this.clickedObjectID = clickedObjectID.bind(this);
+    this.clickedFilters = clickedFilters.bind(this);
+
     this.conversion = conversion.bind(this);
 
     this._userID = userID();
