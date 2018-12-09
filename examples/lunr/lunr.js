@@ -91,7 +91,7 @@ document.addEventListener("click", e => {
       positions: [e.target.getAttribute("position")]
     });
   } else if (e.target.matches(".button-convert")) {
-    window.aa("conversion", {
+    window.aa("convertedObjectIDInSearch", {
       eventName: "hit-converted",
       index: process.env.INDEX_NAME,
       objectIDs: [e.target.getAttribute("objectid")]
