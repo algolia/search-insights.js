@@ -1,3 +1,5 @@
+import { InsightsEvent } from "./_sendEvent";
+
 export interface InsightsSearchConversionEvent {
   eventName: string;
   userID: string;
@@ -9,13 +11,15 @@ export interface InsightsSearchConversionEvent {
 }
 
 /**
- * Checks params for conversion report and sends query
+ * Sends a conversion report in the context of search
  * @param params InsightsSearchConversionEvent
  */
-export function conversion(params: InsightsSearchConversionEvent) {
+export function convertedObjectIDInSearch(
+  params: InsightsSearchConversionEvent
+) {
   if (!params) {
     throw new Error(
-      "No params were sent to conversion function, please provide `queryID` and `objectIDs` to be reported"
+      "No params were sent to convertedObjectIDInSearch function, please provide `queryID` and `objectIDs` to be reported"
     );
   }
   if (!params.queryID) {
@@ -29,6 +33,5 @@ export function conversion(params: InsightsSearchConversionEvent) {
     );
   }
 
-  // Send event
-  this.sendEvent("conversion", params);
+  this.sendEvent("conversion", params as InsightsEvent);
 }

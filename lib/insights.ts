@@ -19,7 +19,10 @@ import {
   InsightsClickFiltersEvent,
   InsightsClickObjectIDsEvent
 } from "./click";
-import { InsightsSearchConversionEvent, conversion } from "./conversion";
+import {
+  InsightsSearchConversionEvent,
+  convertedObjectIDInSearch
+} from "./conversion";
 
 type Queue = {
   queue: string[][];
@@ -62,7 +65,9 @@ class AlgoliaAnalytics {
   public clickedObjectIDInSearch: (params?: InsightsSearchClickEvent) => void;
   public clickedObjectID: (params?: InsightsClickObjectIDsEvent) => void;
   public clickedFilters: (params?: InsightsClickFiltersEvent) => void;
-  public conversion: (params?: Partial<InsightsSearchConversionEvent>) => void;
+  public convertedObjectIDInSearch: (
+    params?: InsightsSearchConversionEvent
+  ) => void;
 
   constructor(options?: any) {
     // Exit on old browsers or if script is not ran in browser
@@ -87,7 +92,7 @@ class AlgoliaAnalytics {
     this.clickedObjectID = clickedObjectID.bind(this);
     this.clickedFilters = clickedFilters.bind(this);
 
-    this.conversion = conversion.bind(this);
+    this.convertedObjectIDInSearch = convertedObjectIDInSearch.bind(this);
 
     this._userID = userID();
 
