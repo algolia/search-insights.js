@@ -84,7 +84,7 @@ window.aa("init", {
 // Analytics
 document.addEventListener("click", e => {
   if (e.target.matches(".button-click")) {
-    window.aa("click", {
+    window.aa("clickedObjectIDInSearch", {
       eventName: "hit-clicked",
       index: process.env.INDEX_NAME,
       objectIDs: [e.target.getAttribute("objectid")],

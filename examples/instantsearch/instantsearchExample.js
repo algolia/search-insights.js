@@ -177,7 +177,7 @@ search.start();
 
 document.addEventListener("click", e => {
   if (e.target.matches(".button-click")) {
-    window.aa("click", {
+    window.aa("clickedObjectIDInSearch", {
       eventName: "hit-clicked",
       index: process.env.INDEX_NAME,
       queryID: e.target.getAttribute("data-query-id"),
