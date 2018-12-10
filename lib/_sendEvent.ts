@@ -103,20 +103,19 @@ export function sendEvent(
     throw new Error("expected either `objectIDs` or `filters` to be provided");
   }
 
-  bulkSendEvent(this._applicationID, this._apiKey, [event]);
+  bulkSendEvent(this._applicationID, this._apiKey, this._endpointOrigin, [
+    event
+  ]);
 }
 
 function bulkSendEvent(
   applicationID: string,
   apiKey: string,
+  endpointOrigin: string,
   events: InsightsEvent[]
 ) {
-  const reportingQueryOrigin =
-    process.env.NODE_ENV === "production"
-      ? `https://insights.algolia.io/1/events`
-      : `http://localhost:8080/1/events`;
   // Auth query
-  const reportingURL = `${reportingQueryOrigin}?X-Algolia-Application-Id=${applicationID}&X-Algolia-API-Key=${apiKey}`;
+  const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${applicationID}&X-Algolia-API-Key=${apiKey}`;
 
   // Detect navigator support
   const supportsNavigator = navigator && isFunction(navigator.sendBeacon);
