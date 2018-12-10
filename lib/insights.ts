@@ -27,6 +27,12 @@ import {
   InsightsSearchConversionFiltersEvent,
   convertedFilters
 } from "./conversion";
+import {
+  InsightsSearchViewObjectIDsEvent,
+  viewedObjectIDs,
+  InsightsSearchViewFiltersEvent,
+  viewedFilters
+} from "./view";
 
 type Queue = {
   queue: string[][];
@@ -72,8 +78,15 @@ class AlgoliaAnalytics {
   public convertedObjectIDInSearch: (
     params?: InsightsSearchConversionEvent
   ) => void;
-  public convertedObjectIDs: (params?: InsightsSearchConversionObjectIDsEvent) => void;
-  public convertedFilters: (params?: InsightsSearchConversionFiltersEvent) => void;
+  public convertedObjectIDs: (
+    params?: InsightsSearchConversionObjectIDsEvent
+  ) => void;
+  public convertedFilters: (
+    params?: InsightsSearchConversionFiltersEvent
+  ) => void;
+
+  public viewedObjectIDs: (params?: InsightsSearchViewObjectIDsEvent) => void;
+  public viewedFilters: (params?: InsightsSearchViewFiltersEvent) => void;
 
   constructor(options?: any) {
     // Exit on old browsers or if script is not ran in browser
@@ -101,6 +114,9 @@ class AlgoliaAnalytics {
     this.convertedObjectIDInSearch = convertedObjectIDInSearch.bind(this);
     this.convertedObjectIDs = convertedObjectIDs.bind(this);
     this.convertedFilters = convertedFilters.bind(this);
+
+    this.viewedObjectIDs = viewedObjectIDs.bind(this);
+    this.viewedFilters = viewedFilters.bind(this);
 
     this._userID = userID();
 
