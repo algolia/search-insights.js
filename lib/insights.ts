@@ -14,14 +14,18 @@ import { initSearch, InitSearchParams } from "./_initSearch";
 import {
   InsightsSearchClickEvent,
   clickedObjectIDInSearch,
+  InsightsClickObjectIDsEvent,
   clickedObjectID,
-  clickedFilters,
   InsightsClickFiltersEvent,
-  InsightsClickObjectIDsEvent
+  clickedFilters
 } from "./click";
 import {
   InsightsSearchConversionEvent,
-  convertedObjectIDInSearch
+  convertedObjectIDInSearch,
+  InsightsSearchConversionObjectIDsEvent,
+  convertedObjectIDs,
+  InsightsSearchConversionFiltersEvent,
+  convertedFilters
 } from "./conversion";
 
 type Queue = {
@@ -68,6 +72,8 @@ class AlgoliaAnalytics {
   public convertedObjectIDInSearch: (
     params?: InsightsSearchConversionEvent
   ) => void;
+  public convertedObjectIDs: (params?: InsightsSearchConversionObjectIDsEvent) => void;
+  public convertedFilters: (params?: InsightsSearchConversionFiltersEvent) => void;
 
   constructor(options?: any) {
     // Exit on old browsers or if script is not ran in browser
@@ -93,6 +99,8 @@ class AlgoliaAnalytics {
     this.clickedFilters = clickedFilters.bind(this);
 
     this.convertedObjectIDInSearch = convertedObjectIDInSearch.bind(this);
+    this.convertedObjectIDs = convertedObjectIDs.bind(this);
+    this.convertedFilters = convertedFilters.bind(this);
 
     this._userID = userID();
 
