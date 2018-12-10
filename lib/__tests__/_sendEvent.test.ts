@@ -114,6 +114,15 @@ describe("sendEvent", () => {
         "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
       );
     });
+    it("should do nothing is _userHasOptedOut === true", () => {
+      AlgoliaInsights._userHasOptedOut = true;
+      AlgoliaInsights.sendEvent("click", {
+        eventName: "my-event",
+        index: "my-index",
+        objectIDs: ["1"]
+      });
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(0);
+    });
   });
 
   describe("eventName", () => {

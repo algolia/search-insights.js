@@ -50,6 +50,18 @@ describe("init", () => {
     AlgoliaInsights.init({ apiKey: "***", applicationID: "XXX", region: "us" });
     expect(AlgoliaInsights._region).toBe("us");
   });
+  it("should set _userHasOptedOut on instance to false by default", () => {
+    AlgoliaInsights.init({ apiKey: "***", applicationID: "XXX" });
+    expect(AlgoliaInsights._userHasOptedOut).toBe(false);
+  });
+  it("should set _userHasOptedOut on instance when passed", () => {
+    AlgoliaInsights.init({
+      apiKey: "***",
+      applicationID: "XXX",
+      userHasOptedOut: true
+    });
+    expect(AlgoliaInsights._userHasOptedOut).toBe(true);
+  });
   it("should set _endpointOrigin on instance to https://insights.algolia.io", () => {
     AlgoliaInsights.init({ apiKey: "***", applicationID: "XXX" });
     expect(AlgoliaInsights._endpointOrigin).toBe("https://insights.algolia.io");
