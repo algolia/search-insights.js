@@ -1,3 +1,5 @@
+import { isUndefined, isString } from "./utils/index";
+
 export interface InitParams {
   apiKey: string;
   applicationID: string;
@@ -12,14 +14,13 @@ export function init(options: InitParams) {
     throw new Error(
       "Init function should be called with an object argument containing your apiKey and applicationID"
     );
-  } else if (!options.apiKey || typeof options.apiKey !== "string") {
+  }
+  if (isUndefined(options.apiKey) || !isString(options.apiKey)) {
     throw new Error(
       "apiKey is missing, please provide it so we can authenticate the application"
     );
-  } else if (
-    !options.applicationID ||
-    typeof options.applicationID !== "string"
-  ) {
+  }
+  if (isUndefined(options.applicationID) || !isString(options.applicationID)) {
     throw new Error(
       "applicationID is missing, please provide it, so we can properly attribute data to your application"
     );
