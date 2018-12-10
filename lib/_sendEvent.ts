@@ -1,11 +1,5 @@
 import { isNumber, isUndefined, isString, isFunction } from "./utils/index";
 
-declare var process: {
-  env: {
-    NODE_ENV: string;
-  };
-};
-
 export type InsightsEventType = "click" | "conversion";
 export type InsightsEvent = {
   eventType: InsightsEventType;
