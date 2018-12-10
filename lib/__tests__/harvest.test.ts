@@ -122,6 +122,9 @@ describe("Integration tests", () => {
       let payload;
       let objectIDs;
       beforeAll(async () => {
+        await page.evaluate(() => {
+          window.AlgoliaAnalytics._endpointOrigin = "http://localhost:8080";
+        });
         const event = await captureNetworkWhile(async () => {
           const button = await page.$(
             ".ais-hits--item:nth-child(2) .button-click"
