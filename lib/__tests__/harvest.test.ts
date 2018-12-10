@@ -53,7 +53,7 @@ describe("Library initialisation", () => {
   });
 
   it("Should create UUID", () => {
-    expect(AlgoliaInsights._userID).not.toBeUndefined();
+    expect(AlgoliaInsights._userToken).not.toBeUndefined();
   });
 });
 

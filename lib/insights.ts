@@ -7,7 +7,7 @@ objectAssignPolyfill();
 import { processQueue } from "./_processQueue";
 import { sendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
 import { StorageManager } from "./_storageManager";
-import { userID } from "./_cookieUtils";
+import { userToken } from "./_cookieUtils";
 
 import { InitParams, init } from "./init";
 import { initSearch, InitSearchParams } from "./_initSearch";
@@ -58,7 +58,7 @@ class AlgoliaAnalytics {
   _applicationID: string;
   _region: string;
   _endpointOrigin: string;
-  _userID: string;
+  _userToken: string;
 
   // LocalStorage
   storageManager: StorageManager;
@@ -120,7 +120,7 @@ class AlgoliaAnalytics {
     this.viewedObjectIDs = viewedObjectIDs.bind(this);
     this.viewedFilters = viewedFilters.bind(this);
 
-    this._userID = userID();
+    this._userToken = userToken();
 
     // Process queue upon script execution
     this.processQueue();

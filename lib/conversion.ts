@@ -2,7 +2,7 @@ import { InsightsEvent } from "./_sendEvent";
 
 export interface InsightsSearchConversionEvent {
   eventName: string;
-  userID: string;
+  userToken: string;
   timestamp: number;
   index: string;
 
@@ -38,7 +38,7 @@ export function convertedObjectIDInSearch(
 
 export interface InsightsSearchConversionObjectIDsEvent {
   eventName: string;
-  userID: string;
+  userToken: string;
   timestamp: number;
   index: string;
 
@@ -67,7 +67,7 @@ export function convertedObjectIDs(
 
 export interface InsightsSearchConversionFiltersEvent {
   eventName: string;
-  userID: string;
+  userToken: string;
   timestamp: number;
   index: string;
 

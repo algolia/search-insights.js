@@ -11,7 +11,7 @@ export type InsightsEvent = {
   eventType: InsightsEventType;
 
   eventName: string;
-  userID: string;
+  userToken: string;
   timestamp: number;
   index: string;
 
@@ -47,14 +47,14 @@ export function sendEvent(
   if (!isUndefined(eventData.timestamp) && !isNumber(eventData.timestamp)) {
     throw TypeError("expected optional parameter `timestamp` to be a number");
   }
-  if (!isUndefined(eventData.userID) && !isString(eventData.userID)) {
-    throw TypeError("expected optional parameter `userID` to be a string");
+  if (!isUndefined(eventData.userToken) && !isString(eventData.userToken)) {
+    throw TypeError("expected optional parameter `userToken` to be a string");
   }
 
   const event: InsightsEvent = {
     eventType,
     eventName: eventData.eventName,
-    userID: eventData.userID || this._userID,
+    userToken: eventData.userToken || this._userToken,
     timestamp: eventData.timestamp || Date.now(),
     index: eventData.index
   };

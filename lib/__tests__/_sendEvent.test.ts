@@ -2,7 +2,7 @@ import AlgoliaInsights from "../insights";
 import * as url from "url";
 
 jest.mock("../_cookieUtils", () => ({
-  userID: jest.fn(() => "mock-user-id")
+  userToken: jest.fn(() => "mock-user-id")
 }));
 
 const credentials = {
@@ -240,8 +240,8 @@ describe("sendEvent", () => {
     });
   });
 
-  describe("userID", () => {
-    it("should add a userID if not provided", () => {
+  describe("userToken", () => {
+    it("should add a userToken if not provided", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
@@ -252,24 +252,24 @@ describe("sendEvent", () => {
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            userID: "mock-user-id"
+            userToken: "mock-user-id"
           })
         ]
       });
     });
-    it("should pass over provided userID", () => {
+    it("should pass over provided userToken", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"],
-        userID: "007"
+        userToken: "007"
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            userID: "007"
+            userToken: "007"
           })
         ]
       });
