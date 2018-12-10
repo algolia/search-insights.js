@@ -8,7 +8,6 @@ export interface InitParams {
   applicationID: string;
   userHasOptedOut?: boolean;
   region?: InsightRegion;
-  endpointOrigin?: string;
 }
 
 /**
