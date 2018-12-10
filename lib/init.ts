@@ -6,6 +6,7 @@ const SUPPORTED_REGIONS = ["de", "us"];
 export interface InitParams {
   apiKey: string;
   applicationID: string;
+  userHasOptedOut?: boolean;
   region?: InsightRegion;
   endpointOrigin?: string;
 }
@@ -43,6 +44,7 @@ export function init(options: InitParams) {
 
   this._apiKey = options.apiKey;
   this._applicationID = options.applicationID;
+  this._userHasOptedOut = !!options.userHasOptedOut;
   this._region = options.region;
   this._endpointOrigin = options.region
     ? `https://insights.${options.region}.algolia.io`

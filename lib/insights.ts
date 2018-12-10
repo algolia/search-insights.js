@@ -59,6 +59,7 @@ class AlgoliaAnalytics {
   _region: string;
   _endpointOrigin: string;
   _userToken: string;
+  _userHasOptedOut: boolean;
 
   // LocalStorage
   storageManager: StorageManager;
