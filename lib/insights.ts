@@ -56,6 +56,8 @@ declare global {
 class AlgoliaAnalytics {
   _apiKey: string;
   _applicationID: string;
+  _region: string;
+  _endpointOrigin: string;
   _userID: string;
 
   // LocalStorage

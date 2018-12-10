@@ -1,8 +1,13 @@
 import { isUndefined, isString } from "./utils/index";
 
+type InsightRegion = "de" | "us";
+const SUPPORTED_REGIONS = ["de", "us"];
+
 export interface InitParams {
   apiKey: string;
   applicationID: string;
+  region?: InsightRegion;
+  endpointOrigin?: string;
 }
 
 /**
@@ -25,9 +30,23 @@ export function init(options: InitParams) {
       "applicationID is missing, please provide it, so we can properly attribute data to your application"
     );
   }
+  if (
+    !isUndefined(options.region) &&
+    SUPPORTED_REGIONS.indexOf(options.region) === -1
+  ) {
+    throw new Error(
+      `optional region is incorrect, please provide either one of: ${SUPPORTED_REGIONS.join(
+        ", "
+      )}.`
+    );
+  }
 
   this._apiKey = options.apiKey;
   this._applicationID = options.applicationID;
+  this._region = options.region;
+  this._endpointOrigin = options.region
+    ? `https://insights.${options.region}.algolia.io`
+    : "https://insights.algolia.io";
 
   // Set hasCredentials
   this._hasCredentials = true;
