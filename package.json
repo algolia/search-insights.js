@@ -3,6 +3,7 @@
   "version": "0.0.15",
   "description": "Search analytics by Algolia",
   "jsdelivr": "dist/search-insights.min.js",
+  "main": "dist/search-insights.min.js",
   "scripts": {
     "deploy": "yarn build && /bin/bash ./pre-deploy.sh && npm publish",
     "lint": "tslint ./lib/**/*.ts",
