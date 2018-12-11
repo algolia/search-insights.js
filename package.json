@@ -15,6 +15,10 @@
     "build:examples": "webpack --config config/webpack.config.js --color --progress",
     "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/search-insights.js.git"
+  },
   "author": {
     "name": "Jonas Badalic",
     "url": "https://www.algolia.com"
