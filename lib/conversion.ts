@@ -3,7 +3,7 @@ import { InsightsEvent } from "./_sendEvent";
 export interface InsightsSearchConversionEvent {
   eventName: string;
   userToken: string;
-  timestamp: number;
+  timestamp?: number;
   index: string;
 
   queryID: string;
@@ -39,7 +39,7 @@ export function convertedObjectIDsAfterSearch(
 export interface InsightsSearchConversionObjectIDsEvent {
   eventName: string;
   userToken: string;
-  timestamp: number;
+  timestamp?: number;
   index: string;
 
   objectIDs: (string | number)[];
@@ -68,7 +68,7 @@ export function convertedObjectIDs(
 export interface InsightsSearchConversionFiltersEvent {
   eventName: string;
   userToken: string;
-  timestamp: number;
+  timestamp?: number;
   index: string;
 
   filters: string[];
