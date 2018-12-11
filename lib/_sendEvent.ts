@@ -6,7 +6,7 @@ declare var process: {
   };
 };
 
-export type InsightsEventType = "click" | "conversion";
+export type InsightsEventType = "click" | "conversion" | "view";
 export type InsightsEvent = {
   eventType: InsightsEventType;
 
