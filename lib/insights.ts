@@ -15,7 +15,7 @@ import {
   InsightsSearchClickEvent,
   clickedObjectIDInSearch,
   InsightsClickObjectIDsEvent,
-  clickedObjectID,
+  clickedObjectIDs,
   InsightsClickFiltersEvent,
   clickedFilters
 } from "./click";
@@ -76,7 +76,7 @@ class AlgoliaAnalytics {
   public init: (params: InitParams) => void;
   public initSearch: (params: InitSearchParams) => void;
   public clickedObjectIDInSearch: (params?: InsightsSearchClickEvent) => void;
-  public clickedObjectID: (params?: InsightsClickObjectIDsEvent) => void;
+  public clickedObjectIDs: (params?: InsightsClickObjectIDsEvent) => void;
   public clickedFilters: (params?: InsightsClickFiltersEvent) => void;
   public convertedObjectIDInSearch: (
     params?: InsightsSearchConversionEvent
@@ -111,7 +111,7 @@ class AlgoliaAnalytics {
     this.initSearch = initSearch.bind(this);
 
     this.clickedObjectIDInSearch = clickedObjectIDInSearch.bind(this);
-    this.clickedObjectID = clickedObjectID.bind(this);
+    this.clickedObjectIDs = clickedObjectIDs.bind(this);
     this.clickedFilters = clickedFilters.bind(this);
 
     this.convertedObjectIDInSearch = convertedObjectIDInSearch.bind(this);

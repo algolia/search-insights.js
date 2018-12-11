@@ -69,19 +69,19 @@ describe("clickedObjectIDInSearch", () => {
   });
 });
 
-describe("clickedObjectID", () => {
+describe("clickedObjectIDs", () => {
   it("should throw if no parameters is passed", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
-      AlgoliaInsights.clickedObjectID();
+      AlgoliaInsights.clickedObjectIDs();
     }).toThrowErrorMatchingInlineSnapshot(
-      `"No params were sent to clickedObjectID function, please provide \`objectIDs\` to be reported"`
+      `"No params were sent to clickedObjectIDs function, please provide \`objectIDs\` to be reported"`
     );
   });
   it("should throw if objectIDs is not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
-      AlgoliaInsights.clickedObjectID({});
+      AlgoliaInsights.clickedObjectIDs({});
     }).toThrowErrorMatchingInlineSnapshot(
       `"required \`objectIDs\` parameter was not sent, click event can not be properly sent without"`
     );
@@ -93,7 +93,7 @@ describe("clickedObjectID", () => {
 
     AlgoliaInsights.init(credentials);
     (AlgoliaInsights as any).sendEvent = jest.fn();
-    AlgoliaInsights.clickedObjectID(clickParams);
+    AlgoliaInsights.clickedObjectIDs(clickParams);
 
     expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalledWith(
       "click",

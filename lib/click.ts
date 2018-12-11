@@ -53,10 +53,10 @@ export interface InsightsClickObjectIDsEvent {
  * Sends a click report using objectIDs
  * @param params: InsightsClickObjectIDsEvent
  */
-export function clickedObjectID(params: InsightsClickObjectIDsEvent) {
+export function clickedObjectIDs(params: InsightsClickObjectIDsEvent) {
   if (!params) {
     throw new Error(
-      "No params were sent to clickedObjectID function, please provide `objectIDs` to be reported"
+      "No params were sent to clickedObjectIDs function, please provide `objectIDs` to be reported"
     );
   }
   if (!params.objectIDs) {
