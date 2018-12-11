@@ -5,14 +5,6 @@ const credentials = {
   applicationID: "test"
 };
 
-it("Should throw if init was not called", () => {
-  expect(() => {
-    AlgoliaInsights.conversion();
-  }).toThrowError(
-    "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
-  );
-});
-
 it("Should throw if no params are sent", () => {
   expect(() => {
     AlgoliaInsights.init(credentials);
