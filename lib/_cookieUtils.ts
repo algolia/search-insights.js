@@ -64,7 +64,6 @@ const createUUID = () => {
   });
 };
 
-const sessionID = createUUID;
 const userToken = checkUserIdCookie;
 
-export { sessionID, userToken };
+export { userToken };
