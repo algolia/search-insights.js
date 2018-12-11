@@ -184,7 +184,7 @@ document.addEventListener("click", e => {
       positions: [parseInt(e.target.getAttribute("data-position"))]
     });
   } else if (e.target.matches(".button-convert")) {
-    aa("convertedObjectIDInSearch", {
+    aa("convertedObjectIDsAfterSearch", {
       eventName: "hit-converted",
       index: process.env.INDEX_NAME,
       queryID: e.target.getAttribute("data-query-id"),

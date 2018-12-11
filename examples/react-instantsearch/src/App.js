@@ -42,7 +42,7 @@ const Hits = connectHits(
           </button>
           <button
             onClick={() => {
-              window.aa('convertedObjectIDInSearch', {
+              window.aa('convertedObjectIDsAfterSearch', {
                 eventName: "hit-converted",
                 index: process.env.INDEX_NAME,
                 queryID: searchResults.queryID,
