@@ -2,7 +2,7 @@ require('./instantsearchExample.scss');
 
 import instantsearch from 'instantsearch.js';
 
-import { 
+import {
   searchBox,
   stats,
   hits,
@@ -164,30 +164,18 @@ document.addEventListener('click', (e) => {
   if(e.target.matches('.button-click')) {
 
     window.aa('click', {
-      objectID: e.target.getAttribute('data-objectid'),
-      position: parseInt(e.target.getAttribute('data-position'))
+      eventName: "hit-clicked",
+      indexName: process.env.INDEX_NAME,
+      objectID: [e.target.getAttribute('data-objectid')],
+      position: [parseInt(e.target.getAttribute('data-position'))]
     })
 
   } else if(e.target.matches('.button-convert')) {
 
     window.aa('conversion', {
-      objectID: e.target.getAttribute('data-objectid')
-    })
-  }
-})
-
-document.addEventListener('contextmenu', (e) => {
-  if(e.target.matches('.button-click')) {
-
-    window.aa('click', {
-      objectID: e.target.getAttribute('data-objectid'),
-      position: e.target.getAttribute('data-position')
-    })
-
-  } else if(e.target.matches('.button-convert')) {
-
-    window.aa('conversion', {
-      objectID: e.target.getAttribute('data-objectid')
+      eventName: "hit-converted",
+      indexName: process.env.INDEX_NAME,
+      objectID: [e.target.getAttribute('data-objectid')]
     })
   }
 })

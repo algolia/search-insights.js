@@ -110,11 +110,13 @@ describe("Integration tests", () => {
       data = await getPageResponse();
       await page.waitFor(1000);
     });
+
     describe("loading", () => {
       it("should retrieve a queryID on page load", async () => {
         expect(data).toHaveProperty("queryID");
       });
     });
+
     describe("click", () => {
       let request;
       let payload;
@@ -152,8 +154,8 @@ describe("Integration tests", () => {
         const {
           events: [event]
         } = payload;
-        expect(event.objectID).toBe(objectID);
-        expect(event.position).toBe(2);
+        expect(event.objectID).toEqual([objectID]);
+        expect(event.position).toEqual([2]);
       });
       it("should include an timestamp", () => {
         const {

@@ -1,9 +1,12 @@
-import { InsightsEvent } from "./_sendEvent";
+export interface InsightsSearchClickEvent {
+  eventName: string;
+  userID: string;
+  timestamp: number;
+  indexName: string;
 
-export interface InsightsSearchClickEvent extends InsightsEvent {
-  objectID: string | number;
-  position: number;
-  queryID?: string;
+  queryID: string;
+  objectID: (string | number)[];
+  position: number[];
 }
 
 /**
@@ -15,15 +18,18 @@ export function click(params: InsightsSearchClickEvent) {
     throw new Error(
       "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
     );
-  } else if (!params) {
+  }
+  if (!params) {
     throw new Error(
-      "No params were sent to click function, please provide an objectID and position to be reported"
+      "No params were sent to click function, please provide `queryID`,  `objectID` and `position` to be reported"
     );
-  } else if (!params.objectID) {
+  }
+  if (!params.objectID) {
     throw new Error(
       "required objectID parameter was not sent, click event can not be properly attributed"
     );
-  } else if (!params.position) {
+  }
+  if (!params.position) {
     throw new Error(
       "required position parameter was not sent, click event position can not be properly sent without"
     );

@@ -77,14 +77,18 @@ document.addEventListener('click', (e) => {
   if(e.target.matches('.button-click')) {
 
     window.aa('click',{
-      objectID: e.target.getAttribute('objectid'),
-      position: e.target.getAttribute('position')
+      eventName: "hit-clicked",
+      indexName: process.env.INDEX_NAME,
+      objectID: [e.target.getAttribute('objectid')],
+      position: [e.target.getAttribute('position')]
     })
 
   } else if(e.target.matches('.button-convert')) {
 
     window.aa('conversion',{
-      objectID: e.target.getAttribute('objectid')
+      eventName: "hit-converted",
+      indexName: process.env.INDEX_NAME,
+      objectID: [e.target.getAttribute('objectid')]
     })
   }
 })

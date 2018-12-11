@@ -25,7 +25,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^22.0.1",
+    "@types/jest": "^23.3.10",
     "@types/jsdom": "^11.0.4",
     "@types/puppeteer": "^1.0.0",
     "algoliasearch": "^3.24.9",
@@ -42,7 +42,7 @@
     "html-replace-webpack-plugin": "^2.2.8",
     "html-webpack-plugin": "^2.30.1",
     "instantsearch.js": "^2.4.1",
-    "jest": "^22.0.5",
+    "jest": "^23.6.0",
     "jest-localstorage-mock": "^2.1.0",
     "lunr": "^2.1.5",
     "node-sass": "^4.7.2",
