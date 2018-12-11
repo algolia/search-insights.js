@@ -1,18 +1,18 @@
 import { isNumber, isUndefined, isString, isFunction } from "./utils/index";
 
-export type InsightsEventType = "click" | "conversion";
+export type InsightsEventType = "click" | "conversion" | "view";
 export type InsightsEvent = {
   eventType: InsightsEventType;
 
   eventName: string;
   userToken: string;
-  timestamp: number;
+  timestamp?: number;
   index: string;
 
   queryID?: string;
   objectIDs?: (string | number)[];
   positions?: number[];
-  
+
   filters?: string[];
 };
 
