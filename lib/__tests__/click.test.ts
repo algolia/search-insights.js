@@ -5,20 +5,20 @@ const credentials = {
   applicationID: "test"
 };
 
-describe("clickedObjectIDInSearch", () => {
+describe("clickedObjectIDsAfterSearch", () => {
   test("Should throw if queryID, objectIDs or positions are not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
-      AlgoliaInsights.clickedObjectIDInSearch();
+      AlgoliaInsights.clickedObjectIDsAfterSearch();
     }).toThrowError(
-      "No params were sent to clickedObjectIDInSearch function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
+      "No params were sent to clickedObjectIDsAfterSearch function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
     );
   });
 
   test("Should throw if objectIDs is not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
-      (AlgoliaInsights as any).clickedObjectIDInSearch({
+      (AlgoliaInsights as any).clickedObjectIDsAfterSearch({
         queryID: "testing",
         positions: [1]
       });
@@ -30,7 +30,7 @@ describe("clickedObjectIDInSearch", () => {
   test("Should throw if positions is not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
-      (AlgoliaInsights as any).clickedObjectIDInSearch({
+      (AlgoliaInsights as any).clickedObjectIDsAfterSearch({
         queryID: "testing",
         objectIDs: [1]
       });
@@ -42,7 +42,7 @@ describe("clickedObjectIDInSearch", () => {
   test("Should throw if queryID is not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
-      (AlgoliaInsights as any).clickedObjectIDInSearch({
+      (AlgoliaInsights as any).clickedObjectIDsAfterSearch({
         objectIDs: ["1"],
         positions: [1]
       });
@@ -60,7 +60,7 @@ describe("clickedObjectIDInSearch", () => {
 
     AlgoliaInsights.init(credentials);
     (AlgoliaInsights as any).sendEvent = jest.fn();
-    AlgoliaInsights.clickedObjectIDInSearch(clickParams);
+    AlgoliaInsights.clickedObjectIDsAfterSearch(clickParams);
 
     expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalledWith(
       "click",

@@ -15,10 +15,10 @@ export interface InsightsSearchClickEvent {
  * Sends a click report in the context of search
  * @param params: InsightsSearchClickEvent
  */
-export function clickedObjectIDInSearch(params: InsightsSearchClickEvent) {
+export function clickedObjectIDsAfterSearch(params: InsightsSearchClickEvent) {
   if (!params) {
     throw new Error(
-      "No params were sent to clickedObjectIDInSearch function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
+      "No params were sent to clickedObjectIDsAfterSearch function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
     );
   }
   if (!params.queryID) {
