@@ -1,7 +1,7 @@
 import { isUndefined, isString } from "./utils/index";
 
 type InsightRegion = "de" | "us";
-const SUPPORTED_REGIONS = ["de", "us"];
+const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
 
 export interface InitParams {
   apiKey: string;
