@@ -1,7 +1,7 @@
 export interface InsightsSearchConversionEvent {
   eventName: string;
-  userID: string;
-  timestamp: number;
+  userToken: string;
+  timestamp?: number;
   index: string;
 
   queryID: string;
@@ -37,7 +37,7 @@ export function convertedObjectIDsAfterSearch(
 export interface InsightsSearchConversionObjectIDsEvent {
   eventName: string;
   userToken: string;
-  timestamp: number;
+  timestamp?: number;
   index: string;
 
   objectIDs: (string | number)[];
@@ -67,7 +67,7 @@ export function convertedObjectIDs(
 export interface InsightsSearchConversionFiltersEvent {
   eventName: string;
   userToken: string;
-  timestamp: number;
+  timestamp?: number;
   index: string;
 
   filters: string[];
