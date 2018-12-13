@@ -28,9 +28,9 @@ import {
   convertedFilters
 } from "./conversion";
 import {
-  InsightsSearchViewObjectIDsEvent,
+  InsightsViewObjectIDsEvent,
   viewedObjectIDs,
-  InsightsSearchViewFiltersEvent,
+  InsightsViewFiltersEvent,
   viewedFilters
 } from "./view";
 
@@ -75,7 +75,9 @@ class AlgoliaAnalytics {
   // Public methods
   public init: (params: InitParams) => void;
   public initSearch: (params: InitSearchParams) => void;
-  public clickedObjectIDsAfterSearch: (params?: InsightsSearchClickEvent) => void;
+  public clickedObjectIDsAfterSearch: (
+    params?: InsightsSearchClickEvent
+  ) => void;
   public clickedObjectIDs: (params?: InsightsClickObjectIDsEvent) => void;
   public clickedFilters: (params?: InsightsClickFiltersEvent) => void;
   public convertedObjectIDsAfterSearch: (
@@ -85,6 +87,9 @@ class AlgoliaAnalytics {
     params?: InsightsConversionObjectIDsEvent
   ) => void;
   public convertedFilters: (params?: InsightsConversionFiltersEvent) => void;
+
+  public viewedObjectIDs: (params?: InsightsViewObjectIDsEvent) => void;
+  public viewedFilters: (params?: InsightsViewFiltersEvent) => void;
 
   constructor(options?: any) {
     // Exit on old browsers or if script is not ran in browser
@@ -109,7 +114,9 @@ class AlgoliaAnalytics {
     this.clickedObjectIDs = clickedObjectIDs.bind(this);
     this.clickedFilters = clickedFilters.bind(this);
 
-    this.convertedObjectIDsAfterSearch = convertedObjectIDsAfterSearch.bind(this);
+    this.convertedObjectIDsAfterSearch = convertedObjectIDsAfterSearch.bind(
+      this
+    );
     this.convertedObjectIDs = convertedObjectIDs.bind(this);
     this.convertedFilters = convertedFilters.bind(this);
 

@@ -1,6 +1,6 @@
 import { InsightsEvent } from "./_sendEvent";
 
-export interface InsightsSearchViewObjectIDsEvent {
+export interface InsightsViewObjectIDsEvent {
   eventName: string;
   userToken: string;
   timestamp: number;
@@ -10,9 +10,9 @@ export interface InsightsSearchViewObjectIDsEvent {
 }
 /**
  * Sends a view report using objectIDs
- * @param params InsightsSearchViewObjectIDsEvent
+ * @param params InsightsViewObjectIDsEvent
  */
-export function viewedObjectIDs(params: InsightsSearchViewObjectIDsEvent) {
+export function viewedObjectIDs(params: InsightsViewObjectIDsEvent) {
   if (!params) {
     throw new Error(
       "No params were sent to viewedObjectIDs function, please provide `objectIDs` to be reported"
@@ -27,7 +27,7 @@ export function viewedObjectIDs(params: InsightsSearchViewObjectIDsEvent) {
   this.sendEvent("view", params as InsightsEvent);
 }
 
-export interface InsightsSearchViewFiltersEvent {
+export interface InsightsViewFiltersEvent {
   eventName: string;
   userToken: string;
   timestamp: number;
@@ -37,9 +37,9 @@ export interface InsightsSearchViewFiltersEvent {
 }
 /**
  * Sends a view report using filters
- * @param params InsightsSearchViewFiltersEvent
+ * @param params InsightsViewFiltersEvent
  */
-export function viewedFilters(params: InsightsSearchViewFiltersEvent) {
+export function viewedFilters(params: InsightsViewFiltersEvent) {
   if (!params) {
     throw new Error(
       "No params were sent to viewedFilters function, please provide `filters` to be reported"
