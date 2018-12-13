@@ -42,7 +42,7 @@ describe("convertedObjectIDsAfterSearch", () => {
     );
   });
 
-  it("Should send passed queryID", () => {
+  it("Should send passed queryID and objectIDs", () => {
     (AlgoliaInsights as any).sendEvent = jest.fn();
     AlgoliaInsights.init(credentials);
     AlgoliaInsights.convertedObjectIDsAfterSearch({

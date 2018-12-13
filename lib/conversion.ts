@@ -34,7 +34,7 @@ export function convertedObjectIDsAfterSearch(
   this.sendEvent("conversion", params as InsightsEvent);
 }
 
-export interface InsightsSearchConversionObjectIDsEvent {
+export interface InsightsConversionObjectIDsEvent {
   eventName: string;
   userToken: string;
   timestamp: number;
@@ -44,11 +44,9 @@ export interface InsightsSearchConversionObjectIDsEvent {
 }
 /**
  * Sends a conversion report using objectIDs
- * @param params InsightsSearchConversionObjectIDsEvent
+ * @param params InsightsConversionObjectIDsEvent
  */
-export function convertedObjectIDs(
-  params: InsightsSearchConversionObjectIDsEvent
-) {
+export function convertedObjectIDs(params: InsightsConversionObjectIDsEvent) {
   if (!params) {
     throw new Error(
       "No params were sent to convertedObjectIDs function, please provide `objectIDs` to be reported"
@@ -64,7 +62,7 @@ export function convertedObjectIDs(
   this.sendEvent("conversion", params as InsightsEvent);
 }
 
-export interface InsightsSearchConversionFiltersEvent {
+export interface InsightsConversionFiltersEvent {
   eventName: string;
   userToken: string;
   timestamp: number;
@@ -74,9 +72,9 @@ export interface InsightsSearchConversionFiltersEvent {
 }
 /**
  * Sends a conversion report using filters
- * @param params InsightsSearchConversionFiltersEvent
+ * @param params InsightsConversionFiltersEvent
  */
-export function convertedFilters(params: InsightsSearchConversionFiltersEvent) {
+export function convertedFilters(params: InsightsConversionFiltersEvent) {
   if (!params) {
     throw new Error(
       "No params were sent to convertedFilters function, please provide `filters` to be reported"

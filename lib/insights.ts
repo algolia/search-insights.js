@@ -22,9 +22,9 @@ import {
 import {
   InsightsSearchConversionEvent,
   convertedObjectIDsAfterSearch,
-  InsightsSearchConversionObjectIDsEvent,
+  InsightsConversionObjectIDsEvent,
   convertedObjectIDs,
-  InsightsSearchConversionFiltersEvent,
+  InsightsConversionFiltersEvent,
   convertedFilters
 } from "./conversion";
 import {
@@ -82,11 +82,9 @@ class AlgoliaAnalytics {
     params?: InsightsSearchConversionEvent
   ) => void;
   public convertedObjectIDs: (
-    params?: InsightsSearchConversionObjectIDsEvent
+    params?: InsightsConversionObjectIDsEvent
   ) => void;
-  public convertedFilters: (
-    params?: InsightsSearchConversionFiltersEvent
-  ) => void;
+  public convertedFilters: (params?: InsightsConversionFiltersEvent) => void;
 
   constructor(options?: any) {
     // Exit on old browsers or if script is not ran in browser
