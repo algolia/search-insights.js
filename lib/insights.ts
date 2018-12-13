@@ -88,9 +88,6 @@ class AlgoliaAnalytics {
     params?: InsightsSearchConversionFiltersEvent
   ) => void;
 
-  public viewedObjectIDs: (params?: InsightsSearchViewObjectIDsEvent) => void;
-  public viewedFilters: (params?: InsightsSearchViewFiltersEvent) => void;
-
   constructor(options?: any) {
     // Exit on old browsers or if script is not ran in browser
     if (!document.addEventListener || !window) {

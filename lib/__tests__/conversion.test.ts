@@ -42,7 +42,7 @@ describe("convertedObjectIDsAfterSearch", () => {
     );
   });
 
-  it("Should send allow passing of queryID", () => {
+  it("Should send passed queryID", () => {
     (AlgoliaInsights as any).sendEvent = jest.fn();
     AlgoliaInsights.init(credentials);
     AlgoliaInsights.convertedObjectIDsAfterSearch({
@@ -71,14 +71,14 @@ describe("convertedObjectIDs", () => {
     AlgoliaInsights.init(credentials);
 
     expect(() => {
-      (AlgoliaInsights as any).convertedObjectIDs({ queryID: "test" });
+      (AlgoliaInsights as any).convertedObjectIDs({});
       expect((AlgoliaInsights as any).sendEvent).not.toHaveBeenCalled();
     }).toThrowError(
       "required objectIDs parameter was not sent, conversion event can not be properly sent without"
     );
   });
 
-  it("should send allow passing of queryID", () => {
+  it("should send passed objectID", () => {
     (AlgoliaInsights as any).sendEvent = jest.fn();
     AlgoliaInsights.init(credentials);
     AlgoliaInsights.convertedObjectIDs({
@@ -101,7 +101,7 @@ describe("convertedFilters", () => {
     );
   });
 
-  it("should throw if no objectIDs has been passed", () => {
+  it("should throw if no filters has been passed", () => {
     (AlgoliaInsights as any).sendEvent = jest.fn();
     AlgoliaInsights.init(credentials);
 
@@ -113,7 +113,7 @@ describe("convertedFilters", () => {
     );
   });
 
-  it("should send allow passing of queryID", () => {
+  it("should send passed filters", () => {
     (AlgoliaInsights as any).sendEvent = jest.fn();
     AlgoliaInsights.init(credentials);
     AlgoliaInsights.convertedFilters({
