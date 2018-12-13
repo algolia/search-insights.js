@@ -48,7 +48,7 @@ describe("viewedFilters", () => {
     );
   });
 
-  it("should throw if no objectIDs has been passed", () => {
+  it("should throw if no filters has been passed", () => {
     (AlgoliaInsights as any).sendEvent = jest.fn();
     AlgoliaInsights.init(credentials);
 
@@ -60,7 +60,7 @@ describe("viewedFilters", () => {
     );
   });
 
-  it("should send allow passing of queryID", () => {
+  it("should send passed filters", () => {
     (AlgoliaInsights as any).sendEvent = jest.fn();
     AlgoliaInsights.init(credentials);
     AlgoliaInsights.viewedFilters({
