@@ -45,11 +45,14 @@ var hitTemplate = hit => `
     <div class="product-desc-wrapper">
       <div class="product-name">${hit._highlightResult.name.value}</div>
     </div>
-    <button data-objectid="${hit.objectID}" data-position="${hit.__hitIndex +
-  1}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
-    <button data-objectid="${
-      hit.objectID
-    }" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
+    <button data-query-id="${hit._queryID}" data-object-id="${
+  hit.objectID
+}" data-position="${
+  hit._hitPosition
+}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
+    <button data-query-id="${hit._queryID}" data-object-id="${
+  hit.objectID
+}" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
   </article>`;
 
 var noResultsTemplate = `<div class="text-center">No results found matching <strong>{{query}}</strong>.</div>`;
@@ -80,6 +83,12 @@ search.addWidget(
       item: hitTemplate
     },
     transformData: function(hit) {
+      var result = search.helper.lastResults;
+      var offset = result.hitsPerPage * result.page;
+
+      hit._queryID = result.queryID;
+      hit._hitPosition = offset + hit.__hitIndex + 1;
+
       hit.stars = [];
       for (var i = 1; i <= 5; ++i) {
         hit.stars.push(i <= hit.rating);
@@ -170,14 +179,16 @@ document.addEventListener("click", e => {
     aa("click", {
       eventName: "hit-clicked",
       index: process.env.INDEX_NAME,
-      objectIDs: [e.target.getAttribute("data-objectid")],
+      queryID: e.target.getAttribute("data-query-id"),
+      objectIDs: [e.target.getAttribute("data-object-id")],
       positions: [parseInt(e.target.getAttribute("data-position"))]
     });
   } else if (e.target.matches(".button-convert")) {
     aa("conversion", {
       eventName: "hit-converted",
       index: process.env.INDEX_NAME,
-      objectIDs: [e.target.getAttribute("data-objectid")]
+      queryID: e.target.getAttribute("data-query-id"),
+      objectIDs: [e.target.getAttribute("data-object-id")]
     });
   }
 });

@@ -14,7 +14,7 @@ describe("Click method", () => {
     );
   });
 
-  test("Should throw if objectIDs and positions are not sent", () => {
+  test("Should throw if queryID, objectIDs or positions are not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
       AlgoliaInsights.click();
@@ -26,27 +26,27 @@ describe("Click method", () => {
   test("Should throw if objectIDs is not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
-      AlgoliaInsights.click({ objectIDs: [1] });
+      AlgoliaInsights.click({ queryID: "testing", positions: [1] });
     }).toThrowError(
-      "required positions parameter was not sent, click event positions can not be properly sent without"
+      "required objectIDs parameter was not sent, click event can not be properly sent without"
     );
   });
 
   test("Should throw if positions is not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
-      AlgoliaInsights.click({ positions: [1] });
+      AlgoliaInsights.click({ queryID: "testing", objectIDs: [1] });
     }).toThrowError(
-      "required objectIDs parameter was not sent, click event can not be properly attributed"
+      "required positions parameter was not sent, click event can not be properly sent without"
     );
   });
 
-  test("Should throw if positions is not sent", () => {
+  test("Should throw if queryID is not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
-      AlgoliaInsights.click({ positions: [1] });
+      AlgoliaInsights.click({ objectIDs: ["1"], positions: [1] });
     }).toThrowError(
-      "required objectIDs parameter was not sent, click event can not be properly attributed"
+      "required queryID parameter was not sent, click event can not be properly sent without"
     );
   });
 
