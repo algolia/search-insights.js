@@ -4,7 +4,8 @@
     "module": "es6",
     "target": "es6",
     "noImplicitAny": false,
-    "allowJs": true
+    "allowJs": true,
+    "declaration": true
   },
   "exclude": [
     "node_modules",
