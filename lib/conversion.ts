@@ -4,12 +4,6 @@ export interface InsightsSearchConversionEvent {
   timestamp: number;
   index: string;
 
-export interface InsightsSearchConversionEvent {
-  eventName: string;
-  userToken: string;
-  timestamp: number;
-  index: string;
-
   queryID: string;
   objectIDs: (string | number)[];
 }
