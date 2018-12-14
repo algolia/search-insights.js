@@ -28,7 +28,7 @@ const Hits = connectHits(
           <Highlight attributeName="name" hit={hit} />
           <button
             onClick={() => {
-              window.aa('clickedObjectIDInSearch', {
+              window.aa('clickedObjectIDsAfterSearch', {
                 eventName: "hit-clicked",
                 index: process.env.INDEX_NAME,
                 queryID: searchResults.queryID,
@@ -42,7 +42,7 @@ const Hits = connectHits(
           </button>
           <button
             onClick={() => {
-              window.aa('convertedObjectIDInSearch', {
+              window.aa('convertedObjectIDsAfterSearch', {
                 eventName: "hit-converted",
                 index: process.env.INDEX_NAME,
                 queryID: searchResults.queryID,
