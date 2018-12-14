@@ -176,7 +176,7 @@ search.start();
 
 document.addEventListener("click", e => {
   if (e.target.matches(".button-click")) {
-    aa("clickedObjectIDInSearch", {
+    aa("clickedObjectIDsAfterSearch", {
       eventName: "hit-clicked",
       index: process.env.INDEX_NAME,
       queryID: e.target.getAttribute("data-query-id"),
@@ -184,7 +184,7 @@ document.addEventListener("click", e => {
       positions: [parseInt(e.target.getAttribute("data-position"))]
     });
   } else if (e.target.matches(".button-convert")) {
-    aa("conversion", {
+    aa("convertedObjectIDsAfterSearch", {
       eventName: "hit-converted",
       index: process.env.INDEX_NAME,
       queryID: e.target.getAttribute("data-query-id"),

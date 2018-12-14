@@ -40,15 +40,15 @@ const getCookie = (cname: string): string => {
  * @return {[string]} new UUID
  */
 const checkUserIdCookie = (userSpecifiedID?: string | number): string => {
-  const userID = getCookie(COOKIE_KEY);
+  const userToken = getCookie(COOKIE_KEY);
 
-  if (!userID || userID === "") {
+  if (!userToken || userToken === "") {
     const newUUID = createUUID();
     setCookie(COOKIE_KEY, newUUID, 10);
     return newUUID;
   }
-  setCookie(COOKIE_KEY, userID, 10);
-  return userID;
+  setCookie(COOKIE_KEY, userToken, 10);
+  return userToken;
 };
 
 /**
@@ -64,7 +64,6 @@ const createUUID = () => {
   });
 };
 
-const sessionID = createUUID;
-const userID = checkUserIdCookie;
+const userToken = checkUserIdCookie;
 
-export { sessionID, userID };
+export { userToken };
