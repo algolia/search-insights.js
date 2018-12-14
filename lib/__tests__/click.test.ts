@@ -14,7 +14,7 @@ describe("clickedObjectIDsAfterSearch", () => {
       "No params were sent to clickedObjectIDsAfterSearch function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
     );
   });
-‡
+
   test("Should throw if objectIDs is not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
