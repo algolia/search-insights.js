@@ -1,4 +1,8 @@
-import { InsightsEvent } from "./_sendEvent";
+export interface InsightsSearchConversionEvent {
+  eventName: string;
+  userID: string;
+  timestamp: number;
+  index: string;
 
 export interface InsightsSearchConversionEvent {
   eventName: string;
@@ -56,6 +60,7 @@ export function convertedObjectIDs(
       "No params were sent to convertedObjectIDs function, please provide `objectIDs` to be reported"
     );
   }
+
   if (!params.objectIDs) {
     throw new Error(
       "required objectIDs parameter was not sent, conversion event can not be properly sent without"
