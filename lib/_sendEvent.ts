@@ -31,6 +31,9 @@ export function sendEvent(
   eventType: InsightsEventType,
   eventData: InsightsEvent
 ) {
+  if (this._userHasOptedOut) {
+    return;
+  }
   if (!this._hasCredentials) {
     throw new Error(
       "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
