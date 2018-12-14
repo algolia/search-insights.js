@@ -7,7 +7,7 @@
   "scripts": {
     "deploy": "yarn build && /bin/bash ./pre-deploy.sh && npm publish",
     "lint": "tslint ./lib/**/*.ts",
-    "prettier": "prettier lib/**/*.ts --write",
+    "prettier": "prettier lib/**/*.ts examples/**/* --write",
     "lint:fix": "yarn lint -- --fix",
     "test": "NODE_ENV=development yarn build:examples && rollup --environment NODE_ENV:'development' -c rollup.config.js && yarn build:test",
     "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js",

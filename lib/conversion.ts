@@ -2,46 +2,91 @@ export interface InsightsSearchConversionEvent {
   eventName: string;
   userID: string;
   timestamp: number;
-  indexName: string;
+  index: string;
 
-  queryID?: string;
-  objectID?: (string | number)[];
+  queryID: string;
+  objectIDs: (string | number)[];
 }
 
 /**
- * Checks params for conversion report and sends query
+ * Sends a conversion report in the context of search
  * @param params InsightsSearchConversionEvent
  */
-export function conversion(params: InsightsSearchConversionEvent) {
-  if (!this._hasCredentials) {
+export function convertedObjectIDsAfterSearch(
+  params: InsightsSearchConversionEvent
+) {
+  if (!params) {
     throw new Error(
-      "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
+      "No params were sent to convertedObjectIDsAfterSearch function, please provide `queryID` and `objectIDs` to be reported"
     );
-  } else if (!params) {
+  }
+  if (!params.queryID) {
     throw new Error(
-      "No parameters were sent to conversion event, please provide an objectID"
+      "required queryID parameter was not sent, conversion event can not be properly sent without"
     );
-  } else if (!params.objectID) {
+  }
+  if (!params.objectIDs) {
     throw new Error(
-      "No objectID was sent to conversion event, please provide an objectID"
+      "required objectIDs parameter was not sent, conversion event can not be properly sent without"
     );
   }
 
-  // Get associated queryID
-  const queryID = params.queryID
-    ? params.queryID
-    : this.storageManager.getConversionObjectID(params.objectID);
+  this.sendEvent("conversion", params as InsightsEvent);
+}
 
-  // Reassign params
-  const conversionParams = Object.assign(params, { queryID });
+export interface InsightsSearchConversionObjectIDsEvent {
+  eventName: string;
+  userToken: string;
+  timestamp: number;
+  index: string;
 
-  // Could not retrieve queryID from localStorage -> CTR through search event likely did not happen,
-  // -> consider that conversion did not come from search and exit.
-  if (!queryID) {
-    throw new Error(`No queryID was retrieved, please check the implementation and provide either a getQueryID function
-    or call the conversion method that will return the queryID parameter`);
+  objectIDs: (string | number)[];
+}
+/**
+ * Sends a conversion report using objectIDs
+ * @param params InsightsSearchConversionObjectIDsEvent
+ */
+export function convertedObjectIDs(
+  params: InsightsSearchConversionObjectIDsEvent
+) {
+  if (!params) {
+    throw new Error(
+      "No params were sent to convertedObjectIDs function, please provide `objectIDs` to be reported"
+    );
   }
 
-  // Send event
-  this.sendEvent("conversion", conversionParams);
+  if (!params.objectIDs) {
+    throw new Error(
+      "required objectIDs parameter was not sent, conversion event can not be properly sent without"
+    );
+  }
+
+  this.sendEvent("conversion", params as InsightsEvent);
+}
+
+export interface InsightsSearchConversionFiltersEvent {
+  eventName: string;
+  userToken: string;
+  timestamp: number;
+  index: string;
+
+  filters: string[];
+}
+/**
+ * Sends a conversion report using filters
+ * @param params InsightsSearchConversionFiltersEvent
+ */
+export function convertedFilters(params: InsightsSearchConversionFiltersEvent) {
+  if (!params) {
+    throw new Error(
+      "No params were sent to convertedFilters function, please provide `filters` to be reported"
+    );
+  }
+  if (!params.filters) {
+    throw new Error(
+      "required filters parameter was not sent, conversion event can not be properly sent without"
+    );
+  }
+
+  this.sendEvent("conversion", params as InsightsEvent);
 }

@@ -5,14 +5,34 @@ objectKeysPolyfill();
 objectAssignPolyfill();
 
 import { processQueue } from "./_processQueue";
-import { sendEvent, InsightsEventType } from "./_sendEvent";
+import { sendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
 import { StorageManager } from "./_storageManager";
-import { userID } from "./_cookieUtils";
+import { userToken } from "./_cookieUtils";
 
 import { InitParams, init } from "./init";
 import { initSearch, InitSearchParams } from "./_initSearch";
-import { InsightsSearchClickEvent, click } from "./click";
-import { InsightsSearchConversionEvent, conversion } from "./conversion";
+import {
+  InsightsSearchClickEvent,
+  clickedObjectIDsAfterSearch,
+  InsightsClickObjectIDsEvent,
+  clickedObjectIDs,
+  InsightsClickFiltersEvent,
+  clickedFilters
+} from "./click";
+import {
+  InsightsSearchConversionEvent,
+  convertedObjectIDsAfterSearch,
+  InsightsSearchConversionObjectIDsEvent,
+  convertedObjectIDs,
+  InsightsSearchConversionFiltersEvent,
+  convertedFilters
+} from "./conversion";
+import {
+  InsightsSearchViewObjectIDsEvent,
+  viewedObjectIDs,
+  InsightsSearchViewFiltersEvent,
+  viewedFilters
+} from "./view";
 
 type Queue = {
   queue: string[][];
@@ -36,7 +56,10 @@ declare global {
 class AlgoliaAnalytics {
   _apiKey: string;
   _applicationID: string;
-  _userID: string;
+  _region: string;
+  _endpointOrigin: string;
+  _userToken: string;
+  _userHasOptedOut: boolean;
 
   // LocalStorage
   storageManager: StorageManager;
@@ -45,15 +68,28 @@ class AlgoliaAnalytics {
   private processQueue: () => void;
   private sendEvent: (
     eventType: InsightsEventType,
-    data: InsightsSearchClickEvent | InsightsSearchConversionEvent
+    data: InsightsEvent
   ) => void;
   private _hasCredentials: boolean = false;
 
   // Public methods
   public init: (params: InitParams) => void;
   public initSearch: (params: InitSearchParams) => void;
-  public click: (params?: Partial<InsightsSearchClickEvent>) => void;
-  public conversion: (params?: Partial<InsightsSearchConversionEvent>) => void;
+  public clickedObjectIDsAfterSearch: (params?: InsightsSearchClickEvent) => void;
+  public clickedObjectIDs: (params?: InsightsClickObjectIDsEvent) => void;
+  public clickedFilters: (params?: InsightsClickFiltersEvent) => void;
+  public convertedObjectIDsAfterSearch: (
+    params?: InsightsSearchConversionEvent
+  ) => void;
+  public convertedObjectIDs: (
+    params?: InsightsSearchConversionObjectIDsEvent
+  ) => void;
+  public convertedFilters: (
+    params?: InsightsSearchConversionFiltersEvent
+  ) => void;
+
+  public viewedObjectIDs: (params?: InsightsSearchViewObjectIDsEvent) => void;
+  public viewedFilters: (params?: InsightsSearchViewFiltersEvent) => void;
 
   constructor(options?: any) {
     // Exit on old browsers or if script is not ran in browser
@@ -73,10 +109,19 @@ class AlgoliaAnalytics {
     // Bind public methods to `this` class
     this.init = init.bind(this);
     this.initSearch = initSearch.bind(this);
-    this.click = click.bind(this);
-    this.conversion = conversion.bind(this);
 
-    this._userID = userID();
+    this.clickedObjectIDsAfterSearch = clickedObjectIDsAfterSearch.bind(this);
+    this.clickedObjectIDs = clickedObjectIDs.bind(this);
+    this.clickedFilters = clickedFilters.bind(this);
+
+    this.convertedObjectIDsAfterSearch = convertedObjectIDsAfterSearch.bind(this);
+    this.convertedObjectIDs = convertedObjectIDs.bind(this);
+    this.convertedFilters = convertedFilters.bind(this);
+
+    this.viewedObjectIDs = viewedObjectIDs.bind(this);
+    this.viewedFilters = viewedFilters.bind(this);
+
+    this._userToken = userToken();
 
     // Process queue upon script execution
     this.processQueue();

@@ -1,31 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>InstantSearch</title>
-  <script src="https://unpkg.com/lunr/lunr.js"></script>
-  <script>
-    !function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e.aa=e.aa||function(){(e.aa.queue=e.aa.queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],i.async=1,i.src="@@SCRIPT_SRC",c.parentNode.insertBefore(i,c)}(window,document,"script",0,"aa");
+  <head>
+    <meta charset="UTF-8" />
+    <title>InstantSearch</title>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+    <script>
+      !(function(e, a, t, n, s, i, c) {
+        (e.AlgoliaAnalyticsObject = s),
+          (e.aa =
+            e.aa ||
+            function() {
+              (e.aa.queue = e.aa.queue || []).push(arguments);
+            }),
+          (i = a.createElement(t)),
+          (c = a.getElementsByTagName(t)[0]),
+          (i.async = 1),
+          (i.src = "@@SCRIPT_SRC"),
+          c.parentNode.insertBefore(i, c);
+      })(window, document, "script", 0, "aa");
 
-    aa('init', {
-      apiKey: '@@API_KEY',
-      applicationID: '@@APP_ID'
-    })
-  </script>
-</head>
+      aa("init", {
+        apiKey: "@@API_KEY",
+        applicationID: "@@APP_ID"
+      });
+    </script>
+  </head>
 
-<body>
-  <div class="container-fluid">
+  <body>
+    <div class="container-fluid">
       <header class="content-wrapper">
         <a href="./" class="logo">amazing</a>
         <div class="input-group">
           <input type="text" class="form-control" id="q" />
           <span class="input-group-btn">
-            <button class="btn btn-default"><i class="fa fa-search"></i></button>
+            <button class="btn btn-default">
+              <i class="fa fa-search"></i>
+            </button>
           </span>
         </div>
       </header>
-    
+
       <div class="results-wrapper">
         <section id="results-topbar">
           <div class="sort-by">
@@ -37,7 +51,5 @@
         <main id="hits" data-algolia-hitscontainer="mainhits"></main>
       </div>
     </div>
-  </div>
-
-</body>
+  </body>
 </html>

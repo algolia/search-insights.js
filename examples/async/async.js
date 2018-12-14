@@ -1,6 +1,6 @@
-require('./async.scss');
+require("./async.scss");
 
-import instantsearch from 'instantsearch.js';
+import instantsearch from "instantsearch.js";
 
 import {
   searchBox,
@@ -10,9 +10,8 @@ import {
   hierarchicalMenu,
   refinementList,
   starRating,
-  priceRanges,
-  sortBySelector,
-  clearAll } from 'instantsearch.js/es/widgets'
+  clearAll
+} from "instantsearch.js/es/widgets";
 
 var search = instantsearch({
   appId: process.env.APP_ID,
@@ -25,33 +24,41 @@ var search = instantsearch({
 
 search.addWidget(
   searchBox({
-    container: '#q',
-    placeholder: 'Search a product'
+    container: "#q",
+    placeholder: "Search a product"
   })
-)
+);
 
 search.addWidget(
   stats({
-    container: '#stats'
+    container: "#stats"
   })
-)
+);
 
-var hitTemplate = (hit) => `
+var hitTemplate = hit => `
   <article>
     <div class="product-picture-wrapper">
-      <div class="product-picture"><img src="https://image.tmdb.org/t/p/w45${hit.image_path}" /></div>
+      <div class="product-picture"><img src="https://image.tmdb.org/t/p/w45${
+        hit.image_path
+      }" /></div>
     </div>
     <div class="product-desc-wrapper">
       <div class="product-name">${hit._highlightResult.name.value}</div>
     </div>
-    <button data-objectid="${hit.objectID}" data-position="${hit.__hitIndex + 1}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
-    <button data-objectid="${hit.objectID}" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
+    <button data-query-id="${hit._queryID}" data-object-id="${
+  hit.objectID
+}" data-position="${
+  hit._hitPosition
+}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
+    <button data-query-id="${hit._queryID}" data-object-id="${
+  hit.objectID
+}" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
   </article>`;
 
 var noResultsTemplate = `<div class="text-center">No results found matching <strong>{{query}}</strong>.</div>`;
 
-var menuTemplate = (menu) => `
-  <div class="facet-item ${menu.isRefined ? "active":""}">
+var menuTemplate = menu => `
+  <div class="facet-item ${menu.isRefined ? "active" : ""}">
     <span class="facet-name">
       <i class="fa fa-angle-right"></i>
       ${menu.name}
@@ -62,20 +69,26 @@ var facetTemplateCheckbox =
   '<a href="javascript:void(0);" class="facet-item">' +
   '<input type="checkbox" class="{{cssClasses.checkbox}}" value="{{name}}" {{#isRefined}}checked{{/isRefined}} />{{name}}' +
   '<span class="facet-count">({{count}})</span>' +
-  '</a>';
+  "</a>";
 
 var facetTemplateColors =
   '<a href="javascript:void(0);" data-facet-value="{{name}}" class="facet-color {{#isRefined}}checked{{/isRefined}}"></a>';
 
 search.addWidget(
   hits({
-    container: '#hits',
+    container: "#hits",
     hitsPerPage: 16,
     templates: {
       empty: noResultsTemplate,
       item: hitTemplate
     },
     transformData: function(hit) {
+      var result = search.helper.lastResults;
+      var offset = result.hitsPerPage * result.page;
+
+      hit._queryID = result.queryID;
+      hit._hitPosition = offset + hit.__hitIndex + 1;
+
       hit.stars = [];
       for (var i = 1; i <= 5; ++i) {
         hit.stars.push(i <= hit.rating);
@@ -87,9 +100,9 @@ search.addWidget(
 
 search.addWidget(
   pagination({
-    container: '#pagination',
+    container: "#pagination",
     cssClasses: {
-      active: 'active'
+      active: "active"
     },
     labels: {
       previous: '<i class="fa fa-angle-left fa-2x"></i> Previous page',
@@ -101,9 +114,9 @@ search.addWidget(
 
 search.addWidget(
   hierarchicalMenu({
-    container: '#categories',
-    attributes: ['category', 'sub_category', 'sub_sub_category'],
-    sortBy: ['name:asc'],
+    container: "#categories",
+    attributes: ["category", "sub_category", "sub_sub_category"],
+    sortBy: ["name:asc"],
     templates: {
       item: menuTemplate
     }
@@ -112,9 +125,9 @@ search.addWidget(
 
 search.addWidget(
   refinementList({
-    container: '#materials',
-    attributeName: 'alternative_name',
-    operator: 'or',
+    container: "#materials",
+    attributeName: "alternative_name",
+    operator: "or",
     limit: 10,
     templates: {
       item: facetTemplateCheckbox,
@@ -125,9 +138,9 @@ search.addWidget(
 
 search.addWidget(
   refinementList({
-    container: '#colors',
-    attributeName: 'colors',
-    operator: 'or',
+    container: "#colors",
+    attributeName: "colors",
+    operator: "or",
     limit: 10,
     templates: {
       item: facetTemplateColors,
@@ -138,23 +151,22 @@ search.addWidget(
 
 search.addWidget(
   starRating({
-    container: '#rating',
-    attributeName: 'rating',
+    container: "#rating",
+    attributeName: "rating",
     templates: {
       header: '<div class="facet-title">Ratings</div class="facet-title">'
     }
   })
 );
 
-
 search.addWidget(
   clearAll({
-    container: '#clear-all',
+    container: "#clear-all",
     templates: {
       link: '<i class="fa fa-eraser"></i> Clear all filters'
     },
     cssClasses: {
-      root: 'btn btn-block btn-default'
+      root: "btn btn-block btn-default"
     },
     autoHideContainer: true
   })
@@ -162,42 +174,34 @@ search.addWidget(
 
 search.start();
 
-document.addEventListener('click', (e) => {
-  if(e.target.matches('.button-click')) {
-
-    aa('click', {
+document.addEventListener("click", e => {
+  if (e.target.matches(".button-click")) {
+    aa("clickedObjectIDsAfterSearch", {
       eventName: "hit-clicked",
-      indexName: process.env.INDEX_NAME,
-      objectID: [e.target.getAttribute('data-objectid')],
-      position: [parseInt(e.target.getAttribute('data-position'))]
-    })
-
-  } else if(e.target.matches('.button-convert')) {
-
-    aa('conversion', {
+      index: process.env.INDEX_NAME,
+      queryID: e.target.getAttribute("data-query-id"),
+      objectIDs: [e.target.getAttribute("data-object-id")],
+      positions: [parseInt(e.target.getAttribute("data-position"))]
+    });
+  } else if (e.target.matches(".button-convert")) {
+    aa("convertedObjectIDsAfterSearch", {
       eventName: "hit-converted",
-      indexName: process.env.INDEX_NAME,
-      objectID: [e.target.getAttribute('data-objectid')]
-    })
+      index: process.env.INDEX_NAME,
+      queryID: e.target.getAttribute("data-query-id"),
+      objectIDs: [e.target.getAttribute("data-object-id")]
+    });
   }
-})
+});
 
-aa('init', {
+aa("init", {
   apiKey: process.env.API_KEY,
   applicationID: process.env.APP_ID
-})
+});
 
-search.once('render',() => {
-  aa('initSearch', {
+search.once("render", () => {
+  aa("initSearch", {
     getQueryID: () => {
-      return search.helper.lastResults.queryID
+      return search.helper.lastResults.queryID;
     }
-  })
-})
-
-
-
-
-
-
-
+  });
+});
