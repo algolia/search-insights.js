@@ -1,23 +1,19 @@
 import { isNumber, isUndefined, isString, isFunction } from "./utils/index";
 
-declare var process: {
-  env: {
-    NODE_ENV: string;
-  };
-};
-
 export type InsightsEventType = "click" | "conversion";
 export type InsightsEvent = {
   eventType: InsightsEventType;
 
   eventName: string;
-  userID: string;
+  userToken: string;
   timestamp: number;
-  indexName: string;
+  index: string;
 
   queryID?: string;
-  objectID?: (string | number)[];
-  position?: number[];
+  objectIDs?: (string | number)[];
+  positions?: number[];
+  
+  filters?: string[];
 };
 
 /**
@@ -29,28 +25,35 @@ export function sendEvent(
   eventType: InsightsEventType,
   eventData: InsightsEvent
 ) {
-  // Add client timestamp and userID
+  if (this._userHasOptedOut) {
+    return;
+  }
+  if (!this._hasCredentials) {
+    throw new Error(
+      "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
+    );
+  }
 
   // mandatory params
   if (!isString(eventData.eventName)) {
     throw TypeError("expected required parameter `eventName` to be a string");
   }
-  if (!isString(eventData.indexName)) {
-    throw TypeError("expected required parameter `indexName` to be a string");
+  if (!isString(eventData.index)) {
+    throw TypeError("expected required parameter `index` to be a string");
   }
   if (!isUndefined(eventData.timestamp) && !isNumber(eventData.timestamp)) {
     throw TypeError("expected optional parameter `timestamp` to be a number");
   }
-  if (!isUndefined(eventData.userID) && !isString(eventData.userID)) {
-    throw TypeError("expected optional parameter `userID` to be a string");
+  if (!isUndefined(eventData.userToken) && !isString(eventData.userToken)) {
+    throw TypeError("expected optional parameter `userToken` to be a string");
   }
 
   const event: InsightsEvent = {
     eventType,
     eventName: eventData.eventName,
-    userID: eventData.userID || this._userID,
+    userToken: eventData.userToken || this._userToken,
     timestamp: eventData.timestamp || Date.now(),
-    indexName: eventData.indexName
+    index: eventData.index
   };
 
   // optional params
@@ -61,40 +64,55 @@ export function sendEvent(
     event.queryID = eventData.queryID;
   }
 
-  if (!isUndefined(eventData.objectID)) {
-    if (!Array.isArray(eventData.objectID)) {
-      throw TypeError("expected optional parameter `objectID` to be an array");
+  if (!isUndefined(eventData.objectIDs)) {
+    if (!Array.isArray(eventData.objectIDs)) {
+      throw TypeError("expected optional parameter `objectIDs` to be an array");
     }
-    event.objectID = eventData.objectID;
+    event.objectIDs = eventData.objectIDs;
   }
 
-  if (!isUndefined(eventData.position)) {
-    if (!Array.isArray(eventData.position)) {
-      throw TypeError("expected optional parameter `position` to be an array");
+  if (!isUndefined(eventData.positions)) {
+    if (!Array.isArray(eventData.positions)) {
+      throw TypeError("expected optional parameter `positions` to be an array");
     }
-    if (isUndefined(eventData.objectID)) {
-      throw new Error("Cannot use `position` without providing `objectID`");
+    if (isUndefined(eventData.objectIDs)) {
+      throw new Error("cannot use `positions` without providing `objectIDs`");
     }
-    if (eventData.objectID.length !== eventData.position.length) {
-      throw new Error("objectID and position need to be of the same size");
+    if (eventData.objectIDs.length !== eventData.positions.length) {
+      throw new Error("objectIDs and positions need to be of the same size");
     }
-    event.position = eventData.position;
+    event.positions = eventData.positions;
   }
 
-  bulkSendEvent(this._applicationID, this._apiKey, [event]);
+  if (!isUndefined(eventData.filters)) {
+    if (!isUndefined(eventData.objectIDs)) {
+      throw new Error(
+        "cannot use `objectIDs` and `filters` for the same event"
+      );
+    }
+    if (!Array.isArray(eventData.filters)) {
+      throw TypeError("expected optional parameter `filters` to be an array");
+    }
+    event.filters = eventData.filters;
+  }
+
+  if (isUndefined(eventData.objectIDs) && isUndefined(eventData.filters)) {
+    throw new Error("expected either `objectIDs` or `filters` to be provided");
+  }
+
+  bulkSendEvent(this._applicationID, this._apiKey, this._endpointOrigin, [
+    event
+  ]);
 }
 
 function bulkSendEvent(
   applicationID: string,
   apiKey: string,
+  endpointOrigin: string,
   events: InsightsEvent[]
 ) {
-  const reportingQueryOrigin =
-    process.env.NODE_ENV === "production"
-      ? `https://insights.algolia.io/1/events`
-      : `http://localhost:8080/1/events`;
   // Auth query
-  const reportingURL = `${reportingQueryOrigin}?X-Algolia-Application-Id=${applicationID}&X-Algolia-API-Key=${apiKey}`;
+  const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${applicationID}&X-Algolia-API-Key=${apiKey}`;
 
   // Detect navigator support
   const supportsNavigator = navigator && isFunction(navigator.sendBeacon);

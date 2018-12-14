@@ -2,7 +2,7 @@ import AlgoliaInsights from "../insights";
 import * as url from "url";
 
 jest.mock("../_cookieUtils", () => ({
-  userID: jest.fn(() => "mock-user-id")
+  userToken: jest.fn(() => "mock-user-id")
 }));
 
 const credentials = {
@@ -33,7 +33,8 @@ describe("sendEvent", () => {
     it("should make a post request to /1/events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       expect(XMLHttpRequest.open).toHaveBeenCalledTimes(1);
       const [verb, requestUrl] = XMLHttpRequest.open.mock.calls[0];
@@ -43,7 +44,8 @@ describe("sendEvent", () => {
     it("should pass over the payload with multiple events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
@@ -68,7 +70,8 @@ describe("sendEvent", () => {
     it("should use sendBeacon when available", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       expect(sendBeacon).toHaveBeenCalledTimes(1);
       expect(XMLHttpRequest.open).not.toHaveBeenCalled();
@@ -77,7 +80,8 @@ describe("sendEvent", () => {
     it("should call sendBeacon with /1/event", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       const [requestURL] = sendBeacon.mock.calls[0];
 
@@ -86,7 +90,8 @@ describe("sendEvent", () => {
     it("should send the correct payload", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       const payload = JSON.parse(sendBeacon.mock.calls[0][1]);
 
@@ -100,21 +105,41 @@ describe("sendEvent", () => {
     });
   });
 
+  describe("init", () => {
+    it("should throw if init was not called", () => {
+      expect(() => {
+        (AlgoliaInsights as any)._hasCredentials = false;
+        (AlgoliaInsights as any).sendEvent();
+      }).toThrowError(
+        "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
+      );
+    });
+    it("should do nothing is _userHasOptedOut === true", () => {
+      AlgoliaInsights._userHasOptedOut = true;
+      AlgoliaInsights.sendEvent("click", {
+        eventName: "my-event",
+        index: "my-index",
+        objectIDs: ["1"]
+      });
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(0);
+    });
+  });
+
   describe("eventName", () => {
     it("should throw if no eventName passed", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
-          indexName: "my-index"
+          index: "my-index"
         });
       }).toThrowErrorMatchingInlineSnapshot(
         `"expected required parameter \`eventName\` to be a string"`
       );
     });
-    it("should throw if no eventName passed", () => {
+    it("should throw if eventName is not a string", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: 3,
-          indexName: "my-index"
+          index: "my-index"
         });
       }).toThrowErrorMatchingInlineSnapshot(
         `"expected required parameter \`eventName\` to be a string"`
@@ -122,68 +147,68 @@ describe("sendEvent", () => {
     });
   });
 
-  describe("indexName", () => {
-    it("should throw if no indexName passed", () => {
+  describe("index", () => {
+    it("should throw if no index passed", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: "my-event"
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"expected required parameter \`indexName\` to be a string"`
+        `"expected required parameter \`index\` to be a string"`
       );
     });
-    it("should throw if no indexName is not a string", () => {
+    it("should throw if no index is not a string", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: "my-event",
-          indexName: 2
+          index: 2
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"expected required parameter \`indexName\` to be a string"`
+        `"expected required parameter \`index\` to be a string"`
       );
     });
   });
 
-  describe("objectID and position", () => {
-    it("should support multiple objectID and position", () => {
+  describe("objectIDs and positions", () => {
+    it("should support multiple objectIDs and positions", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index",
-        objectID: ["1", "2"],
-        position: [3, 5]
+        index: "my-index",
+        objectIDs: ["1", "2"],
+        positions: [3, 5]
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            objectID: ["1", "2"],
-            position: [3, 5]
+            objectIDs: ["1", "2"],
+            positions: [3, 5]
           })
         ]
       });
     });
-    it("should throw and error when objectID and position are not the same size", () => {
+    it("should throw and error when objectIDs and positions are not the same size", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: "my-event",
-          indexName: "my-index",
-          objectID: ["1", "2"],
-          position: [3]
+          index: "my-index",
+          objectIDs: ["1", "2"],
+          positions: [3]
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"objectID and position need to be of the same size"`
+        `"objectIDs and positions need to be of the same size"`
       );
     });
-    it("should throw and error when positions supplied but not objectID", () => {
+    it("should throw and error when positions supplied but not objectIDs", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: "my-event",
-          indexName: "my-index",
-          position: [3]
+          index: "my-index",
+          positions: [3]
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"Cannot use \`position\` without providing \`objectID\`"`
+        `"cannot use \`positions\` without providing \`objectIDs\`"`
       );
     });
   });
@@ -192,7 +217,8 @@ describe("sendEvent", () => {
     it("should add a timestamp if not provided", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
@@ -207,7 +233,8 @@ describe("sendEvent", () => {
     it("should pass over provided timestamp", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index",
+        index: "my-index",
+        objectIDs: ["1"],
         timestamp: 1984
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
@@ -222,37 +249,79 @@ describe("sendEvent", () => {
     });
   });
 
-  describe("userID", () => {
-    it("should add a userID if not provided", () => {
+  describe("userToken", () => {
+    it("should add a userToken if not provided", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index"
+        index: "my-index",
+        objectIDs: ["1"]
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            userID: "mock-user-id"
+            userToken: "mock-user-id"
           })
         ]
       });
     });
-    it("should pass over provided userID", () => {
+    it("should pass over provided userToken", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
-        indexName: "my-index",
-        userID: "007"
+        index: "my-index",
+        objectIDs: ["1"],
+        userToken: "007"
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            userID: "007"
+            userToken: "007"
           })
         ]
       });
+    });
+  });
+  describe("filters", () => {
+    it("should pass over provided filters", () => {
+      (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        index: "my-index",
+        filters: ["brand:Apple"]
+      });
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            filters: ["brand:Apple"]
+          })
+        ]
+      });
+    });
+    it("should throw and error when objectIDs and filter are both provided", () => {
+      expect(() => {
+        (AlgoliaInsights as any).sendEvent("click", {
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1", "2"],
+          filters: ["brand:Apple"]
+        });
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"cannot use \`objectIDs\` and \`filters\` for the same event"`
+      );
+    });
+    it("should throw and error when neither objectIDs or filters are provided", () => {
+      expect(() => {
+        (AlgoliaInsights as any).sendEvent("click", {
+          eventName: "my-event",
+          index: "my-index"
+        });
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"expected either \`objectIDs\` or \`filters\` to be provided"`
+      );
     });
   });
 });

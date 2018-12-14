@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="container-fluid">
-    <ais-index :searchStore="searchStore" :queryParameters="{clickAnalytics: true}" :indexName="process.env.INDEX_NAME">
+    <ais-index :searchStore="searchStore" :queryParameters="{clickAnalytics: true}" :index="process.env.INDEX_NAME">
       <div class="row">
         <div class="col-md-2 col-sm-3">
           <h1 class="head-title">
@@ -99,17 +99,17 @@ export default {
       const position = this.prefix + index + 1;
       window.aa("click", {
         eventName: "hit-clicked",
-        indexName: process.env.INDEX_NAME,
-        objectID: [objectID],
-        position: [position]
+        index: process.env.INDEX_NAME,
+        objectIDs: [objectID],
+        positions: [position]
       });
     },
     // reporting a conversion
     convert({ result: { objectID } }) {
       window.aa("conversion", {
         eventName: "hit-converted",
-        indexName: process.env.INDEX_NAME,
-        objectID: [objectID]
+        index: process.env.INDEX_NAME,
+        objectIDs: [objectID]
       });
     },
   },
