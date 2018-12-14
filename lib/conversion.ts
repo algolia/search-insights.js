@@ -2,7 +2,7 @@ import { InsightsEvent } from "./_sendEvent";
 
 export interface InsightsSearchConversionEvent {
   eventName: string;
-  userID: string;
+  userToken: string;
   timestamp: number;
   index: string;
 
@@ -14,12 +14,12 @@ export interface InsightsSearchConversionEvent {
  * Sends a conversion report in the context of search
  * @param params InsightsSearchConversionEvent
  */
-export function convertedObjectIDInSearch(
+export function convertedObjectIDsAfterSearch(
   params: InsightsSearchConversionEvent
 ) {
   if (!params) {
     throw new Error(
-      "No params were sent to convertedObjectIDInSearch function, please provide `queryID` and `objectIDs` to be reported"
+      "No params were sent to convertedObjectIDsAfterSearch function, please provide `queryID` and `objectIDs` to be reported"
     );
   }
   if (!params.queryID) {
@@ -38,7 +38,7 @@ export function convertedObjectIDInSearch(
 
 export interface InsightsSearchConversionObjectIDsEvent {
   eventName: string;
-  userID: string;
+  userToken: string;
   timestamp: number;
   index: string;
 
@@ -67,7 +67,7 @@ export function convertedObjectIDs(
 
 export interface InsightsSearchConversionFiltersEvent {
   eventName: string;
-  userID: string;
+  userToken: string;
   timestamp: number;
   index: string;
 
