@@ -160,11 +160,11 @@ describe("Integration tests", () => {
         expect(event.objectIDs).toEqual([objectIDs]);
         expect(event.positions).toEqual([2]);
       });
-      it("should include an timestamp", () => {
+      it("should not include an timestamp as it was not passed", () => {
         const {
           events: [event]
         } = payload;
-        expect(event).toHaveProperty("timestamp");
+        expect(event).not.toHaveProperty("timestamp");
       });
     });
   });

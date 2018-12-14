@@ -214,7 +214,7 @@ describe("sendEvent", () => {
   });
 
   describe("timestamp", () => {
-    it("should add a timestamp if not provided", () => {
+    it("should not add a timestamp if not provided", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
@@ -222,13 +222,7 @@ describe("sendEvent", () => {
       });
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
-      expect(payload).toEqual({
-        events: [
-          expect.objectContaining({
-            timestamp: expect.any(Number)
-          })
-        ]
-      });
+      expect(payload.events[0]).not.toHaveProperty("timestamp");
     });
     it("should pass over provided timestamp", () => {
       (AlgoliaInsights as any).sendEvent("click", {

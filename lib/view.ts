@@ -3,7 +3,7 @@ import { InsightsEvent } from "./_sendEvent";
 export interface InsightsViewObjectIDsEvent {
   eventName: string;
   userToken: string;
-  timestamp: number;
+  timestamp?: number;
   index: string;
 
   objectIDs: (string | number)[];
@@ -30,7 +30,7 @@ export function viewedObjectIDs(params: InsightsViewObjectIDsEvent) {
 export interface InsightsViewFiltersEvent {
   eventName: string;
   userToken: string;
-  timestamp: number;
+  timestamp?: number;
   index: string;
 
   filters: string[];

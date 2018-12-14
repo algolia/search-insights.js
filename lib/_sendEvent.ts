@@ -1,18 +1,18 @@
 import { isNumber, isUndefined, isString, isFunction } from "./utils/index";
 
-export type InsightsEventType = "click" | "conversion";
+export type InsightsEventType = "click" | "conversion" | "view";
 export type InsightsEvent = {
   eventType: InsightsEventType;
 
   eventName: string;
   userToken: string;
-  timestamp: number;
+  timestamp?: number;
   index: string;
 
   queryID?: string;
   objectIDs?: (string | number)[];
   positions?: number[];
-  
+
   filters?: string[];
 };
 
@@ -41,9 +41,6 @@ export function sendEvent(
   if (!isString(eventData.index)) {
     throw TypeError("expected required parameter `index` to be a string");
   }
-  if (!isUndefined(eventData.timestamp) && !isNumber(eventData.timestamp)) {
-    throw TypeError("expected optional parameter `timestamp` to be a number");
-  }
   if (!isUndefined(eventData.userToken) && !isString(eventData.userToken)) {
     throw TypeError("expected optional parameter `userToken` to be a string");
   }
@@ -52,11 +49,17 @@ export function sendEvent(
     eventType,
     eventName: eventData.eventName,
     userToken: eventData.userToken || this._userToken,
-    timestamp: eventData.timestamp || Date.now(),
     index: eventData.index
   };
 
   // optional params
+  if (!isUndefined(eventData.timestamp)) {
+    if (!isNumber(eventData.timestamp)) {
+      throw TypeError("expected optional parameter `timestamp` to be a number");
+    }
+    event.timestamp = eventData.timestamp;
+  }
+
   if (!isUndefined(eventData.queryID)) {
     if (!isString(eventData.queryID)) {
       throw TypeError("expected optional parameter `queryID` to be a string");
