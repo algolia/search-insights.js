@@ -23,10 +23,7 @@ export default {
     buble(),
     commonjs(),
     uglify(),
-    filesize(),
-    replace({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    })
+    filesize()
   ],
   targets: [
     { dest: `./dist/${LIBRARY_OUTPUT_NAME}.min.js`, format: 'umd' },
