@@ -1,12 +1,16 @@
 import { isUndefined, isString } from "./utils/index";
+import { userToken } from "./_cookieUtils";
+import { isNumber } from "util";
 
 type InsightRegion = "de" | "us";
 const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
+const MONTH = 30 * 24 * 60 * 60 * 1000;
 
 export interface InitParams {
   apiKey: string;
   applicationID: string;
   userHasOptedOut?: boolean;
+  cookieDuration?: number;
   region?: InsightRegion;
 }
 
@@ -40,6 +44,14 @@ export function init(options: InitParams) {
       )}.`
     );
   }
+  if (
+    !isUndefined(options.cookieDuration) &&
+    (!isNumber(options.cookieDuration) || !isFinite(options.cookieDuration) || Math.floor(options.cookieDuration) !== options.cookieDuration)
+  ) {
+    throw new Error(
+      `optional cookieDuration is incorrect, expected an integer`
+    );
+  }
 
   this._apiKey = options.apiKey;
   this._applicationID = options.applicationID;
@@ -51,4 +63,10 @@ export function init(options: InitParams) {
 
   // Set hasCredentials
   this._hasCredentials = true;
+
+  const cookieDuration = options.cookieDuration
+    ? options.cookieDuration
+    : 6 * MONTH;
+
+  this._userToken = userToken(null, cookieDuration);
 }

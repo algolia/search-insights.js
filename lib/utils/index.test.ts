@@ -1,4 +1,10 @@
-import { isFunction, isNumber, isString, isUndefined } from "./index";
+import {
+  isFunction,
+  isNumber,
+  isString,
+  isUndefined,
+  createUUID
+} from "./index";
 
 describe("isUndefined", () => {
   test.each`
@@ -45,5 +51,11 @@ describe("isFunction", () => {
     ${() => null} | ${true}
   `("should return $expected when passed $input", ({ input, expected }) => {
     expect(isFunction(input)).toEqual(expected);
+  });
+});
+
+describe("createUUID", () => {
+  it("should return a string composed of valid hex characters or dashes `-`", () => {
+    expect(createUUID()).toMatch(/^[0-9a-f\-]+$/);
   });
 });
