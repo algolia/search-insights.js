@@ -14,12 +14,12 @@ export interface InsightsSearchConversionEvent {
  * Sends a conversion report in the context of search
  * @param params InsightsSearchConversionEvent
  */
-export function convertedObjectIDInSearch(
+export function convertedObjectIDsAfterSearch(
   params: InsightsSearchConversionEvent
 ) {
   if (!params) {
     throw new Error(
-      "No params were sent to convertedObjectIDInSearch function, please provide `queryID` and `objectIDs` to be reported"
+      "No params were sent to convertedObjectIDsAfterSearch function, please provide `queryID` and `objectIDs` to be reported"
     );
   }
   if (!params.queryID) {
