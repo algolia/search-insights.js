@@ -7,9 +7,9 @@ const COOKIE_KEY = "_ALGOLIA";
  * @param {[type]} cvalue [description]
  * @param {[type]} exdays [description]
  */
-const setCookie = (cname: string, cvalue: string, exdays: number) => {
+const setCookie = (cname: string, cvalue: string, cookieDuration: number) => {
   const d = new Date();
-  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+  d.setTime(d.getTime() + cookieDuration);
   const expires = `expires=${d.toUTCString()}`;
   document.cookie = `${cname}=${cvalue};${expires};path=/`;
 };
@@ -39,15 +39,18 @@ const getCookie = (cname: string): string => {
  * Return new UUID
  * @return {[string]} new UUID
  */
-const checkUserIdCookie = (userSpecifiedID?: string | number): string => {
+const checkUserIdCookie = (
+  userSpecifiedID?: string | number,
+  cookieDuration?: number
+): string => {
   const userToken = getCookie(COOKIE_KEY);
 
   if (!userToken || userToken === "") {
     const newUUID = createUUID();
-    setCookie(COOKIE_KEY, newUUID, 10);
+    setCookie(COOKIE_KEY, newUUID, cookieDuration);
     return newUUID;
   }
-  setCookie(COOKIE_KEY, userToken, 10);
+  setCookie(COOKIE_KEY, userToken, cookieDuration);
   return userToken;
 };
 
