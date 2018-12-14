@@ -24,7 +24,7 @@ helper.on("result", function(content) {
 const hit = (hit, index) => {
   return `
     <div className="col-3">${hit.name}
-      <button onclick="aa('clickedObjectIDInSearch',{objectIDs: [${
+      <button onclick="aa('clickedObjectIDsAfterSearch',{objectIDs: [${
         hit.objectID
       }], positions: [${index + 1}]})">Click</button>
       <button onclick="aa('conversion',{objectIDs: [${

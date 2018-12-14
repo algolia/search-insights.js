@@ -2,7 +2,7 @@ import { InsightsEvent } from "./_sendEvent";
 
 export interface InsightsSearchClickEvent {
   eventName: string;
-  userID: string;
+  userToken: string;
   timestamp: number;
   index: string;
 
@@ -15,10 +15,10 @@ export interface InsightsSearchClickEvent {
  * Sends a click report in the context of search
  * @param params: InsightsSearchClickEvent
  */
-export function clickedObjectIDInSearch(params: InsightsSearchClickEvent) {
+export function clickedObjectIDsAfterSearch(params: InsightsSearchClickEvent) {
   if (!params) {
     throw new Error(
-      "No params were sent to clickedObjectIDInSearch function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
+      "No params were sent to clickedObjectIDsAfterSearch function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
     );
   }
   if (!params.queryID) {
@@ -42,7 +42,7 @@ export function clickedObjectIDInSearch(params: InsightsSearchClickEvent) {
 
 export interface InsightsClickObjectIDsEvent {
   eventName: string;
-  userID: string;
+  userToken: string;
   timestamp: number;
   index: string;
 
@@ -53,10 +53,10 @@ export interface InsightsClickObjectIDsEvent {
  * Sends a click report using objectIDs
  * @param params: InsightsClickObjectIDsEvent
  */
-export function clickedObjectID(params: InsightsClickObjectIDsEvent) {
+export function clickedObjectIDs(params: InsightsClickObjectIDsEvent) {
   if (!params) {
     throw new Error(
-      "No params were sent to clickedObjectID function, please provide `objectIDs` to be reported"
+      "No params were sent to clickedObjectIDs function, please provide `objectIDs` to be reported"
     );
   }
   if (!params.objectIDs) {
@@ -70,7 +70,7 @@ export function clickedObjectID(params: InsightsClickObjectIDsEvent) {
 
 export interface InsightsClickFiltersEvent {
   eventName: string;
-  userID: string;
+  userToken: string;
   timestamp: number;
   index: string;
 

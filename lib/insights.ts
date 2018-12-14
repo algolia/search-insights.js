@@ -7,21 +7,21 @@ objectAssignPolyfill();
 import { processQueue } from "./_processQueue";
 import { sendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
 import { StorageManager } from "./_storageManager";
-import { userID } from "./_cookieUtils";
+import { userToken } from "./_cookieUtils";
 
 import { InitParams, init } from "./init";
 import { initSearch, InitSearchParams } from "./_initSearch";
 import {
   InsightsSearchClickEvent,
-  clickedObjectIDInSearch,
+  clickedObjectIDsAfterSearch,
   InsightsClickObjectIDsEvent,
-  clickedObjectID,
+  clickedObjectIDs,
   InsightsClickFiltersEvent,
   clickedFilters
 } from "./click";
 import {
   InsightsSearchConversionEvent,
-  convertedObjectIDInSearch,
+  convertedObjectIDsAfterSearch,
   InsightsSearchConversionObjectIDsEvent,
   convertedObjectIDs,
   InsightsSearchConversionFiltersEvent,
@@ -56,7 +56,10 @@ declare global {
 class AlgoliaAnalytics {
   _apiKey: string;
   _applicationID: string;
-  _userID: string;
+  _region: string;
+  _endpointOrigin: string;
+  _userToken: string;
+  _userHasOptedOut: boolean;
 
   // LocalStorage
   storageManager: StorageManager;
@@ -72,10 +75,10 @@ class AlgoliaAnalytics {
   // Public methods
   public init: (params: InitParams) => void;
   public initSearch: (params: InitSearchParams) => void;
-  public clickedObjectIDInSearch: (params?: InsightsSearchClickEvent) => void;
-  public clickedObjectID: (params?: InsightsClickObjectIDsEvent) => void;
+  public clickedObjectIDsAfterSearch: (params?: InsightsSearchClickEvent) => void;
+  public clickedObjectIDs: (params?: InsightsClickObjectIDsEvent) => void;
   public clickedFilters: (params?: InsightsClickFiltersEvent) => void;
-  public convertedObjectIDInSearch: (
+  public convertedObjectIDsAfterSearch: (
     params?: InsightsSearchConversionEvent
   ) => void;
   public convertedObjectIDs: (
@@ -107,18 +110,18 @@ class AlgoliaAnalytics {
     this.init = init.bind(this);
     this.initSearch = initSearch.bind(this);
 
-    this.clickedObjectIDInSearch = clickedObjectIDInSearch.bind(this);
-    this.clickedObjectID = clickedObjectID.bind(this);
+    this.clickedObjectIDsAfterSearch = clickedObjectIDsAfterSearch.bind(this);
+    this.clickedObjectIDs = clickedObjectIDs.bind(this);
     this.clickedFilters = clickedFilters.bind(this);
 
-    this.convertedObjectIDInSearch = convertedObjectIDInSearch.bind(this);
+    this.convertedObjectIDsAfterSearch = convertedObjectIDsAfterSearch.bind(this);
     this.convertedObjectIDs = convertedObjectIDs.bind(this);
     this.convertedFilters = convertedFilters.bind(this);
 
     this.viewedObjectIDs = viewedObjectIDs.bind(this);
     this.viewedFilters = viewedFilters.bind(this);
 
-    this._userID = userID();
+    this._userToken = userToken();
 
     // Process queue upon script execution
     this.processQueue();
