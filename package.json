@@ -3,6 +3,7 @@
   "version": "0.0.15",
   "description": "Search analytics by Algolia",
   "jsdelivr": "dist/search-insights.min.js",
+  "main": "dist/search-insights.min.js",
   "scripts": {
     "deploy": "yarn build && /bin/bash ./pre-deploy.sh && npm publish",
     "lint": "tslint ./lib/**/*.ts",
@@ -14,6 +15,10 @@
     "build:test": "yarn run jest",
     "build:examples": "webpack --config config/webpack.config.js --color --progress",
     "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/search-insights.js.git"
   },
   "author": {
     "name": "Jonas Badalic",
