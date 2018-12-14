@@ -9,18 +9,15 @@ export interface InsightsSearchConversionEvent {
 }
 
 /**
- * Checks params for conversion report and sends query
+ * Sends a conversion report in the context of search
  * @param params InsightsSearchConversionEvent
  */
-export function conversion(params: InsightsSearchConversionEvent) {
-  if (!this._hasCredentials) {
-    throw new Error(
-      "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
-    );
-  }
+export function convertedObjectIDsAfterSearch(
+  params: InsightsSearchConversionEvent
+) {
   if (!params) {
     throw new Error(
-      "No params were sent to conversion function, please provide `queryID` and `objectIDs` to be reported"
+      "No params were sent to convertedObjectIDsAfterSearch function, please provide `queryID` and `objectIDs` to be reported"
     );
   }
   if (!params.queryID) {
@@ -34,6 +31,62 @@ export function conversion(params: InsightsSearchConversionEvent) {
     );
   }
 
-  // Send event
-  this.sendEvent("conversion", params);
+  this.sendEvent("conversion", params as InsightsEvent);
+}
+
+export interface InsightsSearchConversionObjectIDsEvent {
+  eventName: string;
+  userToken: string;
+  timestamp: number;
+  index: string;
+
+  objectIDs: (string | number)[];
+}
+/**
+ * Sends a conversion report using objectIDs
+ * @param params InsightsSearchConversionObjectIDsEvent
+ */
+export function convertedObjectIDs(
+  params: InsightsSearchConversionObjectIDsEvent
+) {
+  if (!params) {
+    throw new Error(
+      "No params were sent to convertedObjectIDs function, please provide `objectIDs` to be reported"
+    );
+  }
+
+  if (!params.objectIDs) {
+    throw new Error(
+      "required objectIDs parameter was not sent, conversion event can not be properly sent without"
+    );
+  }
+
+  this.sendEvent("conversion", params as InsightsEvent);
+}
+
+export interface InsightsSearchConversionFiltersEvent {
+  eventName: string;
+  userToken: string;
+  timestamp: number;
+  index: string;
+
+  filters: string[];
+}
+/**
+ * Sends a conversion report using filters
+ * @param params InsightsSearchConversionFiltersEvent
+ */
+export function convertedFilters(params: InsightsSearchConversionFiltersEvent) {
+  if (!params) {
+    throw new Error(
+      "No params were sent to convertedFilters function, please provide `filters` to be reported"
+    );
+  }
+  if (!params.filters) {
+    throw new Error(
+      "required filters parameter was not sent, conversion event can not be properly sent without"
+    );
+  }
+
+  this.sendEvent("conversion", params as InsightsEvent);
 }

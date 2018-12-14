@@ -33,11 +33,11 @@ var hitTemplate = (hit, i) => `
   <div class="product-desc-wrapper">
     <div class="product-name">${hit.name}</div>
   </div>
-  <button data-object-id="${hit.objectID}" data-position="${i +
+  <button objectID="${hit.objectID}" position="${i +
   1}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
-  <a data-object-id="${hit.objectID}" data-position="${i +
+  <a data-object-id="${hit.objectID}" position="${i +
   1}" href="http://localhost:8080/product.html" class="button-click" style="background: blue;padding: 10px 12px; color: white;">VIEW ITEM</a>
-  <button data-object-id="${
+  <button objectID="${
     hit.objectID
   }" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">ADD TO CART</button>
 </article>`;
@@ -84,17 +84,17 @@ window.aa("init", {
 // Analytics
 document.addEventListener("click", e => {
   if (e.target.matches(".button-click")) {
-    window.aa("click", {
+    window.aa("clickedObjectIDsAfterSearch", {
       eventName: "hit-clicked",
       index: process.env.INDEX_NAME,
-      objectIDs: [e.target.getAttribute("data-object-id")],
-      positions: [e.target.getAttribute("data-position")]
+      objectIDs: [e.target.getAttribute("objectid")],
+      positions: [e.target.getAttribute("position")]
     });
   } else if (e.target.matches(".button-convert")) {
-    window.aa("conversion", {
+    window.aa("convertedObjectIDsAfterSearch", {
       eventName: "hit-converted",
       index: process.env.INDEX_NAME,
-      objectIDs: [e.target.getAttribute("data-object-id")]
+      objectIDs: [e.target.getAttribute("objectid")]
     });
   }
 });
