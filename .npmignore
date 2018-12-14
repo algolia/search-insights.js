@@ -1,9 +1,0 @@
-config
-examples
-server
-tests
-.gitignore
-.nvmrc
-.travis.yml
-pre-deploy.sh
-tsconfig.json
