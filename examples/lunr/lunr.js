@@ -84,14 +84,14 @@ window.aa("init", {
 // Analytics
 document.addEventListener("click", e => {
   if (e.target.matches(".button-click")) {
-    window.aa("click", {
+    window.aa("clickedObjectIDsAfterSearch", {
       eventName: "hit-clicked",
       index: process.env.INDEX_NAME,
       objectIDs: [e.target.getAttribute("objectid")],
       positions: [e.target.getAttribute("position")]
     });
   } else if (e.target.matches(".button-convert")) {
-    window.aa("conversion", {
+    window.aa("convertedObjectIDsAfterSearch", {
       eventName: "hit-converted",
       index: process.env.INDEX_NAME,
       objectIDs: [e.target.getAttribute("objectid")]
