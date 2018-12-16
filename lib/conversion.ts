@@ -1,5 +1,4 @@
 export interface InsightsSearchConversionEvent {
-  eventName: string;
   userToken: string;
   timestamp?: number;
   index: string;

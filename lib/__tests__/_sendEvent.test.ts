@@ -123,23 +123,23 @@ describe("sendEvent", () => {
   });
 
   describe("eventName", () => {
-    it("should throw if no eventName passed", () => {
+    it("should not throw if no eventName passed", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
-          index: "my-index"
+          index: "my-index",
+          objectIDs: ["1"]
         });
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"expected required parameter \`eventName\` to be a string"`
-      );
+      }).not.toThrow();
     });
     it("should throw if eventName is not a string", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: 3,
-          index: "my-index"
+          index: "my-index",
+          objectIDs: ["1"]
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"expected required parameter \`eventName\` to be a string"`
+        `"expected optional parameter \`eventName\` to be a string"`
       );
     });
   });
