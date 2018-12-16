@@ -1,7 +1,7 @@
 import { InsightsEvent } from "./_sendEvent";
 
 export interface InsightsSearchClickEvent {
-  userToken: string;
+  userToken?: string;
   timestamp?: number;
   index: string;
 
@@ -41,7 +41,7 @@ export function clickedObjectIDsAfterSearch(params: InsightsSearchClickEvent) {
 
 export interface InsightsClickObjectIDsEvent {
   eventName: string;
-  userToken: string;
+  userToken?: string;
   timestamp?: number;
   index: string;
 
@@ -69,7 +69,7 @@ export function clickedObjectIDs(params: InsightsClickObjectIDsEvent) {
 
 export interface InsightsClickFiltersEvent {
   eventName: string;
-  userToken: string;
+  userToken?: string;
   timestamp?: number;
   index: string;
 
