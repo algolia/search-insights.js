@@ -1,10 +1,6 @@
 import AlgoliaInsights from "../insights";
 import * as url from "url";
 
-jest.mock("../_cookieUtils", () => ({
-  userToken: jest.fn(() => "mock-user-id")
-}));
-
 const credentials = {
   apiKey: "test",
   applicationID: "test"
@@ -15,6 +11,7 @@ describe("sendEvent", () => {
 
   beforeEach(() => {
     AlgoliaInsights.init(credentials);
+    AlgoliaInsights.setUserToken("mock-user-id");
     XMLHttpRequest = {
       open: jest.spyOn((window as any).XMLHttpRequest.prototype, "open"),
       send: jest.spyOn((window as any).XMLHttpRequest.prototype, "send")

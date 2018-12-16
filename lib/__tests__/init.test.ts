@@ -1,11 +1,6 @@
 import AlgoliaInsights from "../insights";
-import { userToken } from "../_cookieUtils";
-jest.mock("../_cookieUtils", () => ({ userToken: jest.fn() }));
 
 describe("init", () => {
-  beforeEach(() => {
-    userToken.mockClear();
-  });
   it("should throw if no parameters is passed", () => {
     expect(() => {
       (AlgoliaInsights as any).init();
@@ -65,8 +60,7 @@ describe("init", () => {
   it("should use 6 months cookieDuration by default", () => {
     AlgoliaInsights.init({ apiKey: "***", applicationID: "XXX" });
     const month = 30 * 24 * 60 * 60 * 1000;
-    expect(userToken).toHaveBeenCalledTimes(1);
-    expect(userToken.mock.calls[0][1]).toBe(6 * month);
+    expect(AlgoliaInsights._cookieDuration).toBe(6 * month);
   });
   it.each(["not a string", 0.002, NaN])(
     "should throw if cookieDuration passed but is not an integer (eg. %s)",
@@ -88,8 +82,7 @@ describe("init", () => {
       applicationID: "XXX",
       cookieDuration: 42
     });
-    expect(userToken).toHaveBeenCalledTimes(1);
-    expect(userToken.mock.calls[0][1]).toBe(42);
+    expect(AlgoliaInsights._cookieDuration).toBe(42);
   });
   it("should set _endpointOrigin on instance to https://insights.algolia.io", () => {
     AlgoliaInsights.init({ apiKey: "***", applicationID: "XXX" });
