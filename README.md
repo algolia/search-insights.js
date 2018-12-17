@@ -56,6 +56,7 @@ const search = instantsearch({
 ```
 
 ## In the context of search (Click Analytics & A/B testing)
+
 ### Initialize
 
 ```js
@@ -75,12 +76,12 @@ function getQueryID() {
 ### Reporting a click event
 
 ```js
-aa('clickedObjectIDsAfterSearch', {
-    index: 'INDEX_NAME',
-    eventName: 'Clicked item',
-    queryID: getQueryID(),
-    objectIDs: [ 'object1' ],
-    positions: [ 42 ]
+aa("clickedObjectIDsAfterSearch", {
+  index: "INDEX_NAME",
+  eventName: "Clicked item",
+  queryID: getQueryID(),
+  objectIDs: ["object1"],
+  positions: [42]
 });
 ```
 
@@ -107,7 +108,9 @@ aa('convertedObjectIDsAfterSearch', {
 - **queryID**: queryID of the related search \*required
 
 ## In the context of Personalization:
+
 ### Initialize
+
 ```js
 const search = instantsearch({
   appId: "APPLICATION_ID",
@@ -131,6 +134,7 @@ aa('clickedObjectIDs', {
     objectIDs: [ 'object1' ]
 });
 ```
+
 - **index**: name of the index searched. \*required
 - **eventName**: name of the event. \*required
 - **objectIDs**: it is the ID of the result that has been clicked. \*required
