@@ -4,7 +4,7 @@ export type InsightsEventType = "click" | "conversion" | "view";
 export type InsightsEvent = {
   eventType: InsightsEventType;
 
-  eventName: string;
+  eventName?: string;
   userToken: string;
   timestamp?: number;
   index: string;
@@ -35,9 +35,6 @@ export function sendEvent(
   }
 
   // mandatory params
-  if (!isString(eventData.eventName)) {
-    throw TypeError("expected required parameter `eventName` to be a string");
-  }
   if (!isString(eventData.index)) {
     throw TypeError("expected required parameter `index` to be a string");
   }
@@ -53,6 +50,10 @@ export function sendEvent(
   };
 
   // optional params
+  if (!isUndefined(eventData.eventName) && !isString(eventData.eventName)) {
+    throw TypeError("expected optional parameter `eventName` to be a string");
+  }
+
   if (!isUndefined(eventData.timestamp)) {
     if (!isNumber(eventData.timestamp)) {
       throw TypeError("expected optional parameter `timestamp` to be a number");

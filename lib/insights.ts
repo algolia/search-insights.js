@@ -32,6 +32,7 @@ import {
   InsightsSearchViewFiltersEvent,
   viewedFilters
 } from "./view";
+import { ANONYMOUS_USER_TOKEN, getUserToken, setUserToken } from "./_cookieUtils";
 
 type Queue = {
   queue: string[][];
@@ -75,7 +76,14 @@ class AlgoliaAnalytics {
   // Public methods
   public init: (params: InitParams) => void;
   public initSearch: (params: InitSearchParams) => void;
-  public clickedObjectIDsAfterSearch: (params?: InsightsSearchClickEvent) => void;
+
+  public ANONYMOUS_USER_TOKEN: string;
+  public setUserToken: (userToken: string) => void;
+  public getUserToken: () => string;
+
+  public clickedObjectIDsAfterSearch: (
+    params?: InsightsSearchClickEvent
+  ) => void;
   public clickedObjectIDs: (params?: InsightsClickObjectIDsEvent) => void;
   public clickedFilters: (params?: InsightsClickFiltersEvent) => void;
   public convertedObjectIDsAfterSearch: (
@@ -110,17 +118,24 @@ class AlgoliaAnalytics {
     this.init = init.bind(this);
     this.initSearch = initSearch.bind(this);
 
+    this.ANONYMOUS_USER_TOKEN = ANONYMOUS_USER_TOKEN;
+    this.setUserToken = setUserToken.bind(this);
+    this.getUserToken = getUserToken.bind(this);
+
     this.clickedObjectIDsAfterSearch = clickedObjectIDsAfterSearch.bind(this);
     this.clickedObjectIDs = clickedObjectIDs.bind(this);
     this.clickedFilters = clickedFilters.bind(this);
 
-    this.convertedObjectIDsAfterSearch = convertedObjectIDsAfterSearch.bind(this);
+    this.convertedObjectIDsAfterSearch = convertedObjectIDsAfterSearch.bind(
+      this
+    );
     this.convertedObjectIDs = convertedObjectIDs.bind(this);
     this.convertedFilters = convertedFilters.bind(this);
 
     this.viewedObjectIDs = viewedObjectIDs.bind(this);
     this.viewedFilters = viewedFilters.bind(this);
 
+    this.setUserToken(this.ANONYMOUS_USER_TOKEN);
     // Process queue upon script execution
     this.processQueue();
   }
