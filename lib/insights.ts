@@ -55,7 +55,7 @@ declare global {
  */
 class AlgoliaAnalytics {
   _apiKey: string;
-  _applicationID: string;
+  _appId: string;
   _region: string;
   _endpointOrigin: string;
   _userToken: string;

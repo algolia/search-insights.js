@@ -30,7 +30,7 @@ export function sendEvent(
   }
   if (!this._hasCredentials) {
     throw new Error(
-      "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
+      "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
     );
   }
 
@@ -38,6 +38,10 @@ export function sendEvent(
   if (!isString(eventData.index)) {
     throw TypeError("expected required parameter `index` to be a string");
   }
+  if (!isString(eventData.eventName)) {
+    throw TypeError("expected required parameter `eventName` to be a string");
+  }
+
   if (!isUndefined(eventData.userToken) && !isString(eventData.userToken)) {
     throw TypeError("expected optional parameter `userToken` to be a string");
   }
@@ -50,10 +54,6 @@ export function sendEvent(
   };
 
   // optional params
-  if (!isUndefined(eventData.eventName) && !isString(eventData.eventName)) {
-    throw TypeError("expected optional parameter `eventName` to be a string");
-  }
-
   if (!isUndefined(eventData.timestamp)) {
     if (!isNumber(eventData.timestamp)) {
       throw TypeError("expected optional parameter `timestamp` to be a number");
@@ -104,19 +104,19 @@ export function sendEvent(
     throw new Error("expected either `objectIDs` or `filters` to be provided");
   }
 
-  bulkSendEvent(this._applicationID, this._apiKey, this._endpointOrigin, [
+  bulkSendEvent(this._appId, this._apiKey, this._endpointOrigin, [
     event
   ]);
 }
 
 function bulkSendEvent(
-  applicationID: string,
+  appId: string,
   apiKey: string,
   endpointOrigin: string,
   events: InsightsEvent[]
 ) {
   // Auth query
-  const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${applicationID}&X-Algolia-API-Key=${apiKey}`;
+  const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}`;
 
   // Detect navigator support
   const supportsNavigator = navigator && isFunction(navigator.sendBeacon);

@@ -10,7 +10,6 @@ import {
   hierarchicalMenu,
   refinementList,
   starRating,
-  sortBySelector,
   clearAll
 } from "instantsearch.js/es/widgets";
 
@@ -192,18 +191,4 @@ document.addEventListener("click", e => {
       objectIDs: [e.target.getAttribute("data-object-id")]
     });
   }
-});
-
-window.aa("init", {
-  apiKey: process.env.API_KEY,
-  applicationID: process.env.APP_ID
-});
-
-search.once("render", () => {
-  // Init search UI
-  window.aa("initSearch", {
-    getQueryID: () => {
-      return search.helper.lastResults.queryID;
-    }
-  });
 });

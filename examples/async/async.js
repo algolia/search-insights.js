@@ -177,7 +177,6 @@ search.start();
 document.addEventListener("click", e => {
   if (e.target.matches(".button-click")) {
     aa("clickedObjectIDsAfterSearch", {
-      eventName: "hit-clicked",
       index: process.env.INDEX_NAME,
       queryID: e.target.getAttribute("data-query-id"),
       objectIDs: [e.target.getAttribute("data-object-id")],
@@ -185,7 +184,6 @@ document.addEventListener("click", e => {
     });
   } else if (e.target.matches(".button-convert")) {
     aa("convertedObjectIDsAfterSearch", {
-      eventName: "hit-converted",
       index: process.env.INDEX_NAME,
       queryID: e.target.getAttribute("data-query-id"),
       objectIDs: [e.target.getAttribute("data-object-id")]
@@ -195,7 +193,7 @@ document.addEventListener("click", e => {
 
 aa("init", {
   apiKey: process.env.API_KEY,
-  applicationID: process.env.APP_ID
+  appId: process.env.APP_ID
 });
 
 search.once("render", () => {

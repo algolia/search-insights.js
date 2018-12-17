@@ -13,12 +13,12 @@ const windowWidth = 1920;
 const windowHeight = 1080;
 
 describe("Library initialisation", () => {
-  it("Should throw if there is no apiKey and applicationID", () => {
+  it("Should throw if there is no apiKey and appId", () => {
     expect(() => {
       // @ts-ignore
       AlgoliaInsights.init();
     }).toThrowError(
-      "Init function should be called with an object argument containing your apiKey and applicationID"
+      "Init function should be called with an object argument containing your apiKey and appId"
     );
   });
 
@@ -27,14 +27,14 @@ describe("Library initialisation", () => {
       // @ts-ignore
       AlgoliaInsights.init({ apiKey: "1234" });
     }).toThrow(
-      "applicationID is missing, please provide it, so we can properly attribute data to your application"
+      "appId is missing, please provide it, so we can properly attribute data to your application"
     );
   });
 
   it("Should throw if there is only applicatioID param", () => {
     expect(() => {
       // @ts-ignore
-      AlgoliaInsights.init({ applicationID: "1234" });
+      AlgoliaInsights.init({ appId: "1234" });
     }).toThrow(
       "apiKey is missing, please provide it so we can authenticate the application"
     );
@@ -44,7 +44,7 @@ describe("Library initialisation", () => {
     expect(() => {
       AlgoliaInsights.init({
         apiKey: "1234",
-        applicationID: "ABCD"
+        appId: "ABCD"
       });
     }).not.toThrow();
 
