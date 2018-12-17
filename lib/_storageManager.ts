@@ -1,7 +1,7 @@
 function storageAvailable(type: string) {
   try {
-    var storage = (window as any)[type],
-      x = '__storage_test__';
+    const storage = (window as any)[type];
+    const x = "__storage_test__";
     storage.setItem(x, x);
     storage.removeItem(x);
     return true;
@@ -14,9 +14,9 @@ function storageAvailable(type: string) {
         e.code === 1014 ||
         // test name field too, because code might not be present
         // everything except Firefox
-        e.name === 'QuotaExceededError' ||
+        e.name === "QuotaExceededError" ||
         // Firefox
-        e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+        e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
       // acknowledge QuotaExceededError only if there's something already stored
       storage.length !== 0
     );
@@ -31,7 +31,7 @@ export interface Store {
 }
 
 // LocalStorage Key
-export const LOCALSTORAGE_KEY = 'insights-store';
+export const LOCALSTORAGE_KEY = "insights-store";
 
 /**
  * LocalStorage Manager for tracking objectID -> queryID references
@@ -40,8 +40,8 @@ export class StorageManager {
   _storageKey: string;
 
   constructor() {
-    if (!storageAvailable('localStorage')) {
-      throw new Error('LocalStorage is not available');
+    if (!storageAvailable("localStorage")) {
+      throw new Error("LocalStorage is not available");
     }
 
     // Assign storage key to instance
@@ -50,8 +50,8 @@ export class StorageManager {
     // On init invalidate old localStorage entries.
     // Assuming client time as user is likely
     // on the same time locale and machine
-    const currentTimeStamp = new Date().getTime(),
-      data = this.getStorageData();
+    const currentTimeStamp = new Date().getTime();
+    const data = this.getStorageData();
 
     // Clean storage
     const cleanStore = this.cleanOldStorage(currentTimeStamp, data);
@@ -64,7 +64,8 @@ export class StorageManager {
    */
   public storeClick = (objectID: string | number, queryID: string) => {
     // Read store
-    let store: Store = JSON.parse(localStorage.getItem('insights-store')) || {};
+    const store: Store =
+      JSON.parse(localStorage.getItem("insights-store")) || {};
 
     // Reassign latest ID
     store[objectID] = {
@@ -88,9 +89,8 @@ export class StorageManager {
     // discard the conversion event
     if (!storage || !storage.queryID) {
       return undefined;
-    } else {
-      return storage.queryID;
     }
+    return storage.queryID;
   };
 
   /**
@@ -101,10 +101,10 @@ export class StorageManager {
     // Check if store is not empty
     if (keys.length > 0) {
       // Reduce new store
-      let newStore = keys.reduce((store, key) => {
-        const timeEntry = storage[key],
-          hourDiff =
-            Math.abs(currentTimeStamp - timeEntry.eventTimestamp) / 36e5;
+      const newStore = keys.reduce((store, key) => {
+        const timeEntry = storage[key];
+        const hourDiff =
+          Math.abs(currentTimeStamp - timeEntry.eventTimestamp) / 36e5;
 
         if (hourDiff <= 6) {
           store[key] = timeEntry;
@@ -123,6 +123,6 @@ export class StorageManager {
    * GetStorageData
    */
   private getStorageData = (): Store => {
-    return JSON.parse(localStorage.getItem('insights-store')) || {};
+    return JSON.parse(localStorage.getItem("insights-store")) || {};
   };
 }

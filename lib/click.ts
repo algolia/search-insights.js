@@ -1,53 +1,96 @@
-import { AnalyticsEvent } from './_sendEvent';
+import { InsightsEvent } from "./_sendEvent";
 
-export interface ClickReport extends AnalyticsEvent {
-  objectID: string | number;
-  position: number;
-  queryID?: string;
+export interface InsightsSearchClickEvent {
+  userToken?: string;
+  timestamp?: number;
+  index: string;
+
+  queryID: string;
+  objectIDs: (string | number)[];
+  positions: number[];
 }
 
 /**
- * Sends a click report
- * @param params: ClickReport
+ * Sends a click report in the context of search
+ * @param params: InsightsSearchClickEvent
  */
-export function click(params: ClickReport) {
-  if (!this._hasCredentials) {
+export function clickedObjectIDsAfterSearch(params: InsightsSearchClickEvent) {
+  if (!params) {
     throw new Error(
-      "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
+      "No params were sent to clickedObjectIDsAfterSearch function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
     );
-  } else if (!params) {
+  }
+  if (!params.queryID) {
     throw new Error(
-      'No params were sent to click function, please provide an objectID and position to be reported'
+      "required queryID parameter was not sent, click event can not be properly sent without"
     );
-  } else if (!params.objectID) {
+  }
+  if (!params.objectIDs) {
     throw new Error(
-      'required objectID parameter was not sent, click event can not be properly attributed'
+      "required objectIDs parameter was not sent, click event can not be properly sent without"
     );
-  } else if (!params.position) {
+  }
+  if (!params.positions) {
     throw new Error(
-      'required position parameter was not sent, click event position can not be properly sent without'
+      "required positions parameter was not sent, click event can not be properly sent without"
     );
   }
 
-  // Get last queryID
-  let queryID = params.queryID;
+  this.sendEvent("click", params as InsightsEvent);
+}
 
-  if (typeof this.getQueryID === 'function' && !queryID) {
-    queryID = this.getQueryID() || this._lastQueryID;
+export interface InsightsClickObjectIDsEvent {
+  eventName: string;
+  userToken?: string;
+  timestamp?: number;
+  index: string;
+
+  objectIDs: (string | number)[];
+}
+
+/**
+ * Sends a click report using objectIDs
+ * @param params: InsightsClickObjectIDsEvent
+ */
+export function clickedObjectIDs(params: InsightsClickObjectIDsEvent) {
+  if (!params) {
+    throw new Error(
+      "No params were sent to clickedObjectIDs function, please provide `objectIDs` to be reported"
+    );
+  }
+  if (!params.objectIDs) {
+    throw new Error(
+      "required `objectIDs` parameter was not sent, click event can not be properly sent without"
+    );
   }
 
-  // Abort if no queryID
-  if (!queryID) {
-    throw new Error(`No queryID was retrieved, please check the implementation and provide either a getQueryID function
-    or call the search method that will return the queryID parameter`);
+  this.sendEvent("click", params as InsightsEvent);
+}
+
+export interface InsightsClickFiltersEvent {
+  eventName: string;
+  userToken?: string;
+  timestamp?: number;
+  index: string;
+
+  filters: string[];
+}
+
+/**
+ * Sends a click report using filters
+ * @param params: InsightsClickFiltersEvent
+ */
+export function clickedFilters(params: InsightsClickFiltersEvent) {
+  if (!params) {
+    throw new Error(
+      "No params were sent to clickedFilters function, please provide `filters` to be reported"
+    );
+  }
+  if (!params.filters) {
+    throw new Error(
+      "required `filters` parameter was not sent, click event can not be properly sent without"
+    );
   }
 
-  // Store click to localstorage
-  this.storageManager.storeClick(params.objectID, queryID);
-
-  // Merge queryID to params
-  const clickParams = Object.assign({}, params, { queryID });
-
-  // Send event
-  this.sendEvent('click', clickParams);
+  this.sendEvent("click", params as InsightsEvent);
 }

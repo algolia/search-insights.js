@@ -1,54 +1,92 @@
-import * as testServer from '../../server/server.js';
-import AlgoliaInsights from './../insights'
-const puppeteer = require('puppeteer');
+import * as testServer from "../../server/server.js";
+import AlgoliaInsights from "./../insights";
+const puppeteer = require("puppeteer");
+const url = require("url");
 
 // Path helper
-const examplePath = type => `http://localhost:8080/${type}.html`
+const examplePath = type => `http://localhost:8080/${type}.html`;
 
 // vars
-let page, browser, windowWidth = 1920, windowHeight = 1080;
+let page;
+let browser;
+const windowWidth = 1920;
+const windowHeight = 1080;
 
-describe('Library initialisation', () => {
-  it('Should throw if there is no apiKey and applicationID', () => {
+describe("Library initialisation", () => {
+  it("Should throw if there is no apiKey and appId", () => {
     expect(() => {
-      AlgoliaInsights.init()
-    }).toThrowError('Init function should be called with an object argument containing your apiKey and applicationID')
-  })
+      // @ts-ignore
+      AlgoliaInsights.init();
+    }).toThrowError(
+      "Init function should be called with an object argument containing your apiKey and appId"
+    );
+  });
 
-  it('Should throw if there is only apiKey param', () => {
+  it("Should throw if there is only apiKey param", () => {
     expect(() => {
-      AlgoliaInsights.init({apiKey: '1234'})
-    }).toThrow('applicationID is missing, please provide it, so we can properly attribute data to your application')
-  })
+      // @ts-ignore
+      AlgoliaInsights.init({ apiKey: "1234" });
+    }).toThrow(
+      "appId is missing, please provide it, so we can properly attribute data to your application"
+    );
+  });
 
-  it('Should throw if there is only applicatioID param', () => {
+  it("Should throw if there is only applicatioID param", () => {
     expect(() => {
-      AlgoliaInsights.init({applicationID: '1234'})
-    }).toThrow('apiKey is missing, please provide it so we can authenticate the application')
-  })
+      // @ts-ignore
+      AlgoliaInsights.init({ appId: "1234" });
+    }).toThrow(
+      "apiKey is missing, please provide it so we can authenticate the application"
+    );
+  });
 
-  it('Should not throw if all params are set', () => {
+  it("Should not throw if all params are set", () => {
     expect(() => {
       AlgoliaInsights.init({
-        apiKey: '1234',
-        applicationID: 'ABCD'
-      })
-    }).not.toThrow()
+        apiKey: "1234",
+        appId: "ABCD"
+      });
+    }).not.toThrow();
 
+    // @ts-ignore private prop
     expect(AlgoliaInsights._hasCredentials).toBe(true);
-  })
+  });
 
-  it('Should create UUID', () => {
-    expect(AlgoliaInsights._userID).not.toBeUndefined();
-  })
-})
+  it("Should create UUID", () => {
+    expect(AlgoliaInsights._userToken).not.toBeUndefined();
+  });
+});
 
-describe('Integration tests', () => {
+describe("Integration tests", () => {
   let handle = null;
+
+  const startServer = () =>
+    new Promise((resolve, reject) => {
+      handle = testServer.listen(8080, err => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve();
+      });
+    });
+
+  const stopServer = () =>
+    new Promise((resolve, reject) => {
+      handle.close(err => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve();
+      });
+    });
+
   beforeAll(async () => {
-    handle = testServer.listen(8080);
+    await startServer();
+
     browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
 
     page = await browser.newPage();
@@ -59,55 +97,117 @@ describe('Integration tests', () => {
     });
   });
 
-  afterAll(() => {
-    handle.close();
-    browser.close();
+  afterAll(async () => {
+    await stopServer();
+    await browser.close();
   });
 
-  it('Should retrieve queryID from search API', async() => {
-    await page.goto(examplePath('instantsearch'));
-    await page.waitFor(1000);
+  describe("instantsearch example", () => {
+    let data;
+    beforeAll(async () => {
+      await page.goto(examplePath("instantsearch"));
+      await page.waitFor(1000);
+      data = await getPageResponse();
+      await page.waitFor(1000);
+    });
 
-    function pageResponse() {
-      return new Promise( async(resolve, reject) => {
-        page.on('response', async(interceptedRequest) => {
-          const request = interceptedRequest.request();
-
-          if(request.url().includes('.algolia.net')){
-            const postData = JSON.parse(request.postData());
-
-            if(postData.requests && postData.requests[0].params.includes('query=K')){
-              const data = await interceptedRequest.json();
-              resolve(data.results[0])
-            }
-          }
-        });
-
-        await page.type('#q', 'K')
-      })
-    };
-
-    function pageClickSend() {
-      return new Promise( async(resolve, reject) => {
-        page.on('request', interceptedRequest => {
-          if(interceptedRequest.url().includes('localhost:8080')) {
-            resolve(JSON.parse(interceptedRequest.postData()))
-          }
-        });
-
-        await page.click('.ais-hits--item:nth-child(2) .button-click');
+    describe("loading", () => {
+      it("should retrieve a queryID on page load", async () => {
+        expect(data).toHaveProperty("queryID");
       });
-    }
+    });
 
-    const data = await pageResponse()
-    await page.waitFor(1000)
-    const requestClick = await pageClickSend()
+    describe("click", () => {
+      let request;
+      let payload;
+      let objectIDs;
+      beforeAll(async () => {
+        await page.evaluate(() => {
+          window.AlgoliaAnalytics._endpointOrigin = "http://localhost:8080";
+        });
+        const event = await captureNetworkWhile(async () => {
+          const button = await page.$(
+            ".ais-hits--item:nth-child(2) .button-click"
+          );
+          await button.click();
+          objectIDs = await page.evaluate(
+            elem => elem.getAttribute("data-object-id"),
+            button
+          );
+        });
+        request = event.request;
+        payload = event.payload;
+      });
+      it("should send a request to /1/event", () => {
+        const requestUrl = url.parse(request.url());
+        expect(requestUrl.pathname).toBe("/1/events");
+      });
+      it("should have a payload with 1 event", () => {
+        expect(payload).toHaveProperty("events");
+        expect(payload.events).toHaveLength(1);
+      });
+      it("should send the correct queryID", () => {
+        const {
+          events: [event]
+        } = payload;
+        expect(event).toHaveProperty("queryID");
+        expect(event.queryID).toEqual(data.queryID);
+      });
+      it("should include the correct objectIDs and positions", () => {
+        const {
+          events: [event]
+        } = payload;
+        expect(event.objectIDs).toEqual([objectIDs]);
+        expect(event.positions).toEqual([2]);
+      });
+      it("should not include an timestamp as it was not passed", () => {
+        const {
+          events: [event]
+        } = payload;
+        expect(event).not.toHaveProperty("timestamp");
+      });
+    });
+  });
 
-    expect(data).toHaveProperty('queryID')
-    expect(requestClick.queryID).toBe(data.queryID)
+  function getPageResponse() {
+    return new Promise(async (resolve, reject) => {
+      page.on("response", async interceptedRequest => {
+        const request = interceptedRequest.request();
 
-    expect(requestClick).toHaveProperty('objectID')
-    expect(requestClick).toHaveProperty('queryID')
-    expect(requestClick.position).toBe(2)
-  })
-})
+        if (request.url().includes(".algolia.net")) {
+          const postData = JSON.parse(request.postData());
+
+          if (
+            postData.requests &&
+            postData.requests[0].params.includes("query=K")
+          ) {
+            const data = await interceptedRequest.json();
+            resolve(data.results[0]);
+          }
+        }
+      });
+
+      await page.type("#q", "K");
+    });
+  }
+
+  async function captureNetworkWhile(callback) {
+    const capture = new Promise<{ request: any; payload: any }>(
+      (resolve, reject) => {
+        page.on("request", interceptedRequest => {
+          if (interceptedRequest.url().includes("localhost:8080")) {
+            const event = {
+              request: interceptedRequest,
+              payload: JSON.parse(interceptedRequest.postData())
+            };
+            resolve(event);
+          } else {
+            reject(new Error("expected url to be localhost:8080"));
+          }
+        });
+      }
+    );
+    await callback();
+    return capture;
+  }
+});

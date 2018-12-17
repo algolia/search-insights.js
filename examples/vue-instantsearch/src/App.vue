@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="container-fluid">
-    <ais-index :searchStore="searchStore" :queryParameters="{clickAnalytics: true}" :indexName="process.env.INDEX_NAME">
+    <ais-index :searchStore="searchStore" :queryParameters="{clickAnalytics: true}" :index="process.env.INDEX_NAME">
       <div class="row">
         <div class="col-md-2 col-sm-3">
           <h1 class="head-title">
@@ -97,11 +97,20 @@ export default {
       // prefix = page (0-based) * hitsPerPage
       // position is 1-based
       const position = this.prefix + index + 1;
-      window.aa("click", { objectID, position });
+      window.aa("click", {
+        eventName: "hit-clicked",
+        index: process.env.INDEX_NAME,
+        objectIDs: [objectID],
+        positions: [position]
+      });
     },
     // reporting a conversion
     convert({ result: { objectID } }) {
-      window.aa("conversion", { objectID });
+      window.aa("conversion", {
+        eventName: "hit-converted",
+        index: process.env.INDEX_NAME,
+        objectIDs: [objectID]
+      });
     },
   },
   computed: {

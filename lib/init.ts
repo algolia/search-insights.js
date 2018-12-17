@@ -1,27 +1,70 @@
+import { isUndefined, isString } from "./utils/index";
+import { isNumber } from "util";
 
-export interface initParams {
+type InsightRegion = "de" | "us";
+const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
+const MONTH = 30 * 24 * 60 * 60 * 1000;
+
+export interface InitParams {
   apiKey: string;
-  applicationID: string;
+  appId: string;
+  userHasOptedOut?: boolean;
+  cookieDuration?: number;
+  region?: InsightRegion;
 }
 
 /**
  * Binds credentials and settings to class
  * @param options: initParams
  */
-export function init(options: initParams){
-  if(!options) {
-    throw new Error('Init function should be called with an object argument containing your apiKey and applicationID');
-
-  } else if(!options.apiKey || typeof options.apiKey !== 'string'){
-    throw new Error('apiKey is missing, please provide it so we can authenticate the application');
-
-  } else if(!options.applicationID || typeof options.applicationID !== 'string') {
-    throw new Error('applicationID is missing, please provide it, so we can properly attribute data to your application');
+export function init(options: InitParams) {
+  if (!options) {
+    throw new Error(
+      "Init function should be called with an object argument containing your apiKey and appId"
+    );
+  }
+  if (isUndefined(options.apiKey) || !isString(options.apiKey)) {
+    throw new Error(
+      "apiKey is missing, please provide it so we can authenticate the application"
+    );
+  }
+  if (isUndefined(options.appId) || !isString(options.appId)) {
+    throw new Error(
+      "appId is missing, please provide it, so we can properly attribute data to your application"
+    );
+  }
+  if (
+    !isUndefined(options.region) &&
+    SUPPORTED_REGIONS.indexOf(options.region) === -1
+  ) {
+    throw new Error(
+      `optional region is incorrect, please provide either one of: ${SUPPORTED_REGIONS.join(
+        ", "
+      )}.`
+    );
+  }
+  if (
+    !isUndefined(options.cookieDuration) &&
+    (!isNumber(options.cookieDuration) ||
+      !isFinite(options.cookieDuration) ||
+      Math.floor(options.cookieDuration) !== options.cookieDuration)
+  ) {
+    throw new Error(
+      `optional cookieDuration is incorrect, expected an integer`
+    );
   }
 
   this._apiKey = options.apiKey;
-  this._applicationID = options.applicationID;
+  this._appId = options.appId;
+  this._userHasOptedOut = !!options.userHasOptedOut;
+  this._region = options.region;
+  this._endpointOrigin = options.region
+    ? `https://insights.${options.region}.algolia.io`
+    : "https://insights.algolia.io";
 
+  this._cookieDuration = options.cookieDuration
+    ? options.cookieDuration
+    : 6 * MONTH;
   // Set hasCredentials
   this._hasCredentials = true;
 }

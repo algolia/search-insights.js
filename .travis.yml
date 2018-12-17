@@ -19,5 +19,10 @@ before_install:
 - export PATH="$HOME/.yarn/bin:$PATH"
 before_script:
 - yarn install
+- yarn lint
 script:
 - yarn test
+addons:
+  artifacts:
+    paths:
+    - ./dist/
