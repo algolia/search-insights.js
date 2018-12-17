@@ -2,7 +2,7 @@ import { InsightsEvent } from "./_sendEvent";
 
 export interface InsightsViewObjectIDsEvent {
   eventName: string;
-  userToken: string;
+  userToken?: string;
   timestamp?: number;
   index: string;
 
@@ -29,7 +29,7 @@ export function viewedObjectIDs(params: InsightsViewObjectIDsEvent) {
 
 export interface InsightsViewFiltersEvent {
   eventName: string;
-  userToken: string;
+  userToken?: string;
   timestamp?: number;
   index: string;
 

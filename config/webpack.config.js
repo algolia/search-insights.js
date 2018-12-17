@@ -8,7 +8,7 @@ const WebpackChunkHash = require('webpack-chunk-hash');
 
 const isProd = process.env.NODE_ENV === "production";
 const { NODE_ENV, APP_ID, API_KEY, INDEX_NAME } = process.env;
-const SCRIPT_SRC = NODE_ENV === 'production' ? 'https://cdn.jsdelivr.net/npm/search-insights@0.0.15/dist/search-insights.min.js' : 'http://localhost:8080/search-insights.min.js';
+const SCRIPT_SRC = NODE_ENV === 'production' ? 'https://cdn.jsdelivr.net/npm/search-insights@1.0.0/dist/search-insights.min.js' : 'http://localhost:8080/search-insights.min.js';
 
 const replaceHTMLPlugin = new HtmlReplaceWebpackPlugin([
   {
@@ -79,11 +79,6 @@ const PLUGINS = [
     filename: "vue.html",
     chunks: ['vue']
   }),
-  new HtmlWebpackPlugin({
-    template: path.join(process.cwd(), 'examples/lunr/lunr.html'),
-    filename: "lunr.html",
-    chunks: ['lunr']
-  }),
   new webpack.HotModuleReplacementPlugin(),
 ];
 
@@ -93,7 +88,6 @@ const exampleEntries = {
   vue: path.join(process.cwd(), 'examples/vue-instantsearch/src/main.js'),
   autocomplete: path.join(process.cwd(), 'examples/autocomplete/autocomplete.js'),
   async: path.join(process.cwd(), 'examples/async/async.js'),
-  lunr: path.join(process.cwd(), 'examples/lunr/lunr.js'),
   helper: path.join(process.cwd(), 'examples/helper/helper.js'),
 }
 
@@ -108,9 +102,9 @@ module.exports = {
 
   module: {
     rules: [
-    { 
-      test: /\.ts$/, 
-      use: 'ts-loader' 
+    {
+      test: /\.ts$/,
+      use: 'ts-loader'
     },
     {
       test: /\.(js)$/,

@@ -32,6 +32,7 @@ import {
   InsightsViewFiltersEvent,
   viewedFilters
 } from "./view";
+import { ANONYMOUS_USER_TOKEN, getUserToken, setUserToken } from "./_cookieUtils";
 
 type Queue = {
   queue: string[][];
@@ -54,7 +55,7 @@ declare global {
  */
 class AlgoliaAnalytics {
   _apiKey: string;
-  _applicationID: string;
+  _appId: string;
   _region: string;
   _endpointOrigin: string;
   _userToken: string;
@@ -75,6 +76,11 @@ class AlgoliaAnalytics {
   // Public methods
   public init: (params: InitParams) => void;
   public initSearch: (params: InitSearchParams) => void;
+
+  public ANONYMOUS_USER_TOKEN: string;
+  public setUserToken: (userToken: string) => void;
+  public getUserToken: () => string;
+
   public clickedObjectIDsAfterSearch: (
     params?: InsightsSearchClickEvent
   ) => void;
@@ -110,6 +116,10 @@ class AlgoliaAnalytics {
     this.init = init.bind(this);
     this.initSearch = initSearch.bind(this);
 
+    this.ANONYMOUS_USER_TOKEN = ANONYMOUS_USER_TOKEN;
+    this.setUserToken = setUserToken.bind(this);
+    this.getUserToken = getUserToken.bind(this);
+
     this.clickedObjectIDsAfterSearch = clickedObjectIDsAfterSearch.bind(this);
     this.clickedObjectIDs = clickedObjectIDs.bind(this);
     this.clickedFilters = clickedFilters.bind(this);
@@ -123,6 +133,7 @@ class AlgoliaAnalytics {
     this.viewedObjectIDs = viewedObjectIDs.bind(this);
     this.viewedFilters = viewedFilters.bind(this);
 
+    this.setUserToken(this.ANONYMOUS_USER_TOKEN);
     // Process queue upon script execution
     this.processQueue();
   }

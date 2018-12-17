@@ -4,6 +4,11 @@
   "description": "Search analytics by Algolia",
   "jsdelivr": "dist/search-insights.min.js",
   "main": "dist/search-insights.min.js",
+  "files": [
+    "dist",
+    "lib",
+    "!**/__tests__/**"
+  ],
   "scripts": {
     "deploy": "yarn build && /bin/bash ./pre-deploy.sh && npm publish",
     "lint": "tslint ./lib/**/*.ts",

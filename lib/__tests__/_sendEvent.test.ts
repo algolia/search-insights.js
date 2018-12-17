@@ -1,13 +1,9 @@
 import AlgoliaInsights from "../insights";
 import * as url from "url";
 
-jest.mock("../_cookieUtils", () => ({
-  userToken: jest.fn(() => "mock-user-id")
-}));
-
 const credentials = {
   apiKey: "test",
-  applicationID: "test"
+  appId: "test"
 };
 
 describe("sendEvent", () => {
@@ -15,6 +11,7 @@ describe("sendEvent", () => {
 
   beforeEach(() => {
     AlgoliaInsights.init(credentials);
+    AlgoliaInsights.setUserToken("mock-user-id");
     XMLHttpRequest = {
       open: jest.spyOn((window as any).XMLHttpRequest.prototype, "open"),
       send: jest.spyOn((window as any).XMLHttpRequest.prototype, "send")
@@ -111,7 +108,7 @@ describe("sendEvent", () => {
         (AlgoliaInsights as any)._hasCredentials = false;
         (AlgoliaInsights as any).sendEvent();
       }).toThrowError(
-        "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
+        "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
       );
     });
     it("should do nothing is _userHasOptedOut === true", () => {
@@ -129,7 +126,8 @@ describe("sendEvent", () => {
     it("should throw if no eventName passed", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
-          index: "my-index"
+          index: "my-index",
+          objectIDs: ["1"]
         });
       }).toThrowErrorMatchingInlineSnapshot(
         `"expected required parameter \`eventName\` to be a string"`
@@ -139,7 +137,8 @@ describe("sendEvent", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           eventName: 3,
-          index: "my-index"
+          index: "my-index",
+          objectIDs: ["1"]
         });
       }).toThrowErrorMatchingInlineSnapshot(
         `"expected required parameter \`eventName\` to be a string"`

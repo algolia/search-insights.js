@@ -2,7 +2,7 @@ import AlgoliaInsights from "../insights";
 
 const credentials = {
   apiKey: "test",
-  applicationID: "test"
+  appId: "test"
 };
 
 describe("clickedObjectIDsAfterSearch", () => {
