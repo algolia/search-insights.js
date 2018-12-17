@@ -83,7 +83,8 @@ function getQueryID() {
 
 ```js
 aa('clickedObjectIDsAfterSearch', {
-    index: 'INDEX_NAME'
+    index: 'INDEX_NAME',
+    eventName: 'Clicked item',
     queryID: getQueryID(),
     objectIDs: [ 'object1' ],
     positions: [ 42 ]
@@ -100,6 +101,7 @@ aa('clickedObjectIDsAfterSearch', {
 ```js
 aa('convertedObjectIDsAfterSearch', {
     index: 'INDEX_NAME'
+    eventName: 'Add to basket',
     queryID: getQueryID(),
     objectIDs: [ 'object1' ]
 });
@@ -186,9 +188,7 @@ All library examples are done with an assumption, that you have already complete
 
 - [InstantSearch.js example](https://github.com/algolia/search-insights.js/blob/master/examples/INSTANTSEARCH.md)
 - [algoliasearch-helper example](https://github.com/algolia/search-insights.js/blob/master/examples/HELPER.md)
-- [Vue-instantsearch example](https://github.com/algolia/search-insights.js/blob/master/examples/vue-instantsearch/src/App.vue)
 - [React-instantsearch example](https://github.com/algolia/search-insights.js/blob/master/examples/react-instantsearch/src/App.js)
-- [Autocomplete example](https://github.com/algolia/search-insights.js/blob/master/examples/autocomplete/autocomplete.js)
 
 #### Running examples locally
 
