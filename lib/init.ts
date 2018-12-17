@@ -1,5 +1,4 @@
 import { isUndefined, isString } from "./utils/index";
-import { userToken } from "./_cookieUtils";
 import { isNumber } from "util";
 
 type InsightRegion = "de" | "us";
@@ -46,7 +45,9 @@ export function init(options: InitParams) {
   }
   if (
     !isUndefined(options.cookieDuration) &&
-    (!isNumber(options.cookieDuration) || !isFinite(options.cookieDuration) || Math.floor(options.cookieDuration) !== options.cookieDuration)
+    (!isNumber(options.cookieDuration) ||
+      !isFinite(options.cookieDuration) ||
+      Math.floor(options.cookieDuration) !== options.cookieDuration)
   ) {
     throw new Error(
       `optional cookieDuration is incorrect, expected an integer`
@@ -61,12 +62,9 @@ export function init(options: InitParams) {
     ? `https://insights.${options.region}.algolia.io`
     : "https://insights.algolia.io";
 
-  // Set hasCredentials
-  this._hasCredentials = true;
-
-  const cookieDuration = options.cookieDuration
+  this._cookieDuration = options.cookieDuration
     ? options.cookieDuration
     : 6 * MONTH;
-
-  this._userToken = userToken(null, cookieDuration);
+  // Set hasCredentials
+  this._hasCredentials = true;
 }

@@ -1,4 +1,4 @@
-import { createUUID } from "./utils/index";
+import { createUUID } from "./utils/uuid";
 // Cookie key
 const COOKIE_KEY = "_ALGOLIA";
 
@@ -8,7 +8,11 @@ const COOKIE_KEY = "_ALGOLIA";
  * @param {[type]} cvalue [description]
  * @param {[type]} exdays [description]
  */
-const setCookie = (cname: string, cvalue: string, cookieDuration: number) => {
+const setCookie = (
+  cname: string,
+  cvalue: number | string,
+  cookieDuration: number
+) => {
   const d = new Date();
   d.setTime(d.getTime() + cookieDuration);
   const expires = `expires=${d.toUTCString()}`;
@@ -36,25 +40,26 @@ const getCookie = (cname: string): string => {
   return "";
 };
 
-/**
- * Return new UUID
- * @return {[string]} new UUID
- */
-const checkUserIdCookie = (
-  userSpecifiedID?: string | number,
-  cookieDuration?: number
-): string => {
-  const userToken = getCookie(COOKIE_KEY);
+export const ANONYMOUS_USER_TOKEN = "ANONYMOUS_USER_TOKEN";
 
-  if (!userToken || userToken === "") {
-    const newUUID = createUUID();
-    setCookie(COOKIE_KEY, newUUID, cookieDuration);
-    return newUUID;
+export function setUserToken(userToken: string | number): void {
+  if (userToken === ANONYMOUS_USER_TOKEN) {
+    const foundToken = getCookie(COOKIE_KEY);
+    if (
+      !foundToken ||
+      foundToken === "" ||
+      !foundToken.startsWith("anonymous-")
+    ) {
+      this._userToken = `anonymous-${createUUID()}`;
+      setCookie(COOKIE_KEY, this._userToken, this._cookieDuration);
+    } else {
+      this._userToken = foundToken;
+    }
+  } else {
+    this._userToken = userToken;
   }
+}
 
-  return userToken;
-};
-
-const userToken = checkUserIdCookie;
-
-export { userToken };
+export function getUserToken() {
+  return this._userToken;
+}
