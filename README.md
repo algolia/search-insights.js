@@ -127,7 +127,7 @@ function getQueryID() {
 ```js
 aa('clickedObjectIDs', {
     index: 'INDEX_NAME'
-    eventName: "Add to basket',
+    eventName: 'Add to basket',
     objectIDs: [ 'object1' ]
 });
 ```
@@ -138,7 +138,7 @@ aa('clickedObjectIDs', {
 ```js
 aa('clickedFilters', {
     index: 'INDEX_NAME'
-    eventName: "Filter on facet',
+    eventName: 'Filter on facet',
     filters: [ 'brand:Apple' ]
 });
 ```
@@ -157,7 +157,7 @@ aa('convertedObjectIDs', {
 });
 aa('convertedFilters', {
     index: 'INDEX_NAME'
-    eventName: "Filter on facet',
+    eventName: 'Filter on facet',
     filters: [ 'brand:Apple' ]
 });
 ```
@@ -167,12 +167,12 @@ aa('convertedFilters', {
 ```js
 aa('viewedObjectIDs', {
     index: 'INDEX_NAME'
-    eventName: "Add to basket',
+    eventName: 'Add to basket',
     objectIDs: [ 'object1' ]
 });
 aa('viewedFilters', {
     index: 'INDEX_NAME'
-    eventName: "Filter on facet',
+    eventName: 'Filter on facet',
     filters: [ 'brand:Apple' ]
 });
 ```
