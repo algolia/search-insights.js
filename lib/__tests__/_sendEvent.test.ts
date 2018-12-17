@@ -3,7 +3,7 @@ import * as url from "url";
 
 const credentials = {
   apiKey: "test",
-  applicationID: "test"
+  appId: "test"
 };
 
 describe("sendEvent", () => {
@@ -108,7 +108,7 @@ describe("sendEvent", () => {
         (AlgoliaInsights as any)._hasCredentials = false;
         (AlgoliaInsights as any).sendEvent();
       }).toThrowError(
-        "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
+        "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
       );
     });
     it("should do nothing is _userHasOptedOut === true", () => {
@@ -123,13 +123,15 @@ describe("sendEvent", () => {
   });
 
   describe("eventName", () => {
-    it("should not throw if no eventName passed", () => {
+    it("should throw if no eventName passed", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
           index: "my-index",
           objectIDs: ["1"]
         });
-      }).not.toThrow();
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"expected required parameter \`eventName\` to be a string"`
+      );
     });
     it("should throw if eventName is not a string", () => {
       expect(() => {
@@ -139,7 +141,7 @@ describe("sendEvent", () => {
           objectIDs: ["1"]
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"expected optional parameter \`eventName\` to be a string"`
+        `"expected required parameter \`eventName\` to be a string"`
       );
     });
   });

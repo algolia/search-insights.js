@@ -27,12 +27,15 @@ search analytics.
 
   // Initialize library
   aa('init', {
-    applicationID: 'APPLICATION_ID',
+    appId: 'APPLICATION_ID',
     apiKey: 'SEARCH_API_KEY',
-    userHasOptedOut?: boolean; // default: false
-    region?: "de" | "us"; // default auto
-    cookieDuration?: 10 * 24 * 60 * 60 * 1000; // in milliseconds. default: 15552000000ms (6 months)
+    userHasOptedOut?: boolean; // Optional. Default: false
+    region?: "de" | "us"; // Optional. Default auto
+    cookieDuration?: 10 * 24 * 60 * 60 * 1000; // in milliseconds. Optional. Default: 15552000000ms (6 months)
   })
+
+  // optional
+  aa('setUserToken', 'id-of-user');
 </script>
 ```
 
@@ -64,6 +67,7 @@ const helper = algoliasearchHelper(client, "INDEX_NAME", {
 ```
 
 ## In the context of search (Click Analytics & A/B testing)
+### Initialize
 
 ```js
 const search = instantsearch({
@@ -92,8 +96,8 @@ aa('clickedObjectIDsAfterSearch', {
 ```
 
 - **index**: name of the index searched. \*required
-- **objectID**: it is the ID of the result that has been clicked. \*required
-- **position**: absolute position of the clicked element inside the DOM. (The value is 1 based and not 0 based!) \*required
+- **objectIDs**: it is the ID of the result that has been clicked. \*required
+- **positions**: absolute position of the clicked element inside the DOM. (The value is 1 based and not 0 based!) \*required
 - **queryID**: queryID of the related search \*required
 
 ### Reporting a conversion event
@@ -108,11 +112,11 @@ aa('convertedObjectIDsAfterSearch', {
 ```
 
 - **index**: name of the index searched. \*required
-- **objectID**: it is the ID of the result that has been clicked. \*required
+- **objectIDs**: it is the ID of the result that has been clicked. \*required
 - **queryID**: queryID of the related search \*required
 
 ## In the context of Personalization:
-
+### Initialize
 ```js
 const search = instantsearch({
   appId: "APPLICATION_ID",
@@ -138,7 +142,7 @@ aa('clickedObjectIDs', {
 ```
 - **index**: name of the index searched. \*required
 - **eventName**: name of the event. \*required
-- **objectID**: it is the ID of the result that has been clicked. \*required
+- **objectIDs**: it is the ID of the result that has been clicked. \*required
 
 ```js
 aa('clickedFilters', {

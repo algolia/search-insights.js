@@ -2,7 +2,7 @@ import { Store, LOCALSTORAGE_KEY, StorageManager } from "../_storageManager";
 
 const credentials = {
   apiKey: "test",
-  applicationID: "test"
+  appId: "test"
 };
 
 describe("LocalStorageManager", () => {
