@@ -7,7 +7,7 @@ const MONTH = 30 * 24 * 60 * 60 * 1000;
 
 export interface InitParams {
   apiKey: string;
-  applicationID: string;
+  appId: string;
   userHasOptedOut?: boolean;
   cookieDuration?: number;
   region?: InsightRegion;
@@ -20,7 +20,7 @@ export interface InitParams {
 export function init(options: InitParams) {
   if (!options) {
     throw new Error(
-      "Init function should be called with an object argument containing your apiKey and applicationID"
+      "Init function should be called with an object argument containing your apiKey and appId"
     );
   }
   if (isUndefined(options.apiKey) || !isString(options.apiKey)) {
@@ -28,9 +28,9 @@ export function init(options: InitParams) {
       "apiKey is missing, please provide it so we can authenticate the application"
     );
   }
-  if (isUndefined(options.applicationID) || !isString(options.applicationID)) {
+  if (isUndefined(options.appId) || !isString(options.appId)) {
     throw new Error(
-      "applicationID is missing, please provide it, so we can properly attribute data to your application"
+      "appId is missing, please provide it, so we can properly attribute data to your application"
     );
   }
   if (
@@ -55,7 +55,7 @@ export function init(options: InitParams) {
   }
 
   this._apiKey = options.apiKey;
-  this._applicationID = options.applicationID;
+  this._appId = options.appId;
   this._userHasOptedOut = !!options.userHasOptedOut;
   this._region = options.region;
   this._endpointOrigin = options.region

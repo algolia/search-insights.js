@@ -27,20 +27,21 @@ search analytics.
 
   // Initialize library
   aa('init', {
-    applicationID: 'APPLICATION_ID',
+    appId: 'APPLICATION_ID',
     apiKey: 'SEARCH_API_KEY',
-    userHasOptedOut?: boolean; // default: false
-    region?: "de" | "us"; // default auto
-    cookieDuration?: 10 * 24 * 60 * 60 * 1000; // in milliseconds. default: 15552000000ms (6 months)
+    userHasOptedOut?: boolean; // Optional. Default: false
+    region?: "de" | "us"; // Optional. Default auto
+    cookieDuration?: 10 * 24 * 60 * 60 * 1000; // in milliseconds. Optional. Default: 15552000000ms (6 months)
   })
+
+  // optional
+  aa('setUserToken', 'id-of-user');
 </script>
 ```
 
 ### Enabling queryID response from Algolia engine
 
-In order for the Algolia engine to return a queryID on each search request, a special query parameter `clickAnalytics=true` should be set.
-
-InstantSearch
+In order for the Algolia engine to return a queryID on each search request, some special query parameters `clickAnalytics=true` and `enablePersonalization=true` should be set.
 
 ```js
 const search = instantsearch({
@@ -54,16 +55,9 @@ const search = instantsearch({
 });
 ```
 
-algoliasearch-helper:
-
-```js
-const helper = algoliasearchHelper(client, "INDEX_NAME", {
-  clickAnalytics: true,
-  enablePersonalization: true
-});
-```
-
 ## In the context of search (Click Analytics & A/B testing)
+
+### Initialize
 
 ```js
 const search = instantsearch({
@@ -82,17 +76,19 @@ function getQueryID() {
 ### Reporting a click event
 
 ```js
-aa('clickedObjectIDsAfterSearch', {
-    index: 'INDEX_NAME'
-    queryID: getQueryID(),
-    objectIDs: [ 'object1' ],
-    positions: [ 42 ]
+aa("clickedObjectIDsAfterSearch", {
+  index: "INDEX_NAME",
+  eventName: "Clicked item",
+  queryID: getQueryID(),
+  objectIDs: ["object1"],
+  positions: [42]
 });
 ```
 
 - **index**: name of the index searched. \*required
-- **objectID**: it is the ID of the result that has been clicked. \*required
-- **position**: absolute position of the clicked element inside the DOM. (The value is 1 based and not 0 based!) \*required
+- **eventName**: name of the event. \*required
+- **objectIDs**: it is the ID of the result that has been clicked. \*required
+- **positions**: absolute position of the clicked element inside the DOM. (The value is 1 based and not 0 based!) \*required
 - **queryID**: queryID of the related search \*required
 
 ### Reporting a conversion event
@@ -100,16 +96,20 @@ aa('clickedObjectIDsAfterSearch', {
 ```js
 aa('convertedObjectIDsAfterSearch', {
     index: 'INDEX_NAME'
+    eventName: 'Add to basket',
     queryID: getQueryID(),
     objectIDs: [ 'object1' ]
 });
 ```
 
 - **index**: name of the index searched. \*required
-- **objectID**: it is the ID of the result that has been clicked. \*required
+- **eventName**: name of the event. \*required
+- **objectIDs**: it is the ID of the result that has been clicked. \*required
 - **queryID**: queryID of the related search \*required
 
 ## In the context of Personalization:
+
+### Initialize
 
 ```js
 const search = instantsearch({
@@ -117,7 +117,7 @@ const search = instantsearch({
   apiKey: "SEARCH_API_KEY",
   indexName: "INDEX_NAME",
   searchParameters: {
-    clickAnalytics: true
+    enablePersonalization: true
   }
 });
 function getQueryID() {
@@ -130,18 +130,19 @@ function getQueryID() {
 ```js
 aa('clickedObjectIDs', {
     index: 'INDEX_NAME'
-    eventName: "Add to basket',
+    eventName: 'Add to basket',
     objectIDs: [ 'object1' ]
 });
 ```
+
 - **index**: name of the index searched. \*required
 - **eventName**: name of the event. \*required
-- **objectID**: it is the ID of the result that has been clicked. \*required
+- **objectIDs**: it is the ID of the result that has been clicked. \*required
 
 ```js
 aa('clickedFilters', {
     index: 'INDEX_NAME'
-    eventName: "Filter on facet',
+    eventName: 'Filter on facet',
     filters: [ 'brand:Apple' ]
 });
 ```
@@ -160,7 +161,7 @@ aa('convertedObjectIDs', {
 });
 aa('convertedFilters', {
     index: 'INDEX_NAME'
-    eventName: "Filter on facet',
+    eventName: 'Filter on facet',
     filters: [ 'brand:Apple' ]
 });
 ```
@@ -170,12 +171,12 @@ aa('convertedFilters', {
 ```js
 aa('viewedObjectIDs', {
     index: 'INDEX_NAME'
-    eventName: "Add to basket',
+    eventName: 'Add to basket',
     objectIDs: [ 'object1' ]
 });
 aa('viewedFilters', {
     index: 'INDEX_NAME'
-    eventName: "Filter on facet',
+    eventName: 'Filter on facet',
     filters: [ 'brand:Apple' ]
 });
 ```
@@ -186,9 +187,7 @@ All library examples are done with an assumption, that you have already complete
 
 - [InstantSearch.js example](https://github.com/algolia/search-insights.js/blob/master/examples/INSTANTSEARCH.md)
 - [algoliasearch-helper example](https://github.com/algolia/search-insights.js/blob/master/examples/HELPER.md)
-- [Vue-instantsearch example](https://github.com/algolia/search-insights.js/blob/master/examples/vue-instantsearch/src/App.vue)
 - [React-instantsearch example](https://github.com/algolia/search-insights.js/blob/master/examples/react-instantsearch/src/App.js)
-- [Autocomplete example](https://github.com/algolia/search-insights.js/blob/master/examples/autocomplete/autocomplete.js)
 
 #### Running examples locally
 

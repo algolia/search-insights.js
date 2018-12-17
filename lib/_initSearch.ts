@@ -10,7 +10,7 @@ export interface InitSearchParams {
 export function initSearch(initParams: InitSearchParams) {
   if (!this._hasCredentials) {
     throw new Error(
-      "Before calling any methods on the analytics, you first need to call the 'init' function with applicationID and apiKey parameters"
+      "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
     );
   } else if (!initParams) {
     throw new Error(

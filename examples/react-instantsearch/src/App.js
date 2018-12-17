@@ -1,23 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   InstantSearch,
   Configure,
   SearchBox,
   Pagination,
-  Highlight,
-} from 'react-instantsearch/dom';
+  Highlight
+} from "react-instantsearch/dom";
 import {
   connectStateResults,
-  connectHits,
-} from 'react-instantsearch/connectors';
+  connectHits
+} from "react-instantsearch/connectors";
 // import './App.css';
 
-const Analytics = connectStateResults(({ searchResults }) => {
-  window.aa('initSearch', {
-    getQueryID: () => searchResults && searchResults._rawResults[0].queryID,
-  });
+const crendentials = {
+  appId: process.env.APP_ID,
+  apiKey: process.env.API_KEY,
+};
 
-  return null;
+const Analytics = connectStateResults(() => {
+  window.aa("init", crendentials);
 });
 
 const Hits = connectHits(
@@ -28,13 +29,14 @@ const Hits = connectHits(
           <Highlight attributeName="name" hit={hit} />
           <button
             onClick={() => {
-              window.aa('clickedObjectIDsAfterSearch', {
-                eventName: "hit-clicked",
+              window.aa("clickedObjectIDsAfterSearch", {
                 index: process.env.INDEX_NAME,
+                eventName: 'hit-clicked',
                 queryID: searchResults.queryID,
                 objectIDs: [hit.objectID],
-                positions:
-                  [searchResults.hitsPerPage * searchResults.page + index + 1],
+                positions: [
+                  searchResults.hitsPerPage * searchResults.page + index + 1
+                ]
               });
             }}
           >
@@ -42,11 +44,11 @@ const Hits = connectHits(
           </button>
           <button
             onClick={() => {
-              window.aa('convertedObjectIDsAfterSearch', {
-                eventName: "hit-converted",
+              window.aa("convertedObjectIDsAfterSearch", {
                 index: process.env.INDEX_NAME,
+                eventName: 'hit-converted',
                 queryID: searchResults.queryID,
-                objectIDs: [hit.objectID],
+                objectIDs: [hit.objectID]
               });
             }}
           >
@@ -64,7 +66,8 @@ class App extends Component {
       <InstantSearch
         appId={process.env.APP_ID}
         apiKey={process.env.API_KEY}
-        indexName={process.env.INDEX_NAME}>
+        indexName={process.env.INDEX_NAME}
+      >
         <Configure hitsPerPage={8} clickAnalytics />
         <Analytics />
 
@@ -74,7 +77,7 @@ class App extends Component {
           <Hits />
         </div>
 
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: "center" }}>
           <Pagination />
         </div>
       </InstantSearch>

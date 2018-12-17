@@ -7,7 +7,7 @@ jest.mock("../utils/uuid", () => ({
 
 const credentials = {
   apiKey: "test",
-  applicationID: "test",
+  appId: "test",
   cookieDuration: 10 * 24 * 3600 * 1000 // 10 days
 };
 
