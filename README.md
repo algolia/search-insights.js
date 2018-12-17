@@ -41,9 +41,7 @@ search analytics.
 
 ### Enabling queryID response from Algolia engine
 
-In order for the Algolia engine to return a queryID on each search request, a special query parameter `clickAnalytics=true` should be set.
-
-InstantSearch
+In order for the Algolia engine to return a queryID on each search request, some special query parameters `clickAnalytics=true` and `enablePersonalization=true` should be set.
 
 ```js
 const search = instantsearch({
@@ -54,15 +52,6 @@ const search = instantsearch({
     clickAnalytics: true,
     enablePersonalization: true
   }
-});
-```
-
-algoliasearch-helper:
-
-```js
-const helper = algoliasearchHelper(client, "INDEX_NAME", {
-  clickAnalytics: true,
-  enablePersonalization: true
 });
 ```
 
@@ -96,6 +85,7 @@ aa('clickedObjectIDsAfterSearch', {
 ```
 
 - **index**: name of the index searched. \*required
+- **eventName**: name of the event. \*required
 - **objectIDs**: it is the ID of the result that has been clicked. \*required
 - **positions**: absolute position of the clicked element inside the DOM. (The value is 1 based and not 0 based!) \*required
 - **queryID**: queryID of the related search \*required
@@ -112,6 +102,7 @@ aa('convertedObjectIDsAfterSearch', {
 ```
 
 - **index**: name of the index searched. \*required
+- **eventName**: name of the event. \*required
 - **objectIDs**: it is the ID of the result that has been clicked. \*required
 - **queryID**: queryID of the related search \*required
 
@@ -123,7 +114,7 @@ const search = instantsearch({
   apiKey: "SEARCH_API_KEY",
   indexName: "INDEX_NAME",
   searchParameters: {
-    clickAnalytics: true
+    enablePersonalization: true
   }
 });
 function getQueryID() {
