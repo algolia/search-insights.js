@@ -156,7 +156,7 @@ aa('clickedFilters', {
 ```js
 aa('convertedObjectIDs', {
     index: 'INDEX_NAME'
-    eventName: "Add to basket',
+    eventName: 'Add to basket',
     objectIDs: [ 'object1' ]
 });
 aa('convertedFilters', {
