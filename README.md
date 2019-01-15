@@ -195,3 +195,33 @@ To run all examples and play around with the code you have to run two separate c
 
 - `yarn dev` - runs webpack and node dev server
 - `yarn build:dev` - runs rollup in watch mode - livereload if you do changes to the insights library
+
+## Migrating from v0 to v1
+
+### `init` method signature has changed
+- `applicationID` is now called `appId`, to stay consistent with our [other js libraries](https://www.algolia.com/doc/guides/building-search-ui/upgrade-guides/js/?language=javascript#previous-usage).
+
+### `initSearch` method has been removed
+This method was previously used to setup pass getQueryID helper. Now you need to explicitly call this helper
+and pass the result to methods that require it (namely `clickededObjectIDsAfterSearch` and `convertedObjectIDsAfterSearch`)
+
+### `click` and `convert` method have been renamed and their signatures changed to reflect the different use cases covered by the insights client
+
+To make it clear they are intended to be called in the context of a search
+- `click` is now `clickededObjectIDsAfterSearch`
+- `convert` is now `convertedObjectIDsAfterSearch`
+
+The signatures have also changed:
+
+* On `clickededObjectIDsAfterSearch `
+  - `eventName : string` is now required
+  - `index : string` is now required
+  - `objectID : number | string` is now `objectIDs : Array<number | string>`
+  - `queryID : string` is now required, use the getQueryID helper documented
+  - `position : number` is now `positions : Array<number>`
+
+* On `convertedObjectIDsAfterSearch`
+  - `eventName : string` is now required
+  - `index : string` is now required
+  - `objectID : number | string` is now `objectIDs : Array<number | string>`
+  - `queryID : string` is now required, use the getQueryID helper documented
