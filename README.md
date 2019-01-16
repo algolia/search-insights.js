@@ -248,14 +248,14 @@ The signatures have also changed:
   - `eventName: string` is now required
   - `index: string` is now required
   - `objectID: number | string` is now `objectIDs : Array<number | string>`
-  - `queryID: string` is now required, use the getQueryID helper documented
+  - `queryID: string` is now required, use the `getQueryID` helper documented
   - `position: number` is now `positions : Array<number>`
 
 * On `convertedObjectIDsAfterSearch`
   - `eventName: string` is now required
   - `index: string` is now required
   - `objectID: number | string` is now `objectIDs : Array<number | string>`
-  - `queryID: string` is now required, use the getQueryID helper documented
+  - `queryID: string` is now required, use the `getQueryID` helper documented
 
 **Before**:
 ```js
