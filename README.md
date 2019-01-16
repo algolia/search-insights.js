@@ -199,7 +199,7 @@ To run all examples and play around with the code you have to run two separate c
 ## Migrating from v0 to v1
 
 ### `init` method signature has changed
-- `applicationID` is now called `appId`, to stay consistent with our [other js libraries](https://www.algolia.com/doc/guides/building-search-ui/upgrade-guides/js/?language=javascript#previous-usage).
+- `applicationID` is now called `appId` to stay consistent with our [other JavaScript libraries](https://www.algolia.com/doc/guides/building-search-ui/upgrade-guides/js/?language=javascript#previous-usage).
 
 ### `initSearch` method has been removed
 This method was previously used to setup pass `getQueryID` helper. Now you need to explicitly call this helper
