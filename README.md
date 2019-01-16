@@ -199,30 +199,89 @@ To run all examples and play around with the code you have to run two separate c
 ## Migrating from v0 to v1
 
 ### `init` method signature has changed
-- `applicationID` is now called `appId` to stay consistent with our [other JavaScript libraries](https://www.algolia.com/doc/guides/building-search-ui/upgrade-guides/js/?language=javascript#previous-usage).
+- `applicationID` is now called `appId`, to stay consistent with our [other js libraries](https://www.algolia.com/doc/guides/building-search-ui/upgrade-guides/js/?language=javascript#previous-usage).
+
+**Before**:
+```js
+  aa('init', {
+    applicationID: 'APPLICATION_ID',
+    apiKey: 'SEARCH_API_KEY'
+    // other props
+  })
+```
+
+**After**:
+```js
+  aa('init', {
+    appId: 'APPLICATION_ID',
+    apiKey: 'SEARCH_API_KEY'
+    // other props
+  })
+```
 
 ### `initSearch` method has been removed
 This method was previously used to setup pass `getQueryID` helper. Now you need to explicitly call this helper
 and pass the result to methods that require it (namely `clickedObjectIDsAfterSearch` and `convertedObjectIDsAfterSearch`)
 ``
 
+**Before**:
+```js
+ aa('initSearch', {
+    getQueryID: () => search.helper.lastResults.queryID
+ })
+```
+
+**After**:
+```js
+  const getQueryID = () => search.helper.lastResults.queryID
+```
+
 ### `click` and `convert` methods have been renamed and their signatures have changed to reflect the different use cases covered by the insights client
 
 To make it clear they are intended to be called in the context of a search
-- `click` is now `clickededObjectIDsAfterSearch`
+- `click` is now `clickedObjectIDsAfterSearch`
 - `convert` is now `convertedObjectIDsAfterSearch`
 
 The signatures have also changed:
 
-* On `clickededObjectIDsAfterSearch `
-  - `eventName : string` is now required
-  - `index : string` is now required
-  - `objectID : number | string` is now `objectIDs : Array<number | string>`
-  - `queryID : string` is now required, use the getQueryID helper documented
-  - `position : number` is now `positions : Array<number>`
+* On `clickedObjectIDsAfterSearch `
+  - `eventName: string` is now required
+  - `index: string` is now required
+  - `objectID: number | string` is now `objectIDs : Array<number | string>`
+  - `queryID: string` is now required, use the getQueryID helper documented
+  - `position: number` is now `positions : Array<number>`
 
 * On `convertedObjectIDsAfterSearch`
-  - `eventName : string` is now required
-  - `index : string` is now required
-  - `objectID : number | string` is now `objectIDs : Array<number | string>`
-  - `queryID : string` is now required, use the getQueryID helper documented
+  - `eventName: string` is now required
+  - `index: string` is now required
+  - `objectID: number | string` is now `objectIDs : Array<number | string>`
+  - `queryID: string` is now required, use the getQueryID helper documented
+
+**Before**:
+```js
+aa("click", {
+  objectID: "object1",
+  position: 42
+});
+aa("convert", {
+  objectID: "object1",
+  position: 42
+});
+```
+
+**After**:
+```js
+aa("clickedObjectIDsAfterSearch", {
+  index: "INDEX_NAME",
+  eventName: "Clicked item",
+  queryID: getQueryID(),
+  objectIDs: ["object1"],
+  positions: [42]
+});
+aa("convertedObjectIDsAfterSearch", {
+  index: "INDEX_NAME",
+  eventName: "Clicked item",
+  queryID: getQueryID(),
+  objectIDs: ["object1"]
+});
+```
