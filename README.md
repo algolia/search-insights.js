@@ -220,7 +220,7 @@ To run all examples and play around with the code you have to run two separate c
 ```
 
 ### `initSearch` method has been removed
-This method was previously used to setup pass `getQueryID` helper. Now you need to explicitly call this helper
+This method was previously used to pass `getQueryID` helper. Now you need to explicitly call this helper
 and pass the result to methods that require it (namely `clickedObjectIDsAfterSearch` and `convertedObjectIDsAfterSearch`)
 ``
 
