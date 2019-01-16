@@ -120,9 +120,6 @@ const search = instantsearch({
     enablePersonalization: true
   }
 });
-function getQueryID() {
-  return search.helper.lastResults.queryID;
-}
 ```
 
 ### Reporting a click event
