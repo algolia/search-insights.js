@@ -202,7 +202,7 @@ To run all examples and play around with the code you have to run two separate c
 - `applicationID` is now called `appId`, to stay consistent with our [other js libraries](https://www.algolia.com/doc/guides/building-search-ui/upgrade-guides/js/?language=javascript#previous-usage).
 
 ### `initSearch` method has been removed
-This method was previously used to setup pass getQueryID helper. Now you need to explicitly call this helper
+This method was previously used to setup pass `getQueryID` helper. Now you need to explicitly call this helper
 and pass the result to methods that require it (namely `clickededObjectIDsAfterSearch` and `convertedObjectIDsAfterSearch`)
 
 ### `click` and `convert` method have been renamed and their signatures changed to reflect the different use cases covered by the insights client
