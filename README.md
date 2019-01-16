@@ -206,7 +206,7 @@ This method was previously used to setup pass `getQueryID` helper. Now you need 
 and pass the result to methods that require it (namely `clickedObjectIDsAfterSearch` and `convertedObjectIDsAfterSearch`)
 ``
 
-### `click` and `convert` method have been renamed and their signatures changed to reflect the different use cases covered by the insights client
+### `click` and `convert` methods have been renamed and their signatures have changed to reflect the different use cases covered by the insights client
 
 To make it clear they are intended to be called in the context of a search
 - `click` is now `clickededObjectIDsAfterSearch`
