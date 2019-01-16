@@ -238,7 +238,7 @@ and pass the result to methods that require it (namely `clickedObjectIDsAfterSea
 
 ### `click` and `convert` methods have been renamed and their signatures have changed to reflect the different use cases covered by the insights client
 
-To make it clear they are intended to be called in the context of a search
+To make it clear that they are intended to be called in the context of a search:
 - `click` is now `clickedObjectIDsAfterSearch`
 - `convert` is now `convertedObjectIDsAfterSearch`
 
