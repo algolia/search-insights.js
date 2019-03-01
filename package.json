@@ -98,8 +98,7 @@
       "tsx",
       "js",
       "jsx",
-      "json",
-      "node"
+      "json"
     ]
   },
   "dependencies": {}
