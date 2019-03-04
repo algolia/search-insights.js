@@ -32,7 +32,6 @@ const replaceHTMLPlugin = new HtmlReplaceWebpackPlugin([
 const PLUGINS = [
   new ExtractTextPlugin('[name].[hash].css'),
   // new WebpackChunkHash({algorithm: 'md5'}),
-  replaceHTMLPlugin,
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: JSON.stringify(NODE_ENV),
@@ -79,6 +78,7 @@ const PLUGINS = [
     filename: "vue.html",
     chunks: ['vue']
   }),
+  replaceHTMLPlugin,
   new webpack.HotModuleReplacementPlugin(),
 ];
 
