@@ -1,10 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackDevServer = require('webpack-dev-server');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlReplaceWebpackPlugin = require('html-replace-webpack-plugin');
-const WebpackChunkHash = require('webpack-chunk-hash');
 
 const isProd = process.env.NODE_ENV === "production";
 const { NODE_ENV, APP_ID, API_KEY, INDEX_NAME } = process.env;
@@ -31,7 +29,6 @@ const replaceHTMLPlugin = new HtmlReplaceWebpackPlugin([
 
 const PLUGINS = [
   new ExtractTextPlugin('[name].[hash].css'),
-  // new WebpackChunkHash({algorithm: 'md5'}),
   replaceHTMLPlugin,
   new webpack.DefinePlugin({
     'process.env': {
