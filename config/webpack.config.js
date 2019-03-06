@@ -69,23 +69,11 @@ const PLUGINS = [
     filename: "async.html",
     chunks: ['async']
   }),
-  new HtmlWebpackPlugin({
-    template: path.join(process.cwd(), 'examples/react-instantsearch/public/index.html'),
-    filename: "react.html",
-    chunks: ['react']
-  }),
-  new HtmlWebpackPlugin({
-    template: path.join(process.cwd(), 'examples/vue-instantsearch/index.html'),
-    filename: "vue.html",
-    chunks: ['vue']
-  }),
   new webpack.HotModuleReplacementPlugin(),
 ];
 
 const exampleEntries = {
   instantsearch: path.join(process.cwd(), 'examples/instantsearch/instantsearchExample.js'),
-  react: path.join(process.cwd(), 'examples/react-instantsearch/src/index.js'),
-  vue: path.join(process.cwd(), 'examples/vue-instantsearch/src/main.js'),
   autocomplete: path.join(process.cwd(), 'examples/autocomplete/autocomplete.js'),
   async: path.join(process.cwd(), 'examples/async/async.js'),
   helper: path.join(process.cwd(), 'examples/helper/helper.js'),
@@ -113,7 +101,7 @@ module.exports = {
       ],
       loader: 'babel-loader',
       query: {
-        presets: ['env', 'react']
+        presets: ['env']
       }
     }, {
       test: /\.scss$/,
@@ -149,9 +137,6 @@ module.exports = {
     }, {
       test: /\.json$/,
       use: 'json-loader',
-    }, {
-      test: /\.vue$/,
-      use: 'vue-loader',
     }]
   },
 
@@ -159,11 +144,8 @@ module.exports = {
   context: path.resolve(process.cwd()),
 
   resolve: {
-    extensions: ['.js', '.ts', '.tsx', '.vue'],
-    modules: ['.', 'node_modules', 'styles/'],
-    alias: {
-      vue: 'vue/dist/vue.js'
-    }
+    extensions: ['.js', '.ts', '.tsx'],
+    modules: ['.', 'node_modules', 'styles/']
   },
 
   plugins: PLUGINS,
