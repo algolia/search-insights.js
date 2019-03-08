@@ -37,7 +37,7 @@
     "algoliasearch": "3.32.0",
     "algoliasearch-helper": "2.26.1",
     "babel-cli": "6.26.0",
-    "babel-loader": "7.1.2",
+    "babel-loader": "7.1.5",
     "babel-preset-env": "1.6.1",
     "body-parser": "1.18.3",
     "cors": "2.8.4",
