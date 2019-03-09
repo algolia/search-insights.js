@@ -48,7 +48,7 @@
     "html-webpack-plugin": "2.30.1",
     "instantsearch.js": "2.10.4",
     "jest": "23.6.0",
-    "jest-localstorage-mock": "2.2.0",
+    "jest-localstorage-mock": "2.4.0",
     "lunr": "2.1.5",
     "node-sass": "4.7.2",
     "prettier": "1.15.2",
