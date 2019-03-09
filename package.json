@@ -40,7 +40,7 @@
     "babel-loader": "7.1.5",
     "babel-preset-env": "1.7.0",
     "body-parser": "1.18.3",
-    "cors": "2.8.4",
+    "cors": "2.8.5",
     "css-loader": "0.28.9",
     "extract-text-webpack-plugin": "3.0.2",
     "html-loader": "0.5.5",
