@@ -8524,10 +8524,10 @@ ts-jest@22.4.6:
     source-map-support "^0.5.5"
     yargs "^11.0.0"
 
-ts-loader@3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-3.4.0.tgz#c376bc0538d4c441ea8790c3fd841ebfdbfb99d0"
-  integrity sha512-p5vExXYOj/yUEuW45kG643ufi1ynFleeeXFX4dhhVHbBpnrLqTx3VK0ZIMPfwBONIslYD4o2hyWb7JIquoL8tg==
+ts-loader@3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-3.5.0.tgz#151d004dcddb4cf8e381a3bf9d6b74c2d957a9c0"
+  integrity sha512-JTia3kObhTk36wPFgy0RnkZReiusYx7Le9IhcUWRrCTcFcr6Dy1zGsFd3x8DG4gevlbN65knI8W50FfoykXcng==
   dependencies:
     chalk "^2.3.0"
     enhanced-resolve "^3.0.0"
