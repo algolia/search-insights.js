@@ -1,4 +1,5 @@
 import { isNumber, isUndefined, isString, isFunction } from "./utils/index";
+import { version } from "../package.json";
 
 export type InsightsEventType = "click" | "conversion" | "view";
 export type InsightsEvent = {
@@ -16,6 +17,9 @@ export type InsightsEvent = {
   filters?: string[];
 };
 
+const USER_AGENT = encodeURIComponent(
+  `Algolia insights for vanilla JavaScript (${version})`
+);
 /**
  *  Sends data to endpoint
  * @param eventType InsightsEventType
@@ -104,9 +108,7 @@ export function sendEvent(
     throw new Error("expected either `objectIDs` or `filters` to be provided");
   }
 
-  bulkSendEvent(this._appId, this._apiKey, this._endpointOrigin, [
-    event
-  ]);
+  bulkSendEvent(this._appId, this._apiKey, this._endpointOrigin, [event]);
 }
 
 function bulkSendEvent(
@@ -116,7 +118,7 @@ function bulkSendEvent(
   events: InsightsEvent[]
 ) {
   // Auth query
-  const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}`;
+  const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${USER_AGENT}`;
 
   // Detect navigator support
   const supportsNavigator = navigator && isFunction(navigator.sendBeacon);

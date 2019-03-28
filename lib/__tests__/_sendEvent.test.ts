@@ -1,9 +1,14 @@
 import AlgoliaInsights from "../insights";
 import * as url from "url";
+import * as querystring from "querystring";
+
+jest.mock("../../package.json", () => ({
+  version: "1.0.1"
+}));
 
 const credentials = {
-  apiKey: "test",
-  appId: "test"
+  apiKey: "testKey",
+  appId: "testId"
 };
 
 describe("sendEvent", () => {
@@ -54,6 +59,20 @@ describe("sendEvent", () => {
         ]
       });
     });
+    it("should include X-Algolia-* query parameters", () => {
+      (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        index: "my-index",
+        objectIDs: ["1"]
+      });
+      const [, requestUrl] = XMLHttpRequest.open.mock.calls[0];
+      const { query } = url.parse(requestUrl);
+      expect(querystring.parse(query)).toEqual({
+        "X-Algolia-API-Key": "testKey",
+        "X-Algolia-Agent": "Algolia insights for JavaScript (1.0.1)",
+        "X-Algolia-Application-Id": "testId"
+      });
+    });
   });
 
   describe("with sendBeacon", () => {
@@ -98,6 +117,20 @@ describe("sendEvent", () => {
             eventType: "click"
           })
         ]
+      });
+    });
+    it("should include X-Algolia-* query parameters", () => {
+      (AlgoliaInsights as any).sendEvent("click", {
+        eventName: "my-event",
+        index: "my-index",
+        objectIDs: ["1"]
+      });
+      const [requestUrl] = sendBeacon.mock.calls[0];
+      const { query } = url.parse(requestUrl);
+      expect(querystring.parse(query)).toEqual({
+        "X-Algolia-API-Key": "testKey",
+        "X-Algolia-Agent": "Algolia insights for JavaScript (1.0.1)",
+        "X-Algolia-Application-Id": "testId"
       });
     });
   });
@@ -277,6 +310,7 @@ describe("sendEvent", () => {
       });
     });
   });
+
   describe("filters", () => {
     it("should pass over provided filters", () => {
       (AlgoliaInsights as any).sendEvent("click", {
