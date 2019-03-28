@@ -19,7 +19,8 @@
     "build:dev": "rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
     "build:test": "yarn run jest",
     "build:examples": "webpack --config config/webpack.config.js --color --progress",
-    "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server"
+    "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
+    "version": "sh ./scripts/version.sh"
   },
   "repository": {
     "type": "git",
