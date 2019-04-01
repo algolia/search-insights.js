@@ -3,8 +3,8 @@
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "outDir": "./dist/",
-    "module": "commonjs",
-    "target": "es5",
+    "module": "es6",
+    "target": "es6",
     "noImplicitAny": false,
     "allowJs": true
   },
