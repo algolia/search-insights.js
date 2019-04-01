@@ -32,8 +32,12 @@ import {
   InsightsSearchViewFiltersEvent,
   viewedFilters
 } from "./view";
-import { ANONYMOUS_USER_TOKEN, getUserToken, setUserToken } from "./_cookieUtils";
-import version from "./version";
+import {
+  ANONYMOUS_USER_TOKEN,
+  getUserToken,
+  setUserToken
+} from "./_cookieUtils";
+import { version } from "../package.json";
 
 type Queue = {
   queue: string[][];

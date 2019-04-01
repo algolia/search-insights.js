@@ -4,6 +4,7 @@ import filesize from 'rollup-plugin-filesize';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import uglify from 'rollup-plugin-uglify';
+import json from "rollup-plugin-json";
 import replace from 'rollup-plugin-replace';
 import typescript from 'rollup-plugin-typescript';
 
@@ -19,6 +20,10 @@ export default {
     resolve({
       browser: true,
       preferBuiltins: false,
+    }),
+    json({
+      preferConst: true,
+      compact: true
     }),
     buble(),
     commonjs(),
