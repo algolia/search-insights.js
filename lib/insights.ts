@@ -32,7 +32,12 @@ import {
   InsightsSearchViewFiltersEvent,
   viewedFilters
 } from "./view";
-import { ANONYMOUS_USER_TOKEN, getUserToken, setUserToken } from "./_cookieUtils";
+import {
+  ANONYMOUS_USER_TOKEN,
+  getUserToken,
+  setUserToken
+} from "./_cookieUtils";
+import { version } from "../package.json";
 
 type Queue = {
   queue: string[][];
@@ -64,6 +69,8 @@ class AlgoliaAnalytics {
 
   // LocalStorage
   storageManager: StorageManager;
+
+  version: string = version;
 
   // Private methods
   private processQueue: () => void;
