@@ -65,7 +65,7 @@ describe("sendEvent", () => {
         index: "my-index",
         objectIDs: ["1"]
       });
-      const [, requestUrl] = XMLHttpRequest.open.mock.calls[0];
+      const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
       const { query } = url.parse(requestUrl);
       expect(querystring.parse(query)).toEqual({
         "X-Algolia-API-Key": "testKey",
@@ -125,7 +125,7 @@ describe("sendEvent", () => {
         index: "my-index",
         objectIDs: ["1"]
       });
-      const [requestUrl] = sendBeacon.mock.calls[0];
+      const requestUrl = sendBeacon.mock.calls[0][0];
       const { query } = url.parse(requestUrl);
       expect(querystring.parse(query)).toEqual({
         "X-Algolia-API-Key": "testKey",
