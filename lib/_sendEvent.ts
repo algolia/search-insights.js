@@ -18,7 +18,7 @@ export type InsightsEvent = {
 };
 
 const USER_AGENT = encodeURIComponent(
-  `Algolia insights for vanilla JavaScript (${version})`
+  `Algolia insights for JavaScript (${version})`
 );
 /**
  *  Sends data to endpoint
