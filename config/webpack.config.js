@@ -41,39 +41,15 @@ const PLUGINS = [
   }),
   new ExtractTextPlugin('[name].css'),
   new HtmlWebpackPlugin({
-    template: path.join(process.cwd(), 'examples/autocomplete/autocomplete.html'),
-    filename: "autocomplete.html",
-    chunks: ['autocomplete']
-  }),
-  new HtmlWebpackPlugin({
-    template: path.join(process.cwd(), 'examples/helper/helper.html'),
-    filename: "helper.html",
-    chunks: ['helper'],
-    excludeChunks: ['async']
-  }),
-  new HtmlWebpackPlugin({
     template: path.join(process.cwd(), 'examples/instantsearch/instantsearch.html'),
     filename: "instantsearch.html",
     chunks: ['instantsearch']
-  }),
-  new HtmlWebpackPlugin({
-    template: path.join(process.cwd(), 'examples/instantsearch/product.html'),
-    filename: "product.html",
-    chunks:['product']
-  }),
-  new HtmlWebpackPlugin({
-    template: path.join(process.cwd(), 'examples/async/async.html'),
-    filename: "async.html",
-    chunks: ['async']
   }),
   new webpack.HotModuleReplacementPlugin(),
 ];
 
 const exampleEntries = {
   instantsearch: path.join(process.cwd(), 'examples/instantsearch/instantsearchExample.js'),
-  autocomplete: path.join(process.cwd(), 'examples/autocomplete/autocomplete.js'),
-  async: path.join(process.cwd(), 'examples/async/async.js'),
-  helper: path.join(process.cwd(), 'examples/helper/helper.js'),
 }
 
 module.exports = {
