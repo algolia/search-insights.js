@@ -32,8 +32,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^23.3.10",
-    "@types/jsdom": "^11.0.4",
+    "@types/jest": "^24.0.0",
+    "@types/jsdom": "^12.0.0",
     "@types/puppeteer": "^1.0.0",
     "algoliasearch": "3.32.1",
     "algoliasearch-helper": "2.26.1",
