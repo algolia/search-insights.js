@@ -39,6 +39,7 @@ import {
   setUserToken
 } from "./_cookieUtils";
 import { version } from "../package.json";
+import { supportsCookies } from "./utils";
 
 type Queue = {
   queue: string[][];
@@ -138,7 +139,6 @@ class AlgoliaAnalytics {
     this.viewedObjectIDs = viewedObjectIDs.bind(this);
     this.viewedFilters = viewedFilters.bind(this);
 
-    this.setUserToken(this.ANONYMOUS_USER_TOKEN);
     // Process queue upon script execution
     this.processQueue();
   }
