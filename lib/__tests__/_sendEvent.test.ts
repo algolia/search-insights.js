@@ -146,7 +146,7 @@ describe("sendEvent", () => {
     });
     it("should do nothing is _userHasOptedOut === true", () => {
       AlgoliaInsights._userHasOptedOut = true;
-      AlgoliaInsights.sendEvent("click", {
+      (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]

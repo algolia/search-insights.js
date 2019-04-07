@@ -1,4 +1,4 @@
-import { isUndefined, isString, isNumber } from "./utils/index";
+import { isUndefined, isString, isNumber } from "./utils";
 
 type InsightRegion = "de" | "us";
 const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
