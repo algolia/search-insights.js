@@ -72,7 +72,7 @@ describe("init", () => {
           appId: "XXX"
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"optional cookieDuration is incorrect, expected an integer"`
+        `"optional cookieDuration is incorrect, expected an integer."`
       );
     }
   );

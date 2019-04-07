@@ -49,7 +49,7 @@ export function init(options: InitParams) {
       Math.floor(options.cookieDuration) !== options.cookieDuration)
   ) {
     throw new Error(
-      `optional cookieDuration is incorrect, expected an integer`
+      `optional cookieDuration is incorrect, expected an integer.`
     );
   }
 
