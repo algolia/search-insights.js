@@ -22,8 +22,8 @@ before_script:
 - yarn lint
 script:
 - yarn build
-- yarn test:size
 - yarn test
+- yarn test:size
 addons:
   artifacts:
     paths:
