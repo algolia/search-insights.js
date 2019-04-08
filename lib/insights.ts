@@ -9,6 +9,8 @@ import { sendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
 
 import { InitParams, init } from "./init";
 import { initSearch, InitSearchParams } from "./_initSearch";
+import { addAlgoliaAgent } from "./_algoliaAgent";
+
 import {
   InsightsSearchClickEvent,
   clickedObjectIDsAfterSearch,
@@ -66,6 +68,10 @@ class AlgoliaAnalytics {
   _userHasOptedOut: boolean;
   _cookieDuration: number;
 
+  // user agent
+  _ua: string = "";
+  _uaURIEncoded: string = "";
+
   version: string = version;
 
   // Private methods
@@ -79,6 +85,8 @@ class AlgoliaAnalytics {
   // Public methods
   public init: (params: InitParams) => void;
   public initSearch: (params: InitSearchParams) => void;
+
+  public addAlgoliaAgent: (algoliaAgent: string) => void;
 
   public ANONYMOUS_USER_TOKEN: string;
   public setUserToken: (userToken: string) => void;
@@ -110,6 +118,8 @@ class AlgoliaAnalytics {
     // Bind public methods to `this` class
     this.init = init.bind(this);
     this.initSearch = initSearch.bind(this);
+
+    this.addAlgoliaAgent = addAlgoliaAgent.bind(this);
 
     this.ANONYMOUS_USER_TOKEN = ANONYMOUS_USER_TOKEN;
     this.setUserToken = setUserToken.bind(this);
