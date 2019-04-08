@@ -1,13 +1,7 @@
 import { createUUID } from "./utils/uuid";
-// Cookie key
+
 const COOKIE_KEY = "_ALGOLIA";
 
-/**
- * Set Cookie
- * @param {[type]} cname  [description]
- * @param {[type]} cvalue [description]
- * @param {[type]} exdays [description]
- */
 const setCookie = (
   cname: string,
   cvalue: number | string,
@@ -19,11 +13,6 @@ const setCookie = (
   document.cookie = `${cname}=${cvalue};${expires};path=/`;
 };
 
-/**
- * getCookie
- * @param  {[type]} cname [description]
- * @return {[type]}       [description]
- */
 const getCookie = (cname: string): string => {
   const name = `${cname}=`;
   const decodedCookie = decodeURIComponent(document.cookie);

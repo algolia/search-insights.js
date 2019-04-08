@@ -1,5 +1,3 @@
-import AlgoliaInsights from "../insights";
-
 describe("Before script loads", () => {
   beforeAll(() => {
     (window as any)["AlgoliaAnalyticsObject"] = "aa";
@@ -15,7 +13,7 @@ describe("Before script loads", () => {
   });
 
   it("Should create a queue before script is loaded", () => {
-    aa("init", { random: "random" });
+    (window as any).aa("init", { random: "random" });
     expect((window as any).aa.queue).toMatchSnapshot();
   });
 });
