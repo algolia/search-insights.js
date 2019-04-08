@@ -14,10 +14,9 @@
     "lint": "tslint ./lib/**/*.ts",
     "prettier": "prettier lib/**/*.ts examples/**/* --write",
     "lint:fix": "yarn lint -- --fix",
-    "test": "NODE_ENV=development yarn build:examples && rollup --environment NODE_ENV:'development' -c rollup.config.js && yarn build:test",
-    "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js",
+    "test": "NODE_ENV=development yarn build:examples && yarn build && jest",
+    "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js && bundlesize",
     "build:dev": "rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
-    "build:test": "yarn run jest",
     "build:examples": "webpack --config config/webpack.config.js --color --progress",
     "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
     "version": "yarn build"
@@ -41,6 +40,7 @@
     "babel-loader": "7.1.5",
     "babel-preset-env": "1.7.0",
     "body-parser": "1.18.3",
+    "bundlesize": "0.17.1",
     "cors": "2.8.5",
     "css-loader": "0.28.11",
     "express": "4.16.4",
@@ -94,5 +94,11 @@
       "json"
     ]
   },
-  "dependencies": {}
+  "dependencies": {},
+  "bundlesize": [
+    {
+      "path": "./dist/search-insights.min.js",
+      "maxSize": "3 kB"
+    }
+  ]
 }
