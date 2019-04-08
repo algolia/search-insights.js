@@ -6,7 +6,7 @@ export const isFunction = value => typeof value === "function";
 
 export const supportsCookies = () => {
   try {
-    return !!navigator.cookieEnabled;
+    return Boolean(navigator.cookieEnabled);
   } catch (e) {
     return false;
   }
