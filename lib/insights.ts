@@ -39,7 +39,6 @@ import {
   setUserToken
 } from "./_cookieUtils";
 import { version } from "../package.json";
-import { supportsCookies } from "./utils";
 
 type Queue = {
   queue: string[][];
