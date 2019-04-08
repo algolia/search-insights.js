@@ -1,3 +1,5 @@
+import { InsightsEvent } from "./_sendEvent";
+
 export interface InsightsSearchConversionEvent {
   userToken?: string;
   timestamp?: number;

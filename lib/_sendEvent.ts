@@ -1,4 +1,4 @@
-import { isNumber, isUndefined, isString, isFunction } from "./utils/index";
+import { isNumber, isUndefined, isString, isFunction } from "./utils";
 import { version } from "../package.json";
 
 export type InsightsEventType = "click" | "conversion" | "view";

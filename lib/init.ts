@@ -1,5 +1,4 @@
-import { isUndefined, isString } from "./utils/index";
-import { isNumber } from "util";
+import { isUndefined, isString, isNumber } from "./utils";
 
 type InsightRegion = "de" | "us";
 const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
@@ -50,7 +49,7 @@ export function init(options: InitParams) {
       Math.floor(options.cookieDuration) !== options.cookieDuration)
   ) {
     throw new Error(
-      `optional cookieDuration is incorrect, expected an integer`
+      `optional cookieDuration is incorrect, expected an integer.`
     );
   }
 
