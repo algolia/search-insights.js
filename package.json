@@ -10,16 +10,16 @@
     "!**/__tests__/**"
   ],
   "scripts": {
-    "deploy": "yarn build && /bin/bash ./pre-deploy.sh && npm publish",
-    "lint": "tslint ./lib/**/*.ts",
-    "prettier": "prettier lib/**/*.ts examples/**/* --write",
-    "lint:fix": "yarn lint -- --fix",
-    "test": "NODE_ENV=development yarn build:examples && yarn build && jest",
-    "test:size": "bundlesize",
     "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js",
     "build:dev": "rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
     "build:examples": "webpack --config config/webpack.config.js --color --progress",
+    "deploy": "yarn build && /bin/bash ./pre-deploy.sh && npm publish",
     "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
+    "lint": "tslint ./lib/**/*.ts",
+    "lint:fix": "yarn lint -- --fix",
+    "prettier": "prettier lib/**/*.ts examples/**/* --write",
+    "test": "NODE_ENV=development yarn build:examples && yarn build && jest",
+    "test:size": "bundlesize",
     "version": "yarn build"
   },
   "repository": {
