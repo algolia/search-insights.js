@@ -6,7 +6,6 @@ objectAssignPolyfill();
 
 import { processQueue } from "./_processQueue";
 import { sendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
-import { StorageManager } from "./_storageManager";
 
 import { InitParams, init } from "./init";
 import { initSearch, InitSearchParams } from "./_initSearch";
@@ -67,9 +66,6 @@ class AlgoliaAnalytics {
   _userHasOptedOut: boolean;
   _cookieDuration: number;
 
-  // LocalStorage
-  storageManager: StorageManager;
-
   version: string = version;
 
   // Private methods
@@ -107,16 +103,6 @@ class AlgoliaAnalytics {
   public viewedFilters: (params?: InsightsSearchViewFiltersEvent) => void;
 
   constructor(options?: any) {
-    // Exit on old browsers or if script is not ran in browser
-    if (!document.addEventListener || !window) {
-      throw new Error(
-        "Browser does not support eventlistener or there is no window object."
-      );
-    }
-
-    // Init storage manager
-    this.storageManager = new StorageManager();
-
     // Bind private methods to `this` class
     this.processQueue = processQueue.bind(this);
     this.sendEvent = sendEvent.bind(this);
