@@ -125,10 +125,10 @@ const search = instantsearch({
 ### Reporting a click event
 
 ```js
-aa('clickedObjectIDs', {
-    index: 'INDEX_NAME'
-    eventName: 'Add to basket',
-    objectIDs: [ 'object1' ]
+aa("clickedObjectIDs", {
+  index: "INDEX_NAME",
+  eventName: "Add to basket",
+  objectIDs: ["object1"]
 });
 ```
 
@@ -137,10 +137,10 @@ aa('clickedObjectIDs', {
 - **objectIDs**: it is the ID of the result that has been clicked. \*required
 
 ```js
-aa('clickedFilters', {
-    index: 'INDEX_NAME'
-    eventName: 'Filter on facet',
-    filters: [ 'brand:Apple' ]
+aa("clickedFilters", {
+  index: "INDEX_NAME",
+  eventName: "Filter on facet",
+  filters: ["brand:Apple"]
 });
 ```
 
@@ -151,30 +151,30 @@ aa('clickedFilters', {
 ### Reporting a conversion event
 
 ```js
-aa('convertedObjectIDs', {
-    index: 'INDEX_NAME'
-    eventName: 'Add to basket',
-    objectIDs: [ 'object1' ]
+aa("convertedObjectIDs", {
+  index: "INDEX_NAME",
+  eventName: "Add to basket",
+  objectIDs: ["object1"]
 });
-aa('convertedFilters', {
-    index: 'INDEX_NAME'
-    eventName: 'Filter on facet',
-    filters: [ 'brand:Apple' ]
+aa("convertedFilters", {
+  index: "INDEX_NAME",
+  eventName: "Filter on facet",
+  filters: ["brand:Apple"]
 });
 ```
 
 ### Reporting a view event
 
 ```js
-aa('viewedObjectIDs', {
-    index: 'INDEX_NAME'
-    eventName: 'Add to basket',
-    objectIDs: [ 'object1' ]
+aa("viewedObjectIDs", {
+  index: "INDEX_NAME",
+  eventName: "Add to basket",
+  objectIDs: ["object1"]
 });
-aa('viewedFilters', {
-    index: 'INDEX_NAME'
-    eventName: 'Filter on facet',
-    filters: [ 'brand:Apple' ]
+aa("viewedFilters", {
+  index: "INDEX_NAME",
+  eventName: "Filter on facet",
+  filters: ["brand:Apple"]
 });
 ```
 
@@ -196,65 +196,74 @@ To run all examples and play around with the code you have to run two separate c
 ## Migrating from v0 to v1
 
 ### `init` method signature has changed
+
 - `applicationID` is now called `appId`, to stay consistent with our [other js libraries](https://www.algolia.com/doc/guides/building-search-ui/upgrade-guides/js/?language=javascript#previous-usage).
 
 **Before**:
+
 ```js
-  aa('init', {
-    applicationID: 'APPLICATION_ID',
-    apiKey: 'SEARCH_API_KEY'
-    // other props
-  })
+aa("init", {
+  applicationID: "APPLICATION_ID",
+  apiKey: "SEARCH_API_KEY"
+  // other props
+});
 ```
 
 **After**:
+
 ```js
-  aa('init', {
-    appId: 'APPLICATION_ID',
-    apiKey: 'SEARCH_API_KEY'
-    // other props
-  })
+aa("init", {
+  appId: "APPLICATION_ID",
+  apiKey: "SEARCH_API_KEY"
+  // other props
+});
 ```
 
 ### `initSearch` method has been removed
+
 This method was previously used to pass `getQueryID` helper. Now you need to explicitly call this helper
 and pass the result to methods that require it (namely `clickedObjectIDsAfterSearch` and `convertedObjectIDsAfterSearch`)
 ``
 
 **Before**:
+
 ```js
- aa('initSearch', {
-    getQueryID: () => search.helper.lastResults.queryID
- })
+aa("initSearch", {
+  getQueryID: () => search.helper.lastResults.queryID
+});
 ```
 
 **After**:
+
 ```js
-  const getQueryID = () => search.helper.lastResults.queryID
+const getQueryID = () => search.helper.lastResults.queryID;
 ```
 
 ### `click` and `convert` methods have been renamed and their signatures have changed to reflect the different use cases covered by the insights client
 
 To make it clear that they are intended to be called in the context of a search:
+
 - `click` is now `clickedObjectIDsAfterSearch`
 - `convert` is now `convertedObjectIDsAfterSearch`
 
 The signatures have also changed:
 
-* On `clickedObjectIDsAfterSearch `
+- On `clickedObjectIDsAfterSearch`
+
   - `eventName: string` is now required
   - `index: string` is now required
   - `objectID: number | string` is now `objectIDs : Array<number | string>`
   - `queryID: string` is now required, use the `getQueryID` helper documented
   - `position: number` is now `positions : Array<number>`
 
-* On `convertedObjectIDsAfterSearch`
+- On `convertedObjectIDsAfterSearch`
   - `eventName: string` is now required
   - `index: string` is now required
   - `objectID: number | string` is now `objectIDs : Array<number | string>`
   - `queryID: string` is now required, use the `getQueryID` helper documented
 
 **Before**:
+
 ```js
 aa("click", {
   objectID: "object1",
@@ -267,6 +276,7 @@ aa("convert", {
 ```
 
 **After**:
+
 ```js
 aa("clickedObjectIDsAfterSearch", {
   index: "INDEX_NAME",
