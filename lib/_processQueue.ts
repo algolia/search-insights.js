@@ -5,6 +5,8 @@
  * instead of putting them to the queue
  * @return {[type]} [description]
  */
+import { isFunction } from "./utils";
+
 export function processQueue(globalObject) {
   // Set pointer which allows renaming of the script
   const pointer = globalObject["AlgoliaAnalyticsObject"] as any;
@@ -14,18 +16,29 @@ export function processQueue(globalObject) {
     const queue = globalObject[pointer].queue || [];
 
     // Loop queue and execute functions in the queue
-    queue.forEach((fn: string[]) => {
-      const functionName = fn[0];
-      const functionArguments = fn[1];
+    queue.forEach((fn: any[]) => {
+      const functionName: string = fn[0];
+      const functionArguments: any = fn[1];
+      const functionCallback: (err: any, res: any) => void = fn[2];
 
-      if (functionName && typeof (this as any)[functionName] === "function") {
-        this[functionName](functionArguments);
+      if (functionName && isFunction((this as any)[functionName])) {
+        const output: any = this[functionName](functionArguments);
+        if (isFunction(functionCallback)) {
+          functionCallback(null, output);
+        }
       }
     });
 
     // Reassign pointer
-    globalObject[pointer] = (functionName: string, functionArguments: string) => {
-      (this as any)[functionName](functionArguments);
+    globalObject[pointer] = (
+      functionName: string,
+      functionArguments: string,
+      functionCallback: (err: any, res: any) => void
+    ) => {
+      const output = (this as any)[functionName](functionArguments);
+      if (isFunction(functionCallback)) {
+        functionCallback(null, output);
+      }
     };
   }
 }
