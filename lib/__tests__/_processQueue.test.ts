@@ -13,7 +13,7 @@ const makeGlobalObject = () => {
   return globalObject;
 };
 
-class AlgoliaAnalytics {
+class FakeAlgoliaAnalytics {
   public init: Function;
   public otherMethod: Function;
   public processQueue: Function;
@@ -30,7 +30,7 @@ describe("processQueue", () => {
 
   beforeEach(() => {
     globalObject = makeGlobalObject();
-    insights = new AlgoliaAnalytics();
+    insights = new FakeAlgoliaAnalytics();
   });
 
   it("should forward method calls that happen before the queue is processed", () => {
