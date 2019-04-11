@@ -32,7 +32,7 @@ search analytics.
 
     userHasOptedOut: boolean, // Optional. Default: false
     region: "de" | "us", // Optional. Default: will pick one automatically
-    cookieDuration: number //Optional. In milliseconds. Default: 15552000000ms (6 months)
+    cookieDuration: number // Optional. In milliseconds. Default: 15552000000ms (6 months)
   });
 
   // optional
