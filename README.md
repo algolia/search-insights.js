@@ -26,16 +26,17 @@ search analytics.
   !function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e.aa=e.aa||function(){(e.aa.queue=e.aa.queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],i.async=1,i.src="https://cdn.jsdelivr.net/npm/search-insights@1.0.0",c.parentNode.insertBefore(i,c)}(window,document,"script",0,"aa");
 
   // Initialize library
-  aa('init', {
-    appId: 'APPLICATION_ID',
-    apiKey: 'SEARCH_API_KEY',
-    userHasOptedOut?: boolean; // Optional. Default: false
-    region?: "de" | "us"; // Optional. Default auto
-    cookieDuration?: 10 * 24 * 60 * 60 * 1000; // in milliseconds. Optional. Default: 15552000000ms (6 months)
-  })
+  aa("init", {
+    appId: "APPLICATION_ID",
+    apiKey: "SEARCH_API_KEY",
+
+    userHasOptedOut: boolean, // Optional. Default: false
+    region: "de" | "us", // Optional. Default: will pick one automatically
+    cookieDuration: number //Optional. In milliseconds. Default: 15552000000ms (6 months)
+  });
 
   // optional
-  aa('setUserToken', 'id-of-user');
+  aa("setUserToken", "id-of-user");
 </script>
 ```
 
@@ -94,11 +95,11 @@ aa("clickedObjectIDsAfterSearch", {
 ### Reporting a conversion event
 
 ```js
-aa('convertedObjectIDsAfterSearch', {
-    index: 'INDEX_NAME'
-    eventName: 'Add to basket',
-    queryID: getQueryID(),
-    objectIDs: [ 'object1' ]
+aa("convertedObjectIDsAfterSearch", {
+  index: "INDEX_NAME",
+  eventName: "Add to basket",
+  queryID: getQueryID(),
+  objectIDs: ["object1"]
 });
 ```
 
