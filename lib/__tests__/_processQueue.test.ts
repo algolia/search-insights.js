@@ -20,7 +20,8 @@ class FakeAlgoliaAnalytics {
   constructor() {
     this.init = jest.fn();
     this.otherMethod = jest.fn(() => "otherMethodReturnedValue");
-    this.processQueue = processQueue.bind(this);
+
+    this.processQueue = processQueue.bind(this); // the function we'll be testing
   }
 }
 
