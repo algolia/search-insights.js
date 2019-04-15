@@ -3,6 +3,7 @@
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "noEmit": true,
+    "noUnusedLocals": true,
     "outDir": "./dist/",
     "module": "es6",
     "target": "es6",
