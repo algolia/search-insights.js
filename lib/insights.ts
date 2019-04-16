@@ -74,10 +74,8 @@ class AlgoliaAnalytics {
 
   version: string = version;
 
-  // Private methods
   private processQueue: (globalObject: any) => void;
 
-  // Protected methods
   protected sendEvent: (
     eventType: InsightsEventType,
     data: InsightsEvent
