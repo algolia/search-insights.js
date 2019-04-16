@@ -5,13 +5,13 @@
  * instead of putting them to the queue
  * @return {[type]} [description]
  */
-export function processQueue() {
+export function processQueue(globalObject) {
   // Set pointer which allows renaming of the script
-  const pointer = window["AlgoliaAnalyticsObject"] as any;
+  const pointer = globalObject["AlgoliaAnalyticsObject"] as any;
 
   // Check if there is a queue
   if (pointer) {
-    const queue = window[pointer].queue || [];
+    const queue = globalObject[pointer].queue || [];
 
     // Loop queue and execute functions in the queue
     queue.forEach((fn: string[]) => {
@@ -24,7 +24,7 @@ export function processQueue() {
     });
 
     // Reassign pointer
-    window[pointer] = (functionName: string, functionArguments: string) => {
+    globalObject[pointer] = (functionName: string, functionArguments: string) => {
       (this as any)[functionName](functionArguments);
     };
   }

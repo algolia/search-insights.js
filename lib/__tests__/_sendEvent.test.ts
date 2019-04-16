@@ -69,7 +69,7 @@ describe("sendEvent", () => {
       const { query } = url.parse(requestUrl);
       expect(querystring.parse(query)).toEqual({
         "X-Algolia-API-Key": "testKey",
-        "X-Algolia-Agent": "Algolia insights for JavaScript (1.0.1)",
+        "X-Algolia-Agent": "insights-js (1.0.1)",
         "X-Algolia-Application-Id": "testId"
       });
     });
@@ -129,7 +129,7 @@ describe("sendEvent", () => {
       const { query } = url.parse(requestUrl);
       expect(querystring.parse(query)).toEqual({
         "X-Algolia-API-Key": "testKey",
-        "X-Algolia-Agent": "Algolia insights for JavaScript (1.0.1)",
+        "X-Algolia-Agent": "insights-js (1.0.1)",
         "X-Algolia-Application-Id": "testId"
       });
     });

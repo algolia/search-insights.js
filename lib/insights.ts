@@ -75,7 +75,7 @@ class AlgoliaAnalytics {
   version: string = version;
 
   // Private methods
-  private processQueue: () => void;
+  private processQueue: (globalObject: any) => void;
   private sendEvent: (
     eventType: InsightsEventType,
     data: InsightsEvent
@@ -139,7 +139,7 @@ class AlgoliaAnalytics {
     this.viewedFilters = viewedFilters.bind(this);
 
     // Process queue upon script execution
-    this.processQueue();
+    this.processQueue(window);
   }
 }
 

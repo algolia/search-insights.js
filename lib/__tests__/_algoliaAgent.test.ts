@@ -8,21 +8,15 @@ describe("algoliaAgent", () => {
   });
 
   it("should initialize the client with a default algoliaAgent string", () => {
-    expect(AlgoliaInsights._ua).toEqual(
-      "Algolia insights for JavaScript (1.0.1)"
-    );
-    expect(AlgoliaInsights._uaURIEncoded).toEqual(
-      "Algolia%20insights%20for%20JavaScript%20(1.0.1)"
-    );
+    expect(AlgoliaInsights._ua).toEqual("insights-js (1.0.1)");
+    expect(AlgoliaInsights._uaURIEncoded).toEqual("insights-js%20(1.0.1)");
   });
 
   it("should allow adding a string to algoliaAgent", () => {
     AlgoliaInsights.addAlgoliaAgent("other string");
-    expect(AlgoliaInsights._ua).toEqual(
-      "Algolia insights for JavaScript (1.0.1); other string"
-    );
+    expect(AlgoliaInsights._ua).toEqual("insights-js (1.0.1); other string");
     expect(AlgoliaInsights._uaURIEncoded).toEqual(
-      "Algolia%20insights%20for%20JavaScript%20(1.0.1)%3B%20other%20string"
+      "insights-js%20(1.0.1)%3B%20other%20string"
     );
   });
 
@@ -31,10 +25,10 @@ describe("algoliaAgent", () => {
     AlgoliaInsights.addAlgoliaAgent("duplicated string");
 
     expect(AlgoliaInsights._ua).toEqual(
-      "Algolia insights for JavaScript (1.0.1); duplicated string"
+      "insights-js (1.0.1); duplicated string"
     );
     expect(AlgoliaInsights._uaURIEncoded).toEqual(
-      "Algolia%20insights%20for%20JavaScript%20(1.0.1)%3B%20duplicated%20string"
+      "insights-js%20(1.0.1)%3B%20duplicated%20string"
     );
   });
 });
