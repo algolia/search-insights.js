@@ -113,13 +113,23 @@ aa("convertedObjectIDsAfterSearch", {
 ### Initialize
 
 ```js
+const searchClient = algoliasearch("APPLICATION_ID", "SEARCH_API_KEY");
 const search = instantsearch({
-  appId: "APPLICATION_ID",
-  apiKey: "SEARCH_API_KEY",
+  searchClient,
   indexName: "INDEX_NAME",
   searchParameters: {
     enablePersonalization: true
   }
+});
+```
+
+### Access userToken
+
+In cases where the userToken is generated, you will need a way to access the userToken so that you can pass it to the searchClient.
+
+```ts
+aa("getUserToken", null, (err, userToken) => {
+  searchClient.setExtraHeader("X-Algolia-UserToken", userToken);
 });
 ```
 
