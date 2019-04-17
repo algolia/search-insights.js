@@ -20,7 +20,8 @@ class FakeAlgoliaAnalytics {
   constructor() {
     this.init = jest.fn();
     this.otherMethod = jest.fn(() => "otherMethodReturnedValue");
-    this.processQueue = processQueue.bind(this);
+
+    this.processQueue = processQueue.bind(this); // the function we'll be testing
   }
 }
 
@@ -57,5 +58,14 @@ describe("processQueue", () => {
 
     expect(insights.init).toHaveBeenCalledWith({ appID: "xxx", apiKey: "yyy" });
     expect(insights.otherMethod).toHaveBeenCalledWith({ objectIDs: ["1"] });
+  });
+
+  it("should return method output in a callback", () => {
+    insights.processQueue(globalObject);
+
+    const callback = jest.fn();
+    globalObject.aa("otherMethod", { objectIDs: ["1"] }, callback);
+
+    expect(callback).toHaveBeenCalledWith(null, "otherMethodReturnedValue");
   });
 });
