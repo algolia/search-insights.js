@@ -70,7 +70,7 @@
     "style-loader": "0.23.1",
     "ts-jest": "22.4.6",
     "ts-loader": "5.3.3",
-    "tslint": "5.15.0",
+    "tslint": "5.16.0",
     "tslint-config-airbnb": "5.11.1",
     "tslint-config-prettier": "1.18.0",
     "tslint-plugin-prettier": "2.0.1",
