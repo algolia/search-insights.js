@@ -73,6 +73,45 @@ describe("sendEvent", () => {
         "X-Algolia-Application-Id": "testId"
       });
     });
+    it("should make a synchronous request when options.synchronous === true", () => {
+      (AlgoliaInsights as any).sendEvent(
+        "click",
+        {
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        },
+        { synchronous: true }
+      );
+      const [, , async] = XMLHttpRequest.open.mock.calls[0];
+      expect(async).toBe(false);
+    });
+    it("should make a asynchronous request when options.synchronous === false", () => {
+      (AlgoliaInsights as any).sendEvent(
+        "click",
+        {
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        },
+        { synchronous: false }
+      );
+      const [, , async] = XMLHttpRequest.open.mock.calls[0];
+      expect(async).toBe(true);
+    });
+    it("should make a asynchronous request when options.synchronous has no been passed", () => {
+      (AlgoliaInsights as any).sendEvent(
+        "click",
+        {
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        },
+        { someOtherOption: false }
+      );
+      const [, , async] = XMLHttpRequest.open.mock.calls[0];
+      expect(async).toBe(true);
+    });
   });
 
   describe("with sendBeacon", () => {
@@ -92,6 +131,20 @@ describe("sendEvent", () => {
       expect(sendBeacon).toHaveBeenCalledTimes(1);
       expect(XMLHttpRequest.open).not.toHaveBeenCalled();
       expect(XMLHttpRequest.send).not.toHaveBeenCalled();
+    });
+    it("should not use sendBeacon if options.synchronous === true", () => {
+      (AlgoliaInsights as any).sendEvent(
+        "click",
+        {
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        },
+        { synchronous: true }
+      );
+      expect(sendBeacon).not.toHaveBeenCalled();
+      expect(XMLHttpRequest.open).toHaveBeenCalledTimes(1);
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
     });
     it("should call sendBeacon with /1/event", () => {
       (AlgoliaInsights as any).sendEvent("click", {

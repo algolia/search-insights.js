@@ -1,4 +1,4 @@
-import { isNumber, isUndefined, isString, isFunction } from "./utils";
+import { isFunction, isNumber, isString, isUndefined } from "./utils";
 
 export type InsightsEventType = "click" | "conversion" | "view";
 export type InsightsEvent = {
@@ -16,6 +16,10 @@ export type InsightsEvent = {
   filters?: string[];
 };
 
+export type InsightsOptions = {
+  synchronous?: boolean; // default false
+};
+
 /**
  *  Sends data to endpoint
  * @param eventType InsightsEventType
@@ -23,7 +27,8 @@ export type InsightsEvent = {
  */
 export function sendEvent(
   eventType: InsightsEventType,
-  eventData: InsightsEvent
+  eventData: InsightsEvent,
+  options?: InsightsOptions
 ) {
   if (this._userHasOptedOut) {
     return;
@@ -104,15 +109,23 @@ export function sendEvent(
     throw new Error("expected either `objectIDs` or `filters` to be provided");
   }
 
-  bulkSendEvent(this._appId, this._apiKey, this._uaURIEncoded, this._endpointOrigin, [event]);
+  bulkSendEvent(
+    this._appId,
+    this._apiKey,
+    this._uaURIEncoded,
+    this._endpointOrigin,
+    [event],
+    options
+  );
 }
 
-function bulkSendEvent(
+export function bulkSendEvent(
   appId: string,
   apiKey: string,
   userAgent: string,
   endpointOrigin: string,
-  events: InsightsEvent[]
+  events: InsightsEvent[],
+  options: InsightsOptions = { synchronous: false }
 ) {
   // Auth query
   const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${userAgent}`;
@@ -122,15 +135,15 @@ function bulkSendEvent(
 
   const data = { events };
 
-  // Always try sending data through sendbeacon
-  if (supportsNavigator) {
+  // Prefer sendBeacon
+  if (supportsNavigator && !options.synchronous) {
     navigator.sendBeacon(reportingURL, JSON.stringify(data));
   } else {
     // Default to a synchronous XHR
     const report = new XMLHttpRequest();
 
     // Open connection
-    report.open("POST", reportingURL);
+    report.open("POST", reportingURL, !options.synchronous);
 
     // Save queryID if event is search
     report.send(JSON.stringify(data));

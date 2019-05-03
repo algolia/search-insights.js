@@ -5,7 +5,12 @@ objectKeysPolyfill();
 objectAssignPolyfill();
 
 import { processQueue } from "./_processQueue";
-import { sendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
+import {
+  sendEvent,
+  InsightsEventType,
+  InsightsEvent,
+  InsightsOptions
+} from "./_sendEvent";
 
 import { InitParams, init } from "./init";
 import { initSearch, InitSearchParams } from "./_initSearch";
@@ -78,7 +83,8 @@ class AlgoliaAnalytics {
 
   protected sendEvent: (
     eventType: InsightsEventType,
-    data: InsightsEvent
+    data: InsightsEvent,
+    options?: InsightsOptions
   ) => void;
   protected _hasCredentials: boolean = false;
 
