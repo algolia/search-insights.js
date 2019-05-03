@@ -115,6 +115,17 @@ describe("Integration tests", () => {
       it("should retrieve a queryID on page load", async () => {
         expect(data).toHaveProperty("queryID");
       });
+      it("should generate an anonymous userToken on init", async () => {
+        const userToken = await page.evaluate(() => {
+          return new Promise((resolve, reject) =>
+            window.aa("getUserToken", null, (err, res) => {
+              if (err) return reject(err);
+              resolve(res);
+            })
+          );
+        });
+        expect(userToken).toMatch(/^anonymous-[-\w]+$/);
+      });
     });
 
     describe("click", () => {
