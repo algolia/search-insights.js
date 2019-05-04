@@ -36,7 +36,7 @@
   "devDependencies": {
     "@types/jest": "24.0.12",
     "@types/jsdom": "12.2.3",
-    "@types/puppeteer": "1.12.3",
+    "@types/puppeteer": "1.12.4",
     "algoliasearch": "3.32.1",
     "algoliasearch-helper": "2.27.0",
     "babel-cli": "6.26.0",
