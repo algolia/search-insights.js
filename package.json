@@ -52,7 +52,7 @@
     "html-replace-webpack-plugin": "2.5.5",
     "html-webpack-plugin": "2.30.1",
     "instantsearch.js": "2.10.4",
-    "jest": "24.7.1",
+    "jest": "24.8.0",
     "jest-localstorage-mock": "2.4.0",
     "lunr": "2.3.6",
     "node-sass": "4.12.0",
