@@ -90,7 +90,10 @@ class AlgoliaAnalytics {
 
   public ANONYMOUS_USER_TOKEN: string;
   public setUserToken: (userToken: string) => void;
-  public getUserToken: () => string;
+  public getUserToken: (
+    options?: any,
+    callback?: (err: any, userToken: string) => void
+  ) => string;
 
   public clickedObjectIDsAfterSearch: (
     params?: InsightsSearchClickEvent

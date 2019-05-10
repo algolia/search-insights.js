@@ -1,4 +1,5 @@
 import { createUUID } from "./utils/uuid";
+import { isFunction } from "./utils";
 
 const COOKIE_KEY = "_ALGOLIA";
 
@@ -49,6 +50,12 @@ export function setUserToken(userToken: string | number): void {
   }
 }
 
-export function getUserToken() {
+export function getUserToken(
+  options?: any,
+  callback?: (err: any, userToken: string) => void
+): string {
+  if (isFunction(callback)) {
+    callback(null, this._userToken);
+  }
   return this._userToken;
 }
