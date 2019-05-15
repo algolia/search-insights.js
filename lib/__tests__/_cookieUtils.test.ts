@@ -74,4 +74,16 @@ describe("cookieUtils", () => {
       });
     });
   });
+  describe("getUserToken", () => {
+    it("should return the current userToken", () => {
+      const userToken = AlgoliaInsights.getUserToken();
+      expect(userToken).toEqual("007");
+    });
+    it("should accept a callback", () => {
+      AlgoliaInsights.getUserToken({}, (err, userToken) => {
+        expect(err).toEqual(null);
+        expect(userToken).toEqual("007");
+      });
+    });
+  });
 });

@@ -20,6 +20,7 @@ before_install:
 before_script:
 - yarn install
 - yarn lint
+- yarn type-check
 script:
 - yarn build
 - yarn test

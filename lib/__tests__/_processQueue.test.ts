@@ -20,7 +20,8 @@ class FakeAlgoliaAnalytics {
   constructor() {
     this.init = jest.fn();
     this.otherMethod = jest.fn(() => "otherMethodReturnedValue");
-    this.processQueue = processQueue.bind(this);
+
+    this.processQueue = processQueue.bind(this); // the function we'll be testing
   }
 }
 
@@ -34,8 +35,9 @@ describe("processQueue", () => {
   });
 
   it("should forward method calls that happen before the queue is processed", () => {
+    const callback = jest.fn();
     globalObject.aa("init", { appID: "xxx", apiKey: "yyy" });
-    globalObject.aa("otherMethod", { objectIDs: ["1"] });
+    globalObject.aa("otherMethod", { objectIDs: ["1"] }, callback);
 
     expect(insights.init).not.toHaveBeenCalled();
     expect(insights.otherMethod).not.toHaveBeenCalled();
@@ -43,19 +45,26 @@ describe("processQueue", () => {
     insights.processQueue(globalObject);
 
     expect(insights.init).toHaveBeenCalledWith({ appID: "xxx", apiKey: "yyy" });
-    expect(insights.otherMethod).toHaveBeenCalledWith({ objectIDs: ["1"] });
+    expect(insights.otherMethod).toHaveBeenCalledWith(
+      { objectIDs: ["1"] },
+      callback
+    );
   });
 
   it("should forward method calls that happen after the queue is processed", () => {
+    const callback = jest.fn();
     insights.processQueue(globalObject);
 
     expect(insights.init).not.toHaveBeenCalled();
     expect(insights.otherMethod).not.toHaveBeenCalled();
 
     globalObject.aa("init", { appID: "xxx", apiKey: "yyy" });
-    globalObject.aa("otherMethod", { objectIDs: ["1"] });
+    globalObject.aa("otherMethod", { objectIDs: ["1"] }, callback);
 
     expect(insights.init).toHaveBeenCalledWith({ appID: "xxx", apiKey: "yyy" });
-    expect(insights.otherMethod).toHaveBeenCalledWith({ objectIDs: ["1"] });
+    expect(insights.otherMethod).toHaveBeenCalledWith(
+      { objectIDs: ["1"] },
+      callback
+    );
   });
 });

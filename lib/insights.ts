@@ -74,13 +74,13 @@ class AlgoliaAnalytics {
 
   version: string = version;
 
-  // Private methods
   private processQueue: (globalObject: any) => void;
-  private sendEvent: (
+
+  protected sendEvent: (
     eventType: InsightsEventType,
     data: InsightsEvent
   ) => void;
-  private _hasCredentials: boolean = false;
+  protected _hasCredentials: boolean = false;
 
   // Public methods
   public init: (params: InitParams) => void;
@@ -90,7 +90,10 @@ class AlgoliaAnalytics {
 
   public ANONYMOUS_USER_TOKEN: string;
   public setUserToken: (userToken: string) => void;
-  public getUserToken: () => string;
+  public getUserToken: (
+    options?: any,
+    callback?: (err: any, userToken: string) => void
+  ) => string;
 
   public clickedObjectIDsAfterSearch: (
     params?: InsightsSearchClickEvent

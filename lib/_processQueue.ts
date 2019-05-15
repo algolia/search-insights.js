@@ -1,31 +1,33 @@
 /**
  * Processes queue that might have been set before
  * the script was actually loaded and reassigns
- * class over window variable to execute commands
+ * class over globalObject variable to execute commands
  * instead of putting them to the queue
- * @return {[type]} [description]
  */
+import { isFunction } from "./utils";
+
 export function processQueue(globalObject) {
   // Set pointer which allows renaming of the script
-  const pointer = globalObject["AlgoliaAnalyticsObject"] as any;
+  const pointer = globalObject["AlgoliaAnalyticsObject"] as string;
 
   // Check if there is a queue
   if (pointer) {
-    const queue = globalObject[pointer].queue || [];
+    const queue: IArguments[] = globalObject[pointer].queue || [];
 
     // Loop queue and execute functions in the queue
-    queue.forEach((fn: string[]) => {
-      const functionName = fn[0];
-      const functionArguments = fn[1];
-
-      if (functionName && typeof (this as any)[functionName] === "function") {
-        this[functionName](functionArguments);
+    queue.forEach((args: IArguments) => {
+      const [functionName, ...functionArguments] = [].slice.call(args);
+      if (functionName && isFunction((this as any)[functionName])) {
+        this[functionName](...functionArguments);
       }
     });
 
     // Reassign pointer
-    globalObject[pointer] = (functionName: string, functionArguments: string) => {
-      (this as any)[functionName](functionArguments);
+    globalObject[pointer] = (
+      functionName: string,
+      ...functionArguments: any[]
+    ) => {
+      (this as any)[functionName](...functionArguments);
     };
   }
 }
