@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import { getCookie } from "../_cookieUtils";
 
 const DAY = 86400000; /* 1 day in ms*/
