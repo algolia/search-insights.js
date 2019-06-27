@@ -20,7 +20,7 @@ const setCookie = (cname: string, cvalue: string, exdays: number) => {
  * @param  {[type]} cname [description]
  * @return {[type]}       [description]
  */
-const getCookie = (cname: string):string => {
+export const getCookie = (cname: string):string => {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
