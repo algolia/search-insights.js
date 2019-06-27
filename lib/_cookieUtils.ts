@@ -14,10 +14,9 @@ const setCookie = (
   document.cookie = `${cname}=${cvalue};${expires};path=/`;
 };
 
-const getCookie = (cname: string): string => {
+export const getCookie = (cname: string): string => {
   const name = `${cname}=`;
-  const decodedCookie = decodeURIComponent(document.cookie);
-  const ca = decodedCookie.split(";");
+  const ca = document.cookie.split(";");
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
     while (c.charAt(0) === " ") {

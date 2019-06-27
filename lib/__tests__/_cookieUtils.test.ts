@@ -1,3 +1,4 @@
+import { getCookie } from "../_cookieUtils";
 import AlgoliaAnalytics from "../insights";
 import { createUUID } from "../utils/uuid";
 import * as utils from "../utils";
@@ -12,10 +13,16 @@ const credentials = {
   cookieDuration: 10 * 24 * 3600 * 1000 // 10 days
 };
 
+const DAY = 86400000; /* 1 day in ms*/
+const DATE_TOMORROW = new Date(Date.now() + DAY).toUTCString();
+const DATE_YESTERDAY = new Date(Date.now() - DAY).toUTCString();
+
 describe("cookieUtils", () => {
   let analyticsInstance;
   beforeEach(() => {
-    analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
+    analyticsInstance = new AlgoliaAnalytics({
+      requestFn: () => {}
+    });
     analyticsInstance.init(credentials);
     createUUID.mockReset();
     createUUID
@@ -88,6 +95,24 @@ describe("cookieUtils", () => {
       analyticsInstance.getUserToken({}, (err, userToken) => {
         expect(err).toEqual(null);
         expect(userToken).toEqual("007");
+      });
+    });
+
+    describe("getCookie", () => {
+      it("should return '' _ALGOLIA cookie when not available", () => {
+        document.cookie = `_ALGOLIA=value;expires=${DATE_YESTERDAY};path=/`;
+        expect(getCookie("_ALGOLIA")).toEqual("");
+      });
+      it("should get _ALGOLIA cookie when available", () => {
+        document.cookie = `_ALGOLIA=value;expires=${DATE_TOMORROW};path=/`;
+
+        expect(getCookie("_ALGOLIA")).toEqual("value");
+      });
+      it("should not care about other cookie if malformed", () => {
+        document.cookie = `_ALGOLIA=value;expires=${DATE_TOMORROW};path=/`;
+        document.cookie = `BAD_COOKIE=val%ue;expires=${DATE_TOMORROW};path=/`;
+
+        expect(getCookie("_ALGOLIA")).toEqual("value");
       });
     });
   });
