@@ -21,23 +21,27 @@ const setCookie = (cname: string, cvalue: string, exdays: number) => {
  * @return {[type]}       [description]
  */
 export const getCookie = (cname: string):string => {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
+    const name = cname + "=";
+    const ca = document.cookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
             c = c.substring(1);
         }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
+        if (c.indexOf(name) === 0) {
+          try {
+            return decodeURIComponent(c.substring(name.length, c.length));
+          } catch (e) {
+            console.warn(`Failed to decode ${cname} cookie.`, e);
+            return "";
+          }
         }
     }
     return "";
 }
 
 /**
- * Return new UUID 
+ * Return new UUID
  * @return {[string]} new UUID
  */
 const checkUserIdCookie = (userSpecifiedID?: string|number):string => {
