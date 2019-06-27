@@ -20,24 +20,24 @@ const setCookie = (cname: string, cvalue: string, exdays: number) => {
  * @param  {[type]} cname [description]
  * @return {[type]}       [description]
  */
-export const getCookie = (cname: string):string => {
-    const name = cname + "=";
-    const ca = document.cookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) === 0) {
-          try {
-            return decodeURIComponent(c.substring(name.length, c.length));
-          } catch (e) {
-            console.warn(`Failed to decode ${cname} cookie.`, e);
-            return "";
-          }
-        }
+export const getCookie = (cname: string): string => {
+  const name = cname + "=";
+  const ca = document.cookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === " ") {
+      c = c.substring(1);
     }
-    return "";
+    if (c.indexOf(name) === 0) {
+      try {
+        return decodeURIComponent(c.substring(name.length, c.length));
+      } catch (e) {
+        console.warn(`Failed to decode ${cname} cookie.`, e);
+        return "";
+      }
+    }
+  }
+  return "";
 }
 
 /**
