@@ -25,20 +25,5 @@ describe("cookieUtils", () => {
 
       expect(getCookie("_ALGOLIA")).toEqual("value");
     });
-    it("should return nothing when ALGOLIA cookie is malformed, and show a warning", () => {
-      const warn = jest.spyOn(console, "warn").mockImplementation(jest.fn());
-
-      document.cookie = `_ALGOLIA=val%ue;expires=${DATE_TOMORROW};path=/`;
-      document.cookie = `BAD_COOKIE=val%ue;expires=${DATE_TOMORROW};path=/`;
-
-      expect(getCookie("_ALGOLIA")).toEqual("");
-      expect(warn).toHaveBeenCalledTimes(1);
-      expect(warn).toHaveBeenCalledWith(
-        "Failed to decode _ALGOLIA cookie.",
-        expect.objectContaining({ name: "URIError" })
-      );
-
-      warn.mockRestore();
-    });
   });
 });

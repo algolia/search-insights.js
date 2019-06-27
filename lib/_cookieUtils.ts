@@ -29,12 +29,7 @@ export const getCookie = (cname: string): string => {
       c = c.substring(1);
     }
     if (c.indexOf(name) === 0) {
-      try {
-        return decodeURIComponent(c.substring(name.length, c.length));
-      } catch (e) {
-        console.warn(`Failed to decode ${cname} cookie.`, e);
-        return "";
-      }
+      return c.substring(name.length, c.length);
     }
   }
   return "";
