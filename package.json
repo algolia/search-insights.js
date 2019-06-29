@@ -43,7 +43,7 @@
     "babel-loader": "7.1.5",
     "babel-preset-env": "1.7.0",
     "body-parser": "1.19.0",
-    "bundlesize": "0.17.2",
+    "bundlesize": "0.18.0",
     "cors": "2.8.5",
     "css-loader": "0.28.11",
     "express": "4.17.1",
