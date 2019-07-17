@@ -72,6 +72,6 @@ describe("processQueue", () => {
     const oldPointerFunction = globalObject.aa;
     insights.processQueue(globalObject);
     const newPointerFunction = globalObject.aa;
-    expect(oldPointerFunction).toStrictEqual(newPointerFunction);
+    expect(oldPointerFunction).toBe(newPointerFunction);
   });
 });
