@@ -10,24 +10,34 @@ export function processQueue(globalObject) {
   // Set pointer which allows renaming of the script
   const pointer = globalObject["AlgoliaAnalyticsObject"] as string;
 
-  // Check if there is a queue
   if (pointer) {
-    const queue: IArguments[] = globalObject[pointer].queue || [];
+    const _aa = (functionName: string, ...functionArguments: any[]) => {
+      if (functionName && isFunction((this as any)[functionName])) {
+        this[functionName](...functionArguments);
+      }
+    };
+
+    // `aa` is the user facing function, which is defined in the install snippet.
+    //  - before library is initialized  `aa` fills a queue
+    //  - after library is initialized  `aa` calls `_aa`
+    const aa = globalObject[pointer];
+    aa.queue = aa.queue || [];
+
+    const queue: IArguments[] = aa.queue;
 
     // Loop queue and execute functions in the queue
     queue.forEach((args: IArguments) => {
       const [functionName, ...functionArguments] = [].slice.call(args);
-      if (functionName && isFunction((this as any)[functionName])) {
-        this[functionName](...functionArguments);
-      }
+      _aa(functionName, ...functionArguments);
     });
 
-    // Reassign pointer
-    globalObject[pointer] = (
-      functionName: string,
-      ...functionArguments: any[]
-    ) => {
-      (this as any)[functionName](...functionArguments);
+    // FIXME: Reassigning the pointer is a bad idea (cf: https://github.com/algolia/search-insights.js/issues/127)
+    //   to remove this without any breaking change, we redefine the Array.prototype.push method on the queue array.
+    //   for next major version, use a custom method instead of push.
+    // @ts-ignore (otherwise typescript won't let you change the signature)
+    queue.push = (args: IArguments) => {
+      const [functionName, ...functionArguments] = [].slice.call(args);
+      _aa(functionName, ...functionArguments);
     };
   }
 }
