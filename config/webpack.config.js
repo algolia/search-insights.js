@@ -6,7 +6,7 @@ const HtmlReplaceWebpackPlugin = require('html-replace-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === "production";
 const { NODE_ENV, APP_ID, API_KEY, INDEX_NAME } = process.env;
-const SCRIPT_SRC = NODE_ENV === 'production' ? 'https://cdn.jsdelivr.net/npm/search-insights@1.0.0/dist/search-insights.min.js' : 'http://localhost:8080/search-insights.min.js';
+const SCRIPT_SRC = NODE_ENV === 'production' ? 'https://cdn.jsdelivr.net/npm/search-insights@1.0.0/dist/search-insights.min.js' : '/search-insights.min.js';
 
 const replaceHTMLPlugin = new HtmlReplaceWebpackPlugin([
   {
