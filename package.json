@@ -15,7 +15,7 @@
     "build:examples": "webpack --config config/webpack.config.js --color --progress",
     "deploy": "yarn build && /bin/bash ./pre-deploy.sh && npm publish",
     "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
-    "lint": "eslint .",
+    "lint": "eslint --ext .js,.ts,.tsx .",
     "lint:fix": "yarn lint --fix",
     "prettier": "prettier lib/**/*.ts examples/**/* --write",
     "test": "NODE_ENV=development yarn build:examples && yarn build && jest",
