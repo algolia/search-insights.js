@@ -38,7 +38,7 @@ export function setUserToken(userToken: string | number): void {
     if (
       !foundToken ||
       foundToken === "" ||
-      !foundToken.startsWith("anonymous-")
+      foundToken.indexOf("anonymous-") !== 0
     ) {
       this._userToken = `anonymous-${createUUID()}`;
       setCookie(COOKIE_KEY, this._userToken, this._cookieDuration);
