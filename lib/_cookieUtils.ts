@@ -1,7 +1,7 @@
-import { createUUID } from "./utils/uuid";
-import { isFunction } from "./utils";
+import { createUUID } from './utils/uuid';
+import { isFunction } from './utils';
 
-const COOKIE_KEY = "_ALGOLIA";
+const COOKIE_KEY = '_ALGOLIA';
 
 const setCookie = (
   cname: string,
@@ -17,28 +17,28 @@ const setCookie = (
 const getCookie = (cname: string): string => {
   const name = `${cname}=`;
   const decodedCookie = decodeURIComponent(document.cookie);
-  const ca = decodedCookie.split(";");
+  const ca = decodedCookie.split(';');
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
-    while (c.charAt(0) === " ") {
+    while (c.charAt(0) === ' ') {
       c = c.substring(1);
     }
     if (c.indexOf(name) === 0) {
       return c.substring(name.length, c.length);
     }
   }
-  return "";
+  return '';
 };
 
-export const ANONYMOUS_USER_TOKEN = "ANONYMOUS_USER_TOKEN";
+export const ANONYMOUS_USER_TOKEN = 'ANONYMOUS_USER_TOKEN';
 
 export function setUserToken(userToken: string | number): void {
   if (userToken === ANONYMOUS_USER_TOKEN) {
     const foundToken = getCookie(COOKIE_KEY);
     if (
       !foundToken ||
-      foundToken === "" ||
-      !foundToken.startsWith("anonymous-")
+      foundToken === '' ||
+      !foundToken.startsWith('anonymous-')
     ) {
       this._userToken = `anonymous-${createUUID()}`;
       setCookie(COOKIE_KEY, this._userToken, this._cookieDuration);

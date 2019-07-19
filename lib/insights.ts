@@ -1,15 +1,15 @@
-import objectAssignPolyfill from "./polyfills/objectAssign";
-import objectKeysPolyfill from "./polyfills/objectKeys";
+import objectAssignPolyfill from './polyfills/objectAssign';
+import objectKeysPolyfill from './polyfills/objectKeys';
 
 objectKeysPolyfill();
 objectAssignPolyfill();
 
-import { processQueue } from "./_processQueue";
-import { sendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
+import { processQueue } from './_processQueue';
+import { sendEvent, InsightsEventType, InsightsEvent } from './_sendEvent';
 
-import { InitParams, init } from "./init";
-import { initSearch, InitSearchParams } from "./_initSearch";
-import { addAlgoliaAgent } from "./_algoliaAgent";
+import { InitParams, init } from './init';
+import { initSearch, InitSearchParams } from './_initSearch';
+import { addAlgoliaAgent } from './_algoliaAgent';
 
 import {
   InsightsSearchClickEvent,
@@ -17,28 +17,28 @@ import {
   InsightsClickObjectIDsEvent,
   clickedObjectIDs,
   InsightsClickFiltersEvent,
-  clickedFilters
-} from "./click";
+  clickedFilters,
+} from './click';
 import {
   InsightsSearchConversionEvent,
   convertedObjectIDsAfterSearch,
   InsightsSearchConversionObjectIDsEvent,
   convertedObjectIDs,
   InsightsSearchConversionFiltersEvent,
-  convertedFilters
-} from "./conversion";
+  convertedFilters,
+} from './conversion';
 import {
   InsightsSearchViewObjectIDsEvent,
   viewedObjectIDs,
   InsightsSearchViewFiltersEvent,
-  viewedFilters
-} from "./view";
+  viewedFilters,
+} from './view';
 import {
   ANONYMOUS_USER_TOKEN,
   getUserToken,
-  setUserToken
-} from "./_cookieUtils";
-import { version } from "../package.json";
+  setUserToken,
+} from './_cookieUtils';
+import { version } from '../package.json';
 
 type Queue = {
   queue: string[][];
@@ -69,8 +69,8 @@ class AlgoliaAnalytics {
   _cookieDuration: number;
 
   // user agent
-  _ua: string = "";
-  _uaURIEncoded: string = "";
+  _ua: string = '';
+  _uaURIEncoded: string = '';
 
   version: string = version;
 

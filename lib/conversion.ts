@@ -1,4 +1,4 @@
-import { InsightsEvent } from "./_sendEvent";
+import { InsightsEvent } from './_sendEvent';
 
 export interface InsightsSearchConversionEvent {
   userToken?: string;
@@ -6,7 +6,7 @@ export interface InsightsSearchConversionEvent {
   index: string;
 
   queryID: string;
-  objectIDs: (string | number)[];
+  objectIDs: Array<string | number>;
 }
 
 /**
@@ -18,21 +18,21 @@ export function convertedObjectIDsAfterSearch(
 ) {
   if (!params) {
     throw new Error(
-      "No params were sent to convertedObjectIDsAfterSearch function, please provide `queryID` and `objectIDs` to be reported"
+      'No params were sent to convertedObjectIDsAfterSearch function, please provide `queryID` and `objectIDs` to be reported'
     );
   }
   if (!params.queryID) {
     throw new Error(
-      "required queryID parameter was not sent, conversion event can not be properly sent without"
+      'required queryID parameter was not sent, conversion event can not be properly sent without'
     );
   }
   if (!params.objectIDs) {
     throw new Error(
-      "required objectIDs parameter was not sent, conversion event can not be properly sent without"
+      'required objectIDs parameter was not sent, conversion event can not be properly sent without'
     );
   }
 
-  this.sendEvent("conversion", params as InsightsEvent);
+  this.sendEvent('conversion', params as InsightsEvent);
 }
 
 export interface InsightsSearchConversionObjectIDsEvent {
@@ -41,7 +41,7 @@ export interface InsightsSearchConversionObjectIDsEvent {
   timestamp?: number;
   index: string;
 
-  objectIDs: (string | number)[];
+  objectIDs: Array<string | number>;
 }
 /**
  * Sends a conversion report using objectIDs
@@ -52,17 +52,17 @@ export function convertedObjectIDs(
 ) {
   if (!params) {
     throw new Error(
-      "No params were sent to convertedObjectIDs function, please provide `objectIDs` to be reported"
+      'No params were sent to convertedObjectIDs function, please provide `objectIDs` to be reported'
     );
   }
 
   if (!params.objectIDs) {
     throw new Error(
-      "required objectIDs parameter was not sent, conversion event can not be properly sent without"
+      'required objectIDs parameter was not sent, conversion event can not be properly sent without'
     );
   }
 
-  this.sendEvent("conversion", params as InsightsEvent);
+  this.sendEvent('conversion', params as InsightsEvent);
 }
 
 export interface InsightsSearchConversionFiltersEvent {
@@ -80,14 +80,14 @@ export interface InsightsSearchConversionFiltersEvent {
 export function convertedFilters(params: InsightsSearchConversionFiltersEvent) {
   if (!params) {
     throw new Error(
-      "No params were sent to convertedFilters function, please provide `filters` to be reported"
+      'No params were sent to convertedFilters function, please provide `filters` to be reported'
     );
   }
   if (!params.filters) {
     throw new Error(
-      "required filters parameter was not sent, conversion event can not be properly sent without"
+      'required filters parameter was not sent, conversion event can not be properly sent without'
     );
   }
 
-  this.sendEvent("conversion", params as InsightsEvent);
+  this.sendEvent('conversion', params as InsightsEvent);
 }

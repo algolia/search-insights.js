@@ -1,103 +1,103 @@
-import AlgoliaInsights from "../insights";
+import AlgoliaInsights from '../insights';
 
-describe("init", () => {
-  it("should throw if no parameters is passed", () => {
+describe('init', () => {
+  it('should throw if no parameters is passed', () => {
     expect(() => {
       (AlgoliaInsights as any).init();
     }).toThrowErrorMatchingInlineSnapshot(
       `"Init function should be called with an object argument containing your apiKey and appId"`
     );
   });
-  it("should throw if apiKey is not sent", () => {
+  it('should throw if apiKey is not sent', () => {
     expect(() => {
-      (AlgoliaInsights as any).init({ appId: "***" });
+      (AlgoliaInsights as any).init({ appId: '***' });
     }).toThrowErrorMatchingInlineSnapshot(
       `"apiKey is missing, please provide it so we can authenticate the application"`
     );
   });
-  it("should throw if appId is not sent", () => {
+  it('should throw if appId is not sent', () => {
     expect(() => {
-      (AlgoliaInsights as any).init({ apiKey: "***" });
+      (AlgoliaInsights as any).init({ apiKey: '***' });
     }).toThrowErrorMatchingInlineSnapshot(
       `"appId is missing, please provide it, so we can properly attribute data to your application"`
     );
   });
-  it("should throw if region is other than `de` | `us`", () => {
+  it('should throw if region is other than `de` | `us`', () => {
     expect(() => {
       (AlgoliaInsights as any).init({
-        appId: "xxx",
-        apiKey: "***",
-        region: "emea"
+        appId: 'xxx',
+        apiKey: '***',
+        region: 'emea',
       });
     }).toThrowErrorMatchingInlineSnapshot(
       `"optional region is incorrect, please provide either one of: de, us."`
     );
   });
-  it("should set _appId on instance", () => {
-    AlgoliaInsights.init({ apiKey: "***", appId: "XXX" });
-    expect(AlgoliaInsights._appId).toBe("XXX");
+  it('should set _appId on instance', () => {
+    AlgoliaInsights.init({ apiKey: '***', appId: 'XXX' });
+    expect(AlgoliaInsights._appId).toBe('XXX');
   });
-  it("should set _apiKey on instance", () => {
-    AlgoliaInsights.init({ apiKey: "***", appId: "XXX" });
-    expect(AlgoliaInsights._apiKey).toBe("***");
+  it('should set _apiKey on instance', () => {
+    AlgoliaInsights.init({ apiKey: '***', appId: 'XXX' });
+    expect(AlgoliaInsights._apiKey).toBe('***');
   });
-  it("should set _region on instance", () => {
-    AlgoliaInsights.init({ apiKey: "***", appId: "XXX", region: "us" });
-    expect(AlgoliaInsights._region).toBe("us");
+  it('should set _region on instance', () => {
+    AlgoliaInsights.init({ apiKey: '***', appId: 'XXX', region: 'us' });
+    expect(AlgoliaInsights._region).toBe('us');
   });
-  it("should set _userHasOptedOut on instance to false by default", () => {
-    AlgoliaInsights.init({ apiKey: "***", appId: "XXX" });
+  it('should set _userHasOptedOut on instance to false by default', () => {
+    AlgoliaInsights.init({ apiKey: '***', appId: 'XXX' });
     expect(AlgoliaInsights._userHasOptedOut).toBe(false);
   });
-  it("should set _userHasOptedOut on instance when passed", () => {
+  it('should set _userHasOptedOut on instance when passed', () => {
     AlgoliaInsights.init({
-      apiKey: "***",
-      appId: "XXX",
-      userHasOptedOut: true
+      apiKey: '***',
+      appId: 'XXX',
+      userHasOptedOut: true,
     });
     expect(AlgoliaInsights._userHasOptedOut).toBe(true);
   });
-  it("should use 6 months cookieDuration by default", () => {
-    AlgoliaInsights.init({ apiKey: "***", appId: "XXX" });
+  it('should use 6 months cookieDuration by default', () => {
+    AlgoliaInsights.init({ apiKey: '***', appId: 'XXX' });
     const month = 30 * 24 * 60 * 60 * 1000;
     expect(AlgoliaInsights._cookieDuration).toBe(6 * month);
   });
-  it.each(["not a string", 0.002, NaN])(
-    "should throw if cookieDuration passed but is not an integer (eg. %s)",
+  it.each(['not a string', 0.002, NaN])(
+    'should throw if cookieDuration passed but is not an integer (eg. %s)',
     cookieDuration => {
       expect(() => {
         (AlgoliaInsights as any).init({
           cookieDuration,
-          apiKey: "***",
-          appId: "XXX"
+          apiKey: '***',
+          appId: 'XXX',
         });
       }).toThrowErrorMatchingInlineSnapshot(
         `"optional cookieDuration is incorrect, expected an integer."`
       );
     }
   );
-  it("should use passed cookieDuration", () => {
+  it('should use passed cookieDuration', () => {
     AlgoliaInsights.init({
-      apiKey: "***",
-      appId: "XXX",
-      cookieDuration: 42
+      apiKey: '***',
+      appId: 'XXX',
+      cookieDuration: 42,
     });
     expect(AlgoliaInsights._cookieDuration).toBe(42);
   });
-  it("should set _endpointOrigin on instance to https://insights.algolia.io", () => {
-    AlgoliaInsights.init({ apiKey: "***", appId: "XXX" });
-    expect(AlgoliaInsights._endpointOrigin).toBe("https://insights.algolia.io");
+  it('should set _endpointOrigin on instance to https://insights.algolia.io', () => {
+    AlgoliaInsights.init({ apiKey: '***', appId: 'XXX' });
+    expect(AlgoliaInsights._endpointOrigin).toBe('https://insights.algolia.io');
   });
   it("should set _endpointOrigin on instance to https://insights.us.algolia.io if region === 'us'", () => {
-    AlgoliaInsights.init({ apiKey: "***", appId: "XXX", region: "us" });
+    AlgoliaInsights.init({ apiKey: '***', appId: 'XXX', region: 'us' });
     expect(AlgoliaInsights._endpointOrigin).toBe(
-      "https://insights.us.algolia.io"
+      'https://insights.us.algolia.io'
     );
   });
   it("should set _endpointOrigin on instance to https://insights.de.algolia.io if region === 'de'", () => {
-    AlgoliaInsights.init({ apiKey: "***", appId: "XXX", region: "de" });
+    AlgoliaInsights.init({ apiKey: '***', appId: 'XXX', region: 'de' });
     expect(AlgoliaInsights._endpointOrigin).toBe(
-      "https://insights.de.algolia.io"
+      'https://insights.de.algolia.io'
     );
   });
 });

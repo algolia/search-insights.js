@@ -1,4 +1,4 @@
-import { InsightsEvent } from "./_sendEvent";
+import { InsightsEvent } from './_sendEvent';
 
 export interface InsightsSearchViewObjectIDsEvent {
   eventName: string;
@@ -6,7 +6,7 @@ export interface InsightsSearchViewObjectIDsEvent {
   timestamp?: number;
   index: string;
 
-  objectIDs: (string | number)[];
+  objectIDs: Array<string | number>;
 }
 /**
  * Sends a view report using objectIDs
@@ -15,16 +15,16 @@ export interface InsightsSearchViewObjectIDsEvent {
 export function viewedObjectIDs(params: InsightsSearchViewObjectIDsEvent) {
   if (!params) {
     throw new Error(
-      "No params were sent to viewedObjectIDs function, please provide `objectIDs` to be reported"
+      'No params were sent to viewedObjectIDs function, please provide `objectIDs` to be reported'
     );
   }
   if (!params.objectIDs) {
     throw new Error(
-      "required objectIDs parameter was not sent, view event can not be properly sent without"
+      'required objectIDs parameter was not sent, view event can not be properly sent without'
     );
   }
 
-  this.sendEvent("view", params as InsightsEvent);
+  this.sendEvent('view', params as InsightsEvent);
 }
 
 export interface InsightsSearchViewFiltersEvent {
@@ -42,14 +42,14 @@ export interface InsightsSearchViewFiltersEvent {
 export function viewedFilters(params: InsightsSearchViewFiltersEvent) {
   if (!params) {
     throw new Error(
-      "No params were sent to viewedFilters function, please provide `filters` to be reported"
+      'No params were sent to viewedFilters function, please provide `filters` to be reported'
     );
   }
   if (!params.filters) {
     throw new Error(
-      "required filters parameter was not sent, view event can not be properly sent without"
+      'required filters parameter was not sent, view event can not be properly sent without'
     );
   }
 
-  this.sendEvent("view", params as InsightsEvent);
+  this.sendEvent('view', params as InsightsEvent);
 }

@@ -4,11 +4,11 @@
  * class over globalObject variable to execute commands
  * instead of putting them to the queue
  */
-import { isFunction } from "./utils";
+import { isFunction } from './utils';
 
 export function processQueue(globalObject) {
   // Set pointer which allows renaming of the script
-  const pointer = globalObject["AlgoliaAnalyticsObject"] as string;
+  const pointer = globalObject.AlgoliaAnalyticsObject as string;
 
   // Check if there is a queue
   if (pointer) {

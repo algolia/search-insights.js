@@ -1,5 +1,3 @@
-/* tslint:disable */
-
 /**
  * ES5 Object.assign polyfill
  * src:
@@ -7,13 +5,13 @@
  */
 
 export default function objectAssignPolyfill() {
-  if (typeof Object.assign !== "function") {
+  if (typeof Object.assign !== 'function') {
     Object.assign = function(target, varArgs) {
       // .length of function is 2
 
       if (target == null) {
         // TypeError if undefined or null
-        throw new TypeError("Cannot convert undefined or null to object");
+        throw new TypeError('Cannot convert undefined or null to object');
       }
 
       const to = Object(target);

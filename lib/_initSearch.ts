@@ -14,14 +14,14 @@ export function initSearch(initParams: InitSearchParams) {
     );
   } else if (!initParams) {
     throw new Error(
-      "initSearch function requires an argument with getQueryID and hitsContainer arguments"
+      'initSearch function requires an argument with getQueryID and hitsContainer arguments'
     );
   } else if (
     !initParams.getQueryID ||
-    typeof initParams.getQueryID !== "function"
+    typeof initParams.getQueryID !== 'function'
   ) {
     throw new Error(
-      "getQueryID must be a function that returns the queryID of the last search operation"
+      'getQueryID must be a function that returns the queryID of the last search operation'
     );
   }
   // } else if(!initParams.hitsContainer || (typeof initParams.hitsContainer !== "string" && !Array.isArray(initParams.hitsContainer))){

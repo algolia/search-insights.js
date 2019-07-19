@@ -1,4 +1,4 @@
-import { InsightsEvent } from "./_sendEvent";
+import { InsightsEvent } from './_sendEvent';
 
 export interface InsightsSearchClickEvent {
   userToken?: string;
@@ -6,7 +6,7 @@ export interface InsightsSearchClickEvent {
   index: string;
 
   queryID: string;
-  objectIDs: (string | number)[];
+  objectIDs: Array<string | number>;
   positions: number[];
 }
 
@@ -17,26 +17,26 @@ export interface InsightsSearchClickEvent {
 export function clickedObjectIDsAfterSearch(params: InsightsSearchClickEvent) {
   if (!params) {
     throw new Error(
-      "No params were sent to clickedObjectIDsAfterSearch function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
+      'No params were sent to clickedObjectIDsAfterSearch function, please provide `queryID`,  `objectIDs` and `positions` to be reported'
     );
   }
   if (!params.queryID) {
     throw new Error(
-      "required queryID parameter was not sent, click event can not be properly sent without"
+      'required queryID parameter was not sent, click event can not be properly sent without'
     );
   }
   if (!params.objectIDs) {
     throw new Error(
-      "required objectIDs parameter was not sent, click event can not be properly sent without"
+      'required objectIDs parameter was not sent, click event can not be properly sent without'
     );
   }
   if (!params.positions) {
     throw new Error(
-      "required positions parameter was not sent, click event can not be properly sent without"
+      'required positions parameter was not sent, click event can not be properly sent without'
     );
   }
 
-  this.sendEvent("click", params as InsightsEvent);
+  this.sendEvent('click', params as InsightsEvent);
 }
 
 export interface InsightsClickObjectIDsEvent {
@@ -45,7 +45,7 @@ export interface InsightsClickObjectIDsEvent {
   timestamp?: number;
   index: string;
 
-  objectIDs: (string | number)[];
+  objectIDs: Array<string | number>;
 }
 
 /**
@@ -55,16 +55,16 @@ export interface InsightsClickObjectIDsEvent {
 export function clickedObjectIDs(params: InsightsClickObjectIDsEvent) {
   if (!params) {
     throw new Error(
-      "No params were sent to clickedObjectIDs function, please provide `objectIDs` to be reported"
+      'No params were sent to clickedObjectIDs function, please provide `objectIDs` to be reported'
     );
   }
   if (!params.objectIDs) {
     throw new Error(
-      "required `objectIDs` parameter was not sent, click event can not be properly sent without"
+      'required `objectIDs` parameter was not sent, click event can not be properly sent without'
     );
   }
 
-  this.sendEvent("click", params as InsightsEvent);
+  this.sendEvent('click', params as InsightsEvent);
 }
 
 export interface InsightsClickFiltersEvent {
@@ -83,14 +83,14 @@ export interface InsightsClickFiltersEvent {
 export function clickedFilters(params: InsightsClickFiltersEvent) {
   if (!params) {
     throw new Error(
-      "No params were sent to clickedFilters function, please provide `filters` to be reported"
+      'No params were sent to clickedFilters function, please provide `filters` to be reported'
     );
   }
   if (!params.filters) {
     throw new Error(
-      "required `filters` parameter was not sent, click event can not be properly sent without"
+      'required `filters` parameter was not sent, click event can not be properly sent without'
     );
   }
 
-  this.sendEvent("click", params as InsightsEvent);
+  this.sendEvent('click', params as InsightsEvent);
 }

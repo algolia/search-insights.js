@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+import { version } from '../package.json';
 
 export const DEFAULT_ALGOLIA_AGENT = `insights-js (${version})`;
 
