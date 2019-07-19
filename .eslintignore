@@ -1,0 +1,3 @@
+tests/production
+node_modules
+dist
