@@ -3,12 +3,15 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlReplaceWebpackPlugin = require('html-replace-webpack-plugin');
+require('dotenv').config();
 
 const isProd = process.env.NODE_ENV === "production";
 const { NODE_ENV, APP_ID, API_KEY, INDEX_NAME } = process.env;
 if ([NODE_ENV, APP_ID, API_KEY, INDEX_NAME].some(v => !Boolean(v))) {
   console.error(`The following environment variables are required:`);
   console.error(`  > NODE_ENV, APP_ID, API_KEY, INDEX_NAME`);
+  console.error(`You can either specify them when running command,`);
+  console.error(`or create .env file to store them locally.`);
   console.error('')
   process.exit(1);
 }
