@@ -13,7 +13,6 @@
     "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js",
     "build:dev": "rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
     "build:examples": "webpack --config config/webpack.config.js --color --progress",
-    "deploy": "yarn build && /bin/bash ./pre-deploy.sh && npm publish",
     "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
     "lint": "tslint ./lib/**/*.ts",
     "lint:fix": "yarn lint -- --fix",
@@ -22,7 +21,8 @@
     "test:size": "bundlesize",
     "type-check": "tsc",
     "type-check:watch": "yarn type-check --watch",
-    "version": "yarn build"
+    "release:prepare": "ship prepare",
+    "release": "ship release"
   },
   "repository": {
     "type": "git",
@@ -67,6 +67,7 @@
     "rollup-plugin-typescript": "1.0.1",
     "rollup-plugin-uglify": "3.0.0",
     "sass-loader": "6.0.7",
+    "shipjs": "^0.0.8",
     "style-loader": "0.23.1",
     "ts-jest": "22.4.6",
     "ts-loader": "6.0.4",
