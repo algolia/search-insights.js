@@ -3,7 +3,8 @@
   "version": "1.2.0",
   "description": "Search analytics by Algolia",
   "jsdelivr": "dist/search-insights.min.js",
-  "main": "dist/search-insights.min.js",
+  "main": "dist/search-insights.cjs.min.js",
+  "browser": "dist/search-insights.min.js",
   "files": [
     "dist",
     "lib",
@@ -19,6 +20,7 @@
     "lint:fix": "yarn lint -- --fix",
     "prettier": "prettier lib/**/*.ts examples/**/* --write",
     "test": "NODE_ENV=development yarn build:examples && yarn build && jest",
+    "test:watch": "yarn test --watch",
     "test:size": "bundlesize",
     "type-check": "tsc",
     "type-check:watch": "yarn type-check --watch",
