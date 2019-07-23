@@ -1,7 +1,7 @@
 module.exports = {
-  baseBranches: ["maint", "develop", "chore/add-shipjs"],
+  baseBranches: ["maint", "develop"],
   mergeStrategy: {
-    toSameBranch: ["maint", "chore/add-shipjs"],
+    toSameBranch: ["maint"],
     toReleaseBranch: {
       develop: "master"
     }
