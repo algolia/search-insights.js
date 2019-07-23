@@ -174,8 +174,13 @@ search.addWidget(
 
 search.start();
 
+const matches = (elem, selector) => {
+  const fn = elem.matches || elem.msMatchesSelector;
+  return fn.call(elem, selector);
+};
+
 document.addEventListener("click", e => {
-  if (e.target.matches(".button-click")) {
+  if (matches(e.target, ".button-click")) {
     window.aa("clickedObjectIDsAfterSearch", {
       eventName: "hit-clicked",
       index: process.env.INDEX_NAME,
@@ -183,7 +188,7 @@ document.addEventListener("click", e => {
       objectIDs: [e.target.getAttribute("data-object-id")],
       positions: [parseInt(e.target.getAttribute("data-position"))]
     });
-  } else if (e.target.matches(".button-convert")) {
+  } else if (matches(e.target, ".button-convert")) {
     window.aa("convertedObjectIDsAfterSearch", {
       eventName: "hit-converted",
       index: process.env.INDEX_NAME,
