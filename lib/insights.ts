@@ -141,7 +141,6 @@ class AlgoliaAnalytics {
     this.viewedObjectIDs = viewedObjectIDs.bind(this);
     this.viewedFilters = viewedFilters.bind(this);
 
-    this.setUserToken(this.ANONYMOUS_USER_TOKEN);
     // Process queue upon script execution
     this.processQueue(window);
   }

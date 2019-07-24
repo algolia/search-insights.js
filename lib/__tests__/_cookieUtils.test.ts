@@ -1,5 +1,6 @@
 import AlgoliaInsights from "../insights";
 import { createUUID } from "../utils/uuid";
+import * as utils from "../utils";
 
 jest.mock("../utils/uuid", () => ({
   createUUID: jest.fn()
@@ -42,6 +43,17 @@ describe("cookieUtils", () => {
         AlgoliaInsights.setUserToken(AlgoliaInsights.ANONYMOUS_USER_TOKEN);
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-2");
       });
+      it("should throw if environment does not support cookies", () => {
+        const mockSupportsCookies = jest
+          .spyOn(utils, "supportsCookies")
+          .mockReturnValue(false);
+        expect(() =>
+          AlgoliaInsights.setUserToken(AlgoliaInsights.ANONYMOUS_USER_TOKEN)
+        ).toThrowErrorMatchingInlineSnapshot(
+          `"Tracking of anonymous users is possible on environment that support cookies."`
+        );
+        mockSupportsCookies.mockRestore();
+      });
     });
     describe("provided userToken", () => {
       it("should not create a cookie with provided userToken", () => {
@@ -64,10 +76,12 @@ describe("cookieUtils", () => {
   });
   describe("getUserToken", () => {
     it("should return the current userToken", () => {
+      AlgoliaInsights.setUserToken("007");
       const userToken = AlgoliaInsights.getUserToken();
       expect(userToken).toEqual("007");
     });
     it("should accept a callback", () => {
+      AlgoliaInsights.setUserToken("007");
       AlgoliaInsights.getUserToken({}, (err, userToken) => {
         expect(err).toEqual(null);
         expect(userToken).toEqual("007");

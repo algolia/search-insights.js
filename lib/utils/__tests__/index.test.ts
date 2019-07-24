@@ -3,8 +3,8 @@ import {
   isNumber,
   isString,
   isUndefined,
-  createUUID
-} from "./index";
+  supportsCookies
+} from "../index";
 
 describe("isUndefined", () => {
   test.each`
@@ -51,5 +51,11 @@ describe("isFunction", () => {
     ${() => null} | ${true}
   `("should return $expected when passed $input", ({ input, expected }) => {
     expect(isFunction(input)).toEqual(expected);
+  });
+});
+
+describe("supportsCookies", () => {
+  it("returns true in jsdom env", () => {
+    expect(supportsCookies()).toBe(true);
   });
 });
