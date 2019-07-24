@@ -1,4 +1,4 @@
-import { isNumber, isUndefined, isString, isFunction } from "./utils";
+import { isNumber, isUndefined, isString, request } from "./utils";
 
 export type InsightsEventType = "click" | "conversion" | "view";
 export type InsightsEvent = {
@@ -104,7 +104,13 @@ export function sendEvent(
     throw new Error("expected either `objectIDs` or `filters` to be provided");
   }
 
-  bulkSendEvent(this._appId, this._apiKey, this._uaURIEncoded, this._endpointOrigin, [event]);
+  bulkSendEvent(
+    this._appId,
+    this._apiKey,
+    this._uaURIEncoded,
+    this._endpointOrigin,
+    [event]
+  );
 }
 
 function bulkSendEvent(
@@ -116,23 +122,5 @@ function bulkSendEvent(
 ) {
   // Auth query
   const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${userAgent}`;
-
-  // Detect navigator support
-  const supportsNavigator = navigator && isFunction(navigator.sendBeacon);
-
-  const data = { events };
-
-  // Always try sending data through sendbeacon
-  if (supportsNavigator) {
-    navigator.sendBeacon(reportingURL, JSON.stringify(data));
-  } else {
-    // Default to a synchronous XHR
-    const report = new XMLHttpRequest();
-
-    // Open connection
-    report.open("POST", reportingURL);
-
-    // Save queryID if event is search
-    report.send(JSON.stringify(data));
-  }
+  request(reportingURL, { events });
 }

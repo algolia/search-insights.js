@@ -43,7 +43,7 @@ export default [
       name: MODULE_NAME,
       file: `./dist/${LIBRARY_OUTPUT_NAME}.cjs.min.js`
     },
-    external: ["http"],
+    external: ["http", "https"],
     plugins: createPlugins({ browser: false })
   }
 ];

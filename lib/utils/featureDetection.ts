@@ -1,4 +1,5 @@
 import { request as nodeHttpRequest } from "http";
+import { request as nodeHttpsRequest } from "https";
 
 export const supportsCookies = () => {
   try {
@@ -26,7 +27,7 @@ export const supportsXMLHttpRequest = () => {
 
 export const supportsNodeHttpModule = () => {
   try {
-    return Boolean(nodeHttpRequest);
+    return Boolean(nodeHttpRequest) && Boolean(nodeHttpsRequest);
   } catch (e) {
     return false;
   }
