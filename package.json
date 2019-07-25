@@ -55,6 +55,7 @@
     "instantsearch.js": "2.10.5",
     "jest": "24.8.0",
     "jest-localstorage-mock": "2.4.0",
+    "jest-watch-typeahead": "^0.3.1",
     "lunr": "2.3.6",
     "node-sass": "4.12.0",
     "prettier": "1.18.2",
@@ -95,6 +96,10 @@
       "js",
       "jsx",
       "json"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
     ]
   },
   "dependencies": {},
