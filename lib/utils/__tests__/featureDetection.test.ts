@@ -12,7 +12,7 @@ describe("featureDetection in jsdom env", () => {
   });
 
   describe("supportsSendBeacon", () => {
-    it("should return false if non available", () => {
+    it("should return false if not available", () => {
       // by default in jsdom env, navigator.sendBeacon is undefined
       expect(supportsSendBeacon()).toBe(false);
     });
