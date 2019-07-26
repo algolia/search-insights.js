@@ -9,10 +9,9 @@ import typescript from "rollup-plugin-typescript";
 const MODULE_NAME = "AlgoliaAnalytics",
   LIBRARY_OUTPUT_NAME = "search-insights";
 
-const createPlugins = ({ browser }) => [
+const createPlugins = () => [
   typescript(),
   resolve({
-    browser,
     preferBuiltins: false
   }),
   json({
@@ -34,7 +33,7 @@ export default [
       file: `./dist/${LIBRARY_OUTPUT_NAME}.min.js`,
       globals: {}
     },
-    plugins: createPlugins({ browser: true })
+    plugins: createPlugins()
   },
   {
     input: "lib/insights.ts",
@@ -43,7 +42,7 @@ export default [
       name: MODULE_NAME,
       file: `./dist/${LIBRARY_OUTPUT_NAME}.cjs.min.js`
     },
-    external: ["http"],
-    plugins: createPlugins({ browser: false })
+    external: ["http", "https"],
+    plugins: createPlugins()
   }
 ];
