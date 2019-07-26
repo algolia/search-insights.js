@@ -84,7 +84,7 @@ describe("request", () => {
     expect(nodeHttpsRequest).not.toHaveBeenCalled();
   });
 
-  it("should send with nodeHttpRequest", () => {
+  it("should send with nodeHttpRequest if url does not start with https://", () => {
     supportsSendBeacon.mockImplementation(() => false);
     supportsXMLHttpRequest.mockImplementation(() => false);
     supportsNodeHttpModule.mockImplementation(() => true);
@@ -107,7 +107,7 @@ describe("request", () => {
     expect(write).toHaveBeenLastCalledWith(JSON.stringify(data));
   });
 
-  it("should send with nodeHttpsRequest", () => {
+  it("should send with nodeHttpsRequest if url starts with https://", () => {
     supportsSendBeacon.mockImplementation(() => false);
     supportsXMLHttpRequest.mockImplementation(() => false);
     supportsNodeHttpModule.mockImplementation(() => true);
