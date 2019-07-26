@@ -5,12 +5,16 @@ import commonjs from "rollup-plugin-commonjs";
 import uglify from "rollup-plugin-uglify";
 import json from "rollup-plugin-json";
 import typescript from "rollup-plugin-typescript";
+import replace from "rollup-plugin-replace";
 
 const MODULE_NAME = "AlgoliaAnalytics",
   LIBRARY_OUTPUT_NAME = "search-insights";
 
-const createPlugins = () => [
+const createPlugins = ({ maybeNode }) => [
   typescript(),
+  replace({
+    "process.maybeNode": maybeNode
+  }),
   resolve({
     preferBuiltins: false
   }),
@@ -33,7 +37,7 @@ export default [
       file: `./dist/${LIBRARY_OUTPUT_NAME}.min.js`,
       globals: {}
     },
-    plugins: createPlugins()
+    plugins: createPlugins({ maybeNode: false })
   },
   {
     input: "lib/insights.ts",
@@ -43,6 +47,6 @@ export default [
       file: `./dist/${LIBRARY_OUTPUT_NAME}.cjs.min.js`
     },
     external: ["http", "https"],
-    plugins: createPlugins()
+    plugins: createPlugins({ maybeNode: true })
   }
 ];
