@@ -33,6 +33,11 @@ export function sendEvent(
       "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
     );
   }
+  if (!this._userToken) {
+    throw new Error(
+      "Before calling any methods on the analytics, you first need to call 'setUserToken' function."
+    );
+  }
 
   // mandatory params
   if (!isString(eventData.index)) {
