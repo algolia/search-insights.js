@@ -1,3 +1,4 @@
 import AlgoliaAnalytics from "./insights";
 
-export default new AlgoliaAnalytics();
+const processQueue = typeof window !== "undefined";
+export default new AlgoliaAnalytics({ processQueue });
