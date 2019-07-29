@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import AlgoliaInsights from "../entryBrowser";
+import aa from "../entryNode";
 
 const credentials = {
   apiKey: "testKey",
@@ -10,12 +10,12 @@ const credentials = {
 
 describe("_sendEvent in node env", () => {
   beforeEach(() => {
-    AlgoliaInsights.init(credentials);
+    aa("init", credentials);
   });
 
   it("throws when user token is not set", () => {
     expect(() => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      aa("sendEvent", "click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -26,9 +26,9 @@ describe("_sendEvent in node env", () => {
   });
 
   it("does not throw when user token is set", () => {
-    (AlgoliaInsights as any).setUserToken("aaa");
+    aa("setUserToken", "aaa");
     expect(() => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      aa("sendEvent", "click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
