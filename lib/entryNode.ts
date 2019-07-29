@@ -1,3 +1,5 @@
 import AlgoliaAnalytics from "./insights";
-
-export default new AlgoliaAnalytics();
+import getAa from "./_getAa";
+const instance = new AlgoliaAnalytics();
+const aa = getAa(instance);
+export default aa;
