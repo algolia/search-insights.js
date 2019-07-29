@@ -1,4 +1,4 @@
-import AlgoliaInsights from "../insights";
+import AlgoliaInsights from "../entryBrowser";
 import * as url from "url";
 import * as querystring from "querystring";
 

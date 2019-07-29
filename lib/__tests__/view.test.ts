@@ -1,4 +1,4 @@
-import AlgoliaInsights from "../insights";
+import AlgoliaInsights from "../entryBrowser";
 
 const credentials = {
   apiKey: "test",

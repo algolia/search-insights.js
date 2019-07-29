@@ -1,4 +1,4 @@
-import AlgoliaInsights from "../insights";
+import AlgoliaInsights from "../entryBrowser";
 import { createUUID } from "../utils/uuid";
 
 jest.mock("../utils/uuid", () => ({

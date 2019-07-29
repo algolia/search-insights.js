@@ -1,4 +1,4 @@
-import AlgoliaInsights from "../insights";
+import AlgoliaInsights from "../entryBrowser";
 
 describe("init", () => {
   it("should throw if no parameters is passed", () => {
