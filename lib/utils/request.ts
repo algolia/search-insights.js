@@ -20,7 +20,7 @@ function makeRequester() {
     return requestWithXMLHttpRequest;
   }
 
-  if (supportsNodeHttpModule()) {
+  if (!__BROWSER_BUILD__ && supportsNodeHttpModule()) {
     return requestWithNodeHttpModule;
   }
 
