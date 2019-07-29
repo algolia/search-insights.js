@@ -33,7 +33,7 @@ const getCookie = (cname: string): string => {
 export const ANONYMOUS_USER_TOKEN = "ANONYMOUS_USER_TOKEN";
 
 export function setUserToken(userToken: string | number): void {
-  if (__BROWSER_BUILD__ && userToken === ANONYMOUS_USER_TOKEN) {
+  if (userToken === ANONYMOUS_USER_TOKEN) {
     if (!supportsCookies()) {
       throw new Error(
         "Tracking of anonymous users is possible on environment that support cookies."

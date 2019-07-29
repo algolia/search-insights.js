@@ -1,4 +1,4 @@
-import AlgoliaInsights from "../insights";
+import AlgoliaInsights from "../entryBrowser";
 import { createUUID } from "../utils/uuid";
 import * as utils from "../utils";
 

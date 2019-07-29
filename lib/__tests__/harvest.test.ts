@@ -1,5 +1,5 @@
 import * as testServer from "../../server/server.js";
-import AlgoliaInsights from "./../insights";
+import AlgoliaInsights from "./../entryBrowser";
 const puppeteer = require("puppeteer");
 const url = require("url");
 

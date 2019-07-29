@@ -5,16 +5,12 @@ import commonjs from "rollup-plugin-commonjs";
 import uglify from "rollup-plugin-uglify";
 import json from "rollup-plugin-json";
 import typescript from "rollup-plugin-typescript";
-import replace from "rollup-plugin-replace";
 
 const MODULE_NAME = "AlgoliaAnalytics",
   LIBRARY_OUTPUT_NAME = "search-insights";
 
-const createPlugins = ({ isBrowserBuild }) => [
+const createPlugins = () => [
   typescript(),
-  replace({
-    __BROWSER_BUILD__: isBrowserBuild
-  }),
   resolve({
     preferBuiltins: false
   }),
@@ -30,23 +26,23 @@ const createPlugins = ({ isBrowserBuild }) => [
 
 export default [
   {
-    input: "lib/insights.ts",
+    input: "lib/entryBrowser.ts",
     output: {
       format: "umd",
       name: MODULE_NAME,
       file: `./dist/${LIBRARY_OUTPUT_NAME}.min.js`,
       globals: {}
     },
-    plugins: createPlugins({ isBrowserBuild: true })
+    plugins: createPlugins()
   },
   {
-    input: "lib/insights.ts",
+    input: "lib/entryNode.ts",
     output: {
       format: "cjs",
       name: MODULE_NAME,
       file: `./dist/${LIBRARY_OUTPUT_NAME}.cjs.min.js`
     },
     external: ["http", "https"],
-    plugins: createPlugins({ isBrowserBuild: false })
+    plugins: createPlugins()
   }
 ];
