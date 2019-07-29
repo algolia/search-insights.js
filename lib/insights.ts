@@ -148,6 +148,4 @@ class AlgoliaAnalytics {
   }
 }
 
-const AlgoliaInsights = new AlgoliaAnalytics();
-
-export default AlgoliaInsights;
+export default AlgoliaAnalytics;

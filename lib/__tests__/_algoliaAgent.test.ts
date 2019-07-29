@@ -1,4 +1,4 @@
-import AlgoliaInsights from "../insights";
+import AlgoliaInsights from "../entryBrowser";
 
 jest.mock("../../package.json", () => ({ version: "1.0.1" }));
 
