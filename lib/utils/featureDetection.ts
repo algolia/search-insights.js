@@ -1,6 +1,3 @@
-import { request as nodeHttpRequest } from "http";
-import { request as nodeHttpsRequest } from "https";
-
 export const supportsCookies = () => {
   try {
     return Boolean(navigator.cookieEnabled);
@@ -27,6 +24,8 @@ export const supportsXMLHttpRequest = () => {
 
 export const supportsNodeHttpModule = () => {
   try {
+    const { request: nodeHttpRequest } = require("http");
+    const { request: nodeHttpsRequest } = require("https");
     return Boolean(nodeHttpRequest) && Boolean(nodeHttpsRequest);
   } catch (e) {
     return false;

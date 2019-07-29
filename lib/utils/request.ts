@@ -1,5 +1,3 @@
-import { request as nodeHttpRequest } from "http";
-import { request as nodeHttpsRequest } from "https";
 import {
   supportsSendBeacon,
   supportsXMLHttpRequest,
@@ -53,8 +51,8 @@ const requestWithNodeHttpModule: RequestType = (url, data) => {
     }
   };
 
-  const nodeRequest =
-    url.indexOf("https://") === 0 ? nodeHttpsRequest : nodeHttpRequest;
+  const { request: nodeRequest } =
+    url.indexOf("https://") === 0 ? require("https") : require("http");
   const req = nodeRequest(url, options);
 
   req.on("error", error => {
