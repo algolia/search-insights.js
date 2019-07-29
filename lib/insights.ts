@@ -142,7 +142,7 @@ class AlgoliaAnalytics {
     this.viewedFilters = viewedFilters.bind(this);
 
     // Process queue upon script execution
-    if (typeof window !== "undefined") {
+    if (__BROWSER_BUILD__ && typeof window !== "undefined") {
       this.processQueue(window);
     }
   }
