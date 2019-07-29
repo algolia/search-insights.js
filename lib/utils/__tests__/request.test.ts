@@ -1,6 +1,6 @@
 import { request as nodeHttpRequest } from "http";
 import { request as nodeHttpsRequest } from "https";
-import request from "../request";
+import { getRequesterForBrowser, getRequesterForNode } from "../request";
 import {
   supportsSendBeacon,
   supportsXMLHttpRequest,
@@ -56,6 +56,7 @@ describe("request", () => {
     supportsNodeHttpModule.mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
+    const request = getRequesterForBrowser();
     request(url, data);
     expect(navigator.sendBeacon).toHaveBeenCalledTimes(1);
     expect(navigator.sendBeacon).toHaveBeenLastCalledWith(
@@ -74,6 +75,7 @@ describe("request", () => {
     supportsNodeHttpModule.mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
+    const request = getRequesterForBrowser();
     request(url, data);
     expect(navigator.sendBeacon).not.toHaveBeenCalled();
     expect(open).toHaveBeenCalledTimes(1);
@@ -90,6 +92,7 @@ describe("request", () => {
     supportsNodeHttpModule.mockImplementation(() => true);
     const url = "http://random.url";
     const data = { foo: "bar" };
+    const request = getRequesterForNode();
     request(url, data);
     expect(navigator.sendBeacon).not.toHaveBeenCalled();
     expect(open).not.toHaveBeenCalled();
@@ -113,6 +116,7 @@ describe("request", () => {
     supportsNodeHttpModule.mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
+    const request = getRequesterForNode();
     request(url, data);
     expect(navigator.sendBeacon).not.toHaveBeenCalled();
     expect(open).not.toHaveBeenCalled();

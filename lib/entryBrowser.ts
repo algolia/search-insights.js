@@ -1,4 +1,8 @@
 import AlgoliaAnalytics from "./insights";
+import { getRequesterForBrowser } from "./utils/request";
 
 const processQueue = typeof window !== "undefined";
-export default new AlgoliaAnalytics({ processQueue });
+const requestFn = getRequesterForBrowser();
+const instance = new AlgoliaAnalytics({ processQueue, requestFn });
+
+export default instance;

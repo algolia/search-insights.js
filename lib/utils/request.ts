@@ -4,14 +4,12 @@ import {
   supportsNodeHttpModule
 } from "./featureDetection";
 
-type RequestType = (url: string, data: object) => void;
+export type RequestFnType = (url: string, data: object) => void;
 
-const request: RequestType = (url, data) => {
-  const fn = makeRequester();
-  fn(url, data);
-};
+const errorMessage =
+  "Could not find a supported HTTP request client in this environment.";
 
-function makeRequester() {
+export function getRequesterForBrowser() {
   if (supportsSendBeacon()) {
     return requestWithSendBeacon;
   }
@@ -20,28 +18,30 @@ function makeRequester() {
     return requestWithXMLHttpRequest;
   }
 
+  throw new Error(errorMessage);
+}
+
+export function getRequesterForNode() {
   if (supportsNodeHttpModule()) {
     return requestWithNodeHttpModule;
   }
 
-  throw new Error(
-    "Could not find a supported HTTP request client in this environment."
-  );
+  throw new Error(errorMessage);
 }
 
-const requestWithSendBeacon: RequestType = (url, data) => {
+const requestWithSendBeacon: RequestFnType = (url, data) => {
   const serializedData = JSON.stringify(data);
   navigator.sendBeacon(url, serializedData);
 };
 
-const requestWithXMLHttpRequest: RequestType = (url, data) => {
+const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
   const serializedData = JSON.stringify(data);
   const report = new XMLHttpRequest();
   report.open("POST", url);
   report.send(serializedData);
 };
 
-const requestWithNodeHttpModule: RequestType = (url, data) => {
+const requestWithNodeHttpModule: RequestFnType = (url, data) => {
   const serializedData = JSON.stringify(data);
   const options = {
     method: "POST",
@@ -62,5 +62,3 @@ const requestWithNodeHttpModule: RequestType = (url, data) => {
   req.write(serializedData);
   req.end();
 };
-
-export default request;

@@ -4,4 +4,3 @@ export const isString = value => typeof value === "string";
 export const isNumber = value => typeof value === "number";
 export const isFunction = value => typeof value === "function";
 export * from "./featureDetection";
-export { default as request } from "./request";

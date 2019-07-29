@@ -1,4 +1,6 @@
 import AlgoliaInsights from "../entryBrowser";
+import { getRequesterForBrowser } from "../utils/request";
+import { makeSendEvent } from "../_sendEvent";
 import * as url from "url";
 import * as querystring from "querystring";
 
@@ -10,6 +12,11 @@ const credentials = {
   apiKey: "testKey",
   appId: "testId"
 };
+
+function reAssignSendEvent(instance) {
+  const requestFn = getRequesterForBrowser();
+  instance.sendEvent = makeSendEvent(requestFn).bind(instance);
+}
 
 describe("sendEvent", () => {
   let XMLHttpRequest;
@@ -29,8 +36,15 @@ describe("sendEvent", () => {
   });
 
   describe("with XMLHttpRequest", () => {
+    let sendBeaconBackup = window.navigator.sendBeacon;
     beforeEach(() => {
+      sendBeaconBackup = window.navigator.sendBeacon;
       window.navigator.sendBeacon = undefined; // force usage of XMLHttpRequest
+      reAssignSendEvent(AlgoliaInsights);
+    });
+    afterEach(() => {
+      window.navigator.sendBeacon = sendBeaconBackup;
+      reAssignSendEvent(AlgoliaInsights);
     });
     it("should make a post request to /1/events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
@@ -77,11 +91,15 @@ describe("sendEvent", () => {
 
   describe("with sendBeacon", () => {
     let sendBeacon;
+    let sendBeaconBackup;
     beforeEach(() => {
+      sendBeaconBackup = window.navigator.sendBeacon;
       sendBeacon = window.navigator.sendBeacon = jest.fn();
+      reAssignSendEvent(AlgoliaInsights);
     });
     afterEach(() => {
-      window.navigator.sendBeacon = undefined;
+      window.navigator.sendBeacon = sendBeaconBackup;
+      reAssignSendEvent(AlgoliaInsights);
     });
     it("should use sendBeacon when available", () => {
       (AlgoliaInsights as any).sendEvent("click", {
