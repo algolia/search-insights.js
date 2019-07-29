@@ -33,6 +33,11 @@ export function sendEvent(
       "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
     );
   }
+  if (!this._userToken) {
+    throw new Error(
+      "Before calling any methods on the analytics, you first need to call 'setUserToken' function."
+    );
+  }
 
   // mandatory params
   if (!isString(eventData.index)) {
@@ -104,7 +109,13 @@ export function sendEvent(
     throw new Error("expected either `objectIDs` or `filters` to be provided");
   }
 
-  bulkSendEvent(this._appId, this._apiKey, this._uaURIEncoded, this._endpointOrigin, [event]);
+  bulkSendEvent(
+    this._appId,
+    this._apiKey,
+    this._uaURIEncoded,
+    this._endpointOrigin,
+    [event]
+  );
 }
 
 function bulkSendEvent(
