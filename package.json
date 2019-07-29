@@ -82,6 +82,9 @@
     "webpack": "3.12.0"
   },
   "jest": {
+    "globals": {
+      "__BROWSER_BUILD__": true
+    },
     "setupFiles": [
       "jest-localstorage-mock"
     ],

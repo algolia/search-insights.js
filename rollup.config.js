@@ -10,10 +10,10 @@ import replace from "rollup-plugin-replace";
 const MODULE_NAME = "AlgoliaAnalytics",
   LIBRARY_OUTPUT_NAME = "search-insights";
 
-const createPlugins = ({ maybeNode }) => [
+const createPlugins = ({ isBrowserBuild }) => [
   typescript(),
   replace({
-    "process.maybeNode": maybeNode
+    __BROWSER_BUILD__: isBrowserBuild
   }),
   resolve({
     preferBuiltins: false
@@ -37,7 +37,7 @@ export default [
       file: `./dist/${LIBRARY_OUTPUT_NAME}.min.js`,
       globals: {}
     },
-    plugins: createPlugins({ maybeNode: false })
+    plugins: createPlugins({ isBrowserBuild: true })
   },
   {
     input: "lib/insights.ts",
@@ -47,6 +47,6 @@ export default [
       file: `./dist/${LIBRARY_OUTPUT_NAME}.cjs.min.js`
     },
     external: ["http", "https"],
-    plugins: createPlugins({ maybeNode: true })
+    plugins: createPlugins({ isBrowserBuild: false })
   }
 ];
