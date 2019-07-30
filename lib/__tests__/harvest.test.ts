@@ -1,5 +1,5 @@
 import * as testServer from "../../server/server.js";
-import { getInstance } from "../../tests/utils";
+import { getInstanceForBrowser as getInstance } from "../../tests/utils";
 const puppeteer = require("puppeteer");
 const url = require("url");
 
@@ -58,6 +58,10 @@ describe("Library initialisation", () => {
   });
 
   it("Should create UUID", () => {
+    AlgoliaInsights.init({
+      apiKey: "1234",
+      appId: "ABCD"
+    });
     expect(AlgoliaInsights._userToken).not.toBeUndefined();
   });
 });

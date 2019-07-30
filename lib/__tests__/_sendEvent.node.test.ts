@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import AlgoliaInsights from "../entryBrowser";
+import { getInstance } from "../../tests/utils";
 
 const credentials = {
   apiKey: "testKey",
@@ -9,7 +9,9 @@ const credentials = {
 };
 
 describe("_sendEvent in node env", () => {
+  let AlgoliaInsights;
   beforeEach(() => {
+    AlgoliaInsights = getInstance();
     AlgoliaInsights.init(credentials);
   });
 
