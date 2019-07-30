@@ -1,4 +1,4 @@
-import AlgoliaInsights from "../entryBrowser";
+import { getInstance } from "../../tests/utils";
 import { createUUID } from "../utils/uuid";
 
 jest.mock("../utils/uuid", () => ({
@@ -12,7 +12,9 @@ const credentials = {
 };
 
 describe("cookieUtils", () => {
+  let AlgoliaInsights;
   beforeEach(() => {
+    AlgoliaInsights = getInstance();
     AlgoliaInsights.init(credentials);
     createUUID.mockReset();
     createUUID
@@ -63,6 +65,9 @@ describe("cookieUtils", () => {
     });
   });
   describe("getUserToken", () => {
+    beforeEach(() => {
+      AlgoliaInsights.setUserToken("007");
+    });
     it("should return the current userToken", () => {
       const userToken = AlgoliaInsights.getUserToken();
       expect(userToken).toEqual("007");

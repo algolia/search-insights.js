@@ -1,6 +1,11 @@
-import AlgoliaInsights from "../entryBrowser";
+import { getInstance } from "../../tests/utils";
 
 describe("init", () => {
+  let AlgoliaInsights;
+  beforeEach(() => {
+    AlgoliaInsights = getInstance();
+  });
+
   it("should throw if no parameters is passed", () => {
     expect(() => {
       (AlgoliaInsights as any).init();

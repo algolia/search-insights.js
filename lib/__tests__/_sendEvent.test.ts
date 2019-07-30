@@ -1,4 +1,4 @@
-import AlgoliaInsights from "../entryBrowser";
+import { getInstance } from "../../tests/utils";
 import * as url from "url";
 import * as querystring from "querystring";
 
@@ -14,7 +14,9 @@ const credentials = {
 describe("sendEvent", () => {
   let XMLHttpRequest;
 
+  let AlgoliaInsights;
   beforeEach(() => {
+    AlgoliaInsights = getInstance();
     AlgoliaInsights.init(credentials);
     AlgoliaInsights.setUserToken("mock-user-id");
     XMLHttpRequest = {
