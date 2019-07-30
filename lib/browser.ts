@@ -1,4 +1,10 @@
 import AlgoliaAnalytics from "./insights";
+import { processQueue } from "./_processQueue";
 
-const processQueue = typeof window !== "undefined";
-export default new AlgoliaAnalytics({ processQueue });
+const instance = new AlgoliaAnalytics({ processQueue });
+if (typeof window !== "undefined") {
+  // Process queue upon script execution
+  processQueue.call(instance, window);
+}
+
+export default instance;

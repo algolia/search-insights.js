@@ -4,7 +4,6 @@ import objectKeysPolyfill from "./polyfills/objectKeys";
 objectKeysPolyfill();
 objectAssignPolyfill();
 
-import { processQueue as processQueueFn } from "./_processQueue";
 import { sendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
 
 import { InitParams, init } from "./init";
@@ -56,9 +55,7 @@ declare global {
   }
 }
 
-type AlgoliaAnalyticsOptions = {
-  processQueue?: boolean;
-};
+type AlgoliaAnalyticsOptions = {};
 
 /**
  *  AlgoliaAnalytics class
@@ -115,7 +112,7 @@ class AlgoliaAnalytics {
   public viewedObjectIDs: (params?: InsightsSearchViewObjectIDsEvent) => void;
   public viewedFilters: (params?: InsightsSearchViewFiltersEvent) => void;
 
-  constructor({ processQueue = false }: AlgoliaAnalyticsOptions = {}) {
+  constructor({  }: AlgoliaAnalyticsOptions = {}) {
     // Bind private methods to `this` class
     this.sendEvent = sendEvent.bind(this);
 
@@ -141,11 +138,6 @@ class AlgoliaAnalytics {
 
     this.viewedObjectIDs = viewedObjectIDs.bind(this);
     this.viewedFilters = viewedFilters.bind(this);
-
-    // Process queue upon script execution
-    if (processQueue) {
-      processQueueFn.call(this, window);
-    }
   }
 }
 
