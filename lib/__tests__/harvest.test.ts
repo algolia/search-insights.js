@@ -1,5 +1,5 @@
 import * as testServer from "../../server/server.js";
-import AlgoliaInsights from "./../entryBrowser";
+import { getInstanceForBrowser as getInstance } from "../../tests/utils";
 const puppeteer = require("puppeteer");
 const url = require("url");
 
@@ -13,6 +13,11 @@ const windowWidth = 1920;
 const windowHeight = 1080;
 
 describe("Library initialisation", () => {
+  let AlgoliaInsights;
+  beforeEach(() => {
+    AlgoliaInsights = getInstance();
+  });
+
   it("Should throw if there is no apiKey and appId", () => {
     expect(() => {
       // @ts-ignore
@@ -53,6 +58,10 @@ describe("Library initialisation", () => {
   });
 
   it("Should create UUID", () => {
+    AlgoliaInsights.init({
+      apiKey: "1234",
+      appId: "ABCD"
+    });
     expect(AlgoliaInsights._userToken).not.toBeUndefined();
   });
 });

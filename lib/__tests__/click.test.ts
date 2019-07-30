@@ -1,4 +1,4 @@
-import AlgoliaInsights from "../entryBrowser";
+import { getInstance } from "../../tests/utils";
 
 const credentials = {
   apiKey: "test",
@@ -6,6 +6,11 @@ const credentials = {
 };
 
 describe("clickedObjectIDsAfterSearch", () => {
+  let AlgoliaInsights;
+  beforeEach(() => {
+    AlgoliaInsights = getInstance();
+  });
+
   test("Should throw if queryID, objectIDs or positions are not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
@@ -70,6 +75,11 @@ describe("clickedObjectIDsAfterSearch", () => {
 });
 
 describe("clickedObjectIDs", () => {
+  let AlgoliaInsights;
+  beforeEach(() => {
+    AlgoliaInsights = getInstance();
+  });
+
   it("should throw if no parameters is passed", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
@@ -103,6 +113,11 @@ describe("clickedObjectIDs", () => {
 });
 
 describe("clickedFilters", () => {
+  let AlgoliaInsights;
+  beforeEach(() => {
+    AlgoliaInsights = getInstance();
+  });
+
   it("should throw if no parameters is passed", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {

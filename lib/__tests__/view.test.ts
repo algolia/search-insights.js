@@ -1,10 +1,15 @@
-import AlgoliaInsights from "../entryBrowser";
+import { getInstance } from "../../tests/utils";
 
 const credentials = {
   apiKey: "test",
   appId: "test"
 };
 describe("viewedObjectIDs", () => {
+  let AlgoliaInsights;
+  beforeEach(() => {
+    AlgoliaInsights = getInstance();
+  });
+
   it("should throw if no params are sent", () => {
     expect(() => {
       AlgoliaInsights.init(credentials);
@@ -38,7 +43,13 @@ describe("viewedObjectIDs", () => {
     });
   });
 });
+
 describe("viewedFilters", () => {
+  let AlgoliaInsights;
+  beforeEach(() => {
+    AlgoliaInsights = getInstance();
+  });
+
   it("should throw if no params are sent", () => {
     expect(() => {
       AlgoliaInsights.init(credentials);

@@ -29,6 +29,22 @@ export function getRequesterForNode() {
   throw new Error(errorMessage);
 }
 
+export function getRequester() {
+  if (supportsSendBeacon()) {
+    return requestWithSendBeacon;
+  }
+
+  if (supportsXMLHttpRequest()) {
+    return requestWithXMLHttpRequest;
+  }
+
+  if (supportsNodeHttpModule()) {
+    return requestWithNodeHttpModule;
+  }
+
+  throw new Error(errorMessage);
+}
+
 const requestWithSendBeacon: RequestFnType = (url, data) => {
   const serializedData = JSON.stringify(data);
   navigator.sendBeacon(url, serializedData);
