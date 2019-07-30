@@ -1,5 +1,5 @@
 import * as testServer from "../../server/server.js";
-import AlgoliaInsights from "./../entryBrowser";
+import { getInstance } from "../../tests/utils";
 const puppeteer = require("puppeteer");
 const url = require("url");
 
@@ -13,6 +13,11 @@ const windowWidth = 1920;
 const windowHeight = 1080;
 
 describe("Library initialisation", () => {
+  let AlgoliaInsights;
+  beforeEach(() => {
+    AlgoliaInsights = getInstance();
+  });
+
   it("Should throw if there is no apiKey and appId", () => {
     expect(() => {
       // @ts-ignore
@@ -59,6 +64,10 @@ describe("Library initialisation", () => {
 
 describe("Integration tests", () => {
   let handle = null;
+  let AlgoliaInsights;
+  beforeEach(() => {
+    AlgoliaInsights = getInstance();
+  });
 
   const startServer = () =>
     new Promise((resolve, reject) => {

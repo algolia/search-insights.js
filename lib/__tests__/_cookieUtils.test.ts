@@ -1,4 +1,4 @@
-import AlgoliaInsights from "../entryBrowser";
+import { getInstance } from "../../tests/utils";
 import { createUUID } from "../utils/uuid";
 import * as utils from "../utils";
 
@@ -13,7 +13,9 @@ const credentials = {
 };
 
 describe("cookieUtils", () => {
+  let AlgoliaInsights;
   beforeEach(() => {
+    AlgoliaInsights = getInstance();
     AlgoliaInsights.init(credentials);
     createUUID.mockReset();
     createUUID
@@ -75,6 +77,9 @@ describe("cookieUtils", () => {
     });
   });
   describe("getUserToken", () => {
+    beforeEach(() => {
+      AlgoliaInsights.setUserToken("007");
+    });
     it("should return the current userToken", () => {
       AlgoliaInsights.setUserToken("007");
       const userToken = AlgoliaInsights.getUserToken();
