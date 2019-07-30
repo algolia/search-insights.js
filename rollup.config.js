@@ -26,7 +26,7 @@ const createPlugins = () => [
 
 export default [
   {
-    input: "lib/entryBrowser.ts",
+    input: "lib/browser.ts",
     output: {
       format: "umd",
       name: MODULE_NAME,
@@ -36,7 +36,7 @@ export default [
     plugins: createPlugins()
   },
   {
-    input: "lib/entryNode.ts",
+    input: "lib/node.ts",
     output: {
       format: "cjs",
       name: MODULE_NAME,
