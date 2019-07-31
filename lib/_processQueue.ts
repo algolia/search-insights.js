@@ -4,14 +4,14 @@
  * class over globalObject variable to execute commands
  * instead of putting them to the queue
  */
-import getAa from "./_getAa";
+import getFunctionalInterface from "./_getFunctionalInterface";
 
 export function processQueue(globalObject) {
   // Set pointer which allows renaming of the script
   const pointer = globalObject["AlgoliaAnalyticsObject"] as string;
 
   if (pointer) {
-    const _aa = getAa(this);
+    const _aa = getFunctionalInterface(this);
 
     // `aa` is the user facing function, which is defined in the install snippet.
     //  - before library is initialized  `aa` fills a queue
