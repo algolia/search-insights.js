@@ -1,5 +1,5 @@
 import AlgoliaAnalytics from "./insights";
-import getAa from "./_getAa";
+import { getFunctionalInterface } from "./_getFunctionalInterface";
 const instance = new AlgoliaAnalytics();
-const aa = getAa(instance);
-export default aa;
+const functionalInterface = getFunctionalInterface(instance);
+export default functionalInterface;
