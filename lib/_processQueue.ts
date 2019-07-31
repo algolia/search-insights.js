@@ -4,7 +4,7 @@
  * class over globalObject variable to execute commands
  * instead of putting them to the queue
  */
-import getFunctionalInterface from "./_getFunctionalInterface";
+import { getFunctionalInterface } from "./_getFunctionalInterface";
 
 export function processQueue(globalObject) {
   // Set pointer which allows renaming of the script
