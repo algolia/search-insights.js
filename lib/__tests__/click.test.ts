@@ -5,12 +5,12 @@ const credentials = {
   appId: "test"
 };
 
-describe("clickedObjectIDsAfterSearch", () => {
-  let AlgoliaInsights;
-  beforeEach(() => {
-    AlgoliaInsights = getInstance();
-  });
+let AlgoliaInsights;
+beforeEach(() => {
+  AlgoliaInsights = getInstance();
+});
 
+describe("clickedObjectIDsAfterSearch", () => {
   test("Should throw if queryID, objectIDs or positions are not sent", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
@@ -75,11 +75,6 @@ describe("clickedObjectIDsAfterSearch", () => {
 });
 
 describe("clickedObjectIDs", () => {
-  let AlgoliaInsights;
-  beforeEach(() => {
-    AlgoliaInsights = getInstance();
-  });
-
   it("should throw if no parameters is passed", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
@@ -113,11 +108,6 @@ describe("clickedObjectIDs", () => {
 });
 
 describe("clickedFilters", () => {
-  let AlgoliaInsights;
-  beforeEach(() => {
-    AlgoliaInsights = getInstance();
-  });
-
   it("should throw if no parameters is passed", () => {
     AlgoliaInsights.init(credentials);
     expect(() => {
