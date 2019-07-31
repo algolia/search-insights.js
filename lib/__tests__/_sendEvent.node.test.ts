@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import { getAaForNode } from "../../tests/utils";
+import { getInstanceForNode as getInstance } from "../_instance";
 
 const credentials = {
   apiKey: "testKey",
@@ -11,7 +11,7 @@ const credentials = {
 describe("_sendEvent in node env", () => {
   let aa;
   beforeEach(() => {
-    aa = getAaForNode();
+    aa = getInstance();
     aa("init", credentials);
   });
 

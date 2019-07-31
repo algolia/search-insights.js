@@ -1,16 +1,15 @@
-import AlgoliaAnalytics from "../lib/insights";
-import { processQueue } from "../lib/_processQueue";
+import AlgoliaAnalytics from "./insights";
+import { processQueue } from "./_processQueue";
+import { getFunctionalInterface } from "./_getFunctionalInterface";
 import {
+  getRequester,
   getRequesterForBrowser,
-  getRequesterForNode,
-  getRequester
-} from "../lib/utils/request";
-import getAa from "../lib/_getAa";
+  getRequesterForNode
+} from "./utils/request";
 
 export function getInstance() {
   const requestFn = getRequester();
-  const instance = new AlgoliaAnalytics({ requestFn });
-  return instance;
+  return new AlgoliaAnalytics({ requestFn });
 }
 
 export function getInstanceForBrowser() {
@@ -23,9 +22,9 @@ export function getInstanceForBrowser() {
   return instance;
 }
 
-export function getAaForNode() {
+export function getInstanceForNode() {
   const requestFn = getRequesterForNode();
   const instance = new AlgoliaAnalytics({ requestFn });
-  const aa = getAa(instance);
-  return aa;
+  const functionalInterface = getFunctionalInterface(instance);
+  return functionalInterface;
 }

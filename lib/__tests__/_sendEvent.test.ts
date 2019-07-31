@@ -1,4 +1,4 @@
-import { getInstanceForBrowser as getInstance } from "../../tests/utils";
+import { getInstanceForBrowser as getInstance } from "../_instance";
 import * as url from "url";
 import * as querystring from "querystring";
 

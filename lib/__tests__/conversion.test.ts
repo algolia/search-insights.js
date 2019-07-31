@@ -1,4 +1,4 @@
-import { getInstance } from "../../tests/utils";
+import { getInstance } from "../_instance";
 
 const credentials = {
   apiKey: "test",

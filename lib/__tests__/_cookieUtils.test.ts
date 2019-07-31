@@ -1,4 +1,4 @@
-import { getInstance } from "../../tests/utils";
+import { getInstance } from "../_instance";
 import { createUUID } from "../utils/uuid";
 import * as utils from "../utils";
 
@@ -81,12 +81,10 @@ describe("cookieUtils", () => {
       AlgoliaInsights.setUserToken("007");
     });
     it("should return the current userToken", () => {
-      AlgoliaInsights.setUserToken("007");
       const userToken = AlgoliaInsights.getUserToken();
       expect(userToken).toEqual("007");
     });
     it("should accept a callback", () => {
-      AlgoliaInsights.setUserToken("007");
       AlgoliaInsights.getUserToken({}, (err, userToken) => {
         expect(err).toEqual(null);
         expect(userToken).toEqual("007");

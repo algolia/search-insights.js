@@ -1,4 +1,4 @@
-import { getInstance } from "../../tests/utils";
+import { getInstance } from "../_instance";
 
 jest.mock("../../package.json", () => ({ version: "1.0.1" }));
 
