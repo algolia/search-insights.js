@@ -1,4 +1,4 @@
-import { getInstance } from "../../tests/utils";
+import { getInstance } from "../_instance";
 import * as url from "url";
 import * as querystring from "querystring";
 

@@ -1,5 +1,5 @@
 import * as testServer from "../../server/server.js";
-import { getInstanceForBrowser as getInstance } from "../../tests/utils";
+import { getInstance } from "../_instance";
 const puppeteer = require("puppeteer");
 const url = require("url");
 
