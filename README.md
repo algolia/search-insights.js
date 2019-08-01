@@ -9,6 +9,35 @@
 
 Library for detecting front-end search metrics
 
+## Table of Contents
+
+<!-- toc -->
+
+- [Concept](#concept)
+- [Getting started](#getting-started)
+  - [Loading and initializing the library](#loading-and-initializing-the-library)
+  - [Enabling queryID response from Algolia engine](#enabling-queryid-response-from-algolia-engine)
+- [In the context of search (Click Analytics & A/B testing)](#in-the-context-of-search-click-analytics--ab-testing)
+  - [Initialize](#initialize)
+  - [Reporting a click event](#reporting-a-click-event)
+  - [Reporting a conversion event](#reporting-a-conversion-event)
+- [In the context of Personalization:](#in-the-context-of-personalization)
+  - [Initialize](#initialize-1)
+  - [Access userToken](#access-usertoken)
+  - [Reporting a click event](#reporting-a-click-event-1)
+  - [Reporting a conversion event](#reporting-a-conversion-event-1)
+  - [Reporting a view event](#reporting-a-view-event)
+  - [Library implementation examples](#library-implementation-examples)
+- [Node.js module](#nodejs-module)
+  - [setUserToken](#setusertoken)
+  - [Minimum Node.js version](#minimum-nodejs-version)
+- [Migrating from v0 to v1](#migrating-from-v0-to-v1)
+  - [`init` method signature has changed](#init-method-signature-has-changed)
+  - [`initSearch` method has been removed](#initsearch-method-has-been-removed)
+  - [`click` and `convert` methods have been renamed and their signatures have changed to reflect the different use cases covered by the insights client](#click-and-convert-methods-have-been-renamed-and-their-signatures-have-changed-to-reflect-the-different-use-cases-covered-by-the-insights-client)
+
+<!-- tocstop -->
+
 ## Concept
 
 Algolia insights client allows developers to report click, conversion and view metrics related using the [Insights REST API](https://www.algolia.com/doc/rest-api/insights/#overview)
