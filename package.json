@@ -4,6 +4,10 @@
   "description": "Search analytics by Algolia",
   "jsdelivr": "dist/search-insights.min.js",
   "main": "dist/search-insights.min.js",
+  "engineStrict": true,
+  "engines": {
+    "node": ">=8.16.0"
+  },
   "files": [
     "dist",
     "lib",
