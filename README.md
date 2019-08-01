@@ -21,6 +21,7 @@ Insights library can be either loaded via jsDelivr CDN or directly bundled with 
 We recommend loading the library by adding the snippet below to all pages where you wish to track
 search analytics.
 
+<!-- prettier-ignore-start -->
 ```html
 <script>
   !function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e.aa=e.aa||function(){(e.aa.queue=e.aa.queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],i.async=1,i.src="https://cdn.jsdelivr.net/npm/search-insights@1.0.0",c.parentNode.insertBefore(i,c)}(window,document,"script",0,"aa");
@@ -39,6 +40,7 @@ search analytics.
   aa("setUserToken", "id-of-user");
 </script>
 ```
+<!-- prettier-ignore-end -->
 
 ### Enabling queryID response from Algolia engine
 
@@ -203,6 +205,36 @@ To run all examples and play around with the code you have to run two separate c
 
 - `yarn dev` - runs webpack and node dev server
 - `yarn build:dev` - runs rollup in watch mode - livereload if you do changes to the insights library
+
+## Node.js module
+
+Insights library can be used on backend as a Node.js module.
+
+```js
+const aa = require("search-insights);
+aa("init", {
+  appId: "APPLICATION_ID",
+  apiKey: "SEARCH_API_KEY"
+});
+```
+
+It exports the same `aa` interface.
+
+### setUserToken
+
+On node environment, unlike browser environment, `setUserToken` must be called before sending any event.
+
+```js
+aa("setUserToken", "id-of-user");
+//...
+aa("clickedObjectIDs", {
+  // ...
+});
+```
+
+### Minimum Node.js version
+
+`>= 8.16.0` required.
 
 ## Migrating from v0 to v1
 
