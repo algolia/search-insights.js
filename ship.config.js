@@ -1,5 +1,4 @@
 module.exports = {
-  baseBranches: ["maint", "develop"],
   mergeStrategy: {
     toSameBranch: ["maint"],
     toReleaseBranch: {

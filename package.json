@@ -21,8 +21,8 @@
     "test:size": "bundlesize",
     "type-check": "tsc",
     "type-check:watch": "yarn type-check --watch",
-    "release:prepare": "ship prepare",
-    "release": "ship release"
+    "shipjs:prepare": "shipjs prepare",
+    "shipjs:release": "shipjs release"
   },
   "repository": {
     "type": "git",
@@ -68,7 +68,7 @@
     "rollup-plugin-typescript": "1.0.1",
     "rollup-plugin-uglify": "3.0.0",
     "sass-loader": "6.0.7",
-    "shipjs": "^0.0.8",
+    "shipjs": "0.1.1",
     "style-loader": "0.23.1",
     "ts-jest": "22.4.6",
     "ts-loader": "6.0.4",
