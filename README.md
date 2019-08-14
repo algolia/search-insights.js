@@ -237,7 +237,7 @@ To run all examples and play around with the code you have to run two separate c
 
 ## Node.js module
 
-Insights library can be used on backend as a Node.js module.
+Insights library can be used on the backend as a Node.js module.
 
 ```js
 const aa = require("search-insights);
@@ -251,7 +251,7 @@ It exports the same `aa` interface.
 
 ### setUserToken
 
-On node environment, unlike browser environment, `setUserToken` must be called before sending any event.
+On the node environment, unlike the browser environment, `setUserToken` must be called before sending any event.
 
 ```js
 aa("setUserToken", "id-of-user");
