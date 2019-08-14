@@ -28,9 +28,6 @@ Library for detecting front-end search metrics
   - [Reporting a conversion event](#reporting-a-conversion-event-1)
   - [Reporting a view event](#reporting-a-view-event)
   - [Library implementation examples](#library-implementation-examples)
-- [Node.js module](#nodejs-module)
-  - [setUserToken](#setusertoken)
-  - [Minimum Node.js version](#minimum-nodejs-version)
 - [Migrating from v0 to v1](#migrating-from-v0-to-v1)
   - [`init` method signature has changed](#init-method-signature-has-changed)
   - [`initSearch` method has been removed](#initsearch-method-has-been-removed)
@@ -44,7 +41,9 @@ Algolia insights client allows developers to report click, conversion and view m
 
 ## Getting started
 
-### <a name="loading"></a>Loading and initializing the library
+### Loading and initializing the library
+
+#### On Browser
 
 Insights library can be either loaded via jsDelivr CDN or directly bundled with your application.
 We recommend loading the library by adding the snippet below to all pages where you wish to track
@@ -70,6 +69,37 @@ search analytics.
 </script>
 ```
 <!-- prettier-ignore-end -->
+
+#### On Node.js
+
+Insights library can be used on the backend as a Node.js module. _(Node.js `>= 8.16.0` required)_
+
+```bash
+$ npm install search-insights
+or
+$ yarn add search-insights
+```
+
+```js
+const aa = require("search-insights);
+aa("init", {
+  appId: "APPLICATION_ID",
+  apiKey: "SEARCH_API_KEY"
+});
+```
+
+It exports the same `aa` interface.
+
+##### setUserToken
+
+On the Node.js environment, unlike the browser environment, `setUserToken` must be called before sending any event.
+
+```js
+aa("setUserToken", "id-of-user");
+aa("clickedObjectIDs", {
+  // ...
+});
+```
 
 ### Enabling queryID response from Algolia engine
 
@@ -234,36 +264,6 @@ To run all examples and play around with the code you have to run two separate c
 
 - `yarn dev` - runs webpack and node dev server
 - `yarn build:dev` - runs rollup in watch mode - livereload if you do changes to the insights library
-
-## Node.js module
-
-Insights library can be used on the backend as a Node.js module.
-
-```js
-const aa = require("search-insights);
-aa("init", {
-  appId: "APPLICATION_ID",
-  apiKey: "SEARCH_API_KEY"
-});
-```
-
-It exports the same `aa` interface.
-
-### setUserToken
-
-On the node environment, unlike the browser environment, `setUserToken` must be called before sending any event.
-
-```js
-aa("setUserToken", "id-of-user");
-//...
-aa("clickedObjectIDs", {
-  // ...
-});
-```
-
-### Minimum Node.js version
-
-`>= 8.16.0` required.
 
 ## Migrating from v0 to v1
 
