@@ -90,13 +90,13 @@ aa("init", {
 
 It exports the same `aa` interface.
 
-##### setUserToken
+##### `userToken`
 
-On the Node.js environment, unlike the browser environment, `setUserToken` must be called before sending any event.
+On the Node.js environment, unlike the browser environment, `userToken` must be specified when sending any event.
 
 ```js
-aa("setUserToken", "id-of-user");
 aa("clickedObjectIDs", {
+  userToken: "id-of-user",
   // ...
 });
 ```
