@@ -1,11 +1,11 @@
-import { getInstance } from "../_instance";
+import AlgoliaAnalytics from "../insights";
 
 jest.mock("../../package.json", () => ({ version: "1.0.1" }));
 
 describe("algoliaAgent", () => {
   let AlgoliaInsights;
   beforeEach(() => {
-    AlgoliaInsights = getInstance();
+    AlgoliaInsights = new AlgoliaAnalytics({ requestFn: () => {} });
     AlgoliaInsights.init({ apiKey: "test", appId: "test" });
   });
 

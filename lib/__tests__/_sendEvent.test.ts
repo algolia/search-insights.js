@@ -1,4 +1,5 @@
-import { getInstanceForBrowser as getInstance } from "../_instance";
+import AlgoliaAnalytics from "../insights";
+import { getRequesterForBrowser } from "../utils/request";
 import * as url from "url";
 import * as querystring from "querystring";
 
@@ -12,7 +13,9 @@ const credentials = {
 };
 
 function setupInstance() {
-  const instance = getInstance();
+  const instance = new AlgoliaAnalytics({
+    requestFn: getRequesterForBrowser()
+  });
   instance.init(credentials);
   instance.setUserToken("mock-user-id");
   return instance;

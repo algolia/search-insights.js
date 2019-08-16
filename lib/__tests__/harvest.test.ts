@@ -1,5 +1,5 @@
 import * as testServer from "../../server/server.js";
-import { getInstance } from "../_instance";
+import AlgoliaAnalytics from "../insights";
 const puppeteer = require("puppeteer");
 const url = require("url");
 
@@ -15,7 +15,7 @@ const windowHeight = 1080;
 describe("Library initialisation", () => {
   let AlgoliaInsights;
   beforeEach(() => {
-    AlgoliaInsights = getInstance();
+    AlgoliaInsights = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
   it("Should throw if there is no apiKey and appId", () => {

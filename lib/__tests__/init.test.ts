@@ -1,10 +1,10 @@
-import { getInstance } from "../_instance";
+import AlgoliaAnalytics from "../insights";
 import * as utils from "../utils";
 
 describe("init", () => {
   let AlgoliaInsights;
   beforeEach(() => {
-    AlgoliaInsights = getInstance();
+    AlgoliaInsights = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
   it("should throw if no parameters is passed", () => {

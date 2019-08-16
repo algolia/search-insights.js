@@ -1,7 +1,9 @@
 /**
  * @jest-environment node
  */
-import { getInstanceForNode as getInstance } from "../_instance";
+import AlgoliaAnalytics from "../insights";
+import { getRequesterForNode } from "../utils/request";
+import { getFunctionalInterface } from "../_getFunctionalInterface";
 
 const credentials = {
   apiKey: "testKey",
@@ -11,7 +13,8 @@ const credentials = {
 describe("_sendEvent in node env", () => {
   let aa;
   beforeEach(() => {
-    aa = getInstance();
+    const instance = new AlgoliaAnalytics({ requestFn: getRequesterForNode() });
+    aa = getFunctionalInterface(instance);
     aa("init", credentials);
   });
 

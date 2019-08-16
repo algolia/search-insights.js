@@ -1,4 +1,4 @@
-import { getInstance } from "../_instance";
+import AlgoliaAnalytics from "../insights";
 
 const credentials = {
   apiKey: "test",
@@ -7,7 +7,7 @@ const credentials = {
 describe("convertedObjectIDsAfterSearch", () => {
   let AlgoliaInsights;
   beforeEach(() => {
-    AlgoliaInsights = getInstance();
+    AlgoliaInsights = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
   it("Should throw if no params are sent", () => {
@@ -65,7 +65,7 @@ describe("convertedObjectIDsAfterSearch", () => {
 describe("convertedObjectIDs", () => {
   let AlgoliaInsights;
   beforeEach(() => {
-    AlgoliaInsights = getInstance();
+    AlgoliaInsights = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
   it("should throw if no params are sent", () => {
@@ -106,7 +106,7 @@ describe("convertedObjectIDs", () => {
 describe("convertedFilters", () => {
   let AlgoliaInsights;
   beforeEach(() => {
-    AlgoliaInsights = getInstance();
+    AlgoliaInsights = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
   it("should throw if no params are sent", () => {

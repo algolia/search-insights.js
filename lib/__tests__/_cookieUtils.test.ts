@@ -1,4 +1,4 @@
-import { getInstance } from "../_instance";
+import AlgoliaAnalytics from "../insights";
 import { createUUID } from "../utils/uuid";
 import * as utils from "../utils";
 
@@ -15,7 +15,7 @@ const credentials = {
 describe("cookieUtils", () => {
   let AlgoliaInsights;
   beforeEach(() => {
-    AlgoliaInsights = getInstance();
+    AlgoliaInsights = new AlgoliaAnalytics({ requestFn: () => {} });
     AlgoliaInsights.init(credentials);
     createUUID.mockReset();
     createUUID
