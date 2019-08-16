@@ -1,5 +1,5 @@
 import AlgoliaAnalytics from "../insights";
-import { getRequesterForBrowser } from "../utils/request";
+import { getRequesterForBrowser } from "../utils/getRequesterForBrowser";
 import * as url from "url";
 import * as querystring from "querystring";
 

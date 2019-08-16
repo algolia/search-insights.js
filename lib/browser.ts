@@ -1,5 +1,5 @@
 import AlgoliaAnalytics from "./insights";
-import { getRequesterForBrowser } from "./utils/request";
+import { getRequesterForBrowser } from "./utils/getRequesterForBrowser";
 import { processQueue } from "./_processQueue";
 
 const requestFn = getRequesterForBrowser();

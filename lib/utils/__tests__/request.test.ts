@@ -1,6 +1,7 @@
 import { request as nodeHttpRequest } from "http";
 import { request as nodeHttpsRequest } from "https";
-import { getRequesterForBrowser, getRequesterForNode } from "../request";
+import { getRequesterForBrowser } from "../getRequesterForBrowser";
+import { getRequesterForNode } from "../getRequesterForNode";
 import {
   supportsSendBeacon,
   supportsXMLHttpRequest,

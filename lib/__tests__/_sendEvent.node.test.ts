@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 import AlgoliaAnalytics from "../insights";
-import { getRequesterForNode } from "../utils/request";
+import { getRequesterForNode } from "../utils/getRequesterForNode";
 import { getFunctionalInterface } from "../_getFunctionalInterface";
 
 const credentials = {
