@@ -99,16 +99,19 @@ describe("request", () => {
     expect(open).not.toHaveBeenCalled();
     expect(send).not.toHaveBeenCalled();
     expect(nodeHttpsRequest).not.toHaveBeenCalled();
-    expect(nodeHttpRequest).toHaveBeenCalledTimes(1);
-    expect(nodeHttpRequest).toHaveBeenLastCalledWith(url, {
+    expect(nodeHttpRequest).toHaveBeenLastCalledWith({
+      protocol: "http:",
+      host: "random.url",
+      path: "/",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Content-Length": JSON.stringify(data).length
       }
     });
-    expect(write).toHaveBeenCalledTimes(1);
+    expect(nodeHttpRequest).toHaveBeenCalledTimes(1);
     expect(write).toHaveBeenLastCalledWith(JSON.stringify(data));
+    expect(write).toHaveBeenCalledTimes(1);
   });
 
   it("should send with nodeHttpsRequest if url starts with https://", () => {
@@ -123,15 +126,18 @@ describe("request", () => {
     expect(open).not.toHaveBeenCalled();
     expect(send).not.toHaveBeenCalled();
     expect(nodeHttpRequest).not.toHaveBeenCalled();
-    expect(nodeHttpsRequest).toHaveBeenCalledTimes(1);
-    expect(nodeHttpsRequest).toHaveBeenLastCalledWith(url, {
+    expect(nodeHttpsRequest).toHaveBeenLastCalledWith({
+      protocol: "https:",
+      host: "random.url",
+      path: "/",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Content-Length": JSON.stringify(data).length
       }
     });
-    expect(write).toHaveBeenCalledTimes(1);
+    expect(nodeHttpsRequest).toHaveBeenCalledTimes(1);
     expect(write).toHaveBeenLastCalledWith(JSON.stringify(data));
+    expect(write).toHaveBeenCalledTimes(1);
   });
 });
