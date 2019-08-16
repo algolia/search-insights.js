@@ -26,7 +26,7 @@ describe("_sendEvent in node env", () => {
         objectIDs: ["1"]
       });
     }).toThrowError(
-      "Before calling any methods on the analytics, you first need to call 'setUserToken' function."
+      "Before calling any methods on the analytics, you first need to call 'setUserToken' function or include 'userToken' in the event payload."
     );
   });
 
@@ -38,8 +38,17 @@ describe("_sendEvent in node env", () => {
         index: "my-index",
         objectIDs: ["1"]
       });
-    }).not.toThrowError(
-      "Before calling any methods on the analytics, you first need to call 'setUserToken' function."
-    );
+    }).not.toThrowError();
+  });
+
+  it("does not throw when user token is set inside payload", () => {
+    expect(() => {
+      aa("sendEvent", "click", {
+        userToken: "aaa",
+        eventName: "my-event",
+        index: "my-index",
+        objectIDs: ["1"]
+      });
+    }).not.toThrowError();
   });
 });
