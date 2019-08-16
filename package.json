@@ -1,9 +1,12 @@
 {
   "name": "search-insights",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "Search analytics by Algolia",
   "jsdelivr": "dist/search-insights.min.js",
   "main": "dist/search-insights.min.js",
+  "engines": {
+    "node": ">=8.16.0"
+  },
   "files": [
     "dist",
     "lib",
