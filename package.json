@@ -1,7 +1,7 @@
 {
   "name": "search-insights",
+  "description": "Library for detecting front-end Algolia search metrics.",
   "version": "1.2.2",
-  "description": "Search analytics by Algolia",
   "jsdelivr": "dist/search-insights.min.js",
   "main": "dist/search-insights.min.js",
   "engines": {
