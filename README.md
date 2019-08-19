@@ -10,8 +10,8 @@ Search Insights lets you report click, conversion and view metrics using the [Al
 <!-- toc -->
 
 - [Getting started](#getting-started)
-  - [On Browser](#on-browser)
-  - [On Node.js](#on-nodejs)
+  - [Browser](#browser)
+  - [Node.js](#nodejs)
 - [Use cases](#use-cases)
   - [Search (Click Analytics and A/B testing)](#search-click-analytics-and-ab-testing)
   - [Personalization](#personalization)
