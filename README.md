@@ -112,8 +112,8 @@ To enable personalization, the search parameter [`enablePersonalization`](https:
 ```js
 const searchClient = algoliasearch('APPLICATION_ID', 'SEARCH_API_KEY');
 const search = instantsearch({
-  searchClient,
   indexName: 'INDEX_NAME',
+  searchClient,
   searchParameters: {
     enablePersonalization: true,
   },
