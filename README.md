@@ -54,6 +54,7 @@ To enable click analytics, the search parameter [`clickAnalytics`](https://www.a
 const searchClient = algoliasearch('APPLICATION_ID', 'SEARCH_API_KEY');
 const search = instantsearch({
   indexName: 'INDEX_NAME',
+  searchClient,
   searchParameters: {
     clickAnalytics: true,
   },
