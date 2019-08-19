@@ -79,7 +79,7 @@ aa('clickedObjectIDsAfterSearch', {
 
 | Option      | Type       | Description                                                                                         |
 | ----------- | ---------- | --------------------------------------------------------------------------------------------------- |
-| `index`     | `string`   | The name of the index to search into                                                                |
+| `index`     | `string`   | The name of the index related to the event                                                          |
 | `eventName` | `string`   | The name of the event                                                                               |
 | `objectIDs` | `string[]` | The list of IDs of the result that was clicked                                                      |
 | `positions` | `string[]` | The list of the absolute positions of the HTML element that was clicked (1-based and _not_ 0-based) |
@@ -98,7 +98,7 @@ aa('convertedObjectIDsAfterSearch', {
 
 | Option      | Type       | Description                                    |
 | ----------- | ---------- | ---------------------------------------------- |
-| `index`     | `string`   | The name of the index to search into           |
+| `index`     | `string`   | The name of the index related to the event     |
 | `eventName` | `string`   | The name of the event                          |
 | `objectIDs` | `string[]` | The list of IDs of the result that was clicked |
 | `queryID`   | `string`   | The `queryID` of the search sent from Algolia  |
@@ -144,7 +144,7 @@ aa('clickedObjectIDs', {
 
 | Option      | Type       | Description                                    |
 | ----------- | ---------- | ---------------------------------------------- |
-| `index`     | `string`   | The name of the index to search into           |
+| `index`     | `string`   | The name of the index related to the event     |
 | `eventName` | `string`   | The name of the event                          |
 | `objectIDs` | `string[]` | The list of IDs of the result that was clicked |
 
@@ -158,7 +158,7 @@ aa('clickedFilters', {
 
 | Option      | Type       | Description                                               |
 | ----------- | ---------- | --------------------------------------------------------- |
-| `index`     | `string`   | The name of the index to search into                      |
+| `index`     | `string`   | The name of the index related to the event                |
 | `eventName` | `string`   | The name of the event                                     |
 | `filters`   | `string[]` | The list of filters that was clicked as `attribute:value` |
 
@@ -174,7 +174,7 @@ aa('convertedObjectIDs', {
 
 | Option      | Type       | Description                                    |
 | ----------- | ---------- | ---------------------------------------------- |
-| `index`     | `string`   | The name of the index to search into           |
+| `index`     | `string`   | The name of the index related to the event     |
 | `eventName` | `string`   | The name of the event                          |
 | `objectIDs` | `string[]` | The list of IDs of the result that was clicked |
 
@@ -188,7 +188,7 @@ aa('convertedFilters', {
 
 | Option      | Type       | Description                                               |
 | ----------- | ---------- | --------------------------------------------------------- |
-| `index`     | `string`   | The name of the index to search into                      |
+| `index`     | `string`   | The name of the index related to the event                |
 | `eventName` | `string`   | The name of the event                                     |
 | `filters`   | `string[]` | The list of filters that was clicked as `attribute:value` |
 
@@ -204,7 +204,7 @@ aa('viewedObjectIDs', {
 
 | Option      | Type       | Description                                    |
 | ----------- | ---------- | ---------------------------------------------- |
-| `index`     | `string`   | The name of the index to search into           |
+| `index`     | `string`   | The name of the index related to the event     |
 | `eventName` | `string`   | The name of the event                          |
 | `objectIDs` | `string[]` | The list of IDs of the result that was clicked |
 
@@ -218,7 +218,7 @@ aa('viewedFilters', {
 
 | Option      | Type       | Description                                               |
 | ----------- | ---------- | --------------------------------------------------------- |
-| `index`     | `string`   | The name of the index to search into                      |
+| `index`     | `string`   | The name of the index related to the event                |
 | `eventName` | `string`   | The name of the event                                     |
 | `filters`   | `string[]` | The list of filters that was clicked as `attribute:value` |
 
