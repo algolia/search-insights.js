@@ -23,7 +23,7 @@ Search Insights lets you report click, conversion and view metrics using the [Al
 
 ## Getting started
 
-### On Browser
+### Browser
 
 #### 1. Load the library
 
@@ -58,37 +58,38 @@ aa('setUserToken', 'USER_ID');
 | `region`          | `'de' \| 'us'` | Automatic                | The DNS server to target                       |
 | `cookieDuration`  | `number`       | `15552000000` (6 months) | The cookie duration in milliseconds            |
 
-### On Node.js
+### Node.js
+
+_(Node.js `>= 8.16.0` required)_
 
 #### 1. Install the library
 
-Insights library can be used on the backend as a Node.js module. _(Node.js `>= 8.16.0` required)_
+Insights library can be used on the backend as a Node.js module.
 
 ```bash
-$ npm install search-insights
+npm install search-insights
 # or
-$ yarn add search-insights
+yarn add search-insights
 ```
 
 #### 2. Initialize the library
 
 ```js
-const aa = require("search-insights");
+const aa = require('search-insights');
 
-aa("init", {
-  appId: "APPLICATION_ID",
-  apiKey: "SEARCH_API_KEY"
+aa('init', {
+  appId: 'APPLICATION_ID',
+  apiKey: 'SEARCH_API_KEY'
 });
 ```
-It exports the same `aa` interface.
 
 #### Add `userToken`
 
 On the Node.js environment, unlike the browser environment, `userToken` must be specified when sending any event.
 
 ```js
-aa("clickedObjectIDs", {
-  userToken: "USER_ID",
+aa('clickedObjectIDs', {
+  userToken: 'USER_ID',
   // ...
 });
 ```
