@@ -156,11 +156,11 @@ aa('clickedFilters', {
 });
 ```
 
-| Option      | Type       | Description                                               |
-| ----------- | ---------- | --------------------------------------------------------- |
-| `index`     | `string`   | The name of the index related to the event                |
-| `eventName` | `string`   | The name of the event                                     |
-| `filters`   | `string[]` | The list of filters that was clicked as `attribute:value` |
+| Option      | Type       | Description                                                      |
+| ----------- | ---------- | ---------------------------------------------------------------- |
+| `index`     | `string`   | The name of the index related to the event                       |
+| `eventName` | `string`   | The name of the event                                            |
+| `filters`   | `string[]` | The list of filters that was clicked as `'${attr}${op}${value}'` |
 
 #### Report a conversion event
 
@@ -186,11 +186,11 @@ aa('convertedFilters', {
 });
 ```
 
-| Option      | Type       | Description                                               |
-| ----------- | ---------- | --------------------------------------------------------- |
-| `index`     | `string`   | The name of the index related to the event                |
-| `eventName` | `string`   | The name of the event                                     |
-| `filters`   | `string[]` | The list of filters that was clicked as `attribute:value` |
+| Option      | Type       | Description                                                      |
+| ----------- | ---------- | ---------------------------------------------------------------- |
+| `index`     | `string`   | The name of the index related to the event                       |
+| `eventName` | `string`   | The name of the event                                            |
+| `filters`   | `string[]` | The list of filters that was clicked as `'${attr}${op}${value}'` |
 
 #### Report a view event
 
@@ -216,11 +216,11 @@ aa('viewedFilters', {
 });
 ```
 
-| Option      | Type       | Description                                               |
-| ----------- | ---------- | --------------------------------------------------------- |
-| `index`     | `string`   | The name of the index related to the event                |
-| `eventName` | `string`   | The name of the event                                     |
-| `filters`   | `string[]` | The list of filters that was clicked as `attribute:value` |
+| Option      | Type       | Description                                                      |
+| ----------- | ---------- | ---------------------------------------------------------------- |
+| `index`     | `string`   | The name of the index related to the event                       |
+| `eventName` | `string`   | The name of the event                                            |
+| `filters`   | `string[]` | The list of filters that was clicked as `'${attr}${op}${value}'` |
 
 ## Examples
 
