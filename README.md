@@ -32,13 +32,13 @@ aa('init', {
 aa('setUserToken', 'USER_ID');
 ```
 
-| Option            | Type          | Default                  | Description                                    |
-| ----------------- | ------------- | ------------------------ | ---------------------------------------------- |
-| **`appId`**       | `string`      | None (required)          | The identifier of your Algolia application     |
-| **`apiKey`**      | `string`      | None (required)          | The search API key of your Algolia application |
-| `userHasOptedOut` | `boolean`     | `false`                  | Whether to exclude users from analytics        |
-| `region`          | `'de' | 'us'` | Automatic                | The DNS server to target                       |
-| `cookieDuration`  | `number`      | `15552000000` (6 months) | The cookie duration in milliseconds            |
+| Option            | Type           | Default                  | Description                                    |
+| ----------------- | -------------- | ------------------------ | ---------------------------------------------- |
+| **`appId`**       | `string`       | None (required)          | The identifier of your Algolia application     |
+| **`apiKey`**      | `string`       | None (required)          | The search API key of your Algolia application |
+| `userHasOptedOut` | `boolean`      | `false`                  | Whether to exclude users from analytics        |
+| `region`          | `'de' \| 'us'` | Automatic                | The DNS server to target                       |
+| `cookieDuration`  | `number`       | `15552000000` (6 months) | The cookie duration in milliseconds            |
 
 ## Use cases
 
