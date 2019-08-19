@@ -66,7 +66,7 @@ Insights library can be used on the backend as a Node.js module. _(Node.js `>= 8
 
 ```bash
 $ npm install search-insights
-or
+# or
 $ yarn add search-insights
 ```
 
@@ -74,6 +74,7 @@ $ yarn add search-insights
 
 ```js
 const aa = require("search-insights");
+
 aa("init", {
   appId: "APPLICATION_ID",
   apiKey: "SEARCH_API_KEY"
@@ -87,7 +88,7 @@ On the Node.js environment, unlike the browser environment, `userToken` must be 
 
 ```js
 aa("clickedObjectIDs", {
-  userToken: "id-of-user",
+  userToken: "USER_ID",
   // ...
 });
 ```
