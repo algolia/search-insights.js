@@ -239,4 +239,4 @@ To run the examples and the code, you need to run two separate commands:
 
 ## License
 
-Search Insights is [MIT licensed](license.md).
+Search Insights is [MIT licensed](LICENSE.md).
