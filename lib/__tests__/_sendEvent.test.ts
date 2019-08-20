@@ -38,7 +38,7 @@ describe("sendEvent", () => {
 
   describe("with XMLHttpRequest", () => {
     let AlgoliaInsights;
-    let sendBeaconBackup = window.navigator.sendBeacon;
+    let sendBeaconBackup;
     beforeEach(() => {
       sendBeaconBackup = window.navigator.sendBeacon;
       window.navigator.sendBeacon = undefined; // force usage of XMLHttpRequest
