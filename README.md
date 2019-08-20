@@ -7,6 +7,8 @@ Search Insights lets you report click, conversion and view metrics using the [Al
 
 ## Getting started
 
+> Are you using Google Tag Manager in your app? We provide a [custom template](gtm) to ease the integration.
+
 ### 1. <a name="loading"></a>Load the library
 
 The Search Insights library can be either loaded via [jsDelivr CDN](https://www.jsdelivr.com/) or directly bundled with your application.

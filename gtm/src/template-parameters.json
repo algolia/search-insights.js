@@ -1,0 +1,404 @@
+[
+  {
+    "macrosInSelect": false,
+    "selectItems": [
+      {
+        "displayValue": "Init",
+        "value": "init"
+      },
+      {
+        "displayValue": "Clicked Object IDs",
+        "value": "clickedObjectIDs"
+      },
+      {
+        "displayValue": "Clicked Object IDs After Search",
+        "value": "clickedObjectIDsAfterSearch"
+      },
+      {
+        "displayValue": "Clicked Filters",
+        "value": "clickedFilters"
+      },
+      {
+        "displayValue": "Converted Object IDs",
+        "value": "convertedObjectIDs"
+      },
+      {
+        "displayValue": "Converted Objects IDs After Search",
+        "value": "convertedObjectIDsAfterSearch"
+      },
+      {
+        "displayValue": "Converted Filters",
+        "value": "convertedFilters"
+      },
+      {
+        "displayValue": "Viewed Object IDs",
+        "value": "viewedObjectIDs"
+      },
+      {
+        "displayValue": "Viewed Filters",
+        "value": "viewedFilters"
+      }
+    ],
+    "displayName": "Event Type",
+    "simpleValueType": true,
+    "name": "eventType",
+    "type": "SELECT"
+  },
+  {
+    "displayName": "Event Details",
+    "name": "Events Labels Group",
+    "groupStyle": "NO_ZIPPY",
+    "type": "GROUP",
+    "subParams": [
+      {
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "init"
+          }
+        ],
+        "displayName": "Initializes the Algola Search Insights library",
+        "name": "labelInit",
+        "type": "LABEL"
+      },
+      {
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "clickedObjectIDsAfterSearch"
+          }
+        ],
+        "displayName": "Sends a click event to capture the clicked items related to a query.",
+        "name": "labelClickedObjectIDsAfterSearch",
+        "type": "LABEL"
+      },
+      {
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "clickedObjectIDs"
+          }
+        ],
+        "displayName": "Sends a click event to capture the clicked items.",
+        "name": "labelClickedObjectIDs",
+        "type": "LABEL"
+      },
+      {
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "clickedFilters"
+          }
+        ],
+        "displayName": "Sends a click event to capture the clicked filters.",
+        "name": "labelClickedFilters",
+        "type": "LABEL"
+      },
+      {
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "convertedObjectIDsAfterSearch"
+          }
+        ],
+        "displayName": "Sends a conversion event to capture the clicked items related to a search.",
+        "name": "labelConvertedObjectIDsAfterSearch",
+        "type": "LABEL"
+      },
+      {
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "convertedObjectIDs"
+          }
+        ],
+        "displayName": "Sends a conversion event to capture the clicked items.",
+        "name": "labelConvertedObjectIDs",
+        "type": "LABEL"
+      },
+      {
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "convertedFilters"
+          }
+        ],
+        "displayName": "Sends a conversation event to capture the filters a user uses when converting.",
+        "name": "labelConvertedFilters",
+        "type": "LABEL"
+      },
+      {
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "viewedObjectIDs"
+          }
+        ],
+        "displayName": "Sends a view event to capture the items.",
+        "name": "labelViewedObjectIDs",
+        "type": "LABEL"
+      },
+      {
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "viewedFilters"
+          }
+        ],
+        "displayName": "Sends a view event to capture the filters.",
+        "name": "labelViewedFilters",
+        "type": "LABEL"
+      }
+    ]
+  },
+  {
+    "enablingConditions": [
+      {
+        "paramName": "eventType",
+        "type": "EQUALS",
+        "paramValue": "init"
+      }
+    ],
+    "displayName": "",
+    "name": "Init Setting",
+    "groupStyle": "NO_ZIPPY",
+    "type": "GROUP",
+    "subParams": [
+      {
+        "displayName": "App ID",
+        "help": "The identifier of your Algolia application.",
+        "simpleValueType": true,
+        "name": "appId",
+        "type": "TEXT"
+      },
+      {
+        "displayName": "API Key",
+        "help": "The search API key of your Algolia application.",
+        "simpleValueType": true,
+        "name": "apiKey",
+        "type": "TEXT"
+      }
+    ]
+  },
+  {
+    "enablingConditions": [
+      {
+        "paramName": "eventType",
+        "type": "EQUALS",
+        "paramValue": "init"
+      }
+    ],
+    "displayName": "Advanced Algolia Settings",
+    "name": "Advanced Algolia Settings",
+    "groupStyle": "ZIPPY_CLOSED",
+    "type": "GROUP",
+    "subParams": [
+      {
+        "displayName": "Opt Out User",
+        "name": "userHasOptedOut",
+        "help": "Whether to exclude users from analytics.",
+        "macrosInSelect": true,
+        "simpleValueType": true,
+        "type": "SELECT",
+        "selectItems": [
+          {
+            "displayValue": "False",
+            "value": false
+          },
+          {
+            "displayValue": "True",
+            "value": true
+          }
+        ]
+      },
+      {
+        "displayName": "Region",
+        "name": "region",
+        "help": "The DNS server to target (support values: de, us).",
+        "simpleValueType": true,
+        "type": "TEXT"
+      },
+      {
+        "displayName": "Cookie Duration",
+        "name": "cookieDuration",
+        "help": "The cookie duration in milliseconds (default to `15552000000`, 6 months).",
+        "simpleValueType": true,
+        "type": "TEXT",
+        "valueValidators": [
+          {
+            "type": "POSITIVE_NUMBER"
+          }
+        ]
+      },
+      {
+        "displayName": "User Token",
+        "name": "setUserToken",
+        "help": "Set a persistent user identifier applied to subsequent events.",
+        "simpleValueType": true,
+        "type": "TEXT"
+      },
+      {
+        "displayName": "Search Insights Endpoint",
+        "name": "searchInsightsEndpoint",
+        "defaultValue": "https://cdn.jsdelivr.net/npm/search-insights@1.2.2",
+        "help": "The endpoint of the Search Insights library.",
+        "simpleValueType": true,
+        "type": "TEXT"
+      }
+    ]
+  },
+  {
+    "enablingConditions": [
+      {
+        "paramName": "eventType",
+        "type": "NOT_EQUALS",
+        "paramValue": "init"
+      }
+    ],
+    "displayName": "Algolia Event Data",
+    "name": "Action Settings",
+    "groupStyle": "ZIPPY_OPEN",
+    "type": "GROUP",
+    "subParams": [
+      {
+        "displayName": "User Token",
+        "name": "userToken",
+        "help": "The identifier of the user.",
+        "simpleValueType": true,
+        "type": "TEXT"
+      },
+      {
+        "help": "The name of the event.",
+        "valueValidators": [
+          {
+            "args": ["[a-zA-Z0-9_-]{1,64}"],
+            "type": "REGEX"
+          }
+        ],
+        "displayName": "Event Name",
+        "simpleValueType": true,
+        "name": "eventName",
+        "type": "TEXT"
+      },
+      {
+        "displayName": "Index",
+        "name": "index",
+        "help": "The name of the index related to the event.",
+        "simpleValueType": true,
+        "type": "TEXT"
+      },
+      {
+        "displayName": "Object IDs",
+        "name": "objectIDs",
+        "help": "The list of object IDs separated by commas (maximum of 20).",
+        "simpleValueType": true,
+        "type": "TEXT",
+        "valueValidators": [
+          {
+            "args": [1, 20],
+            "type": "TABLE_ROW_COUNT"
+          }
+        ],
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "clickedObjectIDs"
+          },
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "clickedObjectIDsAfterSearch"
+          },
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "convertedObjectIDs"
+          },
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "convertedObjectIDsAfterSearch"
+          },
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "viewedObjectIDs"
+          }
+        ]
+      },
+      {
+        "displayName": "Query ID",
+        "name": "queryID",
+        "help": "The `queryID` of the search sent from Algolia (<a href=\"https://www.algolia.com/doc/api-reference/api-parameters/clickAnalytics/\">`clickAnalytics`</a> needs to be set)",
+        "simpleValueType": true,
+        "type": "TEXT",
+        "valueValidators": [
+          {
+            "args": ["[a-z1-9]{32}"],
+            "type": "REGEX"
+          }
+        ],
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "clickedObjectIDsAfterSearch"
+          },
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "convertedObjectIDsAfterSearch"
+          }
+        ]
+      },
+      {
+        "displayName": "Positions",
+        "name": "positions",
+        "help": "The list of the absolute positions of the element that was clicked (1-based and _not_ 0-based). They must be separated by commas and limited to 20.",
+        "simpleValueType": true,
+        "type": "TEXT",
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "clickedObjectIDsAfterSearch"
+          }
+        ]
+      },
+      {
+        "displayName": "Filters",
+        "name": "filters",
+        "help": "The list of filters that was clicked as '${attr}${op}${value}'' (e.g. brand:Apple). They must be separated by commas and limited to 20.",
+        "simpleValueType": true,
+        "type": "TEXT",
+        "enablingConditions": [
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "clickedFilters"
+          },
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "convertedFilters"
+          },
+          {
+            "paramName": "eventType",
+            "type": "EQUALS",
+            "paramValue": "viewedFilters"
+          }
+        ]
+      }
+    ]
+  }
+]
