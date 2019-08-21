@@ -36,7 +36,7 @@ export function setUserToken(userToken: string | number): void {
   if (userToken === ANONYMOUS_USER_TOKEN) {
     if (!supportsCookies()) {
       throw new Error(
-        "Tracking of anonymous users is possible on environment that support cookies."
+        "Tracking of anonymous users is only possible on environments which support cookies."
       );
     }
     const foundToken = getCookie(COOKIE_KEY);
