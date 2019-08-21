@@ -243,9 +243,21 @@ ___TEMPLATE_PARAMETERS___
       {
         "displayName": "Region",
         "name": "region",
-        "help": "The DNS server to target (support values: de, us).",
+        "help": "The DNS server to target.",
+        "type": "SELECT",
         "simpleValueType": true,
-        "type": "TEXT"
+        "macrosInSelect": true,
+        "notSetText": "",
+        "selectItems": [
+          {
+            "displayValue": "de",
+            "value": "de"
+          },
+          {
+            "displayValue": "us",
+            "value": "us"
+          }
+        ]
       },
       {
         "displayName": "Cookie Duration",
