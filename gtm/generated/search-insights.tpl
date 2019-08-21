@@ -621,6 +621,7 @@ const injectScript = require('injectScript');
 const queryPermission = require('queryPermission');
 const setInWindow = require('setInWindow');
 const copyFromWindow = require('copyFromWindow');
+const makeInteger = require('makeInteger');
 
 const TEMPLATE_VERSION = '1.0.0';
 const INSIGHTS_OBJECT_NAME = 'AlgoliaAnalyticsObject';
@@ -630,9 +631,9 @@ function isInitialized() {
   return !!copyFromWindow(INSIGHTS_OBJECT_NAME);
 }
 
-function getParamList(param) {
+function formatValueToList(value) {
   // `20` is the limit that the engine processes.`
-  return param && param.split(',').slice(0, 20);
+  return value && value.split(',').slice(0, 20);
 }
 
 function logger(message, event) {
@@ -696,7 +697,7 @@ switch (data.eventType) {
     const viewedObjectIDsOptions = {
       index: data.index,
       eventName: data.eventName,
-      objectIDs: getParamList(data.objectIDs),
+      objectIDs: formatValueToList(data.objectIDs),
       userToken: data.userToken,
     };
 
@@ -715,8 +716,8 @@ switch (data.eventType) {
 
     const clickedObjectIDsAfterSearchOptions = {
       index: data.index,
-      objectIDs: getParamList(data.objectIDs),
-      positions: getParamList(data.positions),
+      objectIDs: formatValueToList(data.objectIDs),
+      positions: formatValueToList(data.positions).map(makeInteger),
       queryID: data.queryID,
       userToken: data.userToken,
     };
@@ -738,8 +739,8 @@ switch (data.eventType) {
       index: data.index,
       eventName: data.eventName,
       queryID: data.queryID,
-      objectIDs: getParamList(data.objectIDs),
-      positions: getParamList(data.positions),
+      objectIDs: formatValueToList(data.objectIDs),
+      positions: formatValueToList(data.positions).map(makeInteger),
     };
 
     aa(data.eventType, clickedObjectIDsOptions);
@@ -757,7 +758,7 @@ switch (data.eventType) {
 
     const clickedFiltersOptions = {
       eventName: data.eventName,
-      filters: getParamList(data.filters),
+      filters: formatValueToList(data.filters),
       index: data.index,
       userToken: data.userToken,
     };
@@ -777,7 +778,7 @@ switch (data.eventType) {
 
     const convertedObjectIDsAfterSearchOptions = {
       index: data.index,
-      objectIDs: getParamList(data.objectIDs),
+      objectIDs: formatValueToList(data.objectIDs),
       queryID: data.queryID,
       userToken: data.userToken,
     };
@@ -798,7 +799,7 @@ switch (data.eventType) {
     const convertedObjectIDsOptions = {
       eventName: data.eventName,
       index: data.index,
-      objectIDs: getParamList(data.objectIDs),
+      objectIDs: formatValueToList(data.objectIDs),
       userToken: data.userToken,
     };
 
@@ -817,7 +818,7 @@ switch (data.eventType) {
 
     const convertedFiltersOptions = {
       eventName: data.eventName,
-      filters: getParamList(data.filters),
+      filters: formatValueToList(data.filters),
       index: data.index,
       userToken: data.userToken,
     };
@@ -837,7 +838,7 @@ switch (data.eventType) {
 
     const viewedFiltersOptions = {
       eventName: data.eventName,
-      filters: getParamList(data.filters),
+      filters: formatValueToList(data.filters),
       index: data.index,
       userToken: data.userToken,
     };

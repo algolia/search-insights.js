@@ -4,6 +4,7 @@ const injectScript = require('injectScript');
 const queryPermission = require('queryPermission');
 const setInWindow = require('setInWindow');
 const copyFromWindow = require('copyFromWindow');
+const makeInteger = require('makeInteger');
 
 const TEMPLATE_VERSION = '1.0.0';
 const INSIGHTS_OBJECT_NAME = 'AlgoliaAnalyticsObject';
@@ -99,7 +100,7 @@ switch (data.eventType) {
     const clickedObjectIDsAfterSearchOptions = {
       index: data.index,
       objectIDs: formatValueToList(data.objectIDs),
-      positions: formatValueToList(data.positions),
+      positions: formatValueToList(data.positions).map(makeInteger),
       queryID: data.queryID,
       userToken: data.userToken,
     };
@@ -122,7 +123,7 @@ switch (data.eventType) {
       eventName: data.eventName,
       queryID: data.queryID,
       objectIDs: formatValueToList(data.objectIDs),
-      positions: formatValueToList(data.positions),
+      positions: formatValueToList(data.positions).map(makeInteger),
     };
 
     aa(data.eventType, clickedObjectIDsOptions);
