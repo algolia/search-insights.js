@@ -31,7 +31,7 @@ export function makeSendEvent(requestFn: RequestFnType) {
       );
     }
     const userToken = eventData.userToken || this._userToken;
-    if (userToken === undefined) {
+    if (isUndefined(userToken)) {
       throw new Error(
         "Before calling any methods on the analytics, you first need to call 'setUserToken' function or include 'userToken' in the event payload."
       );
