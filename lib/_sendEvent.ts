@@ -39,14 +39,18 @@ export function makeSendEvent(requestFn: RequestFnType) {
 
     // mandatory params
     if (!isString(eventData.index)) {
-      throw TypeError("expected required parameter `index` to be a string");
+      throw new TypeError("expected required parameter `index` to be a string");
     }
     if (!isString(eventData.eventName)) {
-      throw TypeError("expected required parameter `eventName` to be a string");
+      throw new TypeError(
+        "expected required parameter `eventName` to be a string"
+      );
     }
 
     if (!isUndefined(eventData.userToken) && !isString(eventData.userToken)) {
-      throw new TypeError("expected optional parameter `userToken` to be a string");
+      throw new TypeError(
+        "expected optional parameter `userToken` to be a string"
+      );
     }
 
     const event: InsightsEvent = {
@@ -68,7 +72,9 @@ export function makeSendEvent(requestFn: RequestFnType) {
 
     if (!isUndefined(eventData.queryID)) {
       if (!isString(eventData.queryID)) {
-        throw new TypeError("expected optional parameter `queryID` to be a string");
+        throw new TypeError(
+          "expected optional parameter `queryID` to be a string"
+        );
       }
       event.queryID = eventData.queryID;
     }
@@ -84,7 +90,7 @@ export function makeSendEvent(requestFn: RequestFnType) {
 
     if (!isUndefined(eventData.positions)) {
       if (!Array.isArray(eventData.positions)) {
-        throw TypeError(
+        throw new TypeError(
           "expected optional parameter `positions` to be an array"
         );
       }
@@ -104,7 +110,9 @@ export function makeSendEvent(requestFn: RequestFnType) {
         );
       }
       if (!Array.isArray(eventData.filters)) {
-        throw TypeError("expected optional parameter `filters` to be an array");
+        throw new TypeError(
+          "expected optional parameter `filters` to be an array"
+        );
       }
       event.filters = eventData.filters;
     }
