@@ -37,18 +37,18 @@ describe("sendEvent", () => {
   });
 
   describe("with XMLHttpRequest", () => {
-    let AlgoliaInsights;
+    let analyticsInstance;
     let sendBeaconBackup;
     beforeEach(() => {
       sendBeaconBackup = window.navigator.sendBeacon;
       window.navigator.sendBeacon = undefined; // force usage of XMLHttpRequest
-      AlgoliaInsights = setupInstance();
+      analyticsInstance = setupInstance();
     });
     afterEach(() => {
       window.navigator.sendBeacon = sendBeaconBackup;
     });
     it("should make a post request to /1/events", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -59,7 +59,7 @@ describe("sendEvent", () => {
       expect(url.parse(requestUrl).pathname).toBe("/1/events");
     });
     it("should pass over the payload with multiple events", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -75,7 +75,7 @@ describe("sendEvent", () => {
       });
     });
     it("should include X-Algolia-* query parameters", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -91,19 +91,19 @@ describe("sendEvent", () => {
   });
 
   describe("with sendBeacon", () => {
-    let AlgoliaInsights;
+    let analyticsInstance;
     let sendBeacon;
     let sendBeaconBackup;
     beforeEach(() => {
       sendBeaconBackup = window.navigator.sendBeacon;
       sendBeacon = window.navigator.sendBeacon = jest.fn();
-      AlgoliaInsights = setupInstance();
+      analyticsInstance = setupInstance();
     });
     afterEach(() => {
       window.navigator.sendBeacon = sendBeaconBackup;
     });
     it("should use sendBeacon when available", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -113,7 +113,7 @@ describe("sendEvent", () => {
       expect(XMLHttpRequest.send).not.toHaveBeenCalled();
     });
     it("should call sendBeacon with /1/event", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -123,7 +123,7 @@ describe("sendEvent", () => {
       expect(url.parse(requestURL).pathname).toBe("/1/events");
     });
     it("should send the correct payload", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -139,7 +139,7 @@ describe("sendEvent", () => {
       });
     });
     it("should include X-Algolia-* query parameters", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -155,22 +155,22 @@ describe("sendEvent", () => {
   });
 
   describe("init", () => {
-    let AlgoliaInsights;
+    let analyticsInstance;
     beforeEach(() => {
-      AlgoliaInsights = setupInstance();
+      analyticsInstance = setupInstance();
     });
 
     it("should throw if init was not called", () => {
       expect(() => {
-        (AlgoliaInsights as any)._hasCredentials = false;
-        (AlgoliaInsights as any).sendEvent();
+        (analyticsInstance as any)._hasCredentials = false;
+        (analyticsInstance as any).sendEvent();
       }).toThrowError(
         "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
       );
     });
     it("should do nothing is _userHasOptedOut === true", () => {
-      AlgoliaInsights._userHasOptedOut = true;
-      (AlgoliaInsights as any).sendEvent("click", {
+      analyticsInstance._userHasOptedOut = true;
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -180,14 +180,14 @@ describe("sendEvent", () => {
   });
 
   describe("eventName", () => {
-    let AlgoliaInsights;
+    let analyticsInstance;
     beforeEach(() => {
-      AlgoliaInsights = setupInstance();
+      analyticsInstance = setupInstance();
     });
 
     it("should throw if no eventName passed", () => {
       expect(() => {
-        (AlgoliaInsights as any).sendEvent("click", {
+        (analyticsInstance as any).sendEvent("click", {
           index: "my-index",
           objectIDs: ["1"]
         });
@@ -197,7 +197,7 @@ describe("sendEvent", () => {
     });
     it("should throw if eventName is not a string", () => {
       expect(() => {
-        (AlgoliaInsights as any).sendEvent("click", {
+        (analyticsInstance as any).sendEvent("click", {
           eventName: 3,
           index: "my-index",
           objectIDs: ["1"]
@@ -209,14 +209,14 @@ describe("sendEvent", () => {
   });
 
   describe("index", () => {
-    let AlgoliaInsights;
+    let analyticsInstance;
     beforeEach(() => {
-      AlgoliaInsights = setupInstance();
+      analyticsInstance = setupInstance();
     });
 
     it("should throw if no index passed", () => {
       expect(() => {
-        (AlgoliaInsights as any).sendEvent("click", {
+        (analyticsInstance as any).sendEvent("click", {
           eventName: "my-event"
         });
       }).toThrowErrorMatchingInlineSnapshot(
@@ -225,7 +225,7 @@ describe("sendEvent", () => {
     });
     it("should throw if no index is not a string", () => {
       expect(() => {
-        (AlgoliaInsights as any).sendEvent("click", {
+        (analyticsInstance as any).sendEvent("click", {
           eventName: "my-event",
           index: 2
         });
@@ -236,13 +236,13 @@ describe("sendEvent", () => {
   });
 
   describe("objectIDs and positions", () => {
-    let AlgoliaInsights;
+    let analyticsInstance;
     beforeEach(() => {
-      AlgoliaInsights = setupInstance();
+      analyticsInstance = setupInstance();
     });
 
     it("should support multiple objectIDs and positions", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1", "2"],
@@ -261,7 +261,7 @@ describe("sendEvent", () => {
     });
     it("should throw and error when objectIDs and positions are not the same size", () => {
       expect(() => {
-        (AlgoliaInsights as any).sendEvent("click", {
+        (analyticsInstance as any).sendEvent("click", {
           eventName: "my-event",
           index: "my-index",
           objectIDs: ["1", "2"],
@@ -273,7 +273,7 @@ describe("sendEvent", () => {
     });
     it("should throw and error when positions supplied but not objectIDs", () => {
       expect(() => {
-        (AlgoliaInsights as any).sendEvent("click", {
+        (analyticsInstance as any).sendEvent("click", {
           eventName: "my-event",
           index: "my-index",
           positions: [3]
@@ -285,13 +285,13 @@ describe("sendEvent", () => {
   });
 
   describe("timestamp", () => {
-    let AlgoliaInsights;
+    let analyticsInstance;
     beforeEach(() => {
-      AlgoliaInsights = setupInstance();
+      analyticsInstance = setupInstance();
     });
 
     it("should not add a timestamp if not provided", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -301,7 +301,7 @@ describe("sendEvent", () => {
       expect(payload.events[0]).not.toHaveProperty("timestamp");
     });
     it("should pass over provided timestamp", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"],
@@ -320,13 +320,13 @@ describe("sendEvent", () => {
   });
 
   describe("userToken", () => {
-    let AlgoliaInsights;
+    let analyticsInstance;
     beforeEach(() => {
-      AlgoliaInsights = setupInstance();
+      analyticsInstance = setupInstance();
     });
 
     it("should add a userToken if not provided", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -342,7 +342,7 @@ describe("sendEvent", () => {
       });
     });
     it("should pass over provided userToken", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"],
@@ -361,13 +361,13 @@ describe("sendEvent", () => {
   });
 
   describe("filters", () => {
-    let AlgoliaInsights;
+    let analyticsInstance;
     beforeEach(() => {
-      AlgoliaInsights = setupInstance();
+      analyticsInstance = setupInstance();
     });
 
     it("should pass over provided filters", () => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent("click", {
         eventName: "my-event",
         index: "my-index",
         filters: ["brand:Apple"]
@@ -384,7 +384,7 @@ describe("sendEvent", () => {
     });
     it("should throw and error when objectIDs and filter are both provided", () => {
       expect(() => {
-        (AlgoliaInsights as any).sendEvent("click", {
+        (analyticsInstance as any).sendEvent("click", {
           eventName: "my-event",
           index: "my-index",
           objectIDs: ["1", "2"],
@@ -396,7 +396,7 @@ describe("sendEvent", () => {
     });
     it("should throw and error when neither objectIDs or filters are provided", () => {
       expect(() => {
-        (AlgoliaInsights as any).sendEvent("click", {
+        (analyticsInstance as any).sendEvent("click", {
           eventName: "my-event",
           index: "my-index"
         });
