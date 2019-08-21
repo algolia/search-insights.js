@@ -1,4 +1,5 @@
-import { getInstance } from "../../tests/utils";
+import AlgoliaAnalytics from "../insights";
+import { getRequesterForBrowser } from "../utils/getRequesterForBrowser";
 import * as url from "url";
 import * as querystring from "querystring";
 
@@ -11,14 +12,19 @@ const credentials = {
   appId: "testId"
 };
 
+function setupInstance() {
+  const instance = new AlgoliaAnalytics({
+    requestFn: getRequesterForBrowser()
+  });
+  instance.init(credentials);
+  instance.setUserToken("mock-user-id");
+  return instance;
+}
+
 describe("sendEvent", () => {
   let XMLHttpRequest;
 
-  let AlgoliaInsights;
   beforeEach(() => {
-    AlgoliaInsights = getInstance();
-    AlgoliaInsights.init(credentials);
-    AlgoliaInsights.setUserToken("mock-user-id");
     XMLHttpRequest = {
       open: jest.spyOn((window as any).XMLHttpRequest.prototype, "open"),
       send: jest.spyOn((window as any).XMLHttpRequest.prototype, "send")
@@ -31,8 +37,15 @@ describe("sendEvent", () => {
   });
 
   describe("with XMLHttpRequest", () => {
+    let AlgoliaInsights;
+    let sendBeaconBackup;
     beforeEach(() => {
+      sendBeaconBackup = window.navigator.sendBeacon;
       window.navigator.sendBeacon = undefined; // force usage of XMLHttpRequest
+      AlgoliaInsights = setupInstance();
+    });
+    afterEach(() => {
+      window.navigator.sendBeacon = sendBeaconBackup;
     });
     it("should make a post request to /1/events", () => {
       (AlgoliaInsights as any).sendEvent("click", {
@@ -78,12 +91,16 @@ describe("sendEvent", () => {
   });
 
   describe("with sendBeacon", () => {
+    let AlgoliaInsights;
     let sendBeacon;
+    let sendBeaconBackup;
     beforeEach(() => {
+      sendBeaconBackup = window.navigator.sendBeacon;
       sendBeacon = window.navigator.sendBeacon = jest.fn();
+      AlgoliaInsights = setupInstance();
     });
     afterEach(() => {
-      window.navigator.sendBeacon = undefined;
+      window.navigator.sendBeacon = sendBeaconBackup;
     });
     it("should use sendBeacon when available", () => {
       (AlgoliaInsights as any).sendEvent("click", {
@@ -138,6 +155,11 @@ describe("sendEvent", () => {
   });
 
   describe("init", () => {
+    let AlgoliaInsights;
+    beforeEach(() => {
+      AlgoliaInsights = setupInstance();
+    });
+
     it("should throw if init was not called", () => {
       expect(() => {
         (AlgoliaInsights as any)._hasCredentials = false;
@@ -158,6 +180,11 @@ describe("sendEvent", () => {
   });
 
   describe("eventName", () => {
+    let AlgoliaInsights;
+    beforeEach(() => {
+      AlgoliaInsights = setupInstance();
+    });
+
     it("should throw if no eventName passed", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
@@ -182,6 +209,11 @@ describe("sendEvent", () => {
   });
 
   describe("index", () => {
+    let AlgoliaInsights;
+    beforeEach(() => {
+      AlgoliaInsights = setupInstance();
+    });
+
     it("should throw if no index passed", () => {
       expect(() => {
         (AlgoliaInsights as any).sendEvent("click", {
@@ -204,6 +236,11 @@ describe("sendEvent", () => {
   });
 
   describe("objectIDs and positions", () => {
+    let AlgoliaInsights;
+    beforeEach(() => {
+      AlgoliaInsights = setupInstance();
+    });
+
     it("should support multiple objectIDs and positions", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
@@ -248,6 +285,11 @@ describe("sendEvent", () => {
   });
 
   describe("timestamp", () => {
+    let AlgoliaInsights;
+    beforeEach(() => {
+      AlgoliaInsights = setupInstance();
+    });
+
     it("should not add a timestamp if not provided", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
@@ -278,6 +320,11 @@ describe("sendEvent", () => {
   });
 
   describe("userToken", () => {
+    let AlgoliaInsights;
+    beforeEach(() => {
+      AlgoliaInsights = setupInstance();
+    });
+
     it("should add a userToken if not provided", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",
@@ -314,6 +361,11 @@ describe("sendEvent", () => {
   });
 
   describe("filters", () => {
+    let AlgoliaInsights;
+    beforeEach(() => {
+      AlgoliaInsights = setupInstance();
+    });
+
     it("should pass over provided filters", () => {
       (AlgoliaInsights as any).sendEvent("click", {
         eventName: "my-event",

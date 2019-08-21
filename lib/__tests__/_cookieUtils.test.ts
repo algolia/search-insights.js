@@ -1,5 +1,6 @@
-import { getInstance } from "../../tests/utils";
+import AlgoliaAnalytics from "../insights";
 import { createUUID } from "../utils/uuid";
+import * as utils from "../utils";
 
 jest.mock("../utils/uuid", () => ({
   createUUID: jest.fn()
@@ -14,7 +15,7 @@ const credentials = {
 describe("cookieUtils", () => {
   let AlgoliaInsights;
   beforeEach(() => {
-    AlgoliaInsights = getInstance();
+    AlgoliaInsights = new AlgoliaAnalytics({ requestFn: () => {} });
     AlgoliaInsights.init(credentials);
     createUUID.mockReset();
     createUUID
@@ -43,6 +44,17 @@ describe("cookieUtils", () => {
         document.cookie = "_ALGOLIA=;expires=Thu, 01-Jan-1970 00:00:01 GMT;";
         AlgoliaInsights.setUserToken(AlgoliaInsights.ANONYMOUS_USER_TOKEN);
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-2");
+      });
+      it("should throw if environment does not support cookies", () => {
+        const mockSupportsCookies = jest
+          .spyOn(utils, "supportsCookies")
+          .mockReturnValue(false);
+        expect(() =>
+          AlgoliaInsights.setUserToken(AlgoliaInsights.ANONYMOUS_USER_TOKEN)
+        ).toThrowErrorMatchingInlineSnapshot(
+          `"Tracking of anonymous users is possible on environment that support cookies."`
+        );
+        mockSupportsCookies.mockRestore();
       });
     });
     describe("provided userToken", () => {

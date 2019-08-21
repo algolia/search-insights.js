@@ -1,9 +1,10 @@
-import { getInstance } from "../../tests/utils";
+import AlgoliaAnalytics from "../insights";
+import * as utils from "../utils";
 
 describe("init", () => {
   let AlgoliaInsights;
   beforeEach(() => {
-    AlgoliaInsights = getInstance();
+    AlgoliaInsights = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
   it("should throw if no parameters is passed", () => {
@@ -104,5 +105,31 @@ describe("init", () => {
     expect(AlgoliaInsights._endpointOrigin).toBe(
       "https://insights.de.algolia.io"
     );
+  });
+  it("should set userToken to ANONYMOUS if environment supports cookies", () => {
+    const supportsCookies = jest
+      .spyOn(utils, "supportsCookies")
+      .mockReturnValue(true);
+    const setUserToken = jest.spyOn(AlgoliaInsights, "setUserToken");
+
+    AlgoliaInsights.init({ apiKey: "***", appId: "XXX", region: "de" });
+    expect(setUserToken).toHaveBeenCalledWith(
+      AlgoliaInsights.ANONYMOUS_USER_TOKEN
+    );
+
+    setUserToken.mockRestore();
+    supportsCookies.mockRestore();
+  });
+  it("should not set userToken if environment does not supports cookies", () => {
+    const supportsCookies = jest
+      .spyOn(utils, "supportsCookies")
+      .mockReturnValue(false);
+    const setUserToken = jest.spyOn(AlgoliaInsights, "setUserToken");
+
+    AlgoliaInsights.init({ apiKey: "***", appId: "XXX", region: "de" });
+    expect(setUserToken).not.toHaveBeenCalled();
+
+    setUserToken.mockRestore();
+    supportsCookies.mockRestore();
   });
 });

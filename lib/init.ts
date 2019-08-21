@@ -1,4 +1,4 @@
-import { isUndefined, isString, isNumber } from "./utils";
+import { isUndefined, isString, isNumber, supportsCookies } from "./utils";
 import { DEFAULT_ALGOLIA_AGENT } from "./_algoliaAgent";
 
 type InsightRegion = "de" | "us";
@@ -71,4 +71,8 @@ export function init(options: InitParams) {
   // user agent
   this._ua = DEFAULT_ALGOLIA_AGENT;
   this._uaURIEncoded = encodeURIComponent(DEFAULT_ALGOLIA_AGENT);
+
+  if (supportsCookies()) {
+    this.setUserToken(this.ANONYMOUS_USER_TOKEN);
+  }
 }
