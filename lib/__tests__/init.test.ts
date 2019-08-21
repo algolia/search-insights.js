@@ -118,6 +118,7 @@ describe("init", () => {
     expect(setUserToken).toHaveBeenCalledWith(
       analyticsInstance.ANONYMOUS_USER_TOKEN
     );
+    expect(setUserToken).toHaveBeenCalledTimes(1);
 
     setUserToken.mockRestore();
     supportsCookies.mockRestore();
