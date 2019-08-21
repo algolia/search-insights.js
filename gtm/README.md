@@ -85,7 +85,7 @@ By default, the Search Insights endpoint targets [jsDelivr CDN](https://www.jsde
 
 ## Contributing
 
-Before starting working on the project, make sure to **disable any ad blockers**.
+Before working on the project, make sure to **disable any ad blockers**.
 
 ### Folder structure
 
