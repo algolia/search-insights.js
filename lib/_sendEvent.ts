@@ -30,14 +30,14 @@ export function makeSendEvent(requestFn: RequestFnType) {
         "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
       );
     }
+    if (eventData.userToken === "" || this._userToken === "") {
+      throw new Error("`userToken` cannot be an empty string.");
+    }
     const userToken = eventData.userToken || this._userToken;
     if (isUndefined(userToken)) {
       throw new Error(
         "Before calling any methods on the analytics, you first need to call 'setUserToken' function or include 'userToken' in the event payload."
       );
-    }
-    if (userToken === "") {
-      throw new Error("`userToken` cannot be an empty string.");
     }
 
     // mandatory params

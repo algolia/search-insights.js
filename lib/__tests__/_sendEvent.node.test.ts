@@ -69,7 +69,9 @@ describe("_sendEvent in node env", () => {
         ...defaultPayload
       });
     }).toThrowError("`userToken` cannot be an empty string.");
+  });
 
+  it("throws when user token in payload is an empty string", () => {
     expect(() => {
       aa("sendEvent", "click", {
         userToken: "",
