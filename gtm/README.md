@@ -48,18 +48,20 @@ window.dataLayer.push({
 });
 ```
 
-### How to get the object IDs?
+### How to get the object IDs, positions and query ID?
 
-The `objectIDs` can be given to GTM via [data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes).
-
-In your InstantSearch template, create a `data-insights-objectid` attribute:
+The `objectIDs`, `positions` and `queryID` can be forwarded to GTM via [data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes).
 
 ```js
 instantsearch.widgets.hits({
   container: '#hits',
   templates: {
     item: `
-<article data-insights-objectid="{{objectID}}">
+<article
+ data-insights-objectid="{{objectID}}"
+ data-insights-position="{{__position}}"
+ data-insights-query="{{__queryID}}"
+>
   <!-- ... -->
 </article>
 `,
@@ -67,26 +69,7 @@ instantsearch.widgets.hits({
 });
 ```
 
-### How to get the query ID?
-
-The `queryID` can be given to GTM via [data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes).
-
-In your InstantSearch template, create a `data-insights-query` attribute:
-
-```js
-instantsearch.widgets.hits({
-  container: '#hits',
-  templates: {
-    item: `
-<article data-insights-query="{{__queryID}}">
-  <!-- ... -->
-</article>
-`,
-  },
-});
-```
-
-> `__queryID` is available from:
+> `__queryID` and `__position` are available from:
 >
 > - InstantSearch.js 3.4.0
 > - React InstantSearch 5.5.0
