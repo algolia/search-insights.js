@@ -70,7 +70,7 @@ describe("request", () => {
     expect(nodeHttpsRequest).not.toHaveBeenCalled();
   });
 
-  it("should send with XMLHttpRequest", () => {
+  it("should send with XMLHttpRequest if sendBeacon is not available", () => {
     supportsSendBeacon.mockImplementation(() => false);
     supportsXMLHttpRequest.mockImplementation(() => true);
     supportsNodeHttpModule.mockImplementation(() => true);
