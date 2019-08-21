@@ -1,4 +1,4 @@
-# Search Insights for Google Tag Manager
+# Search Insights for Google Tag Manager (GTM)
 
 Google Tag Manager [custom template](https://developers.google.com/tag-manager/templates/) for Algolia Search Insights.
 
@@ -17,7 +17,7 @@ Google Tag Manager [custom template](https://developers.google.com/tag-manager/t
 ### 1. Import the template
 
 - Download **[`search-insights.tpl`](generated/search-insights.tpl)**
-- Import the file in [Google Tag Manager](https://tagmanager.google.com) (GTM)
+- Import the file in [Google Tag Manager](https://tagmanager.google.com)
   - Go to "Templates"
   - Click on "New"
   - Select "Import" in the menu
