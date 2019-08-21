@@ -57,10 +57,6 @@ declare global {
   }
 }
 
-type AlgoliaAnalyticsOptions = {
-  requestFn: RequestFnType;
-};
-
 /**
  *  AlgoliaAnalytics class
  */
@@ -116,7 +112,7 @@ class AlgoliaAnalytics {
   public viewedObjectIDs: (params?: InsightsSearchViewObjectIDsEvent) => void;
   public viewedFilters: (params?: InsightsSearchViewFiltersEvent) => void;
 
-  constructor({ requestFn }: AlgoliaAnalyticsOptions) {
+  constructor({ requestFn }: { requestFn: RequestFnType }) {
     // Bind private methods to `this` class
     this.sendEvent = makeSendEvent(requestFn).bind(this);
 
