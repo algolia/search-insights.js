@@ -247,8 +247,8 @@
         "type": "TEXT"
       },
       {
-        "displayName": "Search Insights Endpoint",
-        "name": "searchInsightsEndpoint",
+        "displayName": "Search Insights Source URL",
+        "name": "searchInsightsSource",
         "defaultValue": "https://cdn.jsdelivr.net/npm/search-insights@1.2.2",
         "help": "The endpoint of the Search Insights library.",
         "simpleValueType": true,

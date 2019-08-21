@@ -267,8 +267,8 @@ ___TEMPLATE_PARAMETERS___
         "type": "TEXT"
       },
       {
-        "displayName": "Search Insights Endpoint",
-        "name": "searchInsightsEndpoint",
+        "displayName": "Search Insights Source URL",
+        "name": "searchInsightsSource",
         "defaultValue": "https://cdn.jsdelivr.net/npm/search-insights@1.2.2",
         "help": "The endpoint of the Search Insights library.",
         "simpleValueType": true,
@@ -642,26 +642,26 @@ function logger(message, event) {
 switch (data.eventType) {
   case 'init': {
     if (isInitialized()) {
-      logger('The Library has been already been initialized.');
+      logger('The "init" event has already been called.');
       break;
     }
 
     setInWindow(INSIGHTS_OBJECT_NAME, 'aa');
 
-    if (queryPermission('inject_script', data.searchInsightsEndpoint)) {
+    if (queryPermission('inject_script', data.searchInsightsSource)) {
       injectScript(
-        data.searchInsightsEndpoint,
+        data.searchInsightsSource,
         data.gtmOnSuccess,
         data.gtmOnFailure,
-        data.searchInsightsEndpoint
+        data.searchInsightsSource
       );
     } else {
       logger(
         'The library endpoint is not allowed in the "Injects Scripts" permissions.\n\n' +
-          'Please add the value: "' +
-          data.searchInsightsEndpoint +
+          'You need to add the value: "' +
+          data.searchInsightsSource +
           '"\n\n' +
-          'See: https://www.simoahava.com/analytics/custom-templates-guide-for-google-tag-manager/#step-4-modify-permissions'
+          'See https://www.simoahava.com/analytics/custom-templates-guide-for-google-tag-manager/#step-4-modify-permissions'
       );
       break;
     }

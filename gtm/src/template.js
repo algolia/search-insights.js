@@ -31,18 +31,18 @@ switch (data.eventType) {
 
     setInWindow(INSIGHTS_OBJECT_NAME, 'aa');
 
-    if (queryPermission('inject_script', data.searchInsightsEndpoint)) {
+    if (queryPermission('inject_script', data.searchInsightsSource)) {
       injectScript(
-        data.searchInsightsEndpoint,
+        data.searchInsightsSource,
         data.gtmOnSuccess,
         data.gtmOnFailure,
-        data.searchInsightsEndpoint
+        data.searchInsightsSource
       );
     } else {
       logger(
         'The library endpoint is not allowed in the "Injects Scripts" permissions.\n\n' +
           'You need to add the value: "' +
-          data.searchInsightsEndpoint +
+          data.searchInsightsSource +
           '"\n\n' +
           'See https://www.simoahava.com/analytics/custom-templates-guide-for-google-tag-manager/#step-4-modify-permissions'
       );

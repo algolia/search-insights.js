@@ -76,11 +76,11 @@ instantsearch.widgets.hits({
 > - Vue InstantSearch 2.1.0
 > - Angular InstantSearch 3.0.0
 
-### How to change the Search Insights endpoint?
+### How to change the Search Insights source URL?
 
-By default, the Search Insights endpoint targets [jsDelivr CDN](https://www.jsdelivr.com/). If you want to use a specific version of the Search Insights library or to host your own version of the library, you can change the endpoint:
+By default, the Search Insights source URL targets [jsDelivr CDN](https://www.jsdelivr.com/). If you want to use a specific version of the Search Insights library or to host your own version of the library, you can change the URL:
 
-1. In the "Init" event configuration, go to "Advanced Algolia Settings" and update "Search Insights Endpoint"
+1. In the "Init" event configuration, go to "Advanced Algolia Settings" and update "Search Insights Source URL"
 1. In the "Permissions" template, add the same link in the "[Inject Scripts](https://www.simoahava.com/analytics/custom-templates-guide-for-google-tag-manager/#injects-scripts)" section
 
 ## Contributing
