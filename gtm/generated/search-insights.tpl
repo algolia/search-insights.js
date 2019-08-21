@@ -1,7 +1,7 @@
 ___INFO___
 
 {
-  "displayName": "Algolia Search Insights",
+  "displayName": "Search Insights",
   "description": "Library for detecting front-end Algolia search metrics.",
   "type": "TAG",
   "version": 1,
