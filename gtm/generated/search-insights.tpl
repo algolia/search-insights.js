@@ -78,7 +78,7 @@ ___TEMPLATE_PARAMETERS___
             "paramValue": "init"
           }
         ],
-        "displayName": "Initializes the Algola Search Insights library",
+        "displayName": "Initializes the Algola Search Insights library.",
         "name": "labelInit",
         "type": "LABEL"
       },
@@ -188,8 +188,8 @@ ___TEMPLATE_PARAMETERS___
         "paramValue": "init"
       }
     ],
-    "displayName": "",
-    "name": "Init Setting",
+    "name": "Init Options",
+    "displayName": "Init Options",
     "groupStyle": "NO_ZIPPY",
     "type": "GROUP",
     "subParams": [
@@ -217,8 +217,8 @@ ___TEMPLATE_PARAMETERS___
         "paramValue": "init"
       }
     ],
-    "displayName": "Advanced Algolia Settings",
-    "name": "Advanced Algolia Settings",
+    "displayName": "Advanced init options",
+    "name": "Advanced init options",
     "groupStyle": "ZIPPY_CLOSED",
     "type": "GROUP",
     "subParams": [
@@ -229,6 +229,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "macrosInSelect": true,
         "simpleValueType": true,
+        "notSetText": "",
         "selectItems": [
           {
             "displayValue": "False",
@@ -296,8 +297,8 @@ ___TEMPLATE_PARAMETERS___
         "paramValue": "init"
       }
     ],
-    "displayName": "Algolia Event Data",
-    "name": "Action Settings",
+    "name": "Event options",
+    "displayName": "Event Options",
     "groupStyle": "ZIPPY_OPEN",
     "type": "GROUP",
     "subParams": [
