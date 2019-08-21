@@ -280,7 +280,7 @@ ___TEMPLATE_PARAMETERS___
         "simpleValueType": true,
         "valueValidators": [
           {
-            "args": ["[a-zA-Z0-9_-]{1,64}"],
+            "args": ["^.{1,64}$"],
             "type": "REGEX"
           }
         ]
@@ -316,7 +316,7 @@ ___TEMPLATE_PARAMETERS___
         "simpleValueType": true,
         "valueValidators": [
           {
-            "args": ["[a-zA-Z0-9_-]{1,64}"],
+            "args": ["^.{1,64}$"],
             "type": "REGEX"
           }
         ]
@@ -325,7 +325,7 @@ ___TEMPLATE_PARAMETERS___
         "help": "The name of the event.",
         "valueValidators": [
           {
-            "args": ["[a-zA-Z0-9_-]{1,64}"],
+            "args": ["^.{1,64}$"],
             "type": "REGEX"
           }
         ],
