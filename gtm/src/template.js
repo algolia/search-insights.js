@@ -123,7 +123,6 @@ switch (data.eventType) {
       eventName: data.eventName,
       queryID: data.queryID,
       objectIDs: formatValueToList(data.objectIDs),
-      positions: formatValueToList(data.positions).map(makeInteger),
     };
 
     aa(data.eventType, clickedObjectIDsOptions);
