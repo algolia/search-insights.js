@@ -26,6 +26,12 @@ Google Tag Manager [custom template](https://developers.google.com/tag-manager/t
 
 For events to be sent with the correct information (`userToken`, `objectIDs`, `queryID`, etc.), you need to add variables in the "User-Defined Variables" section.
 
+1. Click "New" in the Variables panel
+1. Name the variable (e.g. "ItemClicked", "UserToken", etc.)
+1. Set the variable type:
+   - "Custom JavaScript" if coming from [data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) (e.g. `objectIDs`, `positions`, `queryId` etc.)
+   - "Data Layer Variable" if coming from a [Data Layer](https://developers.google.com/tag-manager/devguide#datalayer) (e.g. `userToken`)
+
 [Learn more about GTM variables →](https://www.simoahava.com/analytics/variable-guide-google-tag-manager/)
 
 ### 3. Create tags
@@ -39,7 +45,7 @@ For events to be sent with the correct information (`userToken`, `objectIDs`, `q
 
 ### How to get the user token?
 
-The user token can be given to GTM via a [Data Layer](https://developers.google.com/tag-manager/devguide#datalayer).
+The user token can be forwarded to GTM via a [Data Layer](https://developers.google.com/tag-manager/devguide#datalayer).
 
 ```js
 window.dataLayer = window.dataLayer || [];
