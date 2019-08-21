@@ -64,8 +64,8 @@ switch (data.eventType) {
 
     aa('init', initOptions);
 
-    if (data.setUserToken) {
-      aa('setUserToken', data.setUserToken);
+    if (data.initialUserToken) {
+      aa('setUserToken', data.initialUserToken);
     }
 
     break;

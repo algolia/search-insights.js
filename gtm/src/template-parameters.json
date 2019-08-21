@@ -241,7 +241,7 @@
       },
       {
         "displayName": "User Token",
-        "name": "setUserToken",
+        "name": "initialUserToken",
         "help": "Set a persistent user identifier applied to subsequent events.",
         "simpleValueType": true,
         "type": "TEXT"

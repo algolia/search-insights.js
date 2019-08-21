@@ -261,7 +261,7 @@ ___TEMPLATE_PARAMETERS___
       },
       {
         "displayName": "User Token",
-        "name": "setUserToken",
+        "name": "initialUserToken",
         "help": "Set a persistent user identifier applied to subsequent events.",
         "simpleValueType": true,
         "type": "TEXT"
@@ -681,8 +681,8 @@ switch (data.eventType) {
 
     aa('init', initOptions);
 
-    if (data.setUserToken) {
-      aa('setUserToken', data.setUserToken);
+    if (data.initialUserToken) {
+      aa('setUserToken', data.initialUserToken);
     }
 
     break;
