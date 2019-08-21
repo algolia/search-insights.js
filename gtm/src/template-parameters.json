@@ -1,5 +1,9 @@
 [
   {
+    "displayName": "Method",
+    "name": "method",
+    "type": "SELECT",
+    "simpleValueType": true,
     "macrosInSelect": false,
     "selectItems": [
       {
@@ -38,22 +42,18 @@
         "displayValue": "Viewed Filters",
         "value": "viewedFilters"
       }
-    ],
-    "displayName": "Event Type",
-    "simpleValueType": true,
-    "name": "eventType",
-    "type": "SELECT"
+    ]
   },
   {
-    "displayName": "Event Details",
-    "name": "Events Labels Group",
+    "displayName": "Method Details",
+    "name": "Method Labels Group",
     "groupStyle": "NO_ZIPPY",
     "type": "GROUP",
     "subParams": [
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "init"
           }
@@ -65,7 +65,7 @@
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedObjectIDsAfterSearch"
           }
@@ -77,7 +77,7 @@
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedObjectIDs"
           }
@@ -89,7 +89,7 @@
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedFilters"
           }
@@ -101,7 +101,7 @@
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedObjectIDsAfterSearch"
           }
@@ -113,7 +113,7 @@
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedObjectIDs"
           }
@@ -125,7 +125,7 @@
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedFilters"
           }
@@ -137,7 +137,7 @@
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "viewedObjectIDs"
           }
@@ -149,7 +149,7 @@
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "viewedFilters"
           }
@@ -163,7 +163,7 @@
   {
     "enablingConditions": [
       {
-        "paramName": "eventType",
+        "paramName": "method",
         "type": "EQUALS",
         "paramValue": "init"
       }
@@ -176,23 +176,23 @@
       {
         "displayName": "App ID",
         "help": "The identifier of your Algolia application.",
-        "simpleValueType": true,
         "name": "appId",
-        "type": "TEXT"
+        "type": "TEXT",
+        "simpleValueType": true
       },
       {
         "displayName": "API Key",
         "help": "The search API key of your Algolia application.",
-        "simpleValueType": true,
         "name": "apiKey",
-        "type": "TEXT"
+        "type": "TEXT",
+        "simpleValueType": true
       }
     ]
   },
   {
     "enablingConditions": [
       {
-        "paramName": "eventType",
+        "paramName": "method",
         "type": "EQUALS",
         "paramValue": "init"
       }
@@ -206,9 +206,9 @@
         "displayName": "Opt Out User",
         "name": "userHasOptedOut",
         "help": "Whether to exclude users from analytics.",
+        "type": "SELECT",
         "macrosInSelect": true,
         "simpleValueType": true,
-        "type": "SELECT",
         "selectItems": [
           {
             "displayValue": "False",
@@ -231,8 +231,8 @@
         "displayName": "Cookie Duration",
         "name": "cookieDuration",
         "help": "The cookie duration in milliseconds (default to `15552000000`, 6 months).",
-        "simpleValueType": true,
         "type": "TEXT",
+        "simpleValueType": true,
         "valueValidators": [
           {
             "type": "POSITIVE_NUMBER"
@@ -243,23 +243,23 @@
         "displayName": "User Token",
         "name": "initialUserToken",
         "help": "Set a persistent user identifier applied to subsequent events.",
-        "simpleValueType": true,
-        "type": "TEXT"
+        "type": "TEXT",
+        "simpleValueType": true
       },
       {
         "displayName": "Search Insights Source URL",
         "name": "searchInsightsSource",
         "defaultValue": "https://cdn.jsdelivr.net/npm/search-insights@1.2.2",
-        "help": "The endpoint of the Search Insights library.",
-        "simpleValueType": true,
-        "type": "TEXT"
+        "help": "The source URL of the Search Insights library.",
+        "type": "TEXT",
+        "simpleValueType": true
       }
     ]
   },
   {
     "enablingConditions": [
       {
-        "paramName": "eventType",
+        "paramName": "method",
         "type": "NOT_EQUALS",
         "paramValue": "init"
       }
@@ -310,27 +310,27 @@
         ],
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedObjectIDs"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedObjectIDsAfterSearch"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedObjectIDs"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedObjectIDsAfterSearch"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "viewedObjectIDs"
           }
@@ -350,12 +350,12 @@
         ],
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedObjectIDsAfterSearch"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedObjectIDsAfterSearch"
           }
@@ -369,7 +369,7 @@
         "type": "TEXT",
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedObjectIDsAfterSearch"
           }
@@ -383,17 +383,17 @@
         "type": "TEXT",
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedFilters"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedFilters"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "viewedFilters"
           }

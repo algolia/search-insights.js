@@ -20,6 +20,10 @@ ___TEMPLATE_PARAMETERS___
 
 [
   {
+    "displayName": "Method",
+    "name": "method",
+    "type": "SELECT",
+    "simpleValueType": true,
     "macrosInSelect": false,
     "selectItems": [
       {
@@ -58,22 +62,18 @@ ___TEMPLATE_PARAMETERS___
         "displayValue": "Viewed Filters",
         "value": "viewedFilters"
       }
-    ],
-    "displayName": "Event Type",
-    "simpleValueType": true,
-    "name": "eventType",
-    "type": "SELECT"
+    ]
   },
   {
-    "displayName": "Event Details",
-    "name": "Events Labels Group",
+    "displayName": "Method Details",
+    "name": "Method Labels Group",
     "groupStyle": "NO_ZIPPY",
     "type": "GROUP",
     "subParams": [
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "init"
           }
@@ -85,7 +85,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedObjectIDsAfterSearch"
           }
@@ -97,7 +97,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedObjectIDs"
           }
@@ -109,7 +109,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedFilters"
           }
@@ -121,7 +121,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedObjectIDsAfterSearch"
           }
@@ -133,7 +133,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedObjectIDs"
           }
@@ -145,7 +145,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedFilters"
           }
@@ -157,7 +157,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "viewedObjectIDs"
           }
@@ -169,7 +169,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "viewedFilters"
           }
@@ -183,7 +183,7 @@ ___TEMPLATE_PARAMETERS___
   {
     "enablingConditions": [
       {
-        "paramName": "eventType",
+        "paramName": "method",
         "type": "EQUALS",
         "paramValue": "init"
       }
@@ -196,23 +196,23 @@ ___TEMPLATE_PARAMETERS___
       {
         "displayName": "App ID",
         "help": "The identifier of your Algolia application.",
-        "simpleValueType": true,
         "name": "appId",
-        "type": "TEXT"
+        "type": "TEXT",
+        "simpleValueType": true
       },
       {
         "displayName": "API Key",
         "help": "The search API key of your Algolia application.",
-        "simpleValueType": true,
         "name": "apiKey",
-        "type": "TEXT"
+        "type": "TEXT",
+        "simpleValueType": true
       }
     ]
   },
   {
     "enablingConditions": [
       {
-        "paramName": "eventType",
+        "paramName": "method",
         "type": "EQUALS",
         "paramValue": "init"
       }
@@ -226,9 +226,9 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "Opt Out User",
         "name": "userHasOptedOut",
         "help": "Whether to exclude users from analytics.",
+        "type": "SELECT",
         "macrosInSelect": true,
         "simpleValueType": true,
-        "type": "SELECT",
         "selectItems": [
           {
             "displayValue": "False",
@@ -251,8 +251,8 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "Cookie Duration",
         "name": "cookieDuration",
         "help": "The cookie duration in milliseconds (default to `15552000000`, 6 months).",
-        "simpleValueType": true,
         "type": "TEXT",
+        "simpleValueType": true,
         "valueValidators": [
           {
             "type": "POSITIVE_NUMBER"
@@ -263,23 +263,23 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "User Token",
         "name": "initialUserToken",
         "help": "Set a persistent user identifier applied to subsequent events.",
-        "simpleValueType": true,
-        "type": "TEXT"
+        "type": "TEXT",
+        "simpleValueType": true
       },
       {
         "displayName": "Search Insights Source URL",
         "name": "searchInsightsSource",
         "defaultValue": "https://cdn.jsdelivr.net/npm/search-insights@1.2.2",
-        "help": "The endpoint of the Search Insights library.",
-        "simpleValueType": true,
-        "type": "TEXT"
+        "help": "The source URL of the Search Insights library.",
+        "type": "TEXT",
+        "simpleValueType": true
       }
     ]
   },
   {
     "enablingConditions": [
       {
-        "paramName": "eventType",
+        "paramName": "method",
         "type": "NOT_EQUALS",
         "paramValue": "init"
       }
@@ -330,27 +330,27 @@ ___TEMPLATE_PARAMETERS___
         ],
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedObjectIDs"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedObjectIDsAfterSearch"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedObjectIDs"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedObjectIDsAfterSearch"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "viewedObjectIDs"
           }
@@ -370,12 +370,12 @@ ___TEMPLATE_PARAMETERS___
         ],
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedObjectIDsAfterSearch"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedObjectIDsAfterSearch"
           }
@@ -389,7 +389,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "TEXT",
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedObjectIDsAfterSearch"
           }
@@ -403,17 +403,17 @@ ___TEMPLATE_PARAMETERS___
         "type": "TEXT",
         "enablingConditions": [
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "clickedFilters"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "convertedFilters"
           },
           {
-            "paramName": "eventType",
+            "paramName": "method",
             "type": "EQUALS",
             "paramValue": "viewedFilters"
           }
@@ -640,7 +640,7 @@ function logger(message, event) {
   log('[GTM-DEBUG] Search Insights > ' + message, event || '');
 }
 
-switch (data.eventType) {
+switch (data.method) {
   case 'init': {
     if (isInitialized()) {
       logger('The "init" event has already been called.');
@@ -677,7 +677,7 @@ switch (data.eventType) {
       cookieDuration: data.cookieDuration,
     };
 
-    logger(data.eventType, initOptions);
+    logger(data.method, initOptions);
 
     aa('init', initOptions);
 
@@ -701,9 +701,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, viewedObjectIDsOptions);
+    aa(data.method, viewedObjectIDsOptions);
 
-    logger(data.eventType, viewedObjectIDsOptions);
+    logger(data.method, viewedObjectIDsOptions);
 
     break;
   }
@@ -722,9 +722,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, clickedObjectIDsAfterSearchOptions);
+    aa(data.method, clickedObjectIDsAfterSearchOptions);
 
-    logger(data.eventType, clickedObjectIDsAfterSearchOptions);
+    logger(data.method, clickedObjectIDsAfterSearchOptions);
 
     break;
   }
@@ -742,9 +742,9 @@ switch (data.eventType) {
       objectIDs: formatValueToList(data.objectIDs),
     };
 
-    aa(data.eventType, clickedObjectIDsOptions);
+    aa(data.method, clickedObjectIDsOptions);
 
-    logger(data.eventType, clickedObjectIDsOptions);
+    logger(data.method, clickedObjectIDsOptions);
 
     break;
   }
@@ -762,9 +762,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, clickedFiltersOptions);
+    aa(data.method, clickedFiltersOptions);
 
-    logger(data.eventType, clickedFiltersOptions);
+    logger(data.method, clickedFiltersOptions);
 
     break;
   }
@@ -782,9 +782,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, convertedObjectIDsAfterSearchOptions);
+    aa(data.method, convertedObjectIDsAfterSearchOptions);
 
-    logger(data.eventType, convertedObjectIDsAfterSearchOptions);
+    logger(data.method, convertedObjectIDsAfterSearchOptions);
 
     break;
   }
@@ -802,9 +802,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, convertedObjectIDsOptions);
+    aa(data.method, convertedObjectIDsOptions);
 
-    logger(data.eventType, convertedObjectIDsOptions);
+    logger(data.method, convertedObjectIDsOptions);
 
     break;
   }
@@ -822,9 +822,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, convertedFiltersOptions);
+    aa(data.method, convertedFiltersOptions);
 
-    logger(data.eventType, convertedFiltersOptions);
+    logger(data.method, convertedFiltersOptions);
 
     break;
   }
@@ -842,9 +842,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, viewedFiltersOptions);
+    aa(data.method, viewedFiltersOptions);
 
-    logger(data.eventType, viewedFiltersOptions);
+    logger(data.method, viewedFiltersOptions);
 
     break;
   }

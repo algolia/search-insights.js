@@ -23,7 +23,7 @@ function logger(message, event) {
   log('[GTM-DEBUG] Search Insights > ' + message, event || '');
 }
 
-switch (data.eventType) {
+switch (data.method) {
   case 'init': {
     if (isInitialized()) {
       logger('The "init" event has already been called.');
@@ -60,7 +60,7 @@ switch (data.eventType) {
       cookieDuration: data.cookieDuration,
     };
 
-    logger(data.eventType, initOptions);
+    logger(data.method, initOptions);
 
     aa('init', initOptions);
 
@@ -84,9 +84,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, viewedObjectIDsOptions);
+    aa(data.method, viewedObjectIDsOptions);
 
-    logger(data.eventType, viewedObjectIDsOptions);
+    logger(data.method, viewedObjectIDsOptions);
 
     break;
   }
@@ -105,9 +105,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, clickedObjectIDsAfterSearchOptions);
+    aa(data.method, clickedObjectIDsAfterSearchOptions);
 
-    logger(data.eventType, clickedObjectIDsAfterSearchOptions);
+    logger(data.method, clickedObjectIDsAfterSearchOptions);
 
     break;
   }
@@ -125,9 +125,9 @@ switch (data.eventType) {
       objectIDs: formatValueToList(data.objectIDs),
     };
 
-    aa(data.eventType, clickedObjectIDsOptions);
+    aa(data.method, clickedObjectIDsOptions);
 
-    logger(data.eventType, clickedObjectIDsOptions);
+    logger(data.method, clickedObjectIDsOptions);
 
     break;
   }
@@ -145,9 +145,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, clickedFiltersOptions);
+    aa(data.method, clickedFiltersOptions);
 
-    logger(data.eventType, clickedFiltersOptions);
+    logger(data.method, clickedFiltersOptions);
 
     break;
   }
@@ -165,9 +165,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, convertedObjectIDsAfterSearchOptions);
+    aa(data.method, convertedObjectIDsAfterSearchOptions);
 
-    logger(data.eventType, convertedObjectIDsAfterSearchOptions);
+    logger(data.method, convertedObjectIDsAfterSearchOptions);
 
     break;
   }
@@ -185,9 +185,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, convertedObjectIDsOptions);
+    aa(data.method, convertedObjectIDsOptions);
 
-    logger(data.eventType, convertedObjectIDsOptions);
+    logger(data.method, convertedObjectIDsOptions);
 
     break;
   }
@@ -205,9 +205,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, convertedFiltersOptions);
+    aa(data.method, convertedFiltersOptions);
 
-    logger(data.eventType, convertedFiltersOptions);
+    logger(data.method, convertedFiltersOptions);
 
     break;
   }
@@ -225,9 +225,9 @@ switch (data.eventType) {
       userToken: data.userToken,
     };
 
-    aa(data.eventType, viewedFiltersOptions);
+    aa(data.method, viewedFiltersOptions);
 
-    logger(data.eventType, viewedFiltersOptions);
+    logger(data.method, viewedFiltersOptions);
 
     break;
   }
