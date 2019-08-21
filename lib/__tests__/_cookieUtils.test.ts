@@ -52,7 +52,7 @@ describe("cookieUtils", () => {
         expect(() =>
           analyticsInstance.setUserToken(analyticsInstance.ANONYMOUS_USER_TOKEN)
         ).toThrowErrorMatchingInlineSnapshot(
-          `"Tracking of anonymous users is possible on environment that support cookies."`
+          `"Tracking of anonymous users is only possible on environments which support cookies."`
         );
         mockSupportsCookies.mockRestore();
       });
