@@ -255,9 +255,15 @@
       {
         "displayName": "User Token",
         "name": "initialUserToken",
-        "help": "Set a persistent user identifier applied to subsequent events.",
+        "help": "Set an initial user identifier applied to subsequent events.",
         "type": "TEXT",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "valueValidators": [
+          {
+            "args": ["[a-zA-Z0-9_-]{1,64}"],
+            "type": "REGEX"
+          }
+        ]
       },
       {
         "displayName": "Search Insights Source URL",
@@ -286,8 +292,14 @@
         "displayName": "User Token",
         "name": "userToken",
         "help": "The identifier of the user.",
+        "type": "TEXT",
         "simpleValueType": true,
-        "type": "TEXT"
+        "valueValidators": [
+          {
+            "args": ["[a-zA-Z0-9_-]{1,64}"],
+            "type": "REGEX"
+          }
+        ]
       },
       {
         "help": "The name of the event.",
