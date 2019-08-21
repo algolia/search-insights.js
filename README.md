@@ -82,7 +82,7 @@ aa('clickedObjectIDsAfterSearch', {
 | `index`     | `string`   | The name of the index related to the event                                                          |
 | `eventName` | `string`   | The name of the event                                                                               |
 | `objectIDs` | `string[]` | The list of IDs of the result that was clicked                                                      |
-| `positions` | `string[]` | The list of the absolute positions of the HTML element that was clicked (1-based and _not_ 0-based) |
+| `positions` | `number[]` | The list of the absolute positions of the HTML element that was clicked (1-based and _not_ 0-based) |
 | `queryID`   | `string`   | The `queryID` of the search sent from Algolia                                                       |
 
 #### Report a conversion event
