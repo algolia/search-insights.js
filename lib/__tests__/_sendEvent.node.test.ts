@@ -4,10 +4,17 @@
 import AlgoliaAnalytics from "../insights";
 import { getRequesterForNode } from "../utils/getRequesterForNode";
 import { getFunctionalInterface } from "../_getFunctionalInterface";
+import { setUserToken } from "../_cookieUtils";
 
 const credentials = {
   apiKey: "testKey",
   appId: "testId"
+};
+
+const defaultPayload = {
+  eventName: "my-event",
+  index: "my-index",
+  objectIDs: ["1"]
 };
 
 describe("_sendEvent in node env", () => {
@@ -21,9 +28,7 @@ describe("_sendEvent in node env", () => {
   it("throws when user token is not set", () => {
     expect(() => {
       aa("sendEvent", "click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
+        ...defaultPayload
       });
     }).toThrowError(
       "Before calling any methods on the analytics, you first need to call 'setUserToken' function or include 'userToken' in the event payload."
@@ -34,9 +39,7 @@ describe("_sendEvent in node env", () => {
     aa("setUserToken", "aaa");
     expect(() => {
       aa("sendEvent", "click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
+        ...defaultPayload
       });
     }).not.toThrowError();
   });
@@ -45,10 +48,33 @@ describe("_sendEvent in node env", () => {
     expect(() => {
       aa("sendEvent", "click", {
         userToken: "aaa",
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
+        ...defaultPayload
       });
     }).not.toThrowError();
+  });
+
+  it("throws when user token in payload is not a string", () => {
+    expect(() => {
+      aa("sendEvent", "click", {
+        userToken: 3,
+        ...defaultPayload
+      });
+    }).toThrowError("expected optional parameter `userToken` to be a string");
+  });
+
+  it("throws when user token is an empty string", () => {
+    expect(() => {
+      aa("setUserToken", "");
+      aa("sendEvent", "click", {
+        ...defaultPayload
+      });
+    }).toThrowError("`userToken` cannot be an empty string.");
+
+    expect(() => {
+      aa("sendEvent", "click", {
+        userToken: "",
+        ...defaultPayload
+      });
+    }).toThrowError("`userToken` cannot be an empty string.");
   });
 });

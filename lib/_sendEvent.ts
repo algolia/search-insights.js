@@ -36,6 +36,9 @@ export function makeSendEvent(requestFn: RequestFnType) {
         "Before calling any methods on the analytics, you first need to call 'setUserToken' function or include 'userToken' in the event payload."
       );
     }
+    if (userToken === "") {
+      throw new Error("`userToken` cannot be an empty string.");
+    }
 
     // mandatory params
     if (!isString(eventData.index)) {
