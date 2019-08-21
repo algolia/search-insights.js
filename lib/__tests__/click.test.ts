@@ -1,4 +1,4 @@
-import { getInstance } from "../_instance";
+import AlgoliaAnalytics from "../insights";
 
 const credentials = {
   apiKey: "test",
@@ -7,7 +7,7 @@ const credentials = {
 
 let AlgoliaInsights;
 beforeEach(() => {
-  AlgoliaInsights = getInstance();
+  AlgoliaInsights = new AlgoliaAnalytics({ requestFn: () => {} });
 });
 
 describe("clickedObjectIDsAfterSearch", () => {

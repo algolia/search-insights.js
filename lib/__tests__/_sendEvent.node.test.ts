@@ -1,7 +1,9 @@
 /**
  * @jest-environment node
  */
-import { getInstance } from "../_instance";
+import AlgoliaAnalytics from "../insights";
+import { getRequesterForNode } from "../utils/getRequesterForNode";
+import { getFunctionalInterface } from "../_getFunctionalInterface";
 
 const credentials = {
   apiKey: "testKey",
@@ -9,34 +11,44 @@ const credentials = {
 };
 
 describe("_sendEvent in node env", () => {
-  let AlgoliaInsights;
+  let aa;
   beforeEach(() => {
-    AlgoliaInsights = getInstance();
-    AlgoliaInsights.init(credentials);
+    const instance = new AlgoliaAnalytics({ requestFn: getRequesterForNode() });
+    aa = getFunctionalInterface(instance);
+    aa("init", credentials);
   });
 
   it("throws when user token is not set", () => {
     expect(() => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      aa("sendEvent", "click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
       });
     }).toThrowError(
-      "Before calling any methods on the analytics, you first need to call 'setUserToken' function."
+      "Before calling any methods on the analytics, you first need to call 'setUserToken' function or include 'userToken' in the event payload."
     );
   });
 
   it("does not throw when user token is set", () => {
-    (AlgoliaInsights as any).setUserToken("aaa");
+    aa("setUserToken", "aaa");
     expect(() => {
-      (AlgoliaInsights as any).sendEvent("click", {
+      aa("sendEvent", "click", {
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
       });
-    }).not.toThrowError(
-      "Before calling any methods on the analytics, you first need to call 'setUserToken' function."
-    );
+    }).not.toThrowError();
+  });
+
+  it("does not throw when user token is set inside payload", () => {
+    expect(() => {
+      aa("sendEvent", "click", {
+        userToken: "aaa",
+        eventName: "my-event",
+        index: "my-index",
+        objectIDs: ["1"]
+      });
+    }).not.toThrowError();
   });
 });

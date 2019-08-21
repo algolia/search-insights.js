@@ -1,3 +1,12 @@
-import { getInstanceForBrowser } from "./_instance";
+import AlgoliaAnalytics from "./insights";
+import { getRequesterForBrowser } from "./utils/getRequesterForBrowser";
+import { processQueue } from "./_processQueue";
 
-export default getInstanceForBrowser();
+const requestFn = getRequesterForBrowser();
+const instance = new AlgoliaAnalytics({ requestFn });
+if (typeof window !== "undefined") {
+  // Process queue upon script execution
+  processQueue.call(instance, window);
+}
+
+export default instance;

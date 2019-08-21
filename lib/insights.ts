@@ -4,11 +4,13 @@ import objectKeysPolyfill from "./polyfills/objectKeys";
 objectKeysPolyfill();
 objectAssignPolyfill();
 
-import { sendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
+import { makeSendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
 
 import { InitParams, init } from "./init";
 import { initSearch, InitSearchParams } from "./_initSearch";
 import { addAlgoliaAgent } from "./_algoliaAgent";
+
+import { RequestFnType } from "./utils/request";
 
 import {
   InsightsSearchClickEvent,
@@ -55,7 +57,9 @@ declare global {
   }
 }
 
-type AlgoliaAnalyticsOptions = {};
+type AlgoliaAnalyticsOptions = {
+  requestFn: RequestFnType;
+};
 
 /**
  *  AlgoliaAnalytics class
@@ -112,9 +116,9 @@ class AlgoliaAnalytics {
   public viewedObjectIDs: (params?: InsightsSearchViewObjectIDsEvent) => void;
   public viewedFilters: (params?: InsightsSearchViewFiltersEvent) => void;
 
-  constructor({  }: AlgoliaAnalyticsOptions = {}) {
+  constructor({ requestFn }: AlgoliaAnalyticsOptions) {
     // Bind private methods to `this` class
-    this.sendEvent = sendEvent.bind(this);
+    this.sendEvent = makeSendEvent(requestFn).bind(this);
 
     // Bind public methods to `this` class
     this.init = init.bind(this);
