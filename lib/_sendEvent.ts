@@ -30,7 +30,8 @@ export function makeSendEvent(requestFn: RequestFnType) {
         "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
       );
     }
-    if (!eventData.userToken && !this._userToken) {
+    const userToken = eventData.userToken || this._userToken;
+    if (userToken === undefined) {
       throw new Error(
         "Before calling any methods on the analytics, you first need to call 'setUserToken' function or include 'userToken' in the event payload."
       );
@@ -51,7 +52,7 @@ export function makeSendEvent(requestFn: RequestFnType) {
     const event: InsightsEvent = {
       eventType,
       eventName: eventData.eventName,
-      userToken: eventData.userToken || this._userToken,
+      userToken,
       index: eventData.index
     };
 
