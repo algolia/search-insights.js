@@ -30,8 +30,6 @@ switch (data.method) {
       break;
     }
 
-    setInWindow(INSIGHTS_OBJECT_NAME, 'aa');
-
     if (queryPermission('inject_script', data.searchInsightsSource)) {
       injectScript(
         data.searchInsightsSource,
@@ -50,7 +48,11 @@ switch (data.method) {
       break;
     }
 
-    aa('addAlgoliaAgent', 'insights-gtm (' + TEMPLATE_VERSION + ')');
+    setInWindow(INSIGHTS_OBJECT_NAME, 'aa');
+
+    const userAgent = 'insights-gtm (' + TEMPLATE_VERSION + ')';
+    logger('addAlgoliaAgent', userAgent);
+    aa('addAlgoliaAgent', userAgent);
 
     const initOptions = {
       appId: data.appId,
@@ -61,10 +63,10 @@ switch (data.method) {
     };
 
     logger(data.method, initOptions);
-
-    aa('init', initOptions);
+    aa(data.method, initOptions);
 
     if (data.initialUserToken) {
+      logger('setUserToken', data.initialUserToken);
       aa('setUserToken', data.initialUserToken);
     }
 
@@ -84,9 +86,8 @@ switch (data.method) {
       userToken: data.userToken,
     };
 
-    aa(data.method, viewedObjectIDsOptions);
-
     logger(data.method, viewedObjectIDsOptions);
+    aa(data.method, viewedObjectIDsOptions);
 
     break;
   }
@@ -105,9 +106,8 @@ switch (data.method) {
       userToken: data.userToken,
     };
 
-    aa(data.method, clickedObjectIDsAfterSearchOptions);
-
     logger(data.method, clickedObjectIDsAfterSearchOptions);
+    aa(data.method, clickedObjectIDsAfterSearchOptions);
 
     break;
   }
@@ -123,11 +123,11 @@ switch (data.method) {
       eventName: data.eventName,
       queryID: data.queryID,
       objectIDs: formatValueToList(data.objectIDs),
+      userToken: data.userToken,
     };
 
-    aa(data.method, clickedObjectIDsOptions);
-
     logger(data.method, clickedObjectIDsOptions);
+    aa(data.method, clickedObjectIDsOptions);
 
     break;
   }
@@ -145,9 +145,8 @@ switch (data.method) {
       userToken: data.userToken,
     };
 
-    aa(data.method, clickedFiltersOptions);
-
     logger(data.method, clickedFiltersOptions);
+    aa(data.method, clickedFiltersOptions);
 
     break;
   }
@@ -165,9 +164,8 @@ switch (data.method) {
       userToken: data.userToken,
     };
 
-    aa(data.method, convertedObjectIDsAfterSearchOptions);
-
     logger(data.method, convertedObjectIDsAfterSearchOptions);
+    aa(data.method, convertedObjectIDsAfterSearchOptions);
 
     break;
   }
@@ -185,9 +183,8 @@ switch (data.method) {
       userToken: data.userToken,
     };
 
-    aa(data.method, convertedObjectIDsOptions);
-
     logger(data.method, convertedObjectIDsOptions);
+    aa(data.method, convertedObjectIDsOptions);
 
     break;
   }
@@ -205,9 +202,8 @@ switch (data.method) {
       userToken: data.userToken,
     };
 
-    aa(data.method, convertedFiltersOptions);
-
     logger(data.method, convertedFiltersOptions);
+    aa(data.method, convertedFiltersOptions);
 
     break;
   }
@@ -225,14 +221,13 @@ switch (data.method) {
       userToken: data.userToken,
     };
 
-    aa(data.method, viewedFiltersOptions);
-
     logger(data.method, viewedFiltersOptions);
+    aa(data.method, viewedFiltersOptions);
 
     break;
   }
 
   default: {
-    logger('Unknown event');
+    logger('You need to set the method for this event.');
   }
 }
