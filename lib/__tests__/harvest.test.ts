@@ -1,5 +1,5 @@
 import * as testServer from "../../server/server.js";
-import AlgoliaInsights from "./../insights";
+import AlgoliaAnalytics from "../insights";
 const puppeteer = require("puppeteer");
 const url = require("url");
 
@@ -13,10 +13,15 @@ const windowWidth = 1920;
 const windowHeight = 1080;
 
 describe("Library initialisation", () => {
+  let analyticsInstance;
+  beforeEach(() => {
+    analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
+  });
+
   it("Should throw if there is no apiKey and appId", () => {
     expect(() => {
       // @ts-ignore
-      AlgoliaInsights.init();
+      analyticsInstance.init();
     }).toThrowError(
       "Init function should be called with an object argument containing your apiKey and appId"
     );
@@ -25,7 +30,7 @@ describe("Library initialisation", () => {
   it("Should throw if there is only apiKey param", () => {
     expect(() => {
       // @ts-ignore
-      AlgoliaInsights.init({ apiKey: "1234" });
+      analyticsInstance.init({ apiKey: "1234" });
     }).toThrow(
       "appId is missing, please provide it, so we can properly attribute data to your application"
     );
@@ -34,7 +39,7 @@ describe("Library initialisation", () => {
   it("Should throw if there is only applicatioID param", () => {
     expect(() => {
       // @ts-ignore
-      AlgoliaInsights.init({ appId: "1234" });
+      analyticsInstance.init({ appId: "1234" });
     }).toThrow(
       "apiKey is missing, please provide it so we can authenticate the application"
     );
@@ -42,18 +47,22 @@ describe("Library initialisation", () => {
 
   it("Should not throw if all params are set", () => {
     expect(() => {
-      AlgoliaInsights.init({
+      analyticsInstance.init({
         apiKey: "1234",
         appId: "ABCD"
       });
     }).not.toThrow();
 
     // @ts-ignore private prop
-    expect(AlgoliaInsights._hasCredentials).toBe(true);
+    expect(analyticsInstance._hasCredentials).toBe(true);
   });
 
   it("Should create UUID", () => {
-    expect(AlgoliaInsights._userToken).not.toBeUndefined();
+    analyticsInstance.init({
+      apiKey: "1234",
+      appId: "ABCD"
+    });
+    expect(analyticsInstance._userToken).not.toBeUndefined();
   });
 });
 

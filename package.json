@@ -3,7 +3,8 @@
   "description": "Library for detecting front-end Algolia search metrics",
   "version": "1.2.2",
   "jsdelivr": "dist/search-insights.min.js",
-  "main": "dist/search-insights.min.js",
+  "main": "dist/search-insights.cjs.min.js",
+  "browser": "dist/search-insights.min.js",
   "engines": {
     "node": ">=8.16.0"
   },
@@ -22,6 +23,7 @@
     "lint:fix": "yarn lint -- --fix",
     "prettier": "prettier lib/**/*.ts examples/**/* --write",
     "test": "NODE_ENV=development yarn build:examples && yarn build && jest",
+    "test:watch": "yarn test --watch",
     "test:size": "bundlesize",
     "type-check": "tsc",
     "type-check:watch": "yarn type-check --watch",
