@@ -1,73 +1,84 @@
-import AlgoliaInsights from "../insights";
+import AlgoliaAnalytics from "../insights";
 
 const credentials = {
   apiKey: "test",
   appId: "test"
 };
 describe("viewedObjectIDs", () => {
+  let analyticsInstance;
+  beforeEach(() => {
+    analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
+  });
+
   it("should throw if no params are sent", () => {
     expect(() => {
-      AlgoliaInsights.init(credentials);
-      (AlgoliaInsights as any).viewedObjectIDs();
+      analyticsInstance.init(credentials);
+      (analyticsInstance as any).viewedObjectIDs();
     }).toThrowError(
       "No params were sent to viewedObjectIDs function, please provide `objectIDs` to be reported"
     );
   });
 
   it("should throw if no objectIDs has been passed", () => {
-    (AlgoliaInsights as any).sendEvent = jest.fn();
-    AlgoliaInsights.init(credentials);
+    (analyticsInstance as any).sendEvent = jest.fn();
+    analyticsInstance.init(credentials);
 
     expect(() => {
-      (AlgoliaInsights as any).viewedObjectIDs({ queryID: "test" });
-      expect((AlgoliaInsights as any).sendEvent).not.toHaveBeenCalled();
+      (analyticsInstance as any).viewedObjectIDs({ queryID: "test" });
+      expect((analyticsInstance as any).sendEvent).not.toHaveBeenCalled();
     }).toThrowError(
       "required objectIDs parameter was not sent, view event can not be properly sent without"
     );
   });
 
   it("should send allow passing of queryID", () => {
-    (AlgoliaInsights as any).sendEvent = jest.fn();
-    AlgoliaInsights.init(credentials);
-    AlgoliaInsights.viewedObjectIDs({
+    (analyticsInstance as any).sendEvent = jest.fn();
+    analyticsInstance.init(credentials);
+    analyticsInstance.viewedObjectIDs({
       objectIDs: ["12345"]
     });
-    expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalled();
-    expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalledWith("view", {
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith("view", {
       objectIDs: ["12345"]
     });
   });
 });
+
 describe("viewedFilters", () => {
+  let analyticsInstance;
+  beforeEach(() => {
+    analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
+  });
+
   it("should throw if no params are sent", () => {
     expect(() => {
-      AlgoliaInsights.init(credentials);
-      (AlgoliaInsights as any).viewedFilters();
+      analyticsInstance.init(credentials);
+      (analyticsInstance as any).viewedFilters();
     }).toThrowError(
       "No params were sent to viewedFilters function, please provide `filters` to be reported"
     );
   });
 
   it("should throw if no objectIDs has been passed", () => {
-    (AlgoliaInsights as any).sendEvent = jest.fn();
-    AlgoliaInsights.init(credentials);
+    (analyticsInstance as any).sendEvent = jest.fn();
+    analyticsInstance.init(credentials);
 
     expect(() => {
-      (AlgoliaInsights as any).viewedFilters({});
-      expect((AlgoliaInsights as any).sendEvent).not.toHaveBeenCalled();
+      (analyticsInstance as any).viewedFilters({});
+      expect((analyticsInstance as any).sendEvent).not.toHaveBeenCalled();
     }).toThrowError(
       "required filters parameter was not sent, view event can not be properly sent without"
     );
   });
 
   it("should send allow passing of queryID", () => {
-    (AlgoliaInsights as any).sendEvent = jest.fn();
-    AlgoliaInsights.init(credentials);
-    AlgoliaInsights.viewedFilters({
+    (analyticsInstance as any).sendEvent = jest.fn();
+    analyticsInstance.init(credentials);
+    analyticsInstance.viewedFilters({
       filters: ["brands:apple"]
     });
-    expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalled();
-    expect((AlgoliaInsights as any).sendEvent).toHaveBeenCalledWith("view", {
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith("view", {
       filters: ["brands:apple"]
     });
   });
