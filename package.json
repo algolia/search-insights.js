@@ -26,6 +26,7 @@
     "test:watch": "yarn test --watch",
     "test:size": "bundlesize",
     "toc": "markdown-toc -i --maxdepth=3 --bullets=\"-\" README.md",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "type-check": "tsc",
     "type-check:watch": "yarn type-check --watch",
     "version": "yarn build"
@@ -50,6 +51,7 @@
     "babel-preset-env": "1.7.0",
     "body-parser": "1.19.0",
     "bundlesize": "0.18.0",
+    "conventional-changelog-cli": "2.0.23",
     "cors": "2.8.5",
     "css-loader": "0.28.11",
     "dotenv": "8.1.0",
