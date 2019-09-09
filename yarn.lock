@@ -2409,7 +2409,7 @@ conventional-changelog-atom@^2.0.1:
   dependencies:
     q "^1.5.1"
 
-conventional-changelog-cli@^2.0.23:
+conventional-changelog-cli@2.0.23:
   version "2.0.23"
   resolved "https://registry.npmjs.org/conventional-changelog-cli/-/conventional-changelog-cli-2.0.23.tgz#3f6b2bb3e1e6a6f520f7fa514fe8fba2d92faab0"
   integrity sha512-a/jDZHEUpSHQMAqeDrmrFhz9CKHBKhBGpJyc38BCfNjFA1RKchpq/Qqbo1BZwRLWrW/PX7IGsUicTyhniqUH9g==
