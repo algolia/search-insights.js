@@ -23,6 +23,10 @@ Search Insights lets you report click, conversion and view metrics using the [Al
 
 ## Getting started
 
+
+> Are you using Google Tag Manager in your app? We provide a [custom template](gtm) to ease the integration.
+
+
 ### Browser
 
 #### 1. Load the library
