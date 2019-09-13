@@ -1,5 +1,5 @@
 import { createUUID } from "./utils/uuid";
-import { isFunction } from "./utils";
+import { isFunction, supportsCookies } from "./utils";
 
 const COOKIE_KEY = "_ALGOLIA";
 
@@ -34,6 +34,11 @@ export const ANONYMOUS_USER_TOKEN = "ANONYMOUS_USER_TOKEN";
 
 export function setUserToken(userToken: string | number): void {
   if (userToken === ANONYMOUS_USER_TOKEN) {
+    if (!supportsCookies()) {
+      throw new Error(
+        "Tracking of anonymous users is only possible on environments which support cookies."
+      );
+    }
     const foundToken = getCookie(COOKIE_KEY);
     if (
       !foundToken ||

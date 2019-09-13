@@ -4,12 +4,13 @@ import objectKeysPolyfill from "./polyfills/objectKeys";
 objectKeysPolyfill();
 objectAssignPolyfill();
 
-import { processQueue } from "./_processQueue";
-import { sendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
+import { makeSendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
 
 import { InitParams, init } from "./init";
 import { initSearch, InitSearchParams } from "./_initSearch";
 import { addAlgoliaAgent } from "./_algoliaAgent";
+
+import { RequestFnType } from "./utils/request";
 
 import {
   InsightsSearchClickEvent,
@@ -74,8 +75,6 @@ class AlgoliaAnalytics {
 
   version: string = version;
 
-  private processQueue: (globalObject: any) => void;
-
   protected sendEvent: (
     eventType: InsightsEventType,
     data: InsightsEvent
@@ -113,10 +112,9 @@ class AlgoliaAnalytics {
   public viewedObjectIDs: (params?: InsightsSearchViewObjectIDsEvent) => void;
   public viewedFilters: (params?: InsightsSearchViewFiltersEvent) => void;
 
-  constructor(options?: any) {
+  constructor({ requestFn }: { requestFn: RequestFnType }) {
     // Bind private methods to `this` class
-    this.processQueue = processQueue.bind(this);
-    this.sendEvent = sendEvent.bind(this);
+    this.sendEvent = makeSendEvent(requestFn).bind(this);
 
     // Bind public methods to `this` class
     this.init = init.bind(this);
@@ -140,13 +138,7 @@ class AlgoliaAnalytics {
 
     this.viewedObjectIDs = viewedObjectIDs.bind(this);
     this.viewedFilters = viewedFilters.bind(this);
-
-    this.setUserToken(this.ANONYMOUS_USER_TOKEN);
-    // Process queue upon script execution
-    this.processQueue(window);
   }
 }
 
-const AlgoliaInsights = new AlgoliaAnalytics();
-
-export default AlgoliaInsights;
+export default AlgoliaAnalytics;

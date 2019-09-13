@@ -1,10 +1,4 @@
-import {
-  isFunction,
-  isNumber,
-  isString,
-  isUndefined,
-  createUUID
-} from "./index";
+import { isFunction, isNumber, isString, isUndefined } from "../index";
 
 describe("isUndefined", () => {
   test.each`

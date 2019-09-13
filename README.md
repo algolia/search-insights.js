@@ -5,11 +5,31 @@
 
 Search Insights lets you report click, conversion and view metrics using the [Algolia Insights API](https://www.algolia.com/doc/rest-api/insights/#overview).
 
+## Table of Contents
+
+<!-- toc -->
+
+- [Getting started](#getting-started)
+  - [Browser](#browser)
+  - [Node.js](#nodejs)
+- [Use cases](#use-cases)
+  - [Search (Click Analytics and A/B testing)](#search-click-analytics-and-ab-testing)
+  - [Personalization](#personalization)
+- [Examples](#examples)
+- [Contributing](#contributing)
+- [License](#license)
+
+<!-- tocstop -->
+
 ## Getting started
+
 
 > Are you using Google Tag Manager in your app? We provide a [custom template](gtm) to ease the integration.
 
-### 1. <a name="loading"></a>Load the library
+
+### Browser
+
+#### 1. Load the library
 
 The Search Insights library can be either loaded via [jsDelivr CDN](https://www.jsdelivr.com/) or directly bundled with your application.
 We recommend loading the library by adding the snippet below to all pages where you wish to track search analytics.
@@ -22,7 +42,7 @@ We recommend loading the library by adding the snippet below to all pages where 
 ```
 <!-- prettier-ignore-end -->
 
-### 2. Initialize the library
+#### 2. Initialize the library
 
 ```js
 aa('init', {
@@ -41,6 +61,42 @@ aa('setUserToken', 'USER_ID');
 | `userHasOptedOut` | `boolean`      | `false`                  | Whether to exclude users from analytics        |
 | `region`          | `'de' \| 'us'` | Automatic                | The DNS server to target                       |
 | `cookieDuration`  | `number`       | `15552000000` (6 months) | The cookie duration in milliseconds            |
+
+### Node.js
+
+_(Node.js `>= 8.16.0` required)_
+
+#### 1. Install the library
+
+Insights library can be used on the backend as a Node.js module.
+
+```bash
+npm install search-insights
+# or
+yarn add search-insights
+```
+
+#### 2. Initialize the library
+
+```js
+const aa = require('search-insights');
+
+aa('init', {
+  appId: 'APPLICATION_ID',
+  apiKey: 'SEARCH_API_KEY'
+});
+```
+
+#### Add `userToken`
+
+On the Node.js environment, unlike the browser environment, `userToken` must be specified when sending any event.
+
+```js
+aa('clickedObjectIDs', {
+  userToken: 'USER_ID',
+  // ...
+});
+```
 
 ## Use cases
 
@@ -84,7 +140,7 @@ aa('clickedObjectIDsAfterSearch', {
 | `index`     | `string`   | The name of the index related to the event                                                          |
 | `eventName` | `string`   | The name of the event                                                                               |
 | `objectIDs` | `string[]` | The list of IDs of the result that was clicked                                                      |
-| `positions` | `string[]` | The list of the absolute positions of the HTML element that was clicked (1-based and _not_ 0-based) |
+| `positions` | `number[]` | The list of the absolute positions of the HTML element that was clicked (1-based and _not_ 0-based) |
 | `queryID`   | `string`   | The `queryID` of the search sent from Algolia                                                       |
 
 #### Report a conversion event
