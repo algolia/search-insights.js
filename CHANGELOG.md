@@ -1,4 +1,4 @@
-# [1.3.0-beta.0](https://github.com/algolia/search-insights.js/compare/v1.2.0...v1.3.0-beta.0) (2019-09-09)
+# [1.3.0](https://github.com/algolia/search-insights.js/compare/v1.2.0...v1.3.0) (2019-09-18)
 
 
 ### Bug Fixes
