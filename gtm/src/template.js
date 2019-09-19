@@ -15,7 +15,7 @@ function isInitialized() {
 }
 
 function formatValueToList(value) {
-  // `20` is the limit that the engine processes.`
+  // `20` is the limit that the engine processes.
   return value && value.split(',').slice(0, 20);
 }
 

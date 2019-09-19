@@ -64,9 +64,9 @@ instantsearch.widgets.hits({
   templates: {
     item: `
 <article
- data-insights-objectid="{{objectID}}"
+ data-insights-object-id="{{objectID}}"
  data-insights-position="{{__position}}"
- data-insights-query="{{__queryID}}"
+ data-insights-query-id="{{__queryID}}"
 >
   <!-- ... -->
 </article>
