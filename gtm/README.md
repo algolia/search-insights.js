@@ -32,7 +32,7 @@ For events to be sent with the correct information (`userToken`, `objectIDs`, `q
    - "Custom JavaScript" if coming from [data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) (e.g. `objectIDs`, `positions`, `queryId` etc.)
    - "Data Layer Variable" if coming from a [Data Layer](https://developers.google.com/tag-manager/devguide#datalayer) (e.g. `userToken`)
 
-[Learn more about GTM variables →](https://www.simoahava.com/analytics/variable-guide-google-tag-manager/)
+[See how to create Custom JavaScript variables →](#how-to-get-the-object-ids-positions-and-query-id)
 
 ### 3. Create tags
 
@@ -81,6 +81,42 @@ instantsearch.widgets.hits({
 > - React InstantSearch 5.5.0
 > - Vue InstantSearch 2.1.0
 > - Angular InstantSearch 3.0.0
+
+Once these values are available in the hits template, you can retrieve them in GTM.
+
+1. Create a Custom JavaScript variable to find the element and name it `Find closest`
+
+```js
+function() {
+  return function(target, selector) {
+    while (!target.matches(selector) && !target.matches('body')) {
+      target = target.parentElement;
+    }
+
+    return target.matches(selector) ? target : undefined;
+  }
+}
+```
+
+This creates a variable called `{{Find closest}}` that contains the nearest element matching the selector.
+
+2. Create another Custom JavaScript variable and name it `ObjectIDClicked`
+
+```js
+function() {
+  var element = {{Find closest}}({{Click Element}}, '[data-insights-object-id]');
+
+  return typeof element !== 'undefined'
+    ? element.getAttribute('data-insights-object-id')
+    : undefined;
+}
+```
+
+This creates a variable called `{{ObjectIDClicked}}` that gives you the object ID of the hit clicked to reference it in the Insights method.
+
+> We use [`getAttribute`](https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute) to add compatibility for IE which doesn't support [JavaScript access to `dataset`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/dataset).
+
+[Learn more about GTM variables →](https://www.simoahava.com/analytics/variable-guide-google-tag-manager/)
 
 ### How to change the Search Insights source URL?
 
