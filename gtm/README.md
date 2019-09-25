@@ -116,6 +116,8 @@ function() {
 
 This creates a variable called `{{ObjectIDClicked}}` that gives you the object ID of the hit clicked to reference it in the Insights method.
 
+You can repeat this process for other variables: `positions`, `queryId`, etc.
+
 > We use [`getAttribute`](https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute) to add compatibility for IE which doesn't support [JavaScript access to `dataset`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/dataset).
 
 [Learn more about GTM variables →](https://www.simoahava.com/analytics/variable-guide-google-tag-manager/)
