@@ -54,6 +54,8 @@ window.dataLayer.push({
 });
 ```
 
+In the GTM interface, create a "Data Layer Variable" called `userToken` to get the value.
+
 ### How to get the object IDs, positions and query ID?
 
 The `objectIDs`, `positions` and `queryID` can be forwarded to GTM via [data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes).
