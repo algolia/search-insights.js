@@ -56,19 +56,22 @@ window.dataLayer.push({
 
 In the GTM interface, create a "Data Layer Variable" called `userToken` to get the value.
 
-### How to get the object IDs, positions and query ID?
+### How to get the object IDs, positions, query ID and index?
 
 The `objectIDs`, `positions` and `queryID` can be forwarded to GTM via [data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes).
 
 ```js
+const indexName = 'products';
+
 instantsearch.widgets.hits({
   container: '#hits',
   templates: {
     item: `
 <article
  data-insights-object-id="{{objectID}}"
- data-insights-position="{{__position}}"
+ data-insights-object-position="{{__position}}"
  data-insights-query-id="{{__queryID}}"
+ data-insights-index-name="{{indexName}}"
 >
   <!-- ... -->
 </article>
@@ -86,7 +89,7 @@ instantsearch.widgets.hits({
 
 Once these values are available in the hits template, you can retrieve them in GTM.
 
-1. Create a Custom JavaScript variable to find the element and name it `Find closest`
+First, you can create a variable to target elements based on their selector. Select "Custom JavaScript" variable and name it `Find closest`:
 
 ```js
 function() {
@@ -102,7 +105,9 @@ function() {
 
 This creates a variable called `{{Find closest}}` that contains the nearest element matching the selector.
 
-2. Create another Custom JavaScript variable and name it `ObjectIDClicked`
+#### Getting the object ID
+
+Create a "Custom JavaScript" variable and name it `ObjectID`:
 
 ```js
 function() {
@@ -114,13 +119,59 @@ function() {
 }
 ```
 
-This creates a variable called `{{ObjectIDClicked}}` that gives you the object ID of the hit clicked to reference it in the Insights method.
-
-You can repeat this process for other variables: `positions`, `queryId`, etc.
+This creates a variable called `{{ObjectID}}` that gives you the object ID of the hit clicked to reference it in the Insights method.
 
 > We use [`getAttribute`](https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute) to add compatibility for IE which doesn't support [JavaScript access to `dataset`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/dataset).
 
 [Learn more about GTM variables →](https://www.simoahava.com/analytics/variable-guide-google-tag-manager/)
+
+#### Getting the position
+
+Create a "Custom JavaScript" variable and name it `ObjectPosition`:
+
+```js
+function() {
+  var element = {{Find closest}}({{Click Element}}, '[data-insights-object-position]');
+
+  return typeof element !== 'undefined'
+    ? element.getAttribute('data-insights-object-position')
+    : undefined;
+}
+```
+
+This creates a variable called `{{ObjectPosition}}` that gives you the position of the hit clicked to reference it in the Insights method.
+
+#### Getting the query ID
+
+Create a "Custom JavaScript" variable and name it `QueryID`:
+
+```js
+function() {
+  var element = {{Find closest}}({{Click Element}}, '[data-insights-query-id]');
+
+  return typeof element !== 'undefined'
+    ? element.getAttribute('data-insights-query-id')
+    : undefined;
+}
+```
+
+This creates a variable called `{{QueryID}}` that gives you the query ID related to the hit clicked to reference it in the Insights method.
+
+#### Getting the index name
+
+Create a "Custom JavaScript" variable and name it `IndexName`:
+
+```js
+function() {
+  var element = {{Find closest}}({{Click Element}}, '[data-insights-index-name]');
+
+  return typeof element !== 'undefined'
+    ? element.getAttribute('data-insights-index-name')
+    : undefined;
+}
+```
+
+This creates a variable called `{{IndexName}}` that gives you the index name related to the hit clicked to reference it in the Insights method.
 
 ### How to change the Search Insights source URL?
 
