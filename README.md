@@ -1,305 +1,300 @@
-# Insights
-
-<!-- [START badges] -->
+# Search Insights
 
 [![Build Status](https://travis-ci.org/algolia/search-insights.js.svg?branch=master)](https://travis-ci.org/algolia/search-insights.js)
 [![npm version](https://badge.fury.io/js/search-insights.svg)](https://badge.fury.io/js/search-insights)
 
-<!-- [END badges] -->
+Search Insights lets you report click, conversion and view metrics using the [Algolia Insights API](https://www.algolia.com/doc/rest-api/insights/#overview).
 
-Library for detecting front-end search metrics
+## Table of Contents
 
-## Concept
+<!-- toc -->
 
-Algolia insights client allows developers to report click, conversion and view metrics related using the [Insights REST API](https://www.algolia.com/doc/rest-api/insights/#overview)
+- [Getting started](#getting-started)
+  - [Browser](#browser)
+  - [Node.js](#nodejs)
+- [Use cases](#use-cases)
+  - [Search (Click Analytics and A/B testing)](#search-click-analytics-and-ab-testing)
+  - [Personalization](#personalization)
+- [Examples](#examples)
+- [Contributing](#contributing)
+- [License](#license)
+
+<!-- tocstop -->
 
 ## Getting started
 
-### <a name="loading"></a>Loading and initializing the library
 
-Insights library can be either loaded via jsDelivr CDN or directly bundled with your application.
-We recommend loading the library by adding the snippet below to all pages where you wish to track
-search analytics.
+> Are you using Google Tag Manager in your app? We provide a [custom template](gtm) to ease the integration.
 
+
+### Browser
+
+#### 1. Load the library
+
+The Search Insights library can be either loaded via [jsDelivr CDN](https://www.jsdelivr.com/) or directly bundled with your application.
+We recommend loading the library by adding the snippet below to all pages where you wish to track search analytics.
+
+<!-- prettier-ignore-start -->
 ```html
 <script>
-  !function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e.aa=e.aa||function(){(e.aa.queue=e.aa.queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],i.async=1,i.src="https://cdn.jsdelivr.net/npm/search-insights@1.0.0",c.parentNode.insertBefore(i,c)}(window,document,"script",0,"aa");
-
-  // Initialize library
-  aa("init", {
-    appId: "APPLICATION_ID",
-    apiKey: "SEARCH_API_KEY",
-
-    userHasOptedOut: boolean, // Optional. Default: false
-    region: "de" | "us", // Optional. Default: will pick one automatically
-    cookieDuration: number // Optional. In milliseconds. Default: 15552000000ms (6 months)
-  });
-
-  // optional
-  aa("setUserToken", "id-of-user");
+  !function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e.aa=e.aa||function(){(e.aa.queue=e.aa.queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],i.async=1,i.src="https://cdn.jsdelivr.net/npm/search-insights@1.2.2",c.parentNode.insertBefore(i,c)}(window,document,"script",0,"aa");
 </script>
 ```
+<!-- prettier-ignore-end -->
 
-### Enabling queryID response from Algolia engine
-
-In order for the Algolia engine to return a queryID on each search request, some special query parameters `clickAnalytics=true` and `enablePersonalization=true` should be set.
+#### 2. Initialize the library
 
 ```js
-const search = instantsearch({
-  appId: "APPLICATION_ID",
-  apiKey: "SEARCH_API_KEY",
-  indexName: "INDEX_NAME",
-  searchParameters: {
-    clickAnalytics: true,
-    enablePersonalization: true
-  }
+aa('init', {
+  appId: 'APP_ID',
+  apiKey: 'SEARCH_API_KEY',
+});
+
+// Optional: set the analytics user ID
+aa('setUserToken', 'USER_ID');
+```
+
+| Option            | Type           | Default                  | Description                                    |
+| ----------------- | -------------- | ------------------------ | ---------------------------------------------- |
+| **`appId`**       | `string`       | None (required)          | The identifier of your Algolia application     |
+| **`apiKey`**      | `string`       | None (required)          | The search API key of your Algolia application |
+| `userHasOptedOut` | `boolean`      | `false`                  | Whether to exclude users from analytics        |
+| `region`          | `'de' \| 'us'` | Automatic                | The DNS server to target                       |
+| `cookieDuration`  | `number`       | `15552000000` (6 months) | The cookie duration in milliseconds            |
+
+### Node.js
+
+_(Node.js `>= 8.16.0` required)_
+
+#### 1. Install the library
+
+Insights library can be used on the backend as a Node.js module.
+
+```bash
+npm install search-insights
+# or
+yarn add search-insights
+```
+
+#### 2. Initialize the library
+
+```js
+const aa = require('search-insights');
+
+aa('init', {
+  appId: 'APPLICATION_ID',
+  apiKey: 'SEARCH_API_KEY'
 });
 ```
 
-## In the context of search (Click Analytics & A/B testing)
+#### Add `userToken`
 
-### Initialize
+On the Node.js environment, unlike the browser environment, `userToken` must be specified when sending any event.
 
 ```js
-const search = instantsearch({
-  appId: "APPLICATION_ID",
-  apiKey: "SEARCH_API_KEY",
-  indexName: "INDEX_NAME",
-  searchParameters: {
-    clickAnalytics: true
-  }
+aa('clickedObjectIDs', {
+  userToken: 'USER_ID',
+  // ...
 });
+```
+
+## Use cases
+
+The Search Insights library supports both [Search](https://www.algolia.com/doc/guides/getting-insights-and-analytics/search-analytics/out-of-the-box-analytics/) and [Personalization](https://www.algolia.com/doc/guides/getting-insights-and-analytics/personalization/personalization/) Algolia features.
+
+### Search (Click Analytics and A/B testing)
+
+#### Initialize
+
+To enable click analytics, the search parameter [`clickAnalytics`](https://www.algolia.com/doc/api-reference/api-parameters/clickAnalytics/) must be set to `true`. This tells the Algolia engine to return a `queryID` on each search request.
+
+```js
+const searchClient = algoliasearch('APPLICATION_ID', 'SEARCH_API_KEY');
+const search = instantsearch({
+  indexName: 'INDEX_NAME',
+  searchClient,
+  searchParameters: {
+    clickAnalytics: true,
+  },
+});
+
 function getQueryID() {
   return search.helper.lastResults.queryID;
 }
 ```
 
-### Reporting a click event
+#### Report a click event
 
 ```js
-aa("clickedObjectIDsAfterSearch", {
-  index: "INDEX_NAME",
-  eventName: "Clicked item",
+aa('clickedObjectIDsAfterSearch', {
+  index: 'INDEX_NAME',
+  eventName: 'Click item',
   queryID: getQueryID(),
-  objectIDs: ["object1"],
-  positions: [42]
+  objectIDs: ['object1'],
+  positions: [42],
 });
 ```
 
-- **index**: name of the index searched. \*required
-- **eventName**: name of the event. \*required
-- **objectIDs**: it is the ID of the result that has been clicked. \*required
-- **positions**: absolute position of the clicked element inside the DOM. (The value is 1 based and not 0 based!) \*required
-- **queryID**: queryID of the related search \*required
+| Option      | Type       | Description                                                                                         |
+| ----------- | ---------- | --------------------------------------------------------------------------------------------------- |
+| `index`     | `string`   | The name of the index related to the event                                                          |
+| `eventName` | `string`   | The name of the event                                                                               |
+| `objectIDs` | `string[]` | The list of IDs of the result that was clicked                                                      |
+| `positions` | `number[]` | The list of the absolute positions of the HTML element that was clicked (1-based and _not_ 0-based) |
+| `queryID`   | `string`   | The `queryID` of the search sent from Algolia                                                       |
 
-### Reporting a conversion event
+#### Report a conversion event
 
 ```js
-aa("convertedObjectIDsAfterSearch", {
-  index: "INDEX_NAME",
-  eventName: "Add to basket",
+aa('convertedObjectIDsAfterSearch', {
+  index: 'INDEX_NAME',
+  eventName: 'Add to basket',
   queryID: getQueryID(),
-  objectIDs: ["object1"]
+  objectIDs: ['object1'],
 });
 ```
 
-- **index**: name of the index searched. \*required
-- **eventName**: name of the event. \*required
-- **objectIDs**: it is the ID of the result that has been clicked. \*required
-- **queryID**: queryID of the related search \*required
+| Option      | Type       | Description                                    |
+| ----------- | ---------- | ---------------------------------------------- |
+| `index`     | `string`   | The name of the index related to the event     |
+| `eventName` | `string`   | The name of the event                          |
+| `objectIDs` | `string[]` | The list of IDs of the result that was clicked |
+| `queryID`   | `string`   | The `queryID` of the search sent from Algolia  |
 
-## In the context of Personalization:
+### Personalization
 
-### Initialize
+#### Initialize
+
+To enable personalization, the search parameter [`enablePersonalization`](https://www.algolia.com/doc/api-reference/api-parameters/enablePersonalization/) must be set to `true`.
 
 ```js
-const searchClient = algoliasearch("APPLICATION_ID", "SEARCH_API_KEY");
+const searchClient = algoliasearch('APPLICATION_ID', 'SEARCH_API_KEY');
 const search = instantsearch({
+  indexName: 'INDEX_NAME',
   searchClient,
-  indexName: "INDEX_NAME",
   searchParameters: {
-    enablePersonalization: true
-  }
+    enablePersonalization: true,
+  },
 });
 ```
 
-### Access userToken
+#### Access `userToken`
 
-In cases where the userToken is generated, you will need a way to access the userToken so that you can pass it to the searchClient.
+In cases where the `userToken` is generated, you need a way to access the `userToken` so that you can pass it to the `searchClient`.
 
 ```ts
-aa("getUserToken", null, (err, userToken) => {
-  searchClient.setExtraHeader("X-Algolia-UserToken", userToken);
+const searchClient = algoliasearch('APPLICATION_ID', 'SEARCH_API_KEY');
+
+aa('getUserToken', null, (err, userToken) => {
+  searchClient.setExtraHeader('X-Algolia-UserToken', userToken);
 });
 ```
 
-### Reporting a click event
+#### Report a click event
 
 ```js
-aa("clickedObjectIDs", {
-  index: "INDEX_NAME",
-  eventName: "Add to basket",
-  objectIDs: ["object1"]
+aa('clickedObjectIDs', {
+  index: 'INDEX_NAME',
+  eventName: 'Add to basket',
+  objectIDs: ['object1'],
 });
 ```
 
-- **index**: name of the index searched. \*required
-- **eventName**: name of the event. \*required
-- **objectIDs**: it is the ID of the result that has been clicked. \*required
+| Option      | Type       | Description                                    |
+| ----------- | ---------- | ---------------------------------------------- |
+| `index`     | `string`   | The name of the index related to the event     |
+| `eventName` | `string`   | The name of the event                          |
+| `objectIDs` | `string[]` | The list of IDs of the result that was clicked |
 
 ```js
-aa("clickedFilters", {
-  index: "INDEX_NAME",
-  eventName: "Filter on facet",
-  filters: ["brand:Apple"]
+aa('clickedFilters', {
+  index: 'INDEX_NAME',
+  eventName: 'Filter on facet',
+  filters: ['brand:Apple'],
 });
 ```
 
-- **index**: name of the index searched. \*required
-- **eventName**: name of the event. \*required
-- **filters**: it is the facet that has been clicked. \*required
+| Option      | Type       | Description                                                      |
+| ----------- | ---------- | ---------------------------------------------------------------- |
+| `index`     | `string`   | The name of the index related to the event                       |
+| `eventName` | `string`   | The name of the event                                            |
+| `filters`   | `string[]` | The list of filters that was clicked as `'${attr}${op}${value}'` |
 
-### Reporting a conversion event
+#### Report a conversion event
 
 ```js
-aa("convertedObjectIDs", {
-  index: "INDEX_NAME",
-  eventName: "Add to basket",
-  objectIDs: ["object1"]
-});
-aa("convertedFilters", {
-  index: "INDEX_NAME",
-  eventName: "Filter on facet",
-  filters: ["brand:Apple"]
+aa('convertedObjectIDs', {
+  index: 'INDEX_NAME',
+  eventName: 'Add to basket',
+  objectIDs: ['object1'],
 });
 ```
 
-### Reporting a view event
+| Option      | Type       | Description                                    |
+| ----------- | ---------- | ---------------------------------------------- |
+| `index`     | `string`   | The name of the index related to the event     |
+| `eventName` | `string`   | The name of the event                          |
+| `objectIDs` | `string[]` | The list of IDs of the result that was clicked |
 
 ```js
-aa("viewedObjectIDs", {
-  index: "INDEX_NAME",
-  eventName: "Add to basket",
-  objectIDs: ["object1"]
-});
-aa("viewedFilters", {
-  index: "INDEX_NAME",
-  eventName: "Filter on facet",
-  filters: ["brand:Apple"]
+aa('convertedFilters', {
+  index: 'INDEX_NAME',
+  eventName: 'Filter on facet',
+  filters: ['brand:Apple'],
 });
 ```
 
-### Library implementation examples
+| Option      | Type       | Description                                                      |
+| ----------- | ---------- | ---------------------------------------------------------------- |
+| `index`     | `string`   | The name of the index related to the event                       |
+| `eventName` | `string`   | The name of the event                                            |
+| `filters`   | `string[]` | The list of filters that was clicked as `'${attr}${op}${value}'` |
 
-All library examples are done with an assumption, that you have already completed the first step of loading the library.
-
-- [InstantSearch.js example](https://github.com/algolia/search-insights.js/blob/master/examples/INSTANTSEARCH.md)
-- [algoliasearch-helper example](https://github.com/algolia/search-insights.js/blob/master/examples/HELPER.md)
-- [React-instantsearch example](https://github.com/algolia/search-insights.js/blob/master/examples/react-instantsearch/src/App.js)
-
-#### Running examples locally
-
-To run all examples and play around with the code you have to run two separate commands:
-
-- `yarn dev` - runs webpack and node dev server
-- `yarn build:dev` - runs rollup in watch mode - livereload if you do changes to the insights library
-
-## Migrating from v0 to v1
-
-### `init` method signature has changed
-
-- `applicationID` is now called `appId`, to stay consistent with our [other js libraries](https://www.algolia.com/doc/guides/building-search-ui/upgrade-guides/js/?language=javascript#previous-usage).
-
-**Before**:
+#### Report a view event
 
 ```js
-aa("init", {
-  applicationID: "APPLICATION_ID",
-  apiKey: "SEARCH_API_KEY"
-  // other props
+aa('viewedObjectIDs', {
+  index: 'INDEX_NAME',
+  eventName: 'Add to basket',
+  objectIDs: ['object1'],
 });
 ```
 
-**After**:
+| Option      | Type       | Description                                    |
+| ----------- | ---------- | ---------------------------------------------- |
+| `index`     | `string`   | The name of the index related to the event     |
+| `eventName` | `string`   | The name of the event                          |
+| `objectIDs` | `string[]` | The list of IDs of the result that was clicked |
 
 ```js
-aa("init", {
-  appId: "APPLICATION_ID",
-  apiKey: "SEARCH_API_KEY"
-  // other props
+aa('viewedFilters', {
+  index: 'INDEX_NAME',
+  eventName: 'Filter on facet',
+  filters: ['brand:Apple'],
 });
 ```
 
-### `initSearch` method has been removed
+| Option      | Type       | Description                                                      |
+| ----------- | ---------- | ---------------------------------------------------------------- |
+| `index`     | `string`   | The name of the index related to the event                       |
+| `eventName` | `string`   | The name of the event                                            |
+| `filters`   | `string[]` | The list of filters that was clicked as `'${attr}${op}${value}'` |
 
-This method was previously used to pass `getQueryID` helper. Now you need to explicitly call this helper
-and pass the result to methods that require it (namely `clickedObjectIDsAfterSearch` and `convertedObjectIDsAfterSearch`)
-``
+## Examples
 
-**Before**:
+The following examples assume that the Search Insights library is loaded.
 
-```js
-aa("initSearch", {
-  getQueryID: () => search.helper.lastResults.queryID
-});
-```
+- [InstantSearch.js](https://github.com/algolia/search-insights.js/blob/master/examples/INSTANTSEARCH.md)
+- [AlgoliaSearch Helper](https://github.com/algolia/search-insights.js/blob/master/examples/HELPER.md)
+- [React Instantsearch](https://github.com/algolia/search-insights.js/blob/master/examples/react-instantsearch/src/App.js)
 
-**After**:
+## Contributing
 
-```js
-const getQueryID = () => search.helper.lastResults.queryID;
-```
+To run the examples and the code, you need to run two separate commands:
 
-### `click` and `convert` methods have been renamed and their signatures have changed to reflect the different use cases covered by the insights client
+- `yarn dev` runs webpack and the Node.js server
+- `yarn build:dev` runs Rollup in watch mode
 
-To make it clear that they are intended to be called in the context of a search:
+## License
 
-- `click` is now `clickedObjectIDsAfterSearch`
-- `convert` is now `convertedObjectIDsAfterSearch`
-
-The signatures have also changed:
-
-- On `clickedObjectIDsAfterSearch`
-
-  - `eventName: string` is now required
-  - `index: string` is now required
-  - `objectID: number | string` is now `objectIDs : Array<number | string>`
-  - `queryID: string` is now required, use the `getQueryID` helper documented
-  - `position: number` is now `positions : Array<number>`
-
-- On `convertedObjectIDsAfterSearch`
-  - `eventName: string` is now required
-  - `index: string` is now required
-  - `objectID: number | string` is now `objectIDs : Array<number | string>`
-  - `queryID: string` is now required, use the `getQueryID` helper documented
-
-**Before**:
-
-```js
-aa("click", {
-  objectID: "object1",
-  position: 42
-});
-aa("convert", {
-  objectID: "object1",
-  position: 42
-});
-```
-
-**After**:
-
-```js
-aa("clickedObjectIDsAfterSearch", {
-  index: "INDEX_NAME",
-  eventName: "Clicked item",
-  queryID: getQueryID(),
-  objectIDs: ["object1"],
-  positions: [42]
-});
-aa("convertedObjectIDsAfterSearch", {
-  index: "INDEX_NAME",
-  eventName: "Clicked item",
-  queryID: getQueryID(),
-  objectIDs: ["object1"]
-});
-```
+Search Insights is [MIT licensed](LICENSE.md).
