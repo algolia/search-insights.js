@@ -5,5 +5,6 @@ module.exports = {
       develop: "master"
     }
   },
-  buildCommand: () => "yarn build && /bin/bash ./pre-deploy.sh"
+  buildCommand: () => "yarn build && /bin/bash ./pre-deploy.sh",
+  pullRequestReviewer: "@algolia/instantsearch-for-websites"
 };
