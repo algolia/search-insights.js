@@ -25,7 +25,7 @@ script:
 - yarn build
 - yarn test
 - yarn test:size
-- yarn shipjs:release
+- yarn release:trigger
 addons:
   artifacts:
     paths:
