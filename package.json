@@ -64,7 +64,7 @@
     "jest": "24.9.0",
     "jest-localstorage-mock": "2.4.0",
     "jest-watch-typeahead": "0.4.0",
-    "lunr": "2.3.6",
+    "lunr": "2.3.7",
     "markdown-toc": "1.2.0",
     "node-sass": "4.12.0",
     "prettier": "1.18.2",
