@@ -49,20 +49,33 @@ For events to be sent with the correct information (`userToken`, `objectIDs`, `q
 
 ## Tags
 
+### Init
+
+This method is necessary for initializing the connection with the Insights API.
+
+#### Configuration
+
+- App ID
+- API key
+
+#### Trigger
+
+We recommend triggering this tag on the "Page View" event.
+
 ### Clicked Object IDs After Search
 
 This method refers to the [Clicked Object IDs After Search](https://www.algolia.com/doc/api-reference/api-methods/clicked-object-ids-after-search/) Insights API.
 
-#### Required variables
+#### Configuration
 
-- `eventName`
-- [`userToken`](#userToken)
-- `index`
-- [`queryID`](#queryID)
-- [`objectIDs`](#objectIDs)
-- [`positions`](#positions)
+- Event name
+- [User Token](#userToken)
+- Index
+- [Query ID](#queryID)
+- [Object IDs](#objectIDs)
+- [Positions](#positions)
 
-#### Required template
+#### Templates
 
 ##### InstantSearch.js
 
@@ -87,15 +100,15 @@ instantsearch.widgets.hits({
 
 This method refers to the [Clicked Object IDs](https://www.algolia.com/doc/api-reference/api-methods/clicked-object-ids/) Insights API.
 
-#### Required variables
+#### Configuration
 
-- `eventName`
-- [`userToken`](#userToken)
-- `index`
-- [`objectIDs`](#objectIDs)
-- [`positions`](#positions)
+- Event name
+- [User token](#userToken)
+- Index
+- [Object IDs](#objectIDs)
+- [Positions](#positions)
 
-#### Required template
+#### Templates
 
 ##### InstantSearch.js
 
@@ -119,14 +132,14 @@ instantsearch.widgets.hits({
 
 This method refers to the [Clicked Filters](https://www.algolia.com/doc/api-reference/api-methods/clicked-object-ids/) Insights API.
 
-#### Required variables
+#### Configuration
 
-- `eventName`
-- [`userToken`](#userToken)
-- `index`
-- [`filters`](#filters)
+- Event name
+- [User token](#userToken)
+- Index
+- [Filters](#filters)
 
-#### Required template
+#### Templates
 
 Replace `brand` by the attribute to track.
 
@@ -155,15 +168,15 @@ instantsearch.widgets.refinementList({
 
 This method refers to the [Converted Objects IDs After Search](https://www.algolia.com/doc/api-reference/api-methods/converted-object-ids-after-search/) Insights API.
 
-#### Required variables
+#### Configuration
 
-- `eventName`
-- [`userToken`](#userToken)
-- `index`
-- [`queryID`](#queryID)
-- [`objectIDs`](#objectIDs)
+- Event name
+- [User token](#userToken)
+- Index
+- [Query ID](#queryID)
+- [Object IDs](#objectIDs)
 
-#### Required template
+#### Templates
 
 ##### InstantSearch.js
 
@@ -188,14 +201,14 @@ instantsearch.widgets.hits({
 
 This method refers to the [Converted Objects IDs](https://www.algolia.com/doc/api-reference/api-methods/converted-object-ids/) Insights API.
 
-#### Required variables
+#### Configuration
 
-- `eventName`
-- [`userToken`](#userToken)
-- `index`
-- [`objectIDs`](#objectIDs)
+- Event name
+- [User token](#userToken)
+- Index
+- [Object IDs](#objectIDs)
 
-#### Required template
+#### Templates
 
 ##### InstantSearch.js
 
@@ -216,14 +229,14 @@ instantsearch.widgets.hits({
 
 This method refers to the [Converted Filters](https://www.algolia.com/doc/api-reference/api-methods/converted-filters/) Insights API.
 
-#### Required variables
+#### Configuration
 
-- `eventName`
-- [`userToken`](#userToken)
-- `index`
-- [`filters`](#filters)
+- Event name
+- [User token](#userToken)
+- Index
+- [Filters](#filters)
 
-#### Required template
+#### Templates
 
 ##### InstantSearch.js
 
@@ -252,14 +265,14 @@ instantsearch.widgets.refinementList({
 
 This method refers to the [Viewed Object IDs](https://www.algolia.com/doc/api-reference/api-methods/viewed-object-ids/) Insights API.
 
-#### Required variables
+#### Configuration
 
-- `eventName`
-- [`userToken`](#userToken)
-- `index`
-- [`objectIDs`](#objectIDs)
+- Event name
+- [User token](#userToken)
+- Index
+- [Object IDs](#objectIDs)
 
-#### Required template
+#### Templates
 
 ##### InstantSearch.js
 
@@ -280,14 +293,14 @@ instantsearch.widgets.hits({
 
 This method refers to the [Viewed Filters](https://www.algolia.com/doc/api-reference/api-methods/viewed-filters/) Insights API.
 
-#### Required variables
+#### Configuration
 
-- `eventName`
-- [`userToken`](#userToken)
-- `index`
-- [`filters`](#filters)
+- Event name
+- [User token](#userToken)
+- Index
+- [Filters](#filters)
 
-#### Required template
+#### Templates
 
 Replace `brand` by the attribute to track.
 
