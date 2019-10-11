@@ -6,7 +6,7 @@ Google Tag Manager [custom template](https://developers.google.com/tag-manager/t
 
 <div align="center">
 
-<a href="generated/search-insights.tpl" download>
+<a href="https://raw.githubusercontent.com/algolia/search-insights.js/develop/gtm/generated/search-insights.tpl" download>
 
 **Download template**
 
@@ -20,7 +20,7 @@ Google Tag Manager [custom template](https://developers.google.com/tag-manager/t
 
 ### 1. Import the template
 
-- Download <a href="generated/search-insights.tpl" download><strong><code>search-insights.tpl</code></strong></a>
+- Download <a href="https://raw.githubusercontent.com/algolia/search-insights.js/develop/gtm/generated/search-insights.tpl" download><strong><code>search-insights.tpl</code></strong></a>
 - Import the file in [Google Tag Manager](https://tagmanager.google.com)
   - Go to "Templates"
   - Click on "New"
