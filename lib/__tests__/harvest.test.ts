@@ -124,16 +124,38 @@ describe("Integration tests", () => {
       it("should retrieve a queryID on page load", async () => {
         expect(data).toHaveProperty("queryID");
       });
-      it("should generate an anonymous userToken on init", async () => {
-        const userToken = await page.evaluate(() => {
-          return new Promise((resolve, reject) =>
-            window.aa("getUserToken", null, (err, res) => {
-              if (err) return reject(err);
-              resolve(res);
-            })
-          );
-        });
+      it("should generate an anonymous userToken on init and store it in a cookie", async () => {
+        const userToken = await page.evaluate(
+          () =>
+            new Promise((resolve, reject) =>
+              window.aa("getUserToken", null, (err, res) => {
+                if (err) return reject(err);
+                resolve(res);
+              })
+            )
+        );
+
+        const cookies = await page.cookies();
+        const algoliaCookie = cookies.find(
+          cookie => (cookie.name = "_ALGOLIA")
+        );
+
         expect(userToken).toMatch(/^anonymous-[-\w]+$/);
+        expect(algoliaCookie.value).toMatch(userToken);
+      });
+
+      it("should replace the userToken when setUserToken is called", async () => {
+        const userToken = await page.evaluate(
+          () =>
+            new Promise((resolve, reject) => {
+              window.aa("setUserToken", "user-id-1");
+              window.aa("getUserToken", null, (err, res) => {
+                if (err) return reject(err);
+                resolve(res);
+              });
+            })
+        );
+        expect(userToken).toEqual("user-id-1");
       });
     });
 
