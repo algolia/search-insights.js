@@ -137,7 +137,7 @@ describe("Integration tests", () => {
 
         const cookies = await page.cookies();
         const algoliaCookie = cookies.find(
-          cookie => (cookie.name = "_ALGOLIA")
+          cookie => cookie.name === "_ALGOLIA"
         );
 
         expect(userToken).toMatch(/^anonymous-[-\w]+$/);
