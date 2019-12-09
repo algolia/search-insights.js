@@ -25,6 +25,7 @@ script:
 - yarn build
 - yarn test
 - yarn test:size
+- yarn release:trigger
 addons:
   artifacts:
     paths:

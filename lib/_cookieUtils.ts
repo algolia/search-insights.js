@@ -3,28 +3,23 @@ import { isFunction, supportsCookies } from "./utils";
 
 const COOKIE_KEY = "_ALGOLIA";
 
-const setCookie = (
-  cname: string,
-  cvalue: number | string,
-  cookieDuration: number
-) => {
+const setCookie = (name: string, value: number | string, duration: number) => {
   const d = new Date();
-  d.setTime(d.getTime() + cookieDuration);
+  d.setTime(d.getTime() + duration);
   const expires = `expires=${d.toUTCString()}`;
-  document.cookie = `${cname}=${cvalue};${expires};path=/`;
+  document.cookie = `${name}=${value};${expires};path=/`;
 };
 
-const getCookie = (cname: string): string => {
-  const name = `${cname}=`;
-  const decodedCookie = decodeURIComponent(document.cookie);
-  const ca = decodedCookie.split(";");
+export const getCookie = (name: string): string => {
+  const prefix = `${name}=`;
+  const ca = document.cookie.split(";");
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
     while (c.charAt(0) === " ") {
       c = c.substring(1);
     }
-    if (c.indexOf(name) === 0) {
-      return c.substring(name.length, c.length);
+    if (c.indexOf(prefix) === 0) {
+      return c.substring(prefix.length, c.length);
     }
   }
   return "";
