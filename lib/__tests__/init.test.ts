@@ -4,7 +4,9 @@ import * as utils from "../utils";
 describe("init", () => {
   let analyticsInstance;
   beforeEach(() => {
-    analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
+    analyticsInstance = new AlgoliaAnalytics({
+      requestFn: () => {}
+    });
   });
 
   it("should throw if no parameters is passed", () => {
@@ -108,30 +110,59 @@ describe("init", () => {
       "https://insights.de.algolia.io"
     );
   });
-  it("should set userToken to ANONYMOUS if environment supports cookies", () => {
+  it("should try reusing userToken stored in cookies, when supporting cookies", () => {
     const supportsCookies = jest
       .spyOn(utils, "supportsCookies")
       .mockReturnValue(true);
     const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+    const reuseUserTokenStoredInCookies = jest
+      .spyOn(analyticsInstance, "reuseUserTokenStoredInCookies")
+      .mockImplementation(jest.fn());
 
     analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
-    expect(setUserToken).toHaveBeenCalledWith(
-      analyticsInstance.ANONYMOUS_USER_TOKEN
-    );
-    expect(setUserToken).toHaveBeenCalledTimes(1);
+    expect(reuseUserTokenStoredInCookies).toHaveBeenCalledTimes(1);
+    expect(setUserToken).not.toHaveBeenCalled();
 
+    reuseUserTokenStoredInCookies.mockRestore();
     setUserToken.mockRestore();
     supportsCookies.mockRestore();
   });
-  it("should not set userToken if environment does not supports cookies", () => {
+  it("should try set userToken to anonymous if unable to reuse cookies, when supporting cookies", () => {
+    const supportsCookies = jest
+      .spyOn(utils, "supportsCookies")
+      .mockReturnValue(true);
+    const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+    const reuseUserTokenStoredInCookies = jest
+      .spyOn(analyticsInstance, "reuseUserTokenStoredInCookies")
+      .mockImplementation(() => {
+        throw new Error();
+      });
+
+    analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
+    expect(reuseUserTokenStoredInCookies).toHaveBeenCalledTimes(1);
+    expect(setUserToken).toHaveBeenCalledWith(
+      analyticsInstance.ANONYMOUS_USER_TOKEN
+    );
+
+    reuseUserTokenStoredInCookies.mockRestore();
+    setUserToken.mockRestore();
+    supportsCookies.mockRestore();
+  });
+  it("should not try to reuse cookies if environment does not supports cookies", () => {
     const supportsCookies = jest
       .spyOn(utils, "supportsCookies")
       .mockReturnValue(false);
     const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+    const reuseUserTokenStoredInCookies = jest.spyOn(
+      analyticsInstance,
+      "reuseUserTokenStoredInCookies"
+    );
 
     analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
+    expect(reuseUserTokenStoredInCookies).not.toHaveBeenCalled();
     expect(setUserToken).not.toHaveBeenCalled();
 
+    reuseUserTokenStoredInCookies.mockRestore();
     setUserToken.mockRestore();
     supportsCookies.mockRestore();
   });

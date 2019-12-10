@@ -1,7 +1,10 @@
 import { createUUID } from "./utils/uuid";
 import { isFunction, supportsCookies } from "./utils";
 
-const COOKIE_KEY = "_ALGOLIA";
+const USER_TOKEN_COOKIE_KEY = "alg_user_token";
+const ANONYMOUS_TOKEN_COOKIE_KEY = "_ALGOLIA";
+// TODO: rename this to alg_anonymous_token in a future release
+// Add code in init checking if _ALOGLIA cookie exists and replaces it in alg_anonymous_token
 
 const setCookie = (name: string, value: number | string, duration: number) => {
   const d = new Date();
@@ -27,6 +30,26 @@ export const getCookie = (name: string): string => {
 
 export const ANONYMOUS_USER_TOKEN = "ANONYMOUS_USER_TOKEN";
 
+export function reuseUserTokenStoredInCookies() {
+  if (!supportsCookies()) {
+    throw new Error("This environment does not support cookies.");
+  }
+
+  const userToken = getCookie(USER_TOKEN_COOKIE_KEY);
+  if (userToken) {
+    this._userToken = userToken;
+    return;
+  }
+
+  const anonymousToken = getCookie(ANONYMOUS_TOKEN_COOKIE_KEY);
+  if (anonymousToken) {
+    this._userToken = anonymousToken;
+    return;
+  }
+
+  throw new Error("No cookies found.");
+}
+
 export function setUserToken(userToken: string | number): void {
   if (userToken === ANONYMOUS_USER_TOKEN) {
     if (!supportsCookies()) {
@@ -34,18 +57,32 @@ export function setUserToken(userToken: string | number): void {
         "Tracking of anonymous users is only possible on environments which support cookies."
       );
     }
-    const foundToken = getCookie(COOKIE_KEY);
+    const currentAnonymousToken = getCookie(ANONYMOUS_TOKEN_COOKIE_KEY);
     if (
-      !foundToken ||
-      foundToken === "" ||
-      foundToken.indexOf("anonymous-") !== 0
+      !currentAnonymousToken ||
+      currentAnonymousToken === "" ||
+      currentAnonymousToken.indexOf("anonymous-") !== 0
     ) {
-      this._userToken = `anonymous-${createUUID()}`;
-      setCookie(COOKIE_KEY, this._userToken, this._cookieDuration);
+      // create anonymous token
+      const newAnonymousToken = `anonymous-${createUUID()}`;
+      setCookie(
+        ANONYMOUS_TOKEN_COOKIE_KEY,
+        newAnonymousToken,
+        this._cookieDuration
+      );
+      this._userToken = newAnonymousToken;
     } else {
-      this._userToken = foundToken;
+      // reuse found anonymous token
+      this._userToken = currentAnonymousToken;
     }
   } else {
+    if (supportsCookies()) {
+      const currentUserToken = getCookie(USER_TOKEN_COOKIE_KEY);
+      if (currentUserToken !== userToken) {
+        // only recreate the cookie if it's new userToken
+        setCookie(USER_TOKEN_COOKIE_KEY, userToken, this._cookieDuration);
+      }
+    }
     this._userToken = userToken;
   }
 }

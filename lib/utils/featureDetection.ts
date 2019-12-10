@@ -1,6 +1,6 @@
 export const supportsCookies = () => {
   try {
-    return Boolean(navigator.cookieEnabled);
+    return navigator.cookieEnabled;
   } catch (e) {
     return false;
   }

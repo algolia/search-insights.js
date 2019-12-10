@@ -73,6 +73,11 @@ export function init(options: InitParams) {
   this._uaURIEncoded = encodeURIComponent(DEFAULT_ALGOLIA_AGENT);
 
   if (supportsCookies()) {
-    this.setUserToken(this.ANONYMOUS_USER_TOKEN);
+    try {
+      this.reuseUserTokenStoredInCookies();
+    } catch (e) {
+      // create the anonymous cookie
+      this.setUserToken(this.ANONYMOUS_USER_TOKEN);
+    }
   }
 }

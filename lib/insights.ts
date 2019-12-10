@@ -37,7 +37,8 @@ import {
 import {
   ANONYMOUS_USER_TOKEN,
   getUserToken,
-  setUserToken
+  setUserToken,
+  reuseUserTokenStoredInCookies
 } from "./_cookieUtils";
 import { version } from "../package.json";
 
@@ -88,6 +89,7 @@ class AlgoliaAnalytics {
   public addAlgoliaAgent: (algoliaAgent: string) => void;
 
   public ANONYMOUS_USER_TOKEN: string;
+  public reuseUserTokenStoredInCookies: () => void;
   public setUserToken: (userToken: string) => void;
   public getUserToken: (
     options?: any,
@@ -124,6 +126,9 @@ class AlgoliaAnalytics {
 
     this.ANONYMOUS_USER_TOKEN = ANONYMOUS_USER_TOKEN;
     this.setUserToken = setUserToken.bind(this);
+    this.reuseUserTokenStoredInCookies = reuseUserTokenStoredInCookies.bind(
+      this
+    );
     this.getUserToken = getUserToken.bind(this);
 
     this.clickedObjectIDsAfterSearch = clickedObjectIDsAfterSearch.bind(this);

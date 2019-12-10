@@ -31,6 +31,7 @@ describe("cookieUtils", () => {
       .mockReturnValue("mock-uuid-2+");
     // clear cookies
     document.cookie = "_ALGOLIA=;expires=Thu, 01-Jan-1970 00:00:01 GMT;";
+    document.cookie = "alg_user_token=;expires=Thu, 01-Jan-1970 00:00:01 GMT;";
   });
   describe("setUserToken", () => {
     describe("ANONYMOUS_USER_TOKEN", () => {
@@ -65,22 +66,107 @@ describe("cookieUtils", () => {
       });
     });
     describe("provided userToken", () => {
-      it("should not create a cookie with provided userToken", () => {
+      it("should create a cookie with provided userToken", () => {
         analyticsInstance.setUserToken("007");
-        expect(document.cookie).toBe("");
+        expect(document.cookie).toBe("alg_user_token=007");
       });
       it("create a anonymous cookie when switching from provided userToken to anonymous", () => {
         analyticsInstance.setUserToken("007");
+        expect(document.cookie).toBe("alg_user_token=007");
+        analyticsInstance.setUserToken(analyticsInstance.ANONYMOUS_USER_TOKEN);
+        expect(document.cookie).toBe(
+          "alg_user_token=007; _ALGOLIA=anonymous-mock-uuid-1"
+        );
+      });
+      it("should preserve the cookie with same uuid when userToken provided after anonymous", () => {
         expect(document.cookie).toBe("");
         analyticsInstance.setUserToken(analyticsInstance.ANONYMOUS_USER_TOKEN);
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
-      });
-      it("should preserve the cookie with same uuid when userToken provided after anonymous", () => {
-        analyticsInstance.setUserToken(analyticsInstance.ANONYMOUS_USER_TOKEN);
-        expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
         analyticsInstance.setUserToken("007");
-        expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
+        expect(document.cookie).toBe(
+          "_ALGOLIA=anonymous-mock-uuid-1; alg_user_token=007"
+        );
       });
+      it("should override USER_TOKEN cookie if setUserToken called with a different value", () => {
+        expect(document.cookie).toBe("");
+        analyticsInstance.setUserToken("007");
+        expect(document.cookie).toBe("alg_user_token=007");
+        analyticsInstance.setUserToken("008");
+        expect(document.cookie).toBe("alg_user_token=008");
+      });
+    });
+  });
+  describe("reuseUserTokenStoredInCookies", () => {
+    it("should throw if environment does not support cookies", () => {
+      const supportsCookies = jest
+        .spyOn(utils, "supportsCookies")
+        .mockReturnValue(false);
+      expect(() =>
+        analyticsInstance.reuseUserTokenStoredInCookies()
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"This environment does not support cookies."`
+      );
+      supportsCookies.mockRestore();
+    });
+    it("should throw if supports cookies but no cookies found", () => {
+      const supportsCookies = jest
+        .spyOn(utils, "supportsCookies")
+        .mockReturnValue(true);
+      expect(() =>
+        analyticsInstance.reuseUserTokenStoredInCookies()
+      ).toThrowErrorMatchingInlineSnapshot(`"No cookies found."`);
+      supportsCookies.mockRestore();
+    });
+    it("should not throw if has ANONYMOUS cookie is found", () => {
+      const supportsCookies = jest
+        .spyOn(utils, "supportsCookies")
+        .mockReturnValue(true);
+
+      document.cookie = `_ALGOLIA=value;expires=${DATE_TOMORROW};path=/`;
+
+      expect(() =>
+        analyticsInstance.reuseUserTokenStoredInCookies()
+      ).not.toThrow();
+
+      supportsCookies.mockRestore();
+    });
+    it("should reuse USER_TOKEN cookie first if present", () => {
+      const supportsCookies = jest
+        .spyOn(utils, "supportsCookies")
+        .mockReturnValue(true);
+
+      document.cookie = `_ALGOLIA=anonymous-value;expires=${DATE_TOMORROW};path=/`;
+      document.cookie = `alg_user_token=user-value;expires=${DATE_TOMORROW};path=/`;
+
+      analyticsInstance.reuseUserTokenStoredInCookies();
+      expect(analyticsInstance._userToken).toEqual("user-value");
+
+      supportsCookies.mockRestore();
+    });
+    it("should reuse ANONYMOUS_TOKEN cookie if present USER_TOKEN not present", () => {
+      const supportsCookies = jest
+        .spyOn(utils, "supportsCookies")
+        .mockReturnValue(true);
+
+      document.cookie = `_ALGOLIA=anonymous-value;expires=${DATE_TOMORROW};path=/`;
+
+      analyticsInstance.reuseUserTokenStoredInCookies();
+      expect(analyticsInstance._userToken).toEqual("anonymous-value");
+
+      supportsCookies.mockRestore();
+    });
+    it("should reuse ANONYMOUS_TOKEN cookie if present USER_TOKEN expired", () => {
+      const supportsCookies = jest
+        .spyOn(utils, "supportsCookies")
+        .mockReturnValue(true);
+
+      document.cookie = `_ALGOLIA=anonymous-value;expires=${DATE_TOMORROW};path=/`;
+      document.cookie = `alg_user_token=user-value;expires=${DATE_YESTERDAY};path=/`;
+
+      analyticsInstance.reuseUserTokenStoredInCookies();
+      expect(analyticsInstance._userToken).toEqual("anonymous-value");
+
+      supportsCookies.mockRestore();
     });
   });
   describe("getUserToken", () => {
@@ -98,6 +184,7 @@ describe("cookieUtils", () => {
       });
     });
 
+    // TODO: move this suite outside getUserToken tests
     describe("getCookie", () => {
       it("should return '' _ALGOLIA cookie when not available", () => {
         document.cookie = `_ALGOLIA=value;expires=${DATE_YESTERDAY};path=/`;
