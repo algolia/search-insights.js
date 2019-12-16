@@ -37,7 +37,12 @@ We recommend loading the library by adding the snippet below to all pages where 
 <!-- prettier-ignore-start -->
 ```html
 <script>
-  !function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e.aa=e.aa||function(){(e.aa.queue=e.aa.queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],i.async=1,i.src="https://cdn.jsdelivr.net/npm/search-insights@1.2.2",c.parentNode.insertBefore(i,c)}(window,document,"script",0,"aa");
+var ALGOLIA_INSIGHTS_SRC = "https://cdn.jsdelivr.net/npm/search-insights@1.3.0";
+
+!function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e.aa=e.aa||function(){
+(e.aa.queue=e.aa.queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],
+i.async=1,i.src=ALGOLIA_INSIGHTS_SRC,c.parentNode.insertBefore(i,c)
+}(window,document,"script",0,"aa");
 </script>
 ```
 <!-- prettier-ignore-end -->
