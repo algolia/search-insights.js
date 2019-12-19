@@ -4,7 +4,7 @@ Google Tag Manager connector for Algolia Search Insights.
 
 ## Documentation
 
-Head over our [Getting Insights and Analytics / Google Tag Manager](https://www.algolia.com/doc/guides/getting-insights-and-analytics/connectors/google-tag-manager/) documentation.
+Head over our [**Getting Insights and Analytics / Google Tag Manager**](https://www.algolia.com/doc/guides/getting-insights-and-analytics/connectors/google-tag-manager/) documentation.
 
 ## Contributing
 
