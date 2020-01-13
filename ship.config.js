@@ -2,7 +2,7 @@ module.exports = {
   mergeStrategy: {
     toSameBranch: ["v0"]
   },
-  buildCommand: () => "yarn build && /bin/bash ./pre-deploy.sh",
+  buildCommand: () => "yarn build && ./pre-deploy.sh",
   pullRequestReviewer: ["@algolia/instantsearch-for-websites"],
   versionUpdated: ({ version, releaseType, dir }) => {
     if (
