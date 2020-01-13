@@ -5,6 +5,8 @@ cache:
   yarn: true
   directories:
   - node_modules
+services:
+  - xvfb
 env:
   matrix:
   - CXX=g++-4.8
@@ -14,10 +16,10 @@ env:
   - secure: M4qBMwS65lsVBZcpOxNLsIhwoVdRItDwCh9GH5EZyaVjgyCaUGCZGyeMea22NgLgygQEUpVmHi8QgHPDwsjR3vTKuzSRRtCWvUrbNJ45UcUg3q+ugEa7t1mrWBqRsibC/T/D4JOBVFTEBJl7Q34yb4wzVZd2Vmp7E03q+CJYOloL1hrrb+eveOfiO8ZfsphQkXHC2SAI3U8hYH+56Zc3vjzkxUOBQZD1YlhXe1R9LMdtgEO1cVbllTh1BS/X3bkUuPkCmgrLImNkfr4NeZm6VSrpZZs7WE7XWgz8RPNurKwoC68Jfupg7J9gurI3kzE3E8uia5lhFmY4cg3RSWiDClZdISUIRONQRYClKRBuMaGVIlfzfk3tfkug1L6gw4wPTeyjk4pFv1BJKGam42b9lYFaLZlDkijdwUNr9k7xkw19xNHJ5WQX7BKPw4e6cbXT2xXyOHkgdsKg1E+vbAh8fDaD1grhSeJkegHUO3uLR1HUZdeuGJSi7//UzxEv+Hs3Qg6sw7KVmWsKqEh4BCXlCcZVzAL6iPCxyrf9ntLCGVszG5mlroEp+Rh274wAJQvHJpgQPzApaxowFZIHnGqFpxyogcO3/SdEHIAuYUWtkyVxxaQkGPYoAwT+zbhFwlA1dMdgTyLfk8xUU24fdZjeCJ28a/D+dc8HtH/yMZN8IIU=
 before_install:
 - export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
 - curl -o- -L https://yarnpkg.com/install.sh | bash
 - export PATH="$HOME/.yarn/bin:$PATH"
 before_script:
 - yarn install
 script:
 - yarn test
+- yarn release:trigger
