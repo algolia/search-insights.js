@@ -12,7 +12,9 @@
     "build:dev": "rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
     "build:test": "yarn run jest",
     "build:examples": "webpack --config config/webpack.config.js --color --progress",
-    "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server"
+    "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
+    "release:prepare": "shipjs prepare",
+    "release:trigger": "shipjs trigger"
   },
   "author": {
     "name": "Jonas Badalic",
@@ -62,6 +64,7 @@
     "rollup-plugin-typescript": "^0.8.1",
     "rollup-plugin-uglify": "^3.0.0",
     "sass-loader": "^6.0.6",
+    "shipjs": "0.13.1",
     "style-loader": "^0.20.1",
     "ts-jest": "^22.0.0",
     "ts-loader": "^3.2.0",

@@ -21,3 +21,4 @@ before_script:
 - yarn install
 script:
 - yarn test
+- yarn release:trigger

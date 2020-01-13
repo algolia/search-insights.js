@@ -3,3 +3,4 @@ node_modules
 tests/screenshots
 tests/production
 tests/data.txt
+.env
