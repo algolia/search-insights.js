@@ -3,10 +3,7 @@ const path = require("path");
 
 module.exports = {
   mergeStrategy: {
-    toSameBranch: ["maint"],
-    toReleaseBranch: {
-      develop: "master"
-    }
+    toSameBranch: ["master"]
   },
   buildCommand: () => "yarn build && /bin/bash ./pre-deploy.sh",
   pullRequestReviewer: ["@algolia/instantsearch-for-websites"],
