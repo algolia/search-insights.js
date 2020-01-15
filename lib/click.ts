@@ -49,7 +49,7 @@ export interface InsightsClickObjectIDsEvent {
 }
 
 /**
- * Sends a click report using objectIDs
+ * Sends a click report using objectIDs, outside the context of a search
  * @param params: InsightsClickObjectIDsEvent
  */
 export function clickedObjectIDs(params: InsightsClickObjectIDsEvent) {
