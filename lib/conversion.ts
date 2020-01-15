@@ -74,7 +74,7 @@ export interface InsightsSearchConversionFiltersEvent {
   filters: string[];
 }
 /**
- * Sends a conversion report using filters
+ * Sends a conversion report using filters, outside the context of a search
  * @param params InsightsSearchConversionFiltersEvent
  */
 export function convertedFilters(params: InsightsSearchConversionFiltersEvent) {
