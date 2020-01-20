@@ -95,22 +95,22 @@ class AlgoliaAnalytics {
   ) => string;
 
   public clickedObjectIDsAfterSearch: (
-    params?: InsightsSearchClickEvent
+    params: InsightsSearchClickEvent
   ) => void;
-  public clickedObjectIDs: (params?: InsightsClickObjectIDsEvent) => void;
-  public clickedFilters: (params?: InsightsClickFiltersEvent) => void;
+  public clickedObjectIDs: (params: InsightsClickObjectIDsEvent) => void;
+  public clickedFilters: (params: InsightsClickFiltersEvent) => void;
   public convertedObjectIDsAfterSearch: (
-    params?: InsightsSearchConversionEvent
+    params: InsightsSearchConversionEvent
   ) => void;
   public convertedObjectIDs: (
-    params?: InsightsSearchConversionObjectIDsEvent
+    params: InsightsSearchConversionObjectIDsEvent
   ) => void;
   public convertedFilters: (
-    params?: InsightsSearchConversionFiltersEvent
+    params: InsightsSearchConversionFiltersEvent
   ) => void;
 
-  public viewedObjectIDs: (params?: InsightsSearchViewObjectIDsEvent) => void;
-  public viewedFilters: (params?: InsightsSearchViewFiltersEvent) => void;
+  public viewedObjectIDs: (params: InsightsSearchViewObjectIDsEvent) => void;
+  public viewedFilters: (params: InsightsSearchViewFiltersEvent) => void;
 
   constructor({ requestFn }: { requestFn: RequestFnType }) {
     // Bind private methods to `this` class
