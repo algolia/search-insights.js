@@ -80,8 +80,8 @@ switch (data.method) {
     }
 
     const viewedObjectIDsOptions = {
-      index: data.index,
       eventName: data.eventName,
+      index: data.index,
       objectIDs: formatValueToList(data.objectIDs),
       userToken: data.userToken,
     };
@@ -99,6 +99,7 @@ switch (data.method) {
     }
 
     const clickedObjectIDsAfterSearchOptions = {
+      eventName: data.eventName,
       index: data.index,
       objectIDs: formatValueToList(data.objectIDs),
       positions: formatValueToList(data.positions).map(makeInteger),
@@ -119,8 +120,8 @@ switch (data.method) {
     }
 
     const clickedObjectIDsOptions = {
-      index: data.index,
       eventName: data.eventName,
+      index: data.index,
       queryID: data.queryID,
       objectIDs: formatValueToList(data.objectIDs),
       userToken: data.userToken,
@@ -158,6 +159,7 @@ switch (data.method) {
     }
 
     const convertedObjectIDsAfterSearchOptions = {
+      eventName: data.eventName,
       index: data.index,
       objectIDs: formatValueToList(data.objectIDs),
       queryID: data.queryID,
