@@ -6,7 +6,7 @@ const setInWindow = require('setInWindow');
 const copyFromWindow = require('copyFromWindow');
 const makeInteger = require('makeInteger');
 
-const TEMPLATE_VERSION = '1.0.0';
+const TEMPLATE_VERSION = '1.0.1';
 const INSIGHTS_OBJECT_NAME = 'AlgoliaAnalyticsObject';
 const aa = createArgumentsQueue('aa', 'aa.queue');
 

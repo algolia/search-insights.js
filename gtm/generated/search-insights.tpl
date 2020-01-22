@@ -288,7 +288,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "displayName": "Search Insights Source URL",
         "name": "searchInsightsSource",
-        "defaultValue": "https://cdn.jsdelivr.net/npm/search-insights@1.2.2",
+        "defaultValue": "https://cdn.jsdelivr.net/npm/search-insights@1.3.1",
         "help": "The source URL of the Search Insights library.",
         "type": "TEXT",
         "simpleValueType": true
@@ -648,7 +648,7 @@ const setInWindow = require('setInWindow');
 const copyFromWindow = require('copyFromWindow');
 const makeInteger = require('makeInteger');
 
-const TEMPLATE_VERSION = '1.0.0';
+const TEMPLATE_VERSION = '1.0.1';
 const INSIGHTS_OBJECT_NAME = 'AlgoliaAnalyticsObject';
 const aa = createArgumentsQueue('aa', 'aa.queue');
 
@@ -657,7 +657,7 @@ function isInitialized() {
 }
 
 function formatValueToList(value) {
-  // `20` is the limit that the engine processes.`
+  // `20` is the limit that the engine processes.
   return value && value.split(',').slice(0, 20);
 }
 
@@ -690,12 +690,6 @@ switch (data.method) {
       break;
     }
 
-    setInWindow(INSIGHTS_OBJECT_NAME, 'aa');
-
-    const userAgent = 'insights-gtm (' + TEMPLATE_VERSION + ')';
-    logger('addAlgoliaAgent', userAgent);
-    aa('addAlgoliaAgent', userAgent);
-
     const initOptions = {
       appId: data.appId,
       apiKey: data.apiKey,
@@ -707,10 +701,16 @@ switch (data.method) {
     logger(data.method, initOptions);
     aa(data.method, initOptions);
 
+    const userAgent = 'insights-gtm (' + TEMPLATE_VERSION + ')';
+    logger('addAlgoliaAgent', userAgent);
+    aa('addAlgoliaAgent', userAgent);
+
     if (data.initialUserToken) {
       logger('setUserToken', data.initialUserToken);
       aa('setUserToken', data.initialUserToken);
     }
+
+    setInWindow(INSIGHTS_OBJECT_NAME, 'aa');
 
     break;
   }
@@ -722,8 +722,8 @@ switch (data.method) {
     }
 
     const viewedObjectIDsOptions = {
-      index: data.index,
       eventName: data.eventName,
+      index: data.index,
       objectIDs: formatValueToList(data.objectIDs),
       userToken: data.userToken,
     };
@@ -741,6 +741,7 @@ switch (data.method) {
     }
 
     const clickedObjectIDsAfterSearchOptions = {
+      eventName: data.eventName,
       index: data.index,
       objectIDs: formatValueToList(data.objectIDs),
       positions: formatValueToList(data.positions).map(makeInteger),
@@ -761,8 +762,8 @@ switch (data.method) {
     }
 
     const clickedObjectIDsOptions = {
-      index: data.index,
       eventName: data.eventName,
+      index: data.index,
       queryID: data.queryID,
       objectIDs: formatValueToList(data.objectIDs),
       userToken: data.userToken,
@@ -800,6 +801,7 @@ switch (data.method) {
     }
 
     const convertedObjectIDsAfterSearchOptions = {
+      eventName: data.eventName,
       index: data.index,
       objectIDs: formatValueToList(data.objectIDs),
       queryID: data.queryID,
