@@ -48,12 +48,6 @@ switch (data.method) {
       break;
     }
 
-    setInWindow(INSIGHTS_OBJECT_NAME, 'aa');
-
-    const userAgent = 'insights-gtm (' + TEMPLATE_VERSION + ')';
-    logger('addAlgoliaAgent', userAgent);
-    aa('addAlgoliaAgent', userAgent);
-
     const initOptions = {
       appId: data.appId,
       apiKey: data.apiKey,
@@ -65,10 +59,16 @@ switch (data.method) {
     logger(data.method, initOptions);
     aa(data.method, initOptions);
 
+    const userAgent = 'insights-gtm (' + TEMPLATE_VERSION + ')';
+    logger('addAlgoliaAgent', userAgent);
+    aa('addAlgoliaAgent', userAgent);
+
     if (data.initialUserToken) {
       logger('setUserToken', data.initialUserToken);
       aa('setUserToken', data.initialUserToken);
     }
+
+    setInWindow(INSIGHTS_OBJECT_NAME, 'aa');
 
     break;
   }
