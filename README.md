@@ -185,13 +185,15 @@ const search = instantsearch({
 
 #### Access `userToken`
 
-In cases where the `userToken` is generated, you need a way to access the `userToken` so that you can pass it to the `searchClient`.
+In cases where the `userToken` is generated, you should get the `UserToken` and pass it to the `searchClient`.
 
-```ts
-const searchClient = algoliasearch('APPLICATION_ID', 'SEARCH_API_KEY');
+```js
+const userToken = aa('getUserToken');
 
-aa('getUserToken', null, (err, userToken) => {
-  searchClient.setExtraHeader('X-Algolia-UserToken', userToken);
+const searchClient = algoliasearch('APPLICATION_ID', 'SEARCH_API_KEY', {
+  headers: {
+    'X-Algolia-UserToken': userToken
+  }
 });
 ```
 
