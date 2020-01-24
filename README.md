@@ -190,16 +190,8 @@ In cases where the `userToken` is generated, you should get the `UserToken` and 
 ```js
 const searchClient = algoliasearch('APPLICATION_ID', 'SEARCH_API_KEY');
 
-const headers = {};
-const userToken = aa('getUserToken', null, (err, userToken) => {
-  headers['X-Algolia-UserToken'] = userToken;
-});
-
-// The headers should be used on search related operations:
-searchClient.initIndex('INDEX_NAME').search('query string', {
-  headers: headers
-}).then(({ hits }) => {
-  console.log(hits);
+aa('getUserToken', null, (err, userToken) => {
+  searchClient.transporter.headers['X-Algolia-UserToken'] = userToken;
 });
 ```
 
