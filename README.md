@@ -191,6 +191,10 @@ In cases where the `userToken` is generated, you need a way to access the `userT
 const searchClient = algoliasearch('APPLICATION_ID', 'SEARCH_API_KEY');
 
 aa('getUserToken', null, (err, userToken) => {
+  // for algoliasearch v3.x
+  searchClient.setExtraHeader('X-Algolia-UserToken', userToken);
+
+  // for algoliasearch v4.x
   searchClient.transporter.headers['X-Algolia-UserToken'] = userToken;
 });
 ```
