@@ -2535,17 +2535,6 @@ conventional-changelog-atom@^2.0.3:
   dependencies:
     q "^1.5.1"
 
-conventional-changelog-cli@2.0.31:
-  version "2.0.31"
-  resolved "https://registry.npmjs.org/conventional-changelog-cli/-/conventional-changelog-cli-2.0.31.tgz#3345581170fbb540416946e460fef519a64aef43"
-  integrity sha512-nMINylKAamBLM3OmD7/44d9TPZ3V58IDTXoGC/QtXxve+1Sj37BQTzIEW3TNaviZ2ZV/b5Dqg0eSk4DNP5fBdA==
-  dependencies:
-    add-stream "^1.0.0"
-    conventional-changelog "^3.1.18"
-    lodash "^4.17.15"
-    meow "^5.0.0"
-    tempfile "^3.0.0"
-
 conventional-changelog-codemirror@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npmjs.org/conventional-changelog-codemirror/-/conventional-changelog-codemirror-2.0.3.tgz#ebc088154684f8f5171446b8d546ba6b460d46f2"
@@ -2639,7 +2628,7 @@ conventional-changelog-writer@^4.0.11:
     split "^1.0.0"
     through2 "^3.0.0"
 
-conventional-changelog@^3.1.15, conventional-changelog@^3.1.18:
+conventional-changelog@^3.1.15:
   version "3.1.18"
   resolved "https://registry.npmjs.org/conventional-changelog/-/conventional-changelog-3.1.18.tgz#7da0a5ab34a604b920b8bf71c6cf5d952f0e805e"
   integrity sha512-aN6a3rjgV8qwAJj3sC/Lme2kvswWO7fFSGQc32gREcwIOsaiqBaO6f2p0NomFaPDnTqZ+mMZFLL3hlzvEnZ0mQ==
