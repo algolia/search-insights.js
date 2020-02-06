@@ -295,7 +295,6 @@ The following examples assume that the Search Insights library is loaded.
 
 - [InstantSearch.js](https://github.com/algolia/search-insights.js/blob/master/examples/INSTANTSEARCH.md)
 - [AlgoliaSearch Helper](https://github.com/algolia/search-insights.js/blob/master/examples/HELPER.md)
-- [React Instantsearch](https://github.com/algolia/search-insights.js/blob/master/examples/react-instantsearch/src/App.js)
 
 ## Contributing
 
