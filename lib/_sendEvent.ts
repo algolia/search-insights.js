@@ -126,7 +126,7 @@ export function makeSendEvent(requestFn: RequestFnType) {
       );
     }
 
-    bulkSendEvent(
+    return bulkSendEvent(
       requestFn,
       this._appId,
       this._apiKey,
@@ -147,5 +147,5 @@ function bulkSendEvent(
 ) {
   // Auth query
   const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${userAgent}`;
-  requestFn(reportingURL, { events });
+  return requestFn(reportingURL, { events });
 }

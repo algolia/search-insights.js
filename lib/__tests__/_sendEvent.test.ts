@@ -12,10 +12,8 @@ const credentials = {
   appId: "testId"
 };
 
-function setupInstance() {
-  const instance = new AlgoliaAnalytics({
-    requestFn: getRequesterForBrowser()
-  });
+function setupInstance(requestFn = getRequesterForBrowser()) {
+  const instance = new AlgoliaAnalytics({ requestFn });
   instance.init(credentials);
   instance.setUserToken("mock-user-id");
   return instance;
@@ -151,6 +149,50 @@ describe("sendEvent", () => {
         "X-Algolia-Agent": "insights-js (1.0.1)",
         "X-Algolia-Application-Id": "testId"
       });
+    });
+  });
+
+  describe("with custom requestFn", () => {
+    let analyticsInstance;
+    const fakeRequestFn = jest.fn();
+
+    beforeEach(() => {
+      analyticsInstance = setupInstance(fakeRequestFn);
+    });
+    it("should call the requestFn with expected arguments", () => {
+      (analyticsInstance as any).sendEvent("click", {
+        eventName: "my-event",
+        index: "my-index",
+        objectIDs: ["1"]
+      });
+
+      expect(fakeRequestFn).toHaveBeenCalledWith(
+        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)",
+        {
+          events: [
+            {
+              eventName: "my-event",
+              eventType: "click",
+              index: "my-index",
+              objectIDs: ["1"],
+              userToken: "mock-user-id"
+            }
+          ]
+        }
+      );
+    });
+
+    it("should allow a promise to be returned from requestFn", () => {
+      fakeRequestFn.mockImplementationOnce(() => Promise.resolve("test"));
+
+      const result = (analyticsInstance as any).sendEvent("click", {
+        eventName: "my-event",
+        index: "my-index",
+        objectIDs: ["1"]
+      });
+
+      expect(result instanceof Promise).toBe(true);
+      expect(result).resolves.toBe("test");
     });
   });
 
