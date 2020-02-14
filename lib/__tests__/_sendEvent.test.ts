@@ -157,6 +157,7 @@ describe("sendEvent", () => {
     const fakeRequestFn = jest.fn();
 
     beforeEach(() => {
+      fakeRequestFn.mockClear();
       analyticsInstance = setupInstance(fakeRequestFn);
     });
     it("should call the requestFn with expected arguments", () => {
