@@ -1,3 +1,19 @@
+# [1.4.0](https://github.com/algolia/search-insights.js/compare/v1.3.1...v1.4.0) (2020-02-17)
+
+
+### Bug Fixes
+
+* **gtm:** add Algolia Agent after `init` ([9640dc2](https://github.com/algolia/search-insights.js/commit/9640dc2677c931cdfd1e278834c54fe169381ba6))
+* **gtm:** forward `eventName` to all events ([1209301](https://github.com/algolia/search-insights.js/commit/12093016e424e0a0fce3fe803cc5388d5a905219))
+* **types:** remove optional types on main methods ([#192](https://github.com/algolia/search-insights.js/issues/192)) ([e551d10](https://github.com/algolia/search-insights.js/commit/e551d106464edbcc5304047d398a7b0df48c0823))
+
+
+### Features
+
+* **sendEvent:** return the value of the request function ([#200](https://github.com/algolia/search-insights.js/issues/200)) ([56b4ffd](https://github.com/algolia/search-insights.js/commit/56b4ffd0e878a02767f9553ef9dce26bf6dc6d26)), closes [#199](https://github.com/algolia/search-insights.js/issues/199)
+
+
+
 # [1.3.0](https://github.com/algolia/search-insights.js/compare/v1.2.0...v1.3.0) (2019-09-18)
 
 
