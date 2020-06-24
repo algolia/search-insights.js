@@ -6,4 +6,6 @@ const requestFn = getRequesterForNode();
 const instance = new AlgoliaAnalytics({ requestFn });
 const functionalInterface = getFunctionalInterface(instance);
 
+export { getFunctionalInterface, AlgoliaAnalytics };
+
 export default functionalInterface;
