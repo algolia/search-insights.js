@@ -2,8 +2,8 @@ import AlgoliaAnalytics from "./insights";
 import { getFunctionalInterface } from "./_getFunctionalInterface";
 import { getRequesterForNode } from "./utils/getRequesterForNode";
 
-export function createInsightsClient(requester) {
-  const instance = new AlgoliaAnalytics({ requestFn: requester });
+export function createInsightsClient(requestFn) {
+  const instance = new AlgoliaAnalytics({ requestFn });
   const functionalInterface = getFunctionalInterface(instance);
   return functionalInterface;
 }
