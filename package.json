@@ -18,7 +18,7 @@
     "build": "yarn build:types && rollup --environment NODE_ENV:'production' -c rollup.config.js",
     "build:dev": "yarn build:types && rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
     "build:examples": "webpack --config config/webpack.config.js --color --progress",
-    "build:types": "tsc -p . --noEmit false && rimraf dist",
+    "build:types": "tsc -p . --noEmit false",
     "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
     "lint": "tslint ./lib/**/*.ts",
     "lint:fix": "yarn lint -- --fix",
