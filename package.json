@@ -4,18 +4,21 @@
   "version": "1.4.0",
   "jsdelivr": "dist/search-insights.min.js",
   "main": "dist/search-insights.cjs.min.js",
+  "types": "types/index.d.ts",
   "engines": {
     "node": ">=8.16.0"
   },
   "files": [
     "dist",
     "lib",
+    "types",
     "!**/__tests__/**"
   ],
   "scripts": {
-    "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js",
-    "build:dev": "rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
+    "build": "yarn build:types && rollup --environment NODE_ENV:'production' -c rollup.config.js",
+    "build:dev": "yarn build:types && rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
     "build:examples": "webpack --config config/webpack.config.js --color --progress",
+    "build:types": "tsc -p . --noEmit false && rimraf dist",
     "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
     "lint": "tslint ./lib/**/*.ts",
     "lint:fix": "yarn lint -- --fix",

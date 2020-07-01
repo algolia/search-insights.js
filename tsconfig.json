@@ -2,6 +2,8 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "./types",
     "noEmit": true,
     "noUnusedLocals": true,
     "outDir": "./dist/",
@@ -11,7 +13,9 @@
     "noImplicitThis": false,
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "allowJs": true
+    "allowJs": true,
+    "rootDir": "."
   },
+  "include": ["lib/browser.ts", "lib/node.ts"],
   "exclude": ["node_modules", "**/*.test.ts"]
 }
