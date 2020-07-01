@@ -17,5 +17,5 @@
     "rootDir": "."
   },
   "include": ["lib/browser.ts", "lib/node.ts"],
-  "exclude": ["node_modules", "**/*.test.ts"]
+  "exclude": ["node_modules", "**/*.test.ts", "dist"]
 }
