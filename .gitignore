@@ -1,4 +1,5 @@
 dist/
+types/
 node_modules
 tests/screenshots
 tests/production
