@@ -3,18 +3,19 @@
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "declaration": true,
-    "declarationDir": "./types",
+    "declarationDir": "./dist",
     "noEmit": true,
     "noUnusedLocals": true,
     "outDir": "./dist/",
-    "module": "es6",
-    "target": "es6",
+    "module": "commonjs",
+    "target": "es5",
     "strict": true,
     "noImplicitThis": false,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "allowJs": true,
-    "rootDir": "."
+    "rootDir": ".",
+    "baseUrl": "lib"
   },
   "include": ["lib/browser.ts", "lib/node.ts"],
   "exclude": ["node_modules", "**/*.test.ts", "dist"]

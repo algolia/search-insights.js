@@ -1,5 +1,6 @@
 dist/
 types/
+lib/**/*.js
 node_modules
 tests/screenshots
 tests/production
