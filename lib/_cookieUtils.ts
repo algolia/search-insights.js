@@ -56,6 +56,7 @@ export function getUserToken(
 ): string {
   if (isFunction(callback)) {
     callback(null, this._userToken);
+    return;
   }
   return this._userToken;
 }
