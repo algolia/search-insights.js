@@ -199,6 +199,32 @@ aa('getUserToken', null, (err, userToken) => {
 });
 ```
 
+#### Listen to `userToken` change
+
+If you want to attach a listener for `userToken` change, you can call `onUserTokenChange`.
+
+```js
+aa('onUserTokenChange', (userToken) => {
+  console.log("userToken has changed: ", userToken);
+});
+```
+
+`onUserTokenChange` accepts `callback`(required) and `options`(optional).
+
+```js
+aa('onUserTokenChange', callback, options);
+```
+
+| Option      | Type       | Description                                    |
+| ----------- | ---------- | ---------------------------------------------- |
+| `immediate` | `boolean`  | Fire the callback as soon as it's attached     |
+
+If there is a chance that userToken is already set before `onUserTokenChange`, then you can provide `{ immediate: true }` option in order to get the token as soon as you attach `onUserTokenChange`.
+
+```js
+aa('onUserTokenChange', callback, { immediate: true });
+```
+
 #### Report a click event
 
 ```js
