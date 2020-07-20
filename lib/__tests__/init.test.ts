@@ -147,7 +147,7 @@ describe("init", () => {
       expect(analyticsInstance._userToken).toBeTruthy();
       expect(analyticsInstance._userToken.length).toBeGreaterThan(0);
       const callback = jest.fn();
-      analyticsInstance.onSetUserToken(callback, { immediate: true });
+      analyticsInstance.onUserTokenChange(callback, { immediate: true });
       expect(callback).toHaveBeenCalledWith(analyticsInstance._userToken);
       expect(callback).toHaveBeenCalledTimes(1);
 
@@ -163,7 +163,7 @@ describe("init", () => {
 
       analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
       const callback = jest.fn();
-      analyticsInstance.onSetUserToken(callback, { immediate: true });
+      analyticsInstance.onUserTokenChange(callback, { immediate: true });
       expect(callback).toHaveBeenCalledWith(undefined);
       expect(callback).toHaveBeenCalledTimes(1);
 
