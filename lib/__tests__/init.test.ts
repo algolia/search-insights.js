@@ -135,4 +135,17 @@ describe("init", () => {
     setUserToken.mockRestore();
     supportsCookies.mockRestore();
   });
+  it("updates _initialized after init()", () => {
+    expect(analyticsInstance._initialized).toBeFalsy();
+    analyticsInstance.init({ apiKey: "***", appId: "XXX" });
+    expect(analyticsInstance._initialized).toBe(true);
+  });
+  it("does not run init() more than once", () => {
+    analyticsInstance.init({ apiKey: "key1", appId: "id1" });
+    expect(() => {
+      analyticsInstance.init({ apiKey: "key2", appId: "id2" });
+    }).toThrowErrorMatchingInlineSnapshot(
+      `"Already initialized. Do not call 'init' method more than once."`
+    );
+  });
 });

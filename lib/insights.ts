@@ -68,6 +68,7 @@ class AlgoliaAnalytics {
   _userToken: string;
   _userHasOptedOut: boolean;
   _cookieDuration: number;
+  _initialized: boolean;
 
   // user agent
   _ua: string = "";

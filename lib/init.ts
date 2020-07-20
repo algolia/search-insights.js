@@ -53,6 +53,11 @@ export function init(options: InitParams) {
       `optional cookieDuration is incorrect, expected an integer.`
     );
   }
+  if (this._initialized === true) {
+    throw new Error(
+      `Already initialized. Do not call 'init' method more than once.`
+    );
+  }
 
   this._apiKey = options.apiKey;
   this._appId = options.appId;
@@ -75,4 +80,6 @@ export function init(options: InitParams) {
   if (supportsCookies()) {
     this.setUserToken(this.ANONYMOUS_USER_TOKEN);
   }
+
+  this._initialized = true;
 }
