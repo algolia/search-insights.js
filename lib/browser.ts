@@ -9,6 +9,7 @@ export function createInsightsClient(requestFn: RequestFnType) {
     // Process queue upon script execution
     processQueue.call(instance, window);
   }
+  return instance;
 }
 
 export default createInsightsClient(getRequesterForBrowser());
