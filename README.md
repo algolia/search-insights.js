@@ -24,7 +24,7 @@ Search Insights lets you report click, conversion and view metrics using the [Al
 ## Getting started
 
 
-> Are you using Google Tag Manager in your app? We provide a [custom template](gtm) to ease the integration.
+> Are you using Google Tag Manager in your app? We provide a [custom template](https://github.com/algolia/search-insights-gtm) to ease the integration.
 
 
 ### Browser
@@ -101,6 +101,47 @@ aa('clickedObjectIDs', {
   userToken: 'USER_ID',
   // ...
 });
+```
+
+#### Customize the client
+
+If you want to customize the way to send events, you can create a custom Insights client.
+
+```js
+// via ESM
+import { createInsightsClient } from "search-insights";
+// OR in commonJS
+const { createInsightsClient } = require("search-insights");
+// OR via the UMD
+const createInsightsClient = window.AlgoliaAnalytics.createInsightsClient;
+
+function requestFn(url, data) {
+  const serializedData = JSON.stringify(data);
+  const { protocol, host, path } = require("url").parse(url);
+  const options = {
+    protocol,
+    host,
+    path,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Content-Length": serializedData.length
+    }
+  };
+
+  const { request: nodeRequest } =
+    url.indexOf("https://") === 0 ? require("https") : require("http");
+  const req = nodeRequest(options);
+
+  req.on("error", error => {
+    console.error(error);
+  });
+
+  req.write(serializedData);
+  req.end();
+};
+
+const aa = createInsightsClient(requestFn);
 ```
 
 ## Use cases
