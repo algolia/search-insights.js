@@ -219,11 +219,24 @@ aa('onUserTokenChange', callback, options);
 | ----------- | ---------- | ---------------------------------------------- |
 | `immediate` | `boolean`  | Fire the callback as soon as it's attached     |
 
-If there is a chance that userToken is already set before `onUserTokenChange`, then you can provide `{ immediate: true }` option in order to get the token as soon as you attach `onUserTokenChange`.
+```js
+aa('init', { ... });  // ← This sets an anonymous user token if cookie is available.
+
+aa('onUserTokenChange', (userToken) => {
+  console.log(userToken);  // prints out the anonymous user token
+}, { immediate: true });
+```
 
 ```js
-aa('onUserTokenChange', callback, { immediate: true });
+aa('init', { ... });
+aa('setUserToken', 'my-user-id-1');
+
+aa('onUserTokenChange', (userToken) => {
+  console.log(userToken); // prints out 'my-user-id-1'
+}, { immediate: true })
 ```
+
+With `immediate: true`, `onUserTokenChange` will be immediately fired with the token which is set beforehand.
 
 #### Report a click event
 
