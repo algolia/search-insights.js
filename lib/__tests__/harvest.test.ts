@@ -124,6 +124,7 @@ describe("Integration tests", () => {
       it("should retrieve a queryID on page load", async () => {
         expect(data).toHaveProperty("queryID");
       });
+
       it("should generate an anonymous userToken on init and store it in a cookie", async () => {
         const userToken = await page.evaluate(
           () =>
@@ -156,6 +157,18 @@ describe("Integration tests", () => {
             })
         );
         expect(userToken).toEqual("user-id-1");
+      });
+
+      it("should get _hasCredentials from the instance", async () => {
+        const hasCredentials = await page.evaluate(
+          () =>
+            new Promise((resolve, reject) => {
+              window.aa("_get", "_hasCredentials", hasCredentials => {
+                resolve(hasCredentials);
+              });
+            })
+        );
+        expect(hasCredentials).toBe(true);
       });
     });
 
