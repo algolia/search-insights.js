@@ -165,7 +165,8 @@ describe("Integration tests", () => {
       let objectIDs;
       beforeAll(async () => {
         await page.evaluate(() => {
-          window.AlgoliaAnalytics._endpointOrigin = "http://localhost:8080";
+          window.AlgoliaAnalytics.default._endpointOrigin =
+            "http://localhost:8080";
         });
         const event = await captureNetworkWhile(async () => {
           const button = await page.$(
