@@ -4,7 +4,7 @@
 ### Features
 
 * **browser:** expose createInsightsClient ([#213](https://github.com/algolia/search-insights.js/issues/213)) ([7880205](https://github.com/algolia/search-insights.js/commit/788020598064bc5f9c71ba0b1cf5a20109195fb8))
-* **get:** add _get function ([#216](https://github.com/algolia/search-insights.js/issues/216)) ([3173c9b](https://github.com/algolia/search-insights.js/commit/3173c9bcefb15c9c9b166636dabef6945e555f6f))
+* **get:** add `_get` function to get instance variables ([#216](https://github.com/algolia/search-insights.js/issues/216)) ([3173c9b](https://github.com/algolia/search-insights.js/commit/3173c9bcefb15c9c9b166636dabef6945e555f6f))
 * add `onUserTokenChange` to know when token is assigned ([#209](https://github.com/algolia/search-insights.js/issues/209)) ([1e5bd42](https://github.com/algolia/search-insights.js/commit/1e5bd42f48530106f62855bba22a0a4b612bce8d))
 * export `createInsightsClient` for node env ([#203](https://github.com/algolia/search-insights.js/issues/203)) ([4f04869](https://github.com/algolia/search-insights.js/commit/4f048697a44763c23a03c311bfe6d7a9f5367641)), closes [#204](https://github.com/algolia/search-insights.js/issues/204) [#204](https://github.com/algolia/search-insights.js/issues/204)
 
