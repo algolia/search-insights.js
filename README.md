@@ -240,6 +240,45 @@ aa('getUserToken', null, (err, userToken) => {
 });
 ```
 
+#### Listen to `userToken` change
+
+If you want to attach a listener for `userToken` change, you can call `onUserTokenChange`.
+
+```js
+aa('onUserTokenChange', (userToken) => {
+  console.log("userToken has changed: ", userToken);
+});
+```
+
+`onUserTokenChange` accepts `callback`(required) and `options`(optional).
+
+```js
+aa('onUserTokenChange', callback, options);
+```
+
+| Option      | Type       | Description                                    |
+| ----------- | ---------- | ---------------------------------------------- |
+| `immediate` | `boolean`  | Fire the callback as soon as it's attached     |
+
+```js
+aa('init', { ... });  // ← This sets an anonymous user token if cookie is available.
+
+aa('onUserTokenChange', (userToken) => {
+  console.log(userToken);  // prints out the anonymous user token
+}, { immediate: true });
+```
+
+```js
+aa('init', { ... });
+aa('setUserToken', 'my-user-id-1');
+
+aa('onUserTokenChange', (userToken) => {
+  console.log(userToken); // prints out 'my-user-id-1'
+}, { immediate: true })
+```
+
+With `immediate: true`, `onUserTokenChange` will be immediately fired with the token which is set beforehand.
+
 #### Report a click event
 
 ```js

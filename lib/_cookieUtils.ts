@@ -48,6 +48,9 @@ export function setUserToken(userToken: string | number): void {
   } else {
     this._userToken = userToken;
   }
+  if (this._onUserTokenChangeCallback) {
+    this._onUserTokenChangeCallback(this._userToken);
+  }
 }
 
 export function getUserToken(
@@ -58,4 +61,14 @@ export function getUserToken(
     callback(null, this._userToken);
   }
   return this._userToken;
+}
+
+export function onUserTokenChange(
+  callback: (userToken: string) => void,
+  options?: { immediate: boolean }
+): void {
+  this._onUserTokenChangeCallback = callback;
+  if (options && options.immediate) {
+    this._onUserTokenChangeCallback(this._userToken);
+  }
 }
