@@ -48,7 +48,7 @@ export function setUserToken(userToken: string | number): void {
   } else {
     this._userToken = userToken;
   }
-  if (this._onUserTokenChangeCallback) {
+  if (isFunction(this._onUserTokenChangeCallback)) {
     this._onUserTokenChangeCallback(this._userToken);
   }
 }
@@ -68,7 +68,11 @@ export function onUserTokenChange(
   options?: { immediate: boolean }
 ): void {
   this._onUserTokenChangeCallback = callback;
-  if (options && options.immediate) {
+  if (
+    options &&
+    options.immediate &&
+    isFunction(this._onUserTokenChangeCallback)
+  ) {
     this._onUserTokenChangeCallback(this._userToken);
   }
 }
