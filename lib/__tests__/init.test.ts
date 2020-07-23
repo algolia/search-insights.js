@@ -189,5 +189,29 @@ describe("init", () => {
         expect(callback).toHaveBeenCalledTimes(1);
       });
     });
+
+    describe("nullish or invalid callback", () => {
+      it("should not throw an exception when setting nullish callback", () => {
+        analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
+        analyticsInstance.setUserToken("abc");
+
+        expect(() => {
+          analyticsInstance.onUserTokenChange(undefined);
+        }).not.toThrow();
+
+        expect(() => {
+          analyticsInstance.onUserTokenChange(undefined, { immediate: true });
+        }).not.toThrow();
+      });
+
+      it("should not throw an exception when setting user token after setting invalid callback", () => {
+        analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
+        analyticsInstance.onUserTokenChange("this is not a function");
+
+        expect(() => {
+          analyticsInstance.setUserToken("abc");
+        }).not.toThrow();
+      });
+    });
   });
 });
