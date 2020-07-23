@@ -7,6 +7,7 @@ objectAssignPolyfill();
 import { makeSendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
 
 import { InitParams, init } from "./init";
+import { get, GetCallback } from "./get";
 import { initSearch, InitSearchParams } from "./_initSearch";
 import { addAlgoliaAgent } from "./_algoliaAgent";
 
@@ -112,6 +113,8 @@ class AlgoliaAnalytics {
   public viewedObjectIDs: (params: InsightsSearchViewObjectIDsEvent) => void;
   public viewedFilters: (params: InsightsSearchViewFiltersEvent) => void;
 
+  public _get: (key: string, callback: GetCallback) => void;
+
   constructor({ requestFn }: { requestFn: RequestFnType }) {
     // Bind private methods to `this` class
     this.sendEvent = makeSendEvent(requestFn).bind(this);
@@ -138,6 +141,8 @@ class AlgoliaAnalytics {
 
     this.viewedObjectIDs = viewedObjectIDs.bind(this);
     this.viewedFilters = viewedFilters.bind(this);
+
+    this._get = get.bind(this);
   }
 }
 
