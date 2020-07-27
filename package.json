@@ -4,14 +4,13 @@
   "version": "1.4.0",
   "jsdelivr": "dist/search-insights.min.js",
   "main": "dist/search-insights.cjs.min.js",
-  "types": "types/lib/node.d.ts",
+  "types": "dist/lib/node.d.ts",
   "engines": {
     "node": ">=8.16.0"
   },
   "files": [
     "dist",
     "lib",
-    "types",
     "!**/__tests__/**"
   ],
   "scripts": {
