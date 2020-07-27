@@ -24,7 +24,7 @@ Search Insights lets you report click, conversion and view metrics using the [Al
 ## Getting started
 
 
-> Are you using Google Tag Manager in your app? We provide a [custom template](gtm) to ease the integration.
+> Are you using Google Tag Manager in your app? We provide a [custom template](https://github.com/algolia/search-insights-gtm) to ease the integration.
 
 
 ### Browser
@@ -37,7 +37,7 @@ We recommend loading the library by adding the snippet below to all pages where 
 <!-- prettier-ignore-start -->
 ```html
 <script>
-var ALGOLIA_INSIGHTS_SRC = "https://cdn.jsdelivr.net/npm/search-insights@1.4.0";
+var ALGOLIA_INSIGHTS_SRC = "https://cdn.jsdelivr.net/npm/search-insights@1.5.0";
 
 !function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e[s]=e[s]||function(){
 (e[s].queue=e[s].queue||[]).push(arguments)},i=a.createElement(t),c=a.getElementsByTagName(t)[0],
@@ -101,6 +101,47 @@ aa('clickedObjectIDs', {
   userToken: 'USER_ID',
   // ...
 });
+```
+
+#### Customize the client
+
+If you want to customize the way to send events, you can create a custom Insights client.
+
+```js
+// via ESM
+import { createInsightsClient } from "search-insights";
+// OR in commonJS
+const { createInsightsClient } = require("search-insights");
+// OR via the UMD
+const createInsightsClient = window.AlgoliaAnalytics.createInsightsClient;
+
+function requestFn(url, data) {
+  const serializedData = JSON.stringify(data);
+  const { protocol, host, path } = require("url").parse(url);
+  const options = {
+    protocol,
+    host,
+    path,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Content-Length": serializedData.length
+    }
+  };
+
+  const { request: nodeRequest } =
+    url.indexOf("https://") === 0 ? require("https") : require("http");
+  const req = nodeRequest(options);
+
+  req.on("error", error => {
+    console.error(error);
+  });
+
+  req.write(serializedData);
+  req.end();
+};
+
+const aa = createInsightsClient(requestFn);
 ```
 
 ## Use cases
@@ -198,6 +239,45 @@ aa('getUserToken', null, (err, userToken) => {
   searchClient.transporter.headers['X-Algolia-UserToken'] = userToken;
 });
 ```
+
+#### Listen to `userToken` change
+
+If you want to attach a listener for `userToken` change, you can call `onUserTokenChange`.
+
+```js
+aa('onUserTokenChange', (userToken) => {
+  console.log("userToken has changed: ", userToken);
+});
+```
+
+`onUserTokenChange` accepts `callback`(required) and `options`(optional).
+
+```js
+aa('onUserTokenChange', callback, options);
+```
+
+| Option      | Type       | Description                                    |
+| ----------- | ---------- | ---------------------------------------------- |
+| `immediate` | `boolean`  | Fire the callback as soon as it's attached     |
+
+```js
+aa('init', { ... });  // ← This sets an anonymous user token if cookie is available.
+
+aa('onUserTokenChange', (userToken) => {
+  console.log(userToken);  // prints out the anonymous user token
+}, { immediate: true });
+```
+
+```js
+aa('init', { ... });
+aa('setUserToken', 'my-user-id-1');
+
+aa('onUserTokenChange', (userToken) => {
+  console.log(userToken); // prints out 'my-user-id-1'
+}, { immediate: true })
+```
+
+With `immediate: true`, `onUserTokenChange` will be immediately fired with the token which is set beforehand.
 
 #### Report a click event
 

@@ -7,6 +7,7 @@ objectAssignPolyfill();
 import { makeSendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
 
 import { InitParams, init } from "./init";
+import { get, GetCallback } from "./get";
 import { initSearch, InitSearchParams } from "./_initSearch";
 import { addAlgoliaAgent } from "./_algoliaAgent";
 
@@ -37,7 +38,8 @@ import {
 import {
   ANONYMOUS_USER_TOKEN,
   getUserToken,
-  setUserToken
+  setUserToken,
+  onUserTokenChange
 } from "./_cookieUtils";
 import { version } from "../package.json";
 
@@ -93,6 +95,10 @@ class AlgoliaAnalytics {
     options?: any,
     callback?: (err: any, userToken: string) => void
   ) => string;
+  public onUserTokenChange: (
+    callback: (userToken: string) => void,
+    options: { immediate: boolean }
+  ) => void;
 
   public clickedObjectIDsAfterSearch: (
     params: InsightsSearchClickEvent
@@ -112,6 +118,8 @@ class AlgoliaAnalytics {
   public viewedObjectIDs: (params: InsightsSearchViewObjectIDsEvent) => void;
   public viewedFilters: (params: InsightsSearchViewFiltersEvent) => void;
 
+  public _get: (key: string, callback: GetCallback) => void;
+
   constructor({ requestFn }: { requestFn: RequestFnType }) {
     // Bind private methods to `this` class
     this.sendEvent = makeSendEvent(requestFn).bind(this);
@@ -125,6 +133,7 @@ class AlgoliaAnalytics {
     this.ANONYMOUS_USER_TOKEN = ANONYMOUS_USER_TOKEN;
     this.setUserToken = setUserToken.bind(this);
     this.getUserToken = getUserToken.bind(this);
+    this.onUserTokenChange = onUserTokenChange.bind(this);
 
     this.clickedObjectIDsAfterSearch = clickedObjectIDsAfterSearch.bind(this);
     this.clickedObjectIDs = clickedObjectIDs.bind(this);
@@ -138,6 +147,8 @@ class AlgoliaAnalytics {
 
     this.viewedObjectIDs = viewedObjectIDs.bind(this);
     this.viewedFilters = viewedFilters.bind(this);
+
+    this._get = get.bind(this);
   }
 }
 
