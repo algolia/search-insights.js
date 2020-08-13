@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/algolia/search-insights.js/compare/v1.5.0...v1.6.0) (2020-08-13)
+
+
+### Features
+
+* **react-native:** shim native node modules ([#220](https://github.com/algolia/search-insights.js/issues/220)) ([713cbf9](https://github.com/algolia/search-insights.js/commit/713cbf9b2937713fd9ff2d4b5501c0a1e94dd4ae))
+
+
+
 # [1.5.0](https://github.com/algolia/search-insights.js/compare/v1.4.0...v1.5.0) (2020-07-23)
 
 
