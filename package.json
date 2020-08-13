@@ -4,6 +4,10 @@
   "version": "1.5.0",
   "jsdelivr": "dist/search-insights.min.js",
   "main": "dist/search-insights.cjs.min.js",
+  "react-native": {
+    "http": "./empty-module.cjs.js",
+    "https": "./empty-module.cjs.js"
+  },
   "engines": {
     "node": ">=8.16.0"
   },
