@@ -14,7 +14,8 @@
   "files": [
     "dist",
     "lib",
-    "!**/__tests__/**"
+    "!**/__tests__/**",
+    "empty-module.cjs.js"
   ],
   "scripts": {
     "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js",
