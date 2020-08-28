@@ -1,3 +1,12 @@
+## [1.6.1](https://github.com/algolia/search-insights.js/compare/v1.6.0...v1.6.1) (2020-08-28)
+
+
+### Bug Fixes
+
+* **package:** include empty module ([c4cf25d](https://github.com/algolia/search-insights.js/commit/c4cf25df23936edeca68876e4a93cdd9c97444df))
+
+
+
 # [1.6.0](https://github.com/algolia/search-insights.js/compare/v1.5.0...v1.6.0) (2020-08-13)
 
 

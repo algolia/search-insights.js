@@ -1,7 +1,7 @@
 {
   "name": "search-insights",
   "description": "Library for reporting click, conversion and view metrics using the Algolia Insights API",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "jsdelivr": "dist/search-insights.min.js",
   "main": "dist/search-insights.cjs.min.js",
   "react-native": {
