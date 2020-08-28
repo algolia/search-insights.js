@@ -3,7 +3,7 @@
 
 ### Bug Fixes
 
-* **package:** include emtpy module ([c4cf25d](https://github.com/algolia/search-insights.js/commit/c4cf25df23936edeca68876e4a93cdd9c97444df))
+* **package:** include empty module ([c4cf25d](https://github.com/algolia/search-insights.js/commit/c4cf25df23936edeca68876e4a93cdd9c97444df))
 
 
 
