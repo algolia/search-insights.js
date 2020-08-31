@@ -3,7 +3,7 @@
   "description": "Library for reporting click, conversion and view metrics using the Algolia Insights API",
   "version": "1.6.1",
   "jsdelivr": "dist/search-insights.min.js",
-  "main": "dist/search-insights.cjs.min.js",
+  "main": "index.cjs.js",
   "react-native": {
     "http": "./empty-module.cjs.js",
     "https": "./empty-module.cjs.js"
@@ -15,6 +15,7 @@
     "dist",
     "lib",
     "!**/__tests__/**",
+    "index.cjs.js",
     "empty-module.cjs.js"
   ],
   "scripts": {
