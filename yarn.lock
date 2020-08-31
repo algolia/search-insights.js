@@ -8474,11 +8474,6 @@ rollup-plugin-node-resolve@3.4.0:
     is-module "^1.0.0"
     resolve "^1.1.6"
 
-rollup-plugin-run@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/rollup-plugin-run/-/rollup-plugin-run-1.1.0.tgz#5d9a3a16bf08aca6e5a2814b79c2b76f1210df27"
-  integrity sha512-79GROWUrh5H4mq8ooCuugDz3xCgLlqRQqKm+Tu1sQjLh3jrFkuNeQVQgaXAvIr5xVmxX5YPPYqJKLEjuynr2fQ==
-
 rollup-plugin-typescript@1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/rollup-plugin-typescript/-/rollup-plugin-typescript-1.0.1.tgz#86565033b714c3d1f3aba510aad3dc519f7091e9"
