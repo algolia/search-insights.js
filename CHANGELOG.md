@@ -3,7 +3,7 @@
 
 ### Bug Fixes
 
-* **bundle:** fix mixed exports issue ([#224](https://github.com/algolia/search-insights.js/issues/224)) ([24b97e3](https://github.com/algolia/search-insights.js/commit/24b97e304e6bb71054e47fe79a5357af24cf3f4b))
+* **commonJS:** fix mixed exports issue ([#224](https://github.com/algolia/search-insights.js/issues/224)) ([24b97e3](https://github.com/algolia/search-insights.js/commit/24b97e304e6bb71054e47fe79a5357af24cf3f4b))
 
 
 
