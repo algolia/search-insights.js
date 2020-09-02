@@ -1,3 +1,12 @@
+## [1.6.2](https://github.com/algolia/search-insights.js/compare/v1.6.1...v1.6.2) (2020-09-02)
+
+
+### Bug Fixes
+
+* **bundle:** fix mixed exports issue ([#224](https://github.com/algolia/search-insights.js/issues/224)) ([24b97e3](https://github.com/algolia/search-insights.js/commit/24b97e304e6bb71054e47fe79a5357af24cf3f4b))
+
+
+
 ## [1.6.1](https://github.com/algolia/search-insights.js/compare/v1.6.0...v1.6.1) (2020-08-28)
 
 
