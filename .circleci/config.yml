@@ -68,7 +68,7 @@ jobs:
       - run: *install_yarn_version
       - restore_cache: *restore_yarn_cache
       - run:
-          name: Remove Shipjs and install dependencies
+          name: Remove Ship.js and install dependencies
           command: yarn remove shipjs && yarn install
       - run:
           name: Unit tests
