@@ -8,6 +8,9 @@
     "http": "./empty-module.cjs.js",
     "https": "./empty-module.cjs.js"
   },
+  "engines": {
+    "node": ">=8.16.0"
+  },
   "files": [
     "dist",
     "lib",
@@ -29,8 +32,7 @@
     "toc": "markdown-toc -i --maxdepth=3 --bullets=\"-\" README.md",
     "type-check": "tsc",
     "type-check:watch": "yarn type-check --watch",
-    "release:prepare": "shipjs prepare",
-    "release:trigger": "shipjs trigger"
+    "release": "shipjs prepare"
   },
   "repository": {
     "type": "git",
@@ -78,7 +80,7 @@
     "rollup-plugin-typescript": "1.0.1",
     "rollup-plugin-uglify": "3.0.0",
     "sass-loader": "6.0.7",
-    "shipjs": "0.13.1",
+    "shipjs": "0.21.0",
     "style-loader": "0.23.1",
     "ts-jest": "22.4.6",
     "ts-loader": "6.2.1",
