@@ -383,6 +383,14 @@ To run the examples and the code, you need to run two separate commands:
 - `yarn dev` runs webpack and the Node.js server
 - `yarn build:dev` runs Rollup in watch mode
 
+To release, go on `master` (`git checkout master`) and use:
+
+```sh
+yarn run release
+```
+
+It will create a pull request for the next release. When it's reviewed, approved and merged, then CircleCI will automatically publish it to npm.
+
 ## License
 
 Search Insights is [MIT licensed](LICENSE.md).
