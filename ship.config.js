@@ -2,11 +2,8 @@ const fs = require("fs");
 const path = require("path");
 
 module.exports = {
-  mergeStrategy: {
-    toSameBranch: ["master"]
-  },
   buildCommand: () => "yarn build && /bin/bash ./pre-deploy.sh",
-  pullRequestReviewer: ["@algolia/instantsearch-for-websites"],
+  pullRequestTeamReviewers: ["@algolia/instantsearch-for-websites"],
   versionUpdated: ({ version, releaseType, dir }) => {
     if (
       releaseType === "major" ||
