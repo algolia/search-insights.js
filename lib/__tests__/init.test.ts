@@ -1,10 +1,12 @@
 import AlgoliaAnalytics from "../insights";
 import * as utils from "../utils";
+import { getCookie } from "../_cookieUtils";
 
 describe("init", () => {
   let analyticsInstance;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
+    document.cookie = `_ALGOLIA=;${new Date().toUTCString()};path=/`;
   });
 
   it("should throw if no parameters is passed", () => {
@@ -62,6 +64,15 @@ describe("init", () => {
       userHasOptedOut: true
     });
     expect(analyticsInstance._userHasOptedOut).toBe(true);
+  });
+  it("should not set anonymous user token when _userHasOptedOut is true", () => {
+    analyticsInstance.init({
+      apiKey: "***",
+      appId: "XXX",
+      userHasOptedOut: true
+    });
+    expect(analyticsInstance._userToken).toBeUndefined();
+    expect(getCookie("_ALGOLIA")).toBe("");
   });
   it("should use 6 months cookieDuration by default", () => {
     analyticsInstance.init({ apiKey: "***", appId: "XXX" });
