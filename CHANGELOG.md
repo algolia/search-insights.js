@@ -1,3 +1,12 @@
+## [1.6.3](https://github.com/algolia/search-insights.js/compare/v1.6.2...v1.6.3) (2020-11-02)
+
+
+### Bug Fixes
+
+* do not store anonymous token in cookie when user has opted out ([#233](https://github.com/algolia/search-insights.js/issues/233)) ([8669b67](https://github.com/algolia/search-insights.js/commit/8669b675338f0f76f12be1af57484bfd07e57cbe))
+
+
+
 ## [1.6.2](https://github.com/algolia/search-insights.js/compare/v1.6.1...v1.6.2) (2020-09-02)
 
 
