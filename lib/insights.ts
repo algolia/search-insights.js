@@ -69,6 +69,7 @@ class AlgoliaAnalytics {
   _endpointOrigin: string;
   _userToken: string;
   _userHasOptedOut: boolean;
+  _useCookie: boolean;
   _cookieDuration: number;
 
   // user agent

@@ -9,6 +9,7 @@ export interface InitParams {
   apiKey: string;
   appId: string;
   userHasOptedOut?: boolean;
+  useCookie?: boolean;
   cookieDuration?: number;
   region?: InsightRegion;
 }
@@ -61,7 +62,7 @@ export function init(options: InitParams) {
   this._endpointOrigin = options.region
     ? `https://insights.${options.region}.algolia.io`
     : "https://insights.algolia.io";
-
+  this._useCookie = options.useCookie || true;
   this._cookieDuration = options.cookieDuration
     ? options.cookieDuration
     : 6 * MONTH;
