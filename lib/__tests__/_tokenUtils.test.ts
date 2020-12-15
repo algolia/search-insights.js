@@ -1,4 +1,4 @@
-import { getCookie } from "../_cookieUtils";
+import { getCookie } from "../_tokenUtils";
 import AlgoliaAnalytics from "../insights";
 import { createUUID } from "../utils/uuid";
 import * as utils from "../utils";
@@ -17,7 +17,7 @@ const DAY = 86400000; /* 1 day in ms*/
 const DATE_TOMORROW = new Date(Date.now() + DAY).toUTCString();
 const DATE_YESTERDAY = new Date(Date.now() - DAY).toUTCString();
 
-describe("cookieUtils", () => {
+describe("tokenUtils", () => {
   let analyticsInstance;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({

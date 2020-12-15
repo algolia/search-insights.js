@@ -1,6 +1,6 @@
 import AlgoliaAnalytics from "../insights";
 import * as utils from "../utils";
-import { getCookie } from "../_cookieUtils";
+import { getCookie } from "../_tokenUtils";
 
 describe("init", () => {
   let analyticsInstance;

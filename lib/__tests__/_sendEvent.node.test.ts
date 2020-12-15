@@ -4,7 +4,7 @@
 import AlgoliaAnalytics from "../insights";
 import { getRequesterForNode } from "../utils/getRequesterForNode";
 import { getFunctionalInterface } from "../_getFunctionalInterface";
-import { setUserToken } from "../_cookieUtils";
+import { setUserToken } from "../_tokenUtils";
 
 const credentials = {
   apiKey: "testKey",

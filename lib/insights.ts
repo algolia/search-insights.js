@@ -40,7 +40,7 @@ import {
   getUserToken,
   setUserToken,
   onUserTokenChange
-} from "./_cookieUtils";
+} from "./_tokenUtils";
 import { version } from "../package.json";
 
 type Queue = {
