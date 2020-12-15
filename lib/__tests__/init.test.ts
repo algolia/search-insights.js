@@ -158,7 +158,12 @@ describe("init", () => {
       "setAnonymousUserToken"
     );
 
-    analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de", useCookie: false });
+    analyticsInstance.init({
+      apiKey: "***",
+      appId: "XXX",
+      region: "de",
+      useCookie: false
+    });
     expect(setAnonymousUserToken).not.toHaveBeenCalled();
 
     setAnonymousUserToken.mockRestore();
