@@ -37,10 +37,10 @@ export function setAnonymousUserToken(): void {
     foundToken === "" ||
     foundToken.indexOf("anonymous-") !== 0
   ) {
-    this._userToken = `anonymous-${createUUID()}`;
+    this.setUserToken(`anonymous-${createUUID()}`);
     setCookie(COOKIE_KEY, this._userToken, this._cookieDuration);
   } else {
-    this._userToken = foundToken;
+    this.setUserToken(foundToken);
   }
 }
 

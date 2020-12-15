@@ -222,6 +222,20 @@ describe("init", () => {
         expect(callback).toHaveBeenCalledWith("def");
         expect(callback).toHaveBeenCalledTimes(1);
       });
+
+      it("is triggered by setAnonymousUserToken", () => {
+        analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
+
+        const callback = jest.fn();
+        analyticsInstance.onUserTokenChange(callback);
+        expect(callback).toHaveBeenCalledTimes(0);
+
+        analyticsInstance.setAnonymousUserToken();
+        expect(callback).toHaveBeenCalledWith(
+          expect.stringMatching(/^anonymous-[-\w]+$/)
+        );
+        expect(callback).toHaveBeenCalledTimes(1);
+      });
     });
 
     describe("nullish or invalid callback", () => {
