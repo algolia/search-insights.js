@@ -65,6 +65,7 @@ aa('setUserToken', 'USER_ID');
 | **`apiKey`**      | `string`       | None (required)          | The search API key of your Algolia application |
 | `userHasOptedOut` | `boolean`      | `false`                  | Whether to exclude users from analytics        |
 | `region`          | `'de' \| 'us'` | Automatic                | The DNS server to target                       |
+| `useCookie`       | `boolean`      | `true`                   | Whether to use cookie in browser environment. The anonymous user token will not be set if `false`. |
 | `cookieDuration`  | `number`       | `15552000000` (6 months) | The cookie duration in milliseconds            |
 
 ### Node.js
