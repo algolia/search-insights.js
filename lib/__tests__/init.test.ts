@@ -149,6 +149,21 @@ describe("init", () => {
     setAnonymousUserToken.mockRestore();
     supportsCookies.mockRestore();
   });
+  it("should not set anonymous userToken if useCookie is false", () => {
+    const supportsCookies = jest
+      .spyOn(utils, "supportsCookies")
+      .mockReturnValue(true);
+    const setAnonymousUserToken = jest.spyOn(
+      analyticsInstance,
+      "setAnonymousUserToken"
+    );
+
+    analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de", useCookie: false });
+    expect(setAnonymousUserToken).not.toHaveBeenCalled();
+
+    setAnonymousUserToken.mockRestore();
+    supportsCookies.mockRestore();
+  });
 
   describe("callback for userToken", () => {
     describe("immediate: true", () => {
