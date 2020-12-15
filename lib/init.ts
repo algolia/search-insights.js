@@ -74,6 +74,6 @@ export function init(options: InitParams) {
   this._uaURIEncoded = encodeURIComponent(DEFAULT_ALGOLIA_AGENT);
 
   if (!this._userHasOptedOut && supportsCookies()) {
-    this.setUserToken(this.ANONYMOUS_USER_TOKEN);
+    this.setAnonymousUserToken();
   }
 }

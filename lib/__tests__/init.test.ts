@@ -119,31 +119,34 @@ describe("init", () => {
       "https://insights.de.algolia.io"
     );
   });
-  it("should set userToken to ANONYMOUS if environment supports cookies", () => {
+  it("should set anonymous userToken if environment supports cookies", () => {
     const supportsCookies = jest
       .spyOn(utils, "supportsCookies")
       .mockReturnValue(true);
-    const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+    const setAnonymousUserToken = jest.spyOn(
+      analyticsInstance,
+      "setAnonymousUserToken"
+    );
 
     analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
-    expect(setUserToken).toHaveBeenCalledWith(
-      analyticsInstance.ANONYMOUS_USER_TOKEN
-    );
-    expect(setUserToken).toHaveBeenCalledTimes(1);
+    expect(setAnonymousUserToken).toHaveBeenCalledTimes(1);
 
-    setUserToken.mockRestore();
+    setAnonymousUserToken.mockRestore();
     supportsCookies.mockRestore();
   });
-  it("should not set userToken if environment does not supports cookies", () => {
+  it("should not set anonymous userToken if environment does not supports cookies", () => {
     const supportsCookies = jest
       .spyOn(utils, "supportsCookies")
       .mockReturnValue(false);
-    const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+    const setAnonymousUserToken = jest.spyOn(
+      analyticsInstance,
+      "setAnonymousUserToken"
+    );
 
     analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
-    expect(setUserToken).not.toHaveBeenCalled();
+    expect(setAnonymousUserToken).not.toHaveBeenCalled();
 
-    setUserToken.mockRestore();
+    setAnonymousUserToken.mockRestore();
     supportsCookies.mockRestore();
   });
 
