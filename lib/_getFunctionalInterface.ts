@@ -5,6 +5,8 @@ export function getFunctionalInterface(instance: AlgoliaAnalytics) {
   return (functionName: string, ...functionArguments: any[]) => {
     if (functionName && isFunction((instance as any)[functionName])) {
       instance[functionName](...functionArguments);
+    } else {
+      console.warn(`The method \`${functionName}\` doesn't exist.`);
     }
   };
 }
