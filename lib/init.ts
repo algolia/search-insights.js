@@ -1,4 +1,4 @@
-import { isUndefined, isString, isNumber, supportsCookies } from "./utils";
+import { isUndefined, isString, isNumber } from "./utils";
 import { DEFAULT_ALGOLIA_AGENT } from "./_algoliaAgent";
 
 type InsightRegion = "de" | "us";
@@ -9,6 +9,7 @@ export interface InitParams {
   apiKey: string;
   appId: string;
   userHasOptedOut?: boolean;
+  useCookie?: boolean;
   cookieDuration?: number;
   region?: InsightRegion;
 }
@@ -61,7 +62,7 @@ export function init(options: InitParams) {
   this._endpointOrigin = options.region
     ? `https://insights.${options.region}.algolia.io`
     : "https://insights.algolia.io";
-
+  this._useCookie = options.useCookie ?? true;
   this._cookieDuration = options.cookieDuration
     ? options.cookieDuration
     : 6 * MONTH;
@@ -72,7 +73,7 @@ export function init(options: InitParams) {
   this._ua = DEFAULT_ALGOLIA_AGENT;
   this._uaURIEncoded = encodeURIComponent(DEFAULT_ALGOLIA_AGENT);
 
-  if (!this._userHasOptedOut && supportsCookies()) {
-    this.setUserToken(this.ANONYMOUS_USER_TOKEN);
+  if (!this._userHasOptedOut && this._useCookie) {
+    this.setAnonymousUserToken();
   }
 }

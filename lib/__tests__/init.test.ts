@@ -1,6 +1,6 @@
 import AlgoliaAnalytics from "../insights";
 import * as utils from "../utils";
-import { getCookie } from "../_cookieUtils";
+import { getCookie } from "../_tokenUtils";
 
 describe("init", () => {
   let analyticsInstance;
@@ -119,22 +119,22 @@ describe("init", () => {
       "https://insights.de.algolia.io"
     );
   });
-  it("should set userToken to ANONYMOUS if environment supports cookies", () => {
+  it("should set anonymous userToken if environment supports cookies", () => {
     const supportsCookies = jest
       .spyOn(utils, "supportsCookies")
       .mockReturnValue(true);
-    const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+    const setAnonymousUserToken = jest.spyOn(
+      analyticsInstance,
+      "setAnonymousUserToken"
+    );
 
     analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
-    expect(setUserToken).toHaveBeenCalledWith(
-      analyticsInstance.ANONYMOUS_USER_TOKEN
-    );
-    expect(setUserToken).toHaveBeenCalledTimes(1);
+    expect(setAnonymousUserToken).toHaveBeenCalledTimes(1);
 
-    setUserToken.mockRestore();
+    setAnonymousUserToken.mockRestore();
     supportsCookies.mockRestore();
   });
-  it("should not set userToken if environment does not supports cookies", () => {
+  it("should not set anonymous userToken if environment does not supports cookies", () => {
     const supportsCookies = jest
       .spyOn(utils, "supportsCookies")
       .mockReturnValue(false);
@@ -144,6 +144,26 @@ describe("init", () => {
     expect(setUserToken).not.toHaveBeenCalled();
 
     setUserToken.mockRestore();
+    supportsCookies.mockRestore();
+  });
+  it("should not set anonymous userToken if useCookie is false", () => {
+    const supportsCookies = jest
+      .spyOn(utils, "supportsCookies")
+      .mockReturnValue(true);
+    const setAnonymousUserToken = jest.spyOn(
+      analyticsInstance,
+      "setAnonymousUserToken"
+    );
+
+    analyticsInstance.init({
+      apiKey: "***",
+      appId: "XXX",
+      region: "de",
+      useCookie: false
+    });
+    expect(setAnonymousUserToken).not.toHaveBeenCalled();
+
+    setAnonymousUserToken.mockRestore();
     supportsCookies.mockRestore();
   });
 
@@ -197,6 +217,20 @@ describe("init", () => {
 
         analyticsInstance.setUserToken("def");
         expect(callback).toHaveBeenCalledWith("def");
+        expect(callback).toHaveBeenCalledTimes(1);
+      });
+
+      it("is triggered by setAnonymousUserToken", () => {
+        analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
+
+        const callback = jest.fn();
+        analyticsInstance.onUserTokenChange(callback);
+        expect(callback).toHaveBeenCalledTimes(0);
+
+        analyticsInstance.setAnonymousUserToken();
+        expect(callback).toHaveBeenCalledWith(
+          expect.stringMatching(/^anonymous-[-\w]+$/)
+        );
         expect(callback).toHaveBeenCalledTimes(1);
       });
     });
