@@ -1,4 +1,4 @@
-import { isUndefined, isString, isNumber, supportsCookies } from "./utils";
+import { isUndefined, isString, isNumber } from "./utils";
 import { DEFAULT_ALGOLIA_AGENT } from "./_algoliaAgent";
 
 type InsightRegion = "de" | "us";
