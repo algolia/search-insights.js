@@ -1,4 +1,4 @@
-import { getCookie } from "../_cookieUtils";
+import { getCookie } from "../_tokenUtils";
 import AlgoliaAnalytics from "../insights";
 import { createUUID } from "../utils/uuid";
 import * as utils from "../utils";
@@ -17,7 +17,7 @@ const DAY = 86400000; /* 1 day in ms*/
 const DATE_TOMORROW = new Date(Date.now() + DAY).toUTCString();
 const DATE_YESTERDAY = new Date(Date.now() - DAY).toUTCString();
 
-describe("cookieUtils", () => {
+describe("tokenUtils", () => {
   let analyticsInstance;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({
@@ -33,35 +33,24 @@ describe("cookieUtils", () => {
     document.cookie = "_ALGOLIA=;expires=Thu, 01-Jan-1970 00:00:01 GMT;";
   });
   describe("setUserToken", () => {
-    describe("ANONYMOUS_USER_TOKEN", () => {
+    describe("anonymous userToken", () => {
       it("should create a cookie with a UUID", () => {
-        analyticsInstance.setUserToken(analyticsInstance.ANONYMOUS_USER_TOKEN);
+        analyticsInstance.setAnonymousUserToken();
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
       });
       it("should reuse previously created UUID", () => {
-        analyticsInstance.setUserToken(analyticsInstance.ANONYMOUS_USER_TOKEN);
+        analyticsInstance.setAnonymousUserToken();
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
-        analyticsInstance.setUserToken(analyticsInstance.ANONYMOUS_USER_TOKEN);
+        analyticsInstance.setAnonymousUserToken();
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
       });
       it("should not reuse UUID from an expired cookie", () => {
-        analyticsInstance.setUserToken(analyticsInstance.ANONYMOUS_USER_TOKEN);
+        analyticsInstance.setAnonymousUserToken();
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
         // set cookie as expired
         document.cookie = "_ALGOLIA=;expires=Thu, 01-Jan-1970 00:00:01 GMT;";
-        analyticsInstance.setUserToken(analyticsInstance.ANONYMOUS_USER_TOKEN);
+        analyticsInstance.setAnonymousUserToken();
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-2");
-      });
-      it("should throw if environment does not support cookies", () => {
-        const mockSupportsCookies = jest
-          .spyOn(utils, "supportsCookies")
-          .mockReturnValue(false);
-        expect(() =>
-          analyticsInstance.setUserToken(analyticsInstance.ANONYMOUS_USER_TOKEN)
-        ).toThrowErrorMatchingInlineSnapshot(
-          `"Tracking of anonymous users is only possible on environments which support cookies."`
-        );
-        mockSupportsCookies.mockRestore();
       });
     });
     describe("provided userToken", () => {
@@ -72,11 +61,11 @@ describe("cookieUtils", () => {
       it("create a anonymous cookie when switching from provided userToken to anonymous", () => {
         analyticsInstance.setUserToken("007");
         expect(document.cookie).toBe("");
-        analyticsInstance.setUserToken(analyticsInstance.ANONYMOUS_USER_TOKEN);
+        analyticsInstance.setAnonymousUserToken();
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
       });
       it("should preserve the cookie with same uuid when userToken provided after anonymous", () => {
-        analyticsInstance.setUserToken(analyticsInstance.ANONYMOUS_USER_TOKEN);
+        analyticsInstance.setAnonymousUserToken();
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
         analyticsInstance.setUserToken("007");
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");

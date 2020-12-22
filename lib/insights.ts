@@ -36,11 +36,11 @@ import {
   viewedFilters
 } from "./view";
 import {
-  ANONYMOUS_USER_TOKEN,
   getUserToken,
   setUserToken,
+  setAnonymousUserToken,
   onUserTokenChange
-} from "./_cookieUtils";
+} from "./_tokenUtils";
 import { version } from "../package.json";
 
 type Queue = {
@@ -69,6 +69,7 @@ class AlgoliaAnalytics {
   _endpointOrigin: string;
   _userToken: string;
   _userHasOptedOut: boolean;
+  _useCookie: boolean;
   _cookieDuration: number;
 
   // user agent
@@ -89,8 +90,8 @@ class AlgoliaAnalytics {
 
   public addAlgoliaAgent: (algoliaAgent: string) => void;
 
-  public ANONYMOUS_USER_TOKEN: string;
   public setUserToken: (userToken: string) => void;
+  public setAnonymousUserToken: () => void;
   public getUserToken: (
     options?: any,
     callback?: (err: any, userToken: string) => void
@@ -130,8 +131,8 @@ class AlgoliaAnalytics {
 
     this.addAlgoliaAgent = addAlgoliaAgent.bind(this);
 
-    this.ANONYMOUS_USER_TOKEN = ANONYMOUS_USER_TOKEN;
     this.setUserToken = setUserToken.bind(this);
+    this.setAnonymousUserToken = setAnonymousUserToken.bind(this);
     this.getUserToken = getUserToken.bind(this);
     this.onUserTokenChange = onUserTokenChange.bind(this);
 

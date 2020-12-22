@@ -25,29 +25,25 @@ export const getCookie = (name: string): string => {
   return "";
 };
 
-export const ANONYMOUS_USER_TOKEN = "ANONYMOUS_USER_TOKEN";
+export function setAnonymousUserToken(): void {
+  if (!supportsCookies()) {
+    return;
+  }
+  const foundToken = getCookie(COOKIE_KEY);
+  if (
+    !foundToken ||
+    foundToken === "" ||
+    foundToken.indexOf("anonymous-") !== 0
+  ) {
+    this.setUserToken(`anonymous-${createUUID()}`);
+    setCookie(COOKIE_KEY, this._userToken, this._cookieDuration);
+  } else {
+    this.setUserToken(foundToken);
+  }
+}
 
 export function setUserToken(userToken: string | number): void {
-  if (userToken === ANONYMOUS_USER_TOKEN) {
-    if (!supportsCookies()) {
-      throw new Error(
-        "Tracking of anonymous users is only possible on environments which support cookies."
-      );
-    }
-    const foundToken = getCookie(COOKIE_KEY);
-    if (
-      !foundToken ||
-      foundToken === "" ||
-      foundToken.indexOf("anonymous-") !== 0
-    ) {
-      this._userToken = `anonymous-${createUUID()}`;
-      setCookie(COOKIE_KEY, this._userToken, this._cookieDuration);
-    } else {
-      this._userToken = foundToken;
-    }
-  } else {
-    this._userToken = userToken;
-  }
+  this._userToken = userToken;
   if (isFunction(this._onUserTokenChangeCallback)) {
     this._onUserTokenChangeCallback(this._userToken);
   }
