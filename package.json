@@ -118,7 +118,7 @@
   "dependencies": {},
   "bundlesize": [
     {
-      "path": "./dist/search-insights.min.js",
+      "path": "./dist/search-insights.umd.min.js",
       "maxSize": "3 kB"
     }
   ]
