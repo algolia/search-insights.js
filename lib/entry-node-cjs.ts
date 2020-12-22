@@ -10,8 +10,4 @@ export function createInsightsClient(requestFn: RequestFnType) {
   return getFunctionalInterface(new AlgoliaAnalytics({ requestFn }));
 }
 
-export default createInsightsClient(
-  typeof window !== "undefined"
-    ? getRequesterForBrowser()
-    : getRequesterForNode()
-);
+export default createInsightsClient(getRequesterForNode());

@@ -2,8 +2,9 @@
   "name": "search-insights",
   "description": "Library for reporting click, conversion and view metrics using the Algolia Insights API",
   "version": "1.6.3",
-  "jsdelivr": "dist/search-insights.min.js",
-  "main": "index.cjs.js",
+  "jsdelivr": "dist/search-insights.umd.min.js",
+  "main": "index-node.cjs.js",
+  "browser": "index-browser.cjs.js",
   "react-native": {
     "http": "./empty-module.cjs.js",
     "https": "./empty-module.cjs.js"

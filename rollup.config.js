@@ -26,21 +26,31 @@ const createPlugins = () => [
 
 export default [
   {
-    input: "lib/browser.ts",
+    input: "lib/entry-umd.ts",
     output: {
       format: "umd",
       name: MODULE_NAME,
-      file: `./dist/${LIBRARY_OUTPUT_NAME}.min.js`,
+      file: `./dist/${LIBRARY_OUTPUT_NAME}.umd.min.js`,
       globals: {}
     },
     plugins: createPlugins()
   },
   {
-    input: "lib/node.ts",
+    input: "lib/entry-node-cjs.ts",
     output: {
       format: "cjs",
       name: MODULE_NAME,
-      file: `./dist/${LIBRARY_OUTPUT_NAME}.cjs.min.js`
+      file: `./dist/${LIBRARY_OUTPUT_NAME}-node.cjs.min.js`
+    },
+    external: ["http", "https"],
+    plugins: createPlugins()
+  },
+  {
+    input: "lib/entry-browser-cjs.ts",
+    output: {
+      format: "cjs",
+      name: MODULE_NAME,
+      file: `./dist/${LIBRARY_OUTPUT_NAME}-browser.cjs.min.js`
     },
     external: ["http", "https"],
     plugins: createPlugins()
