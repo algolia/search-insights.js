@@ -52,17 +52,6 @@ describe("tokenUtils", () => {
         analyticsInstance.setAnonymousUserToken();
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-2");
       });
-      it("should throw if environment does not support cookies", () => {
-        const mockSupportsCookies = jest
-          .spyOn(utils, "supportsCookies")
-          .mockReturnValue(false);
-        expect(() =>
-          analyticsInstance.setAnonymousUserToken()
-        ).toThrowErrorMatchingInlineSnapshot(
-          `"Tracking of anonymous users is only possible on environments which support cookies."`
-        );
-        mockSupportsCookies.mockRestore();
-      });
     });
     describe("provided userToken", () => {
       it("should not create a cookie with provided userToken", () => {

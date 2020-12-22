@@ -27,9 +27,7 @@ export const getCookie = (name: string): string => {
 
 export function setAnonymousUserToken(): void {
   if (!supportsCookies()) {
-    throw new Error(
-      "Tracking of anonymous users is only possible on environments which support cookies."
-    );
+    return;
   }
   const foundToken = getCookie(COOKIE_KEY);
   if (
