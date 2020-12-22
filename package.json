@@ -2,7 +2,7 @@
   "name": "search-insights",
   "description": "Library for reporting click, conversion and view metrics using the Algolia Insights API",
   "version": "1.6.3",
-  "jsdelivr": "dist/search-insights.umd.min.js",
+  "jsdelivr": "dist/search-insights.min.js",
   "main": "index-node.cjs.js",
   "browser": "index-browser.cjs.js",
   "react-native": {
@@ -118,7 +118,7 @@
   "dependencies": {},
   "bundlesize": [
     {
-      "path": "./dist/search-insights.umd.min.js",
+      "path": "./dist/search-insights.min.js",
       "maxSize": "3 kB"
     }
   ]

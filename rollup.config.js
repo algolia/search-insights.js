@@ -30,7 +30,7 @@ export default [
     output: {
       format: "umd",
       name: MODULE_NAME,
-      file: `./dist/${LIBRARY_OUTPUT_NAME}.umd.min.js`,
+      file: `./dist/${LIBRARY_OUTPUT_NAME}.min.js`,
       globals: {}
     },
     plugins: createPlugins()
