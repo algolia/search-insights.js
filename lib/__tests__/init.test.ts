@@ -259,4 +259,40 @@ describe("init", () => {
       });
     });
   });
+
+  describe("userToken param", () => {
+    let setUserToken;
+    let setAnonymousUserToken;
+    beforeEach(() => {
+      setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+      setAnonymousUserToken = jest.spyOn(
+        analyticsInstance,
+        "setAnonymousUserToken"
+      );
+    });
+
+    afterEach(() => {
+      setUserToken.mockRestore();
+      setAnonymousUserToken.mockRestore();
+    });
+
+    it("should set userToken", () => {
+      analyticsInstance.init({ apiKey: "***", appId: "XXX", userToken: "abc" });
+      expect(setUserToken).toHaveBeenCalledTimes(1);
+      expect(setUserToken).toHaveBeenCalledWith("abc");
+    });
+
+    it("shouldn't set anonymous user token to cookie", () => {
+      analyticsInstance.init({
+        apiKey: "***",
+        appId: "XXX",
+        userToken: "abc",
+        useCookie: true
+      });
+      expect(setUserToken).toHaveBeenCalledTimes(1);
+      expect(setUserToken).toHaveBeenCalledWith("abc");
+
+      expect(setAnonymousUserToken).not.toHaveBeenCalled();
+    });
+  });
 });
