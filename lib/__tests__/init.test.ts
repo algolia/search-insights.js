@@ -259,4 +259,51 @@ describe("init", () => {
       });
     });
   });
+
+  describe("userToken param", () => {
+    let setUserToken;
+    let setAnonymousUserToken;
+    beforeEach(() => {
+      setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+      setAnonymousUserToken = jest.spyOn(
+        analyticsInstance,
+        "setAnonymousUserToken"
+      );
+    });
+
+    afterEach(() => {
+      setUserToken.mockRestore();
+      setAnonymousUserToken.mockRestore();
+    });
+
+    it("should set userToken", () => {
+      analyticsInstance.init({ apiKey: "***", appId: "XXX", userToken: "abc" });
+      expect(setUserToken).toHaveBeenCalledTimes(1);
+      expect(setUserToken).toHaveBeenCalledWith("abc");
+    });
+
+    it("shouldn't set anonymous user token to cookie", () => {
+      analyticsInstance.init({
+        apiKey: "***",
+        appId: "XXX",
+        userToken: "abc",
+        useCookie: true
+      });
+      expect(setUserToken).toHaveBeenCalledTimes(1);
+      expect(setUserToken).toHaveBeenCalledWith("abc");
+
+      expect(setAnonymousUserToken).not.toHaveBeenCalled();
+    });
+
+    it("can set userToken manually afterwards", done => {
+      analyticsInstance.init({ apiKey: "***", appId: "XXX", userToken: "abc" });
+      analyticsInstance.setUserToken("def");
+      expect(setUserToken).toHaveBeenCalledTimes(2);
+      expect(setUserToken).toHaveBeenLastCalledWith("def");
+      analyticsInstance._get("_userToken", value => {
+        expect(value).toEqual("def");
+        done();
+      });
+    });
+  });
 });

@@ -12,6 +12,7 @@ export interface InitParams {
   useCookie?: boolean;
   cookieDuration?: number;
   region?: InsightRegion;
+  userToken?: string;
 }
 
 /**
@@ -73,7 +74,9 @@ export function init(options: InitParams) {
   this._ua = DEFAULT_ALGOLIA_AGENT;
   this._uaURIEncoded = encodeURIComponent(DEFAULT_ALGOLIA_AGENT);
 
-  if (!this._userHasOptedOut && this._useCookie) {
+  if (options.userToken) {
+    this.setUserToken(options.userToken);
+  } else if (!this._userHasOptedOut && this._useCookie) {
     this.setAnonymousUserToken();
   }
 }
