@@ -294,5 +294,16 @@ describe("init", () => {
 
       expect(setAnonymousUserToken).not.toHaveBeenCalled();
     });
+
+    it("can set userToken manually afterwards", done => {
+      analyticsInstance.init({ apiKey: "***", appId: "XXX", userToken: "abc" });
+      analyticsInstance.setUserToken("def");
+      expect(setUserToken).toHaveBeenCalledTimes(2);
+      expect(setUserToken).toHaveBeenLastCalledWith("def");
+      analyticsInstance._get("_userToken", value => {
+        expect(value).toEqual("def");
+        done();
+      });
+    });
   });
 });
