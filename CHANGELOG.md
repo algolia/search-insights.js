@@ -9,8 +9,8 @@
 
 ### Features
 
-* **init:** accept userToken at init() method ([#241](https://github.com/algolia/search-insights.js/issues/241)) ([29216c6](https://github.com/algolia/search-insights.js/commit/29216c60ce7a7310071ba9250b9227ae2a7f1d2c))
-* **useCookie:** skip anonymous userToken if useCookie is false ([#236](https://github.com/algolia/search-insights.js/issues/236)) ([db09c7e](https://github.com/algolia/search-insights.js/commit/db09c7ee4065c67b9c58226516f53231da2fad79))
+* **init(userToken):** accept new parameter `userToken` at init() method ([#241](https://github.com/algolia/search-insights.js/issues/241)) ([29216c6](https://github.com/algolia/search-insights.js/commit/29216c60ce7a7310071ba9250b9227ae2a7f1d2c))
+* **init(useCookie):** accept new parameter `useCookie` which skips anonymous userToken when `false` is given ([#236](https://github.com/algolia/search-insights.js/issues/236)) ([db09c7e](https://github.com/algolia/search-insights.js/commit/db09c7ee4065c67b9c58226516f53231da2fad79))
 
 
 
