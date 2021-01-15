@@ -1,17 +1,25 @@
 {
   "compilerOptions": {
-    "resolveJsonModule": true,
+    "resolveJsonModule": false,
     "moduleResolution": "node",
-    "noEmit": true,
     "noUnusedLocals": true,
-    "outDir": "./dist/",
+    "outDir": "./dist",
+    "rootDir": "./lib",
     "module": "es6",
     "target": "es6",
     "strict": true,
     "noImplicitThis": false,
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "allowJs": true
+    "allowJs": true,
+    "declaration": true,
+    "declarationDir": "./dist",
+    "emitDeclarationOnly": true
   },
-  "exclude": ["node_modules", "**/*.test.ts"]
+  "files": [
+    "./lib/typings.d.ts",
+    "./lib/entry-umd.ts",
+    "./lib/entry-node-cjs.ts",
+    "./lib/entry-browser-cjs.ts"
+  ]
 }
