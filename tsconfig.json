@@ -2,6 +2,7 @@
   "compilerOptions": {
     "resolveJsonModule": false,
     "moduleResolution": "node",
+    "noEmit": true,
     "noUnusedLocals": true,
     "outDir": "./dist",
     "rootDir": "./lib",
@@ -11,10 +12,7 @@
     "noImplicitThis": false,
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "allowJs": true,
-    "declaration": true,
-    "declarationDir": "./dist",
-    "emitDeclarationOnly": true
+    "allowJs": true
   },
   "files": [
     "./lib/typings.d.ts",

@@ -23,7 +23,7 @@
     "index-node.cjs.d.ts"
   ],
   "scripts": {
-    "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js && tsc",
+    "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js && tsc --build tsconfig.declaration.json",
     "build:dev": "rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
     "build:examples": "webpack --config config/webpack.config.js --color --progress",
     "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
