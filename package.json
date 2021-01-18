@@ -4,6 +4,7 @@
   "version": "1.7.0",
   "jsdelivr": "dist/search-insights.min.js",
   "main": "index-node.cjs.js",
+  "types": "index-node.cjs.d.ts",
   "browser": "index-browser.cjs.js",
   "react-native": {
     "http": "./empty-module.cjs.js",
@@ -16,11 +17,13 @@
     "dist",
     "lib",
     "!**/__tests__/**",
-    "index.cjs.js",
-    "empty-module.cjs.js"
+    "empty-module.cjs.js",
+    "empty-module.cjs.d.ts",
+    "index-browser.cjs.d.ts",
+    "index-node.cjs.d.ts"
   ],
   "scripts": {
-    "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js",
+    "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js && tsc --build tsconfig.declaration.json",
     "build:dev": "rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
     "build:examples": "webpack --config config/webpack.config.js --color --progress",
     "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
