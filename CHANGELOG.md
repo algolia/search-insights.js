@@ -1,3 +1,12 @@
+## [1.7.1](https://github.com/algolia/search-insights.js/compare/v1.7.0...v1.7.1) (2021-01-25)
+
+
+### Bug Fixes
+
+* **types:** emit and publish type definitions to npm ([#243](https://github.com/algolia/search-insights.js/issues/243)) ([074f037](https://github.com/algolia/search-insights.js/commit/074f0371d0da9227c6d8b1cbc98077d6ee22b551))
+
+
+
 # [1.7.0](https://github.com/algolia/search-insights.js/compare/v1.6.3...v1.7.0) (2021-01-13)
 
 
