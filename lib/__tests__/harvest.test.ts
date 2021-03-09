@@ -230,7 +230,8 @@ describe("Integration tests", () => {
       page.on("response", async interceptedRequest => {
         const request = interceptedRequest.request();
 
-        if (request.url().includes(".algolia.net")) {
+        const url = request.url();
+        if (url.includes(".algolia.net") || url.includes(".algolianet.com")) {
           const postData = JSON.parse(request.postData());
 
           if (
