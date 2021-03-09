@@ -65,7 +65,7 @@ aa('setUserToken', 'USER_ID');
 | **`apiKey`**      | `string`       | None (required)          | The search API key of your Algolia application |
 | `userHasOptedOut` | `boolean`      | `false`                  | Whether to exclude users from analytics        |
 | `region`          | `'de' \| 'us'` | Automatic                | The DNS server to target                       |
-| `useCookie`       | `boolean`      | `true`                   | Whether to use cookie in browser environment. The anonymous user token will not be set if `false`. When `useCookie` is `false` and `setUserToken` is not called yet, sending events will throw errors because there is no user token to attach to the events. |
+| `useCookie`       | `boolean`      | `false`                  | Whether to use cookie in browser environment. The anonymous user token will not be set if `false`. When `useCookie` is `false` and `setUserToken` is not called yet, sending events will throw errors because there is no user token to attach to the events. |
 | `cookieDuration`  | `number`       | `15552000000` (6 months) | The cookie duration in milliseconds            |
 | `userToken`       | `string`       | `undefined` (optional)   | Initial userToken. When given, anonymous userToken will not be set. |
 

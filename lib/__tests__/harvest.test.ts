@@ -60,7 +60,8 @@ describe("Library initialisation", () => {
   it("Should create UUID", () => {
     analyticsInstance.init({
       apiKey: "1234",
-      appId: "ABCD"
+      appId: "ABCD",
+      useCookie: true
     });
     expect(analyticsInstance._userToken).not.toBeUndefined();
   });
@@ -114,10 +115,15 @@ describe("Integration tests", () => {
   describe("instantsearch example", () => {
     let data;
     beforeAll(async () => {
+      console.log("hey1");
       await page.goto(examplePath("instantsearch"));
+      console.log("hey2");
       await page.waitFor(1000);
+      console.log("hey3");
       data = await getPageResponse();
+      console.log("hey4");
       await page.waitFor(1000);
+      console.log("hey5");
     });
 
     describe("loading", () => {
@@ -177,10 +183,12 @@ describe("Integration tests", () => {
       let payload;
       let objectIDs;
       beforeAll(async () => {
+        console.log("here1");
         await page.evaluate(() => {
           window.AlgoliaAnalytics.default._endpointOrigin =
             "http://localhost:8080";
         });
+        console.log("here2");
         const event = await captureNetworkWhile(async () => {
           const button = await page.$(
             ".ais-hits--item:nth-child(2) .button-click"
@@ -191,6 +199,7 @@ describe("Integration tests", () => {
             button
           );
         });
+        console.log("here3");
         request = event.request;
         payload = event.payload;
       });

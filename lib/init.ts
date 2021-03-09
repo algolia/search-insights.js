@@ -63,7 +63,7 @@ export function init(options: InitParams) {
   this._endpointOrigin = options.region
     ? `https://insights.${options.region}.algolia.io`
     : "https://insights.algolia.io";
-  this._useCookie = options.useCookie ?? true;
+  this._useCookie = options.useCookie ?? false;
   this._cookieDuration = options.cookieDuration
     ? options.cookieDuration
     : 6 * MONTH;
