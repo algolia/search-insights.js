@@ -69,7 +69,8 @@ describe("clickedObjectIDsAfterSearch", () => {
 
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
       "click",
-      clickParams
+      clickParams,
+      undefined
     );
   });
 });
@@ -102,7 +103,8 @@ describe("clickedObjectIDs", () => {
 
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
       "click",
-      clickParams
+      clickParams,
+      undefined
     );
   });
 });
@@ -135,7 +137,8 @@ describe("clickedFilters", () => {
 
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
       "click",
-      clickParams
+      clickParams,
+      undefined
     );
   });
 });

@@ -180,7 +180,9 @@ aa('clickedObjectIDsAfterSearch', {
   queryID: getQueryID(),
   objectIDs: ['object1'],
   positions: [42],
-});
+}, callback);
+
+// callback?: (error, result) => void;
 ```
 
 | Option      | Type       | Description                                                                                         |
@@ -199,7 +201,9 @@ aa('convertedObjectIDsAfterSearch', {
   eventName: 'Add to basket',
   queryID: getQueryID(),
   objectIDs: ['object1'],
-});
+}, callback);
+
+// callback?: (error, result) => void;
 ```
 
 | Option      | Type       | Description                                    |
@@ -288,7 +292,9 @@ aa('clickedObjectIDs', {
   index: 'INDEX_NAME',
   eventName: 'Add to basket',
   objectIDs: ['object1'],
-});
+}, callback);
+
+// callback?: (error, result) => void;
 ```
 
 | Option      | Type       | Description                                    |
@@ -302,7 +308,9 @@ aa('clickedFilters', {
   index: 'INDEX_NAME',
   eventName: 'Filter on facet',
   filters: ['brand:Apple'],
-});
+}, callback);
+
+// callback?: (error, result) => void;
 ```
 
 | Option      | Type       | Description                                                      |
@@ -318,7 +326,9 @@ aa('convertedObjectIDs', {
   index: 'INDEX_NAME',
   eventName: 'Add to basket',
   objectIDs: ['object1'],
-});
+}, callback);
+
+// callback?: (error, result) => void;
 ```
 
 | Option      | Type       | Description                                    |
@@ -332,7 +342,9 @@ aa('convertedFilters', {
   index: 'INDEX_NAME',
   eventName: 'Filter on facet',
   filters: ['brand:Apple'],
-});
+}, callback);
+
+// callback?: (error, result) => void;
 ```
 
 | Option      | Type       | Description                                                      |
@@ -348,7 +360,9 @@ aa('viewedObjectIDs', {
   index: 'INDEX_NAME',
   eventName: 'Add to basket',
   objectIDs: ['object1'],
-});
+}, callback);
+
+// callback?: (error, result) => void;
 ```
 
 | Option      | Type       | Description                                    |
@@ -362,7 +376,9 @@ aa('viewedFilters', {
   index: 'INDEX_NAME',
   eventName: 'Filter on facet',
   filters: ['brand:Apple'],
-});
+}, callback);
+
+// callback?: (error, result) => void;
 ```
 
 | Option      | Type       | Description                                                      |

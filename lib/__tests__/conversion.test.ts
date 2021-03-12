@@ -57,7 +57,8 @@ describe("convertedObjectIDsAfterSearch", () => {
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
       "conversion",
-      { objectIDs: ["12345"], queryID: "test" }
+      { objectIDs: ["12345"], queryID: "test" },
+      undefined
     );
   });
 });
@@ -98,7 +99,8 @@ describe("convertedObjectIDs", () => {
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
       "conversion",
-      { objectIDs: ["12345"] }
+      { objectIDs: ["12345"] },
+      undefined
     );
   });
 });
@@ -139,7 +141,8 @@ describe("convertedFilters", () => {
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
       "conversion",
-      { filters: ["brands:apple"] }
+      { filters: ["brands:apple"] },
+      undefined
     );
   });
 });

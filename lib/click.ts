@@ -1,4 +1,5 @@
 import { InsightsEvent } from "./_sendEvent";
+import { RequestCallback } from "./utils/request";
 
 export interface InsightsSearchClickEvent {
   userToken?: string;
@@ -14,7 +15,10 @@ export interface InsightsSearchClickEvent {
  * Sends a click report in the context of search
  * @param params: InsightsSearchClickEvent
  */
-export function clickedObjectIDsAfterSearch(params: InsightsSearchClickEvent) {
+export function clickedObjectIDsAfterSearch(
+  params: InsightsSearchClickEvent,
+  callback?: RequestCallback
+) {
   if (!params) {
     throw new Error(
       "No params were sent to clickedObjectIDsAfterSearch function, please provide `queryID`,  `objectIDs` and `positions` to be reported"
@@ -36,7 +40,7 @@ export function clickedObjectIDsAfterSearch(params: InsightsSearchClickEvent) {
     );
   }
 
-  this.sendEvent("click", params as InsightsEvent);
+  this.sendEvent("click", params as InsightsEvent, callback);
 }
 
 export interface InsightsClickObjectIDsEvent {
@@ -52,7 +56,10 @@ export interface InsightsClickObjectIDsEvent {
  * Sends a click report using objectIDs, outside the context of a search
  * @param params: InsightsClickObjectIDsEvent
  */
-export function clickedObjectIDs(params: InsightsClickObjectIDsEvent) {
+export function clickedObjectIDs(
+  params: InsightsClickObjectIDsEvent,
+  callback?: RequestCallback
+) {
   if (!params) {
     throw new Error(
       "No params were sent to clickedObjectIDs function, please provide `objectIDs` to be reported"
@@ -64,7 +71,7 @@ export function clickedObjectIDs(params: InsightsClickObjectIDsEvent) {
     );
   }
 
-  this.sendEvent("click", params as InsightsEvent);
+  this.sendEvent("click", params as InsightsEvent, callback);
 }
 
 export interface InsightsClickFiltersEvent {
@@ -80,7 +87,10 @@ export interface InsightsClickFiltersEvent {
  * Sends a click report using filters
  * @param params: InsightsClickFiltersEvent
  */
-export function clickedFilters(params: InsightsClickFiltersEvent) {
+export function clickedFilters(
+  params: InsightsClickFiltersEvent,
+  callback?: RequestCallback
+) {
   if (!params) {
     throw new Error(
       "No params were sent to clickedFilters function, please provide `filters` to be reported"
@@ -92,5 +102,5 @@ export function clickedFilters(params: InsightsClickFiltersEvent) {
     );
   }
 
-  this.sendEvent("click", params as InsightsEvent);
+  this.sendEvent("click", params as InsightsEvent, callback);
 }

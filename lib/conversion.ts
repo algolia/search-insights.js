@@ -1,4 +1,5 @@
 import { InsightsEvent } from "./_sendEvent";
+import { RequestCallback } from "./utils/request";
 
 export interface InsightsSearchConversionEvent {
   userToken?: string;
@@ -14,7 +15,8 @@ export interface InsightsSearchConversionEvent {
  * @param params InsightsSearchConversionEvent
  */
 export function convertedObjectIDsAfterSearch(
-  params: InsightsSearchConversionEvent
+  params: InsightsSearchConversionEvent,
+  callback?: RequestCallback
 ) {
   if (!params) {
     throw new Error(
@@ -32,7 +34,7 @@ export function convertedObjectIDsAfterSearch(
     );
   }
 
-  this.sendEvent("conversion", params as InsightsEvent);
+  this.sendEvent("conversion", params as InsightsEvent, callback);
 }
 
 export interface InsightsSearchConversionObjectIDsEvent {
@@ -48,7 +50,8 @@ export interface InsightsSearchConversionObjectIDsEvent {
  * @param params InsightsSearchConversionObjectIDsEvent
  */
 export function convertedObjectIDs(
-  params: InsightsSearchConversionObjectIDsEvent
+  params: InsightsSearchConversionObjectIDsEvent,
+  callback?: RequestCallback
 ) {
   if (!params) {
     throw new Error(
@@ -62,7 +65,7 @@ export function convertedObjectIDs(
     );
   }
 
-  this.sendEvent("conversion", params as InsightsEvent);
+  this.sendEvent("conversion", params as InsightsEvent, callback);
 }
 
 export interface InsightsSearchConversionFiltersEvent {
@@ -77,7 +80,10 @@ export interface InsightsSearchConversionFiltersEvent {
  * Sends a conversion report using filters, outside the context of a search
  * @param params InsightsSearchConversionFiltersEvent
  */
-export function convertedFilters(params: InsightsSearchConversionFiltersEvent) {
+export function convertedFilters(
+  params: InsightsSearchConversionFiltersEvent,
+  callback?: RequestCallback
+) {
   if (!params) {
     throw new Error(
       "No params were sent to convertedFilters function, please provide `filters` to be reported"
@@ -89,5 +95,5 @@ export function convertedFilters(params: InsightsSearchConversionFiltersEvent) {
     );
   }
 
-  this.sendEvent("conversion", params as InsightsEvent);
+  this.sendEvent("conversion", params as InsightsEvent, callback);
 }

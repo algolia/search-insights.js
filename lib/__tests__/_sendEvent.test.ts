@@ -179,7 +179,8 @@ describe("sendEvent", () => {
               userToken: "mock-user-id"
             }
           ]
-        }
+        },
+        undefined
       );
     });
 

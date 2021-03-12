@@ -1,5 +1,5 @@
 import { isNumber, isUndefined, isString } from "./utils";
-import { RequestFnType } from "./utils/request";
+import { RequestFnType, RequestCallback } from "./utils/request";
 
 export type InsightsEventType = "click" | "conversion" | "view";
 export type InsightsEvent = {
@@ -20,7 +20,8 @@ export type InsightsEvent = {
 export function makeSendEvent(requestFn: RequestFnType) {
   return function sendEvent(
     eventType: InsightsEventType,
-    eventData: InsightsEvent
+    eventData: InsightsEvent,
+    callback?: RequestCallback
   ) {
     if (this._userHasOptedOut) {
       return;
@@ -126,26 +127,26 @@ export function makeSendEvent(requestFn: RequestFnType) {
       );
     }
 
-    return bulkSendEvent(
-      requestFn,
-      this._appId,
-      this._apiKey,
-      this._uaURIEncoded,
-      this._endpointOrigin,
-      [event]
-    );
+    const reportingURL = composeURL({
+      endpointOrigin: this._endpointOrigin,
+      appId: this._appId,
+      apiKey: this._apiKey,
+      userAgent: this._uaURIEncoded
+    });
+    return requestFn(reportingURL, { events: [event] }, callback);
   };
 }
 
-function bulkSendEvent(
-  requestFn: RequestFnType,
-  appId: string,
-  apiKey: string,
-  userAgent: string,
-  endpointOrigin: string,
-  events: InsightsEvent[]
-) {
-  // Auth query
-  const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${userAgent}`;
-  return requestFn(reportingURL, { events });
+function composeURL({
+  endpointOrigin,
+  appId,
+  apiKey,
+  userAgent
+}: {
+  endpointOrigin: string;
+  appId: string;
+  apiKey: string;
+  userAgent: string;
+}) {
+  return `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${userAgent}`;
 }

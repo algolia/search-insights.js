@@ -38,9 +38,13 @@ describe("viewedObjectIDs", () => {
       objectIDs: ["12345"]
     });
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith("view", {
-      objectIDs: ["12345"]
-    });
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
+      "view",
+      {
+        objectIDs: ["12345"]
+      },
+      undefined
+    );
   });
 });
 
@@ -78,8 +82,12 @@ describe("viewedFilters", () => {
       filters: ["brands:apple"]
     });
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith("view", {
-      filters: ["brands:apple"]
-    });
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
+      "view",
+      {
+        filters: ["brands:apple"]
+      },
+      undefined
+    );
   });
 });
