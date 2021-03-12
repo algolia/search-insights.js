@@ -160,8 +160,13 @@ describe("AlgoliaAnalytics - callback", () => {
       insightsClient._endpointOrigin = "https://not_existing_domain!!!.com";
       aa("clickedObjectIDsAfterSearch", payload, (error, result) => {
         expect(result).toBeUndefined();
-        expect(error).toMatchInlineSnapshot(
-          `[Error: getaddrinfo ENOTFOUND not_existing_domain]`
+        expect(error).toEqual(
+          expect.objectContaining({
+            errno: "ENOTFOUND",
+            code: "ENOTFOUND",
+            syscall: "getaddrinfo",
+            hostname: "not_existing_domain"
+          })
         );
         done();
       });
