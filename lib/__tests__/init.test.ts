@@ -128,7 +128,12 @@ describe("init", () => {
       "setAnonymousUserToken"
     );
 
-    analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
+    analyticsInstance.init({
+      apiKey: "***",
+      appId: "XXX",
+      region: "de",
+      useCookie: true
+    });
     expect(setAnonymousUserToken).toHaveBeenCalledTimes(1);
 
     setAnonymousUserToken.mockRestore();
@@ -174,7 +179,12 @@ describe("init", () => {
           .spyOn(utils, "supportsCookies")
           .mockReturnValue(true);
 
-        analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
+        analyticsInstance.init({
+          apiKey: "***",
+          appId: "XXX",
+          region: "de",
+          useCookie: true
+        });
         // Because cookie is enabled, anonymous token must be generated already.
         expect(analyticsInstance._userToken).toBeTruthy();
         expect(analyticsInstance._userToken.length).toBeGreaterThan(0);

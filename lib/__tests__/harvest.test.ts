@@ -60,7 +60,8 @@ describe("Library initialisation", () => {
   it("Should create UUID", () => {
     analyticsInstance.init({
       apiKey: "1234",
-      appId: "ABCD"
+      appId: "ABCD",
+      useCookie: true
     });
     expect(analyticsInstance._userToken).not.toBeUndefined();
   });
