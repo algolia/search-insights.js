@@ -16,10 +16,12 @@ const makeGlobalObject = () => {
 class FakeAlgoliaAnalytics {
   public init: Function;
   public otherMethod: Function;
+  public ready: Function;
   public processQueue: Function;
   constructor() {
     this.init = jest.fn();
     this.otherMethod = jest.fn(() => "otherMethodReturnedValue");
+    this.ready = jest.fn(callback => callback());
 
     this.processQueue = processQueue.bind(this); // the function we'll be testing
   }
@@ -73,5 +75,21 @@ describe("processQueue", () => {
     insights.processQueue(globalObject);
     const newPointerFunction = globalObject.aa;
     expect(oldPointerFunction).toBe(newPointerFunction);
+  });
+
+  it("should executes the callback as soon as ready", () => {
+    const callback = jest.fn();
+    globalObject.aa("init", { appID: "xxx", apiKey: "yyy" });
+    globalObject.aa("ready", callback);
+
+    expect(insights.init).not.toHaveBeenCalled();
+    expect(insights.ready).not.toHaveBeenCalled();
+    expect(callback).toHaveBeenCalledTimes(0);
+
+    insights.processQueue(globalObject);
+
+    expect(insights.init).toHaveBeenCalledWith({ appID: "xxx", apiKey: "yyy" });
+    expect(insights.ready).toHaveBeenCalledWith(callback);
+    expect(callback).toHaveBeenCalledTimes(1);
   });
 });

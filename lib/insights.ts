@@ -41,6 +41,7 @@ import {
   setAnonymousUserToken,
   onUserTokenChange
 } from "./_tokenUtils";
+import { ready } from "./ready";
 import { version } from "../package.json";
 
 type Queue = {
@@ -119,6 +120,8 @@ class AlgoliaAnalytics {
   public viewedObjectIDs: (params: InsightsSearchViewObjectIDsEvent) => void;
   public viewedFilters: (params: InsightsSearchViewFiltersEvent) => void;
 
+  public ready: (callback: Function) => void;
+
   public _get: (key: string, callback: GetCallback) => void;
 
   constructor({ requestFn }: { requestFn: RequestFnType }) {
@@ -148,6 +151,8 @@ class AlgoliaAnalytics {
 
     this.viewedObjectIDs = viewedObjectIDs.bind(this);
     this.viewedFilters = viewedFilters.bind(this);
+
+    this.ready = ready.bind(this);
 
     this._get = get.bind(this);
   }
