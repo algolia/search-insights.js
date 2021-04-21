@@ -159,18 +159,6 @@ describe("Integration tests", () => {
         );
         expect(userToken).toEqual("user-id-1");
       });
-
-      it("should get _hasCredentials from the instance", async () => {
-        const hasCredentials = await page.evaluate(
-          () =>
-            new Promise((resolve, reject) => {
-              window.aa("_get", "_hasCredentials", hasCredentials => {
-                resolve(hasCredentials);
-              });
-            })
-        );
-        expect(hasCredentials).toBe(true);
-      });
     });
 
     describe("click", () => {

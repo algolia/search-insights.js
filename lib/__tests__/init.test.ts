@@ -310,7 +310,7 @@ describe("init", () => {
       analyticsInstance.setUserToken("def");
       expect(setUserToken).toHaveBeenCalledTimes(2);
       expect(setUserToken).toHaveBeenLastCalledWith("def");
-      analyticsInstance._get("_userToken", value => {
+      analyticsInstance.getUserToken(null, (_err, value) => {
         expect(value).toEqual("def");
         done();
       });
