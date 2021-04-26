@@ -5,6 +5,7 @@ import { getRequesterForNode } from "./utils/getRequesterForNode";
 import { RequestFnType } from "./utils/request";
 
 export { getRequesterForBrowser, getRequesterForNode };
+export * from "./types";
 
 export function createInsightsClient(requestFn: RequestFnType) {
   return getFunctionalInterface(new AlgoliaAnalytics({ requestFn }));
