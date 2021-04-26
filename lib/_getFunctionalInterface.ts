@@ -1,8 +1,11 @@
 import { isFunction } from "./utils";
 import AlgoliaAnalytics from "./insights";
+import { InsightsClient } from "./types";
 
-export function getFunctionalInterface(instance: AlgoliaAnalytics) {
-  return (functionName: string, ...functionArguments: any[]) => {
+export function getFunctionalInterface(
+  instance: AlgoliaAnalytics
+): InsightsClient {
+  return (functionName, ...functionArguments) => {
     if (functionName && isFunction((instance as any)[functionName])) {
       instance[functionName](...functionArguments);
     } else {
