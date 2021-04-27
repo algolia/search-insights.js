@@ -65,7 +65,7 @@ describe("Library initialisation", () => {
     expect(analyticsInstance._userToken).not.toBeUndefined();
   });
 
-  it("Should return version", done => {
+  it("should return version", done => {
     analyticsInstance.getVersion(version => {
       expect(version).toEqual(expect.stringMatching(/\d+\.\d+\.\d+/));
       done();
