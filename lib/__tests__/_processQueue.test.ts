@@ -77,7 +77,7 @@ describe("processQueue", () => {
     expect(oldPointerFunction).toBe(newPointerFunction);
   });
 
-  it("should executes the callback as soon as ready", () => {
+  it("should execute the callback as soon as ready", () => {
     const callback = jest.fn();
     globalObject.aa("init", { appID: "xxx", apiKey: "yyy" });
     globalObject.aa("ready", callback);
