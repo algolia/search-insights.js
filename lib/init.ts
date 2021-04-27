@@ -76,7 +76,7 @@ export function init(options: InitParams) {
 
   if (options.userToken) {
     this.setUserToken(options.userToken);
-  } else if (!this._userHasOptedOut && this._useCookie) {
+  } else if (!this._userToken && !this._userHasOptedOut && this._useCookie) {
     this.setAnonymousUserToken();
   }
 }

@@ -171,6 +171,30 @@ describe("init", () => {
     setAnonymousUserToken.mockRestore();
     supportsCookies.mockRestore();
   });
+  it("should not set anonymous userToken if a token is already set", () => {
+    const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+    analyticsInstance.init({
+      apiKey: "***",
+      appId: "XXX",
+      useCookie: true
+    });
+    expect(setUserToken).toHaveBeenCalledTimes(1);
+    expect(setUserToken).toHaveBeenCalledWith(
+      expect.stringMatching(/^anonymous-/)
+    );
+
+    analyticsInstance.setUserToken("my-token");
+    expect(setUserToken).toHaveBeenCalledTimes(2);
+    expect(setUserToken).toHaveBeenLastCalledWith("my-token");
+
+    analyticsInstance.init({
+      apiKey: "***",
+      appId: "XXX"
+    });
+    expect(setUserToken).toHaveBeenCalledTimes(2);
+
+    setUserToken.mockRestore();
+  });
 
   describe("callback for userToken", () => {
     describe("immediate: true", () => {

@@ -1,3 +1,14 @@
+## [1.7.2](https://github.com/algolia/search-insights.js/compare/v1.7.1...v1.7.2) (2021-04-26)
+
+
+### Bug Fixes
+
+* **types:** export default ([#257](https://github.com/algolia/search-insights.js/issues/257)) ([55dd748](https://github.com/algolia/search-insights.js/commit/55dd748af67bf83c7f13d3e4bb4f195394df3f33))
+* **types:** export default in the type definition ([#247](https://github.com/algolia/search-insights.js/issues/247)) ([10044fc](https://github.com/algolia/search-insights.js/commit/10044fc0f7a9807e43d41e5333632f657d24f3ed))
+* **userToken:** prevent anonymous user token from overriding existing token ([#251](https://github.com/algolia/search-insights.js/issues/251)) ([738e5d9](https://github.com/algolia/search-insights.js/commit/738e5d9e2a9c416104949ca3509b65e7cb790079))
+
+
+
 ## [1.7.1](https://github.com/algolia/search-insights.js/compare/v1.7.0...v1.7.1) (2021-01-25)
 
 

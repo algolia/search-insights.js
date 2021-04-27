@@ -65,6 +65,13 @@ describe("Library initialisation", () => {
     });
     expect(analyticsInstance._userToken).not.toBeUndefined();
   });
+
+  it("should return version", done => {
+    analyticsInstance.getVersion(version => {
+      expect(version).toEqual(expect.stringMatching(/\d+\.\d+\.\d+/));
+      done();
+    });
+  });
 });
 
 describe("Integration tests", () => {
@@ -158,6 +165,16 @@ describe("Integration tests", () => {
             })
         );
         expect(userToken).toEqual("user-id-1");
+      });
+
+      it("should return version", async () => {
+        const version = await page.evaluate(
+          () =>
+            new Promise(resolve => {
+              window.aa("getVersion", version => resolve(version));
+            })
+        );
+        expect(version).toEqual(expect.stringMatching(/\d+\.\d+\.\d+/));
       });
     });
 
