@@ -12,8 +12,14 @@ import {
   convertedFilters
 } from "./conversion";
 import { viewedObjectIDs, viewedFilters } from "./view";
+import { getVersion } from "./_getVersion";
 
 export type Init = (method: "init", ...args: Parameters<typeof init>) => void;
+
+export type GetVersion = (
+  method: "getVersion",
+  ...args: Parameters<typeof getVersion>
+) => void;
 
 export type AddAlgoliaAgent = (
   method: "addAlgoliaAgent",
@@ -76,6 +82,7 @@ export type ViewedFilters = (
 ) => void;
 
 export type InsightsClient = Init &
+  GetVersion &
   AddAlgoliaAgent &
   SetUserToken &
   GetUserToken &

@@ -10,6 +10,7 @@ import { InitParams, init } from "./init";
 import { get, GetCallback } from "./get";
 import { initSearch, InitSearchParams } from "./_initSearch";
 import { addAlgoliaAgent } from "./_algoliaAgent";
+import { getVersion } from "./_getVersion";
 
 import { RequestFnType } from "./utils/request";
 
@@ -88,6 +89,8 @@ class AlgoliaAnalytics {
   public init: (params: InitParams) => void;
   public initSearch: (params: InitSearchParams) => void;
 
+  public getVersion: (callback: (version: string) => void) => void;
+
   public addAlgoliaAgent: (algoliaAgent: string) => void;
 
   public setUserToken: (userToken: string) => void;
@@ -150,6 +153,8 @@ class AlgoliaAnalytics {
     this.viewedFilters = viewedFilters.bind(this);
 
     this._get = get.bind(this);
+
+    this.getVersion = getVersion.bind(this);
   }
 }
 
