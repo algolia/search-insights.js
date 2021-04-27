@@ -64,6 +64,13 @@ describe("Library initialisation", () => {
     });
     expect(analyticsInstance._userToken).not.toBeUndefined();
   });
+
+  it("Should return version", done => {
+    analyticsInstance.getVersion(version => {
+      expect(version).toEqual(expect.stringMatching(/\d+\.\d+\.\d+/));
+      done();
+    });
+  });
 });
 
 describe("Integration tests", () => {
@@ -169,6 +176,16 @@ describe("Integration tests", () => {
             })
         );
         expect(hasCredentials).toBe(true);
+      });
+
+      it("should return version", async () => {
+        const version = await page.evaluate(
+          () =>
+            new Promise(resolve => {
+              window.aa("getVersion", version => resolve(version));
+            })
+        );
+        expect(version).toEqual(expect.stringMatching(/\d+\.\d+\.\d+/));
       });
     });
 
