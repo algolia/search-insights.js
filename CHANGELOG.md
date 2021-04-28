@@ -9,7 +9,7 @@
 ### Bug Fixes
 
 * **cookie:** make useCookie false by default ([#249](https://github.com/algolia/search-insights.js/issues/249)) ([8106034](https://github.com/algolia/search-insights.js/commit/8106034e6450c1653f9919dbe2ad8db4f3d5a14f))
-* **_get:** remove ([#256](https://github.com/algolia/search-insights.js/issues/256)) ([374f9fb](https://github.com/algolia/search-insights.js/commit/374f9fbbd7fe81149757010929fb71efcfc995b5))
+* **_get:** remove the internal method `_get` ([#256](https://github.com/algolia/search-insights.js/issues/256)) ([374f9fb](https://github.com/algolia/search-insights.js/commit/374f9fbbd7fe81149757010929fb71efcfc995b5))
 
 
 
