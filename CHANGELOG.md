@@ -1,3 +1,22 @@
+# [2.0.0](https://github.com/algolia/search-insights.js/compare/v1.8.0...v2.0.0) (2021-04-28)
+
+
+### Bug Fixes
+
+* **_get:** remove ([#256](https://github.com/algolia/search-insights.js/issues/256)) ([374f9fb](https://github.com/algolia/search-insights.js/commit/374f9fbbd7fe81149757010929fb71efcfc995b5))
+* **cookie:** make useCookie false by default ([#249](https://github.com/algolia/search-insights.js/issues/249)) ([8106034](https://github.com/algolia/search-insights.js/commit/8106034e6450c1653f9919dbe2ad8db4f3d5a14f))
+
+
+### BREAKING CHANGES
+
+* **cookie:** It used to be `true`, but to be GDPR compliant, we're changing it to `false` by default.
+
+* remove test code
+
+* add a banner on useCookie: false
+
+
+
 # [1.8.0](https://github.com/algolia/search-insights.js/compare/v1.7.2...v1.8.0) (2021-04-28)
 
 
