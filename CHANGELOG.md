@@ -1,21 +1,21 @@
 # [2.0.0](https://github.com/algolia/search-insights.js/compare/v1.7.2...v2.0.0) (2021-04-28)
 
 
+### BREAKING CHANGES
+
+* **cookie:** It used to be `true`, but to be GDPR compliant, we're changing it to `false` by default.
+
+
 ### Bug Fixes
 
-* **_get:** remove ([#256](https://github.com/algolia/search-insights.js/issues/256)) ([374f9fb](https://github.com/algolia/search-insights.js/commit/374f9fbbd7fe81149757010929fb71efcfc995b5))
 * **cookie:** make useCookie false by default ([#249](https://github.com/algolia/search-insights.js/issues/249)) ([8106034](https://github.com/algolia/search-insights.js/commit/8106034e6450c1653f9919dbe2ad8db4f3d5a14f))
 * **types:** expose the types of public methods ([#259](https://github.com/algolia/search-insights.js/issues/259)) ([d59afaa](https://github.com/algolia/search-insights.js/commit/d59afaa24ed88d28bad7ae936becb5038d12765b))
+* **_get:** remove ([#256](https://github.com/algolia/search-insights.js/issues/256)) ([374f9fb](https://github.com/algolia/search-insights.js/commit/374f9fbbd7fe81149757010929fb71efcfc995b5))
 
 
 ### Features
 
 * add getVersion method ([#260](https://github.com/algolia/search-insights.js/issues/260)) ([c15a47c](https://github.com/algolia/search-insights.js/commit/c15a47c2d79f47ff3abd1beac3bdddd5822c0c8d))
-
-
-### BREAKING CHANGES
-
-* **cookie:** It used to be `true`, but to be GDPR compliant, we're changing it to `false` by default.
 
 
 ## [1.7.2](https://github.com/algolia/search-insights.js/compare/v1.7.1...v1.7.2) (2021-04-26)
