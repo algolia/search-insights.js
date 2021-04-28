@@ -1,3 +1,17 @@
+# [1.8.0](https://github.com/algolia/search-insights.js/compare/v1.7.2...v1.8.0) (2021-04-28)
+
+
+### Bug Fixes
+
+* **types:** expose the types of public methods ([#259](https://github.com/algolia/search-insights.js/issues/259)) ([d59afaa](https://github.com/algolia/search-insights.js/commit/d59afaa24ed88d28bad7ae936becb5038d12765b))
+
+
+### Features
+
+* add getVersion method ([#260](https://github.com/algolia/search-insights.js/issues/260)) ([c15a47c](https://github.com/algolia/search-insights.js/commit/c15a47c2d79f47ff3abd1beac3bdddd5822c0c8d))
+
+
+
 ## [1.7.2](https://github.com/algolia/search-insights.js/compare/v1.7.1...v1.7.2) (2021-04-26)
 
 
