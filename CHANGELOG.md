@@ -17,11 +17,6 @@
 
 * **cookie:** It used to be `true`, but to be GDPR compliant, we're changing it to `false` by default.
 
-* remove test code
-
-* add a banner on useCookie: false
-
-
 
 ## [1.7.2](https://github.com/algolia/search-insights.js/compare/v1.7.1...v1.7.2) (2021-04-26)
 
