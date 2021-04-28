@@ -5,7 +5,7 @@
 
 Search Insights lets you report click, conversion and view metrics using the [Algolia Insights API](https://www.algolia.com/doc/rest-api/insights/#overview).
 
-<p color="rebeccapurple">This is the documentation for v2.x. Click here for v1.x documentation.</p>
+❗️ This is the documentation for v2.x. Click [here](TO_FIX) for v1.x documentation.
 
 ## Table of Contents
 
