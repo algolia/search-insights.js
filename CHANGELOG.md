@@ -3,7 +3,7 @@
 
 ### BREAKING CHANGES
 
-* **cookie:** It used to be `true`, but to be GDPR compliant, we're changing it to `false` by default.
+* **useCookie:** It used to be `true`, but to be GDPR compliant, we're changing it to `false` by default.
 
 
 ### Bug Fixes
