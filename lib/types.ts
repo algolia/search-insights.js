@@ -14,84 +14,63 @@ import {
 import { viewedObjectIDs, viewedFilters } from "./view";
 import { getVersion } from "./_getVersion";
 
-export type Init = (method: "init", ...args: Parameters<typeof init>) => void;
+type InsightsMethodMap = {
+  init: Parameters<typeof init>;
+  getVersion: Parameters<typeof getVersion>;
+  addAlgoliaAgent: Parameters<typeof addAlgoliaAgent>;
+  setUserToken: Parameters<typeof setUserToken>;
+  getUserToken: Parameters<typeof getUserToken>;
+  onUserTokenChange: Parameters<typeof onUserTokenChange>;
+  clickedObjectIDsAfterSearch: Parameters<typeof clickedObjectIDsAfterSearch>;
+  clickedObjectIDs: Parameters<typeof clickedObjectIDs>;
+  clickedFilters: Parameters<typeof clickedFilters>;
+  convertedObjectIDsAfterSearch: Parameters<
+    typeof convertedObjectIDsAfterSearch
+  >;
+  convertedObjectIDs: Parameters<typeof convertedObjectIDs>;
+  convertedFilters: Parameters<typeof convertedFilters>;
+  viewedObjectIDs: Parameters<typeof viewedObjectIDs>;
+  viewedFilters: Parameters<typeof viewedFilters>;
+};
 
-export type GetVersion = (
-  method: "getVersion",
-  ...args: Parameters<typeof getVersion>
+type MethodType<MethodName extends keyof InsightsMethodMap> = (
+  method: MethodName,
+  ...args: InsightsMethodMap[MethodName]
 ) => void;
 
-export type AddAlgoliaAgent = (
-  method: "addAlgoliaAgent",
-  ...args: Parameters<typeof addAlgoliaAgent>
-) => void;
+export type Init = MethodType<"init">;
 
-export type SetUserToken = (
-  method: "setUserToken",
-  ...args: Parameters<typeof setUserToken>
-) => void;
+export type GetVersion = MethodType<"getVersion">;
 
-export type GetUserToken = (
-  method: "getUserToken",
-  ...args: Parameters<typeof getUserToken>
-) => void;
+export type AddAlgoliaAgent = MethodType<"addAlgoliaAgent">;
 
-export type OnUserTokenChange = (
-  method: "onUserTokenChange",
-  ...args: Parameters<typeof onUserTokenChange>
-) => void;
+export type SetUserToken = MethodType<"setUserToken">;
 
-export type ClickedObjectIDsAfterSearch = (
-  method: "clickedObjectIDsAfterSearch",
-  ...args: Parameters<typeof clickedObjectIDsAfterSearch>
-) => void;
+export type GetUserToken = MethodType<"getUserToken">;
 
-export type ClickedObjectIDs = (
-  method: "clickedObjectIDs",
-  ...args: Parameters<typeof clickedObjectIDs>
-) => void;
+export type OnUserTokenChange = MethodType<"onUserTokenChange">;
 
-export type ClickedFilters = (
-  method: "clickedFilters",
-  ...args: Parameters<typeof clickedFilters>
-) => void;
+export type ClickedObjectIDsAfterSearch = MethodType<
+  "clickedObjectIDsAfterSearch"
+>;
 
-export type ConvertedObjectIDsAfterSearch = (
-  method: "convertedObjectIDsAfterSearch",
-  ...args: Parameters<typeof convertedObjectIDsAfterSearch>
-) => void;
+export type ClickedObjectIDs = MethodType<"clickedObjectIDs">;
 
-export type ConvertedObjectIDs = (
-  method: "convertedObjectIDs",
-  ...args: Parameters<typeof convertedObjectIDs>
-) => void;
+export type ClickedFilters = MethodType<"clickedFilters">;
 
-export type ConvertedFilters = (
-  method: "convertedFilters",
-  ...args: Parameters<typeof convertedFilters>
-) => void;
+export type ConvertedObjectIDsAfterSearch = MethodType<
+  "convertedObjectIDsAfterSearch"
+>;
 
-export type ViewedObjectIDs = (
-  method: "viewedObjectIDs",
-  ...args: Parameters<typeof viewedObjectIDs>
-) => void;
+export type ConvertedObjectIDs = MethodType<"convertedObjectIDs">;
 
-export type ViewedFilters = (
-  method: "viewedFilters",
-  ...args: Parameters<typeof viewedFilters>
-) => void;
+export type ConvertedFilters = MethodType<"convertedFilters">;
 
-export type InsightsClient = Init &
-  GetVersion &
-  AddAlgoliaAgent &
-  SetUserToken &
-  GetUserToken &
-  OnUserTokenChange &
-  ClickedObjectIDsAfterSearch &
-  ClickedObjectIDs &
-  ClickedFilters &
-  ConvertedObjectIDsAfterSearch &
-  ConvertedObjectIDs &
-  ConvertedFilters &
-  ViewedObjectIDs &
-  ViewedFilters;
+export type ViewedObjectIDs = MethodType<"viewedObjectIDs">;
+
+export type ViewedFilters = MethodType<"viewedFilters">;
+
+export type InsightsClient<MethodName extends keyof InsightsMethodMap> = (
+  method: MethodName,
+  params: InsightsMethodMap[MethodName]
+) => void;
