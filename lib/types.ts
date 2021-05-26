@@ -14,7 +14,7 @@ import {
 import { viewedObjectIDs, viewedFilters } from "./view";
 import { getVersion } from "./_getVersion";
 
-type InsightsMethodMap = {
+export type InsightsMethodMap = {
   init: Parameters<typeof init>;
   getVersion: Parameters<typeof getVersion>;
   addAlgoliaAgent: Parameters<typeof addAlgoliaAgent>;
@@ -70,7 +70,7 @@ export type ViewedObjectIDs = MethodType<"viewedObjectIDs">;
 
 export type ViewedFilters = MethodType<"viewedFilters">;
 
-export type InsightsClient<MethodName extends keyof InsightsMethodMap> = (
+export type InsightsClient = <MethodName extends keyof InsightsMethodMap>(
   method: MethodName,
-  params: InsightsMethodMap[MethodName]
+  ...args: InsightsMethodMap[MethodName]
 ) => void;

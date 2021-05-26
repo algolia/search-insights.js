@@ -7,6 +7,7 @@ export function getFunctionalInterface(
 ): InsightsClient {
   return (functionName, ...functionArguments) => {
     if (functionName && isFunction((instance as any)[functionName])) {
+      // @ts-ignore
       instance[functionName](...functionArguments);
     } else {
       console.warn(`The method \`${functionName}\` doesn't exist.`);
