@@ -1,6 +1,7 @@
 import { InsightsEvent } from "./_sendEvent";
 
 export interface InsightsSearchClickEvent {
+  eventName: string;
   userToken?: string;
   timestamp?: number;
   index: string;
