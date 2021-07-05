@@ -1,3 +1,12 @@
+## [2.0.1](https://github.com/algolia/search-insights.js/compare/v2.0.0...v2.0.1) (2021-07-05)
+
+
+### Bug Fixes
+
+* **types:** provide better error messages for insights client ([#269](https://github.com/algolia/search-insights.js/issues/269)) ([8b678e8](https://github.com/algolia/search-insights.js/commit/8b678e802c317d2eeeda70c94db5a4baae539233))
+
+
+
 # [2.0.0](https://github.com/algolia/search-insights.js/compare/v1.8.0...v2.0.0) (2021-04-28)
 
 
