@@ -80,7 +80,7 @@
     "rollup-plugin-commonjs": "8.4.1",
     "rollup-plugin-filesize": "6.1.1",
     "rollup-plugin-json": "4.0.0",
-    "rollup-plugin-node-resolve": "3.4.0",
+    "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-typescript": "1.0.1",
     "rollup-plugin-uglify": "3.0.0",
     "sass-loader": "6.0.7",
