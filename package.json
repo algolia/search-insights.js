@@ -82,7 +82,7 @@
     "rollup-plugin-json": "4.0.0",
     "rollup-plugin-node-resolve": "3.4.0",
     "rollup-plugin-typescript": "1.0.1",
-    "rollup-plugin-uglify": "3.0.0",
+    "rollup-plugin-uglify": "6.0.4",
     "sass-loader": "6.0.7",
     "shipjs": "0.21.1",
     "style-loader": "0.23.1",
