@@ -62,7 +62,6 @@ export default [
       name: MODULE_NAME,
       file: `./dist/${LIBRARY_OUTPUT_NAME}.iife.min.js`
     },
-    external: ["http", "https"],
     plugins: createPlugins()
   }
 ];
