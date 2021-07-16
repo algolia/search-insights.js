@@ -54,5 +54,14 @@ export default [
     },
     external: ["http", "https"],
     plugins: createPlugins()
+  },
+  {
+    input: "lib/entry-umd.ts",
+    output: {
+      format: "iife",
+      name: MODULE_NAME,
+      file: `./dist/${LIBRARY_OUTPUT_NAME}.iife.min.js`
+    },
+    plugins: createPlugins()
   }
 ];
