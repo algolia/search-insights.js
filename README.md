@@ -79,7 +79,7 @@ aa('setUserToken', 'USER_ID');
 
 When using [Require.js](https://requirejs.org/), the default UMD build might conflict and throw with a "Mismatched anonymous define() modules" message. This is a [known Require.js issue](https://requirejs.org/docs/errors.html#mismatch).
 
-To work around this problem, avoid loading the library via a `define()` call. Instead, change `ALGOLIA_INSIGHTS_SRC` to point to the IIFE build, like following:
+To work around this problem and ensure you capture all interactions occurring before the library is done loading, change `ALGOLIA_INSIGHTS_SRC` to point to the IIFE build, and load it via a `<script>` tag.
 
 <!-- prettier-ignore-start -->
 ```html
