@@ -5,7 +5,7 @@ export type InsightsEventType = "click" | "conversion" | "view";
 export type InsightsEvent = {
   eventType: InsightsEventType;
 
-  eventName?: string;
+  eventName: string;
   userToken: string;
   timestamp?: number;
   index: string;
