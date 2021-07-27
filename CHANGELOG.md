@@ -1,3 +1,13 @@
+## [2.0.2](https://github.com/algolia/search-insights.js/compare/v2.0.1...v2.0.2) (2021-07-27)
+
+
+### Bug Fixes
+
+* provide iife build to prevent conflicts with AMD ([#274](https://github.com/algolia/search-insights.js/issues/274)) ([5e8f3ba](https://github.com/algolia/search-insights.js/commit/5e8f3ba8c726a4a8d3fe2fb789ebc199328fb057))
+* **types:** make eventName required ([#275](https://github.com/algolia/search-insights.js/issues/275)) ([04ad058](https://github.com/algolia/search-insights.js/commit/04ad0583f6d319a4ccd47331695fc7b366f8d773))
+
+
+
 ## [2.0.1](https://github.com/algolia/search-insights.js/compare/v2.0.0...v2.0.1) (2021-07-05)
 
 
