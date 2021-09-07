@@ -1,3 +1,12 @@
+## [2.0.3](https://github.com/algolia/search-insights.js/compare/v2.0.2...v2.0.3) (2021-09-07)
+
+
+### Bug Fixes
+
+* **bundle:** remove unnecessary exports from bundles ([#320](https://github.com/algolia/search-insights.js/issues/320)) ([92ee346](https://github.com/algolia/search-insights.js/commit/92ee3464c7ebc746783c9597939a3f5e4735af22))
+
+
+
 ## [2.0.2](https://github.com/algolia/search-insights.js/compare/v2.0.1...v2.0.2) (2021-07-27)
 
 
