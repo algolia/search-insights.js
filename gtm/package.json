@@ -12,8 +12,8 @@
     "start": "yarn run dev"
   },
   "devDependencies": {
-    "@types/fs-extra": "^8.0.0",
-    "fs-extra": "8.1.0",
+    "@types/fs-extra": "^9.0.0",
+    "fs-extra": "9.1.0",
     "nodemon": "1.19.4"
   }
 }
