@@ -1,10 +1,9 @@
 import AlgoliaAnalytics from "./insights";
 import { getFunctionalInterface } from "./_getFunctionalInterface";
 import { getRequesterForBrowser } from "./utils/getRequesterForBrowser";
-import { getRequesterForNode } from "./utils/getRequesterForNode";
 import { RequestFnType } from "./utils/request";
 
-export { getRequesterForBrowser, getRequesterForNode };
+export { getRequesterForBrowser };
 export * from "./types";
 
 export function createInsightsClient(requestFn: RequestFnType) {
