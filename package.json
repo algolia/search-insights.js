@@ -54,7 +54,7 @@
     "algoliasearch": "3.35.1",
     "algoliasearch-helper": "2.28.0",
     "babel-cli": "6.26.0",
-    "babel-loader": "7.1.5",
+    "babel-loader": "8.2.2",
     "babel-preset-env": "1.7.0",
     "body-parser": "1.19.0",
     "bundlesize": "0.18.0",
