@@ -51,7 +51,7 @@
     "@types/jest": "24.0.25",
     "@types/jsdom": "12.2.4",
     "@types/puppeteer": "1.20.3",
-    "algoliasearch": "3.35.1",
+    "algoliasearch": "4.10.5",
     "algoliasearch-helper": "2.28.0",
     "babel-cli": "6.26.0",
     "babel-loader": "7.1.5",
