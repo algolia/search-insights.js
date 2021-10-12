@@ -222,62 +222,6 @@ describe("sendEvent", () => {
     });
   });
 
-  describe("eventName", () => {
-    let analyticsInstance;
-    beforeEach(() => {
-      analyticsInstance = setupInstance();
-    });
-
-    it("should throw if no eventName passed", () => {
-      expect(() => {
-        (analyticsInstance as any).sendEvent("click", {
-          index: "my-index",
-          objectIDs: ["1"]
-        });
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"expected required parameter \`eventName\` to be a string"`
-      );
-    });
-    it("should throw if eventName is not a string", () => {
-      expect(() => {
-        (analyticsInstance as any).sendEvent("click", {
-          eventName: 3,
-          index: "my-index",
-          objectIDs: ["1"]
-        });
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"expected required parameter \`eventName\` to be a string"`
-      );
-    });
-  });
-
-  describe("index", () => {
-    let analyticsInstance;
-    beforeEach(() => {
-      analyticsInstance = setupInstance();
-    });
-
-    it("should throw if no index passed", () => {
-      expect(() => {
-        (analyticsInstance as any).sendEvent("click", {
-          eventName: "my-event"
-        });
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"expected required parameter \`index\` to be a string"`
-      );
-    });
-    it("should throw if no index is not a string", () => {
-      expect(() => {
-        (analyticsInstance as any).sendEvent("click", {
-          eventName: "my-event",
-          index: 2
-        });
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"expected required parameter \`index\` to be a string"`
-      );
-    });
-  });
-
   describe("objectIDs and positions", () => {
     let analyticsInstance;
     beforeEach(() => {
@@ -301,29 +245,6 @@ describe("sendEvent", () => {
           })
         ]
       });
-    });
-    it("should throw and error when objectIDs and positions are not the same size", () => {
-      expect(() => {
-        (analyticsInstance as any).sendEvent("click", {
-          eventName: "my-event",
-          index: "my-index",
-          objectIDs: ["1", "2"],
-          positions: [3]
-        });
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"objectIDs and positions need to be of the same size"`
-      );
-    });
-    it("should throw and error when positions supplied but not objectIDs", () => {
-      expect(() => {
-        (analyticsInstance as any).sendEvent("click", {
-          eventName: "my-event",
-          index: "my-index",
-          positions: [3]
-        });
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"cannot use \`positions\` without providing \`objectIDs\`"`
-      );
     });
   });
 
@@ -424,28 +345,6 @@ describe("sendEvent", () => {
           })
         ]
       });
-    });
-    it("should throw and error when objectIDs and filter are both provided", () => {
-      expect(() => {
-        (analyticsInstance as any).sendEvent("click", {
-          eventName: "my-event",
-          index: "my-index",
-          objectIDs: ["1", "2"],
-          filters: ["brand:Apple"]
-        });
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"cannot use \`objectIDs\` and \`filters\` for the same event"`
-      );
-    });
-    it("should throw and error when neither objectIDs or filters are provided", () => {
-      expect(() => {
-        (analyticsInstance as any).sendEvent("click", {
-          eventName: "my-event",
-          index: "my-index"
-        });
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"expected either \`objectIDs\` or \`filters\` to be provided"`
-      );
     });
   });
 });
