@@ -19,9 +19,13 @@ const createPlugins = ({ format }) => [
     preferConst: true,
     compact: true
   }),
-  format === "umd" || format === "iife"
-    ? replace({ __DEV__: false })
-    : replace({ __DEV__: 'process.env.NODE_ENV === "development"' }),
+  replace({
+    __DEV__:
+      format === "umd" || format === "iife"
+        ? false
+        : 'process.env.NODE_ENV === "development"',
+    exclude: ["package.json"]
+  }),
   buble(),
   commonjs(),
   uglify(),
