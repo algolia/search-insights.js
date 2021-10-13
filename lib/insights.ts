@@ -7,7 +7,6 @@ objectAssignPolyfill();
 import { makeSendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
 
 import { InitParams, init } from "./init";
-import { initSearch, InitSearchParams } from "./_initSearch";
 import { addAlgoliaAgent } from "./_algoliaAgent";
 import { getVersion } from "./_getVersion";
 
@@ -86,7 +85,6 @@ class AlgoliaAnalytics {
 
   // Public methods
   public init: (params: InitParams) => void;
-  public initSearch: (params: InitSearchParams) => void;
 
   public getVersion: (callback: (version: string) => void) => void;
 
@@ -127,7 +125,6 @@ class AlgoliaAnalytics {
 
     // Bind public methods to `this` class
     this.init = init.bind(this);
-    this.initSearch = initSearch.bind(this);
 
     this.addAlgoliaAgent = addAlgoliaAgent.bind(this);
 
