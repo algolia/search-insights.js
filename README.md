@@ -21,11 +21,16 @@ Search Insights lets you report click, conversion and view metrics using the [Al
 
 <!-- tocstop -->
 
-## ❗️ Notice on the cookie usage
+## Cookie usage
 
 You're looking at the documentation of `search-insights` v2, which is the new major version. (_Click [here](https://github.com/algolia/search-insights.js/blob/v1/README.md) for v1.x documentation._)
 
 v2 introduces a breaking change which is `useCookie` being `false` by default. If it's `false`, `search-insights` doesn't generate anonymous userToken. It means no event will be sent until `setUserToken` is explicitly called.
+
+## Payload validation
+
+Since v2.0.4, search-insights does not validate event payloads any more.
+You can visit https://algolia.com/events/debugger to validate them.
 
 ## Getting started
 
