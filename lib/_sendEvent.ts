@@ -33,7 +33,7 @@ export function makeSendEvent(requestFn: RequestFnType) {
     const event: InsightsEvent = {
       ...eventData,
       eventType,
-      userToken: eventData?.userToken || this._userToken
+      userToken: eventData?.userToken ?? this._userToken
     };
 
     return bulkSendEvent(
