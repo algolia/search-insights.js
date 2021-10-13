@@ -1,3 +1,13 @@
+## [2.0.4](https://github.com/algolia/search-insights.js/compare/v2.0.3...v2.0.4) (2021-10-13)
+
+
+### Bug Fixes
+
+* remove initSearch method (no longer in use) ([#327](https://github.com/algolia/search-insights.js/issues/327)) ([b4b4e9e](https://github.com/algolia/search-insights.js/commit/b4b4e9ee847a245f16293d89a697aca2b97878e4))
+* remove validation before sending events ([#325](https://github.com/algolia/search-insights.js/issues/325)) ([2b7f1a6](https://github.com/algolia/search-insights.js/commit/2b7f1a6e1a2e615199050d5482da776f464528a2))
+
+
+
 ## [2.0.3](https://github.com/algolia/search-insights.js/compare/v2.0.2...v2.0.3) (2021-09-07)
 
 
