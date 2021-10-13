@@ -57,8 +57,8 @@ export function init(options: InitParams) {
   }
 
   if (__DEV__) {
-    console.info('Since v2.0.4, search-insights does not validate event payloads any more.');
-    console.info('You can visit https://algolia.com/events/debugger to validate events.')
+    console.info(`Since v2.0.4, search-insights does not validate event payloads any more.
+You can visit https://algolia.com/events/debugger to validate events.`);
   }
 
   this._apiKey = options.apiKey;
