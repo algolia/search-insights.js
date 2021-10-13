@@ -6,7 +6,7 @@ export interface InsightsSearchViewObjectIDsEvent {
   timestamp?: number;
   index: string;
 
-  objectIDs: (string | number)[];
+  objectIDs: string[];
 }
 /**
  * Sends a view report using objectIDs

@@ -7,7 +7,7 @@ export interface InsightsSearchClickEvent {
   index: string;
 
   queryID: string;
-  objectIDs: (string | number)[];
+  objectIDs: string[];
   positions: number[];
 }
 
@@ -25,7 +25,7 @@ export interface InsightsClickObjectIDsEvent {
   timestamp?: number;
   index: string;
 
-  objectIDs: (string | number)[];
+  objectIDs: string[];
 }
 
 /**

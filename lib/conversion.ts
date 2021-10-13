@@ -7,7 +7,7 @@ export interface InsightsSearchConversionEvent {
   index: string;
 
   queryID: string;
-  objectIDs: (string | number)[];
+  objectIDs: string[];
 }
 
 /**
@@ -26,7 +26,7 @@ export interface InsightsSearchConversionObjectIDsEvent {
   timestamp?: number;
   index: string;
 
-  objectIDs: (string | number)[];
+  objectIDs: string[];
 }
 /**
  * Sends a conversion report using objectIDs

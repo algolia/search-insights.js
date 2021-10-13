@@ -10,7 +10,7 @@ export type InsightsEvent = {
   index: string;
 
   queryID?: string;
-  objectIDs?: (string | number)[];
+  objectIDs?: string[];
   positions?: number[];
 
   filters?: string[];
