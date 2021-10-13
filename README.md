@@ -29,8 +29,8 @@ v2 introduces a breaking change which is `useCookie` being `false` by default. I
 
 ## Payload validation
 
-Since v2.0.4, search-insights does not validate event payloads any more.
-You can visit https://algolia.com/events/debugger to validate them.
+Since v2.0.4, search-insights no longer validates event payloads.
+You can visit https://algolia.com/events/debugger instead.
 
 ## Getting started
 
