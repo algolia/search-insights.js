@@ -5,6 +5,7 @@ import AlgoliaAnalytics from "../insights";
 import { getRequesterForNode } from "../utils/getRequesterForNode";
 import { getFunctionalInterface } from "../_getFunctionalInterface";
 import { setUserToken } from "../_tokenUtils";
+import { version } from "../../package.json";
 
 const credentials = {
   apiKey: "testKey",
@@ -17,66 +18,56 @@ const defaultPayload = {
   objectIDs: ["1"]
 };
 
+const defaultRequestUrl = `https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(${version})`;
+
 describe("_sendEvent in node env", () => {
   let aa;
+  let requestFn;
   beforeEach(() => {
-    const instance = new AlgoliaAnalytics({ requestFn: getRequesterForNode() });
+    requestFn = jest.fn((url, data) => {});
+    const instance = new AlgoliaAnalytics({ requestFn });
     aa = getFunctionalInterface(instance);
     aa("init", credentials);
   });
 
-  it("throws when user token is not set", () => {
-    expect(() => {
-      aa("sendEvent", "click", {
-        ...defaultPayload
-      });
-    }).toThrowError(
-      "Before calling any methods on the analytics, you first need to call 'setUserToken' function or include 'userToken' in the event payload."
-    );
-  });
-
-  it("does not throw when user token is set", () => {
-    aa("setUserToken", "aaa");
+  it("does not throw when user token is not set", () => {
     expect(() => {
       aa("sendEvent", "click", {
         ...defaultPayload
       });
     }).not.toThrowError();
+
+    expect(requestFn).toHaveBeenCalledWith(defaultRequestUrl, {
+      events: [
+        {
+          eventName: "my-event",
+          eventType: "click",
+          index: "my-index",
+          objectIDs: ["1"],
+          userToken: undefined
+        }
+      ]
+    });
   });
 
-  it("does not throw when user token is set inside payload", () => {
+  it("does not throw when user token is included", () => {
     expect(() => {
       aa("sendEvent", "click", {
-        userToken: "aaa",
-        ...defaultPayload
+        ...defaultPayload,
+        userToken: "aaa"
       });
     }).not.toThrowError();
-  });
 
-  it("throws when user token in payload is not a string", () => {
-    expect(() => {
-      aa("sendEvent", "click", {
-        userToken: 3,
-        ...defaultPayload
-      });
-    }).toThrowError("expected optional parameter `userToken` to be a string");
-  });
-
-  it("throws when user token is an empty string", () => {
-    expect(() => {
-      aa("setUserToken", "");
-      aa("sendEvent", "click", {
-        ...defaultPayload
-      });
-    }).toThrowError("`userToken` cannot be an empty string.");
-  });
-
-  it("throws when user token in payload is an empty string", () => {
-    expect(() => {
-      aa("sendEvent", "click", {
-        userToken: "",
-        ...defaultPayload
-      });
-    }).toThrowError("`userToken` cannot be an empty string.");
+    expect(requestFn).toHaveBeenCalledWith(defaultRequestUrl, {
+      events: [
+        {
+          eventName: "my-event",
+          eventType: "click",
+          index: "my-index",
+          objectIDs: ["1"],
+          userToken: "aaa"
+        }
+      ]
+    });
   });
 });
