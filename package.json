@@ -98,7 +98,8 @@
   },
   "jest": {
     "setupFiles": [
-      "jest-localstorage-mock"
+      "jest-localstorage-mock",
+      "./tests/setupJest.js"
     ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
