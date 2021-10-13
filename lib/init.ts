@@ -56,6 +56,11 @@ export function init(options: InitParams) {
     );
   }
 
+  if (__DEV__) {
+    console.info(`Since v2.0.4, search-insights no longer validates event payloads.
+You can visit https://algolia.com/events/debugger instead.`);
+  }
+
   this._apiKey = options.apiKey;
   this._appId = options.appId;
   this._userHasOptedOut = !!options.userHasOptedOut;
