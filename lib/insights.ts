@@ -4,36 +4,25 @@ import objectKeysPolyfill from "./polyfills/objectKeys";
 objectKeysPolyfill();
 objectAssignPolyfill();
 
-import { makeSendEvent, InsightsEventType, InsightsEvent } from "./_sendEvent";
+import { makeSendEvent } from "./_sendEvent";
 
-import { InitParams, init } from "./init";
+import { init } from "./init";
 import { addAlgoliaAgent } from "./_algoliaAgent";
 import { getVersion } from "./_getVersion";
 
 import { RequestFnType } from "./utils/request";
 
 import {
-  InsightsSearchClickEvent,
   clickedObjectIDsAfterSearch,
-  InsightsClickObjectIDsEvent,
   clickedObjectIDs,
-  InsightsClickFiltersEvent,
   clickedFilters
 } from "./click";
 import {
-  InsightsSearchConversionEvent,
   convertedObjectIDsAfterSearch,
-  InsightsSearchConversionObjectIDsEvent,
   convertedObjectIDs,
-  InsightsSearchConversionFiltersEvent,
   convertedFilters
 } from "./conversion";
-import {
-  InsightsSearchViewObjectIDsEvent,
-  viewedObjectIDs,
-  InsightsSearchViewFiltersEvent,
-  viewedFilters
-} from "./view";
+import { viewedObjectIDs, viewedFilters } from "./view";
 import {
   getUserToken,
   setUserToken,
@@ -77,47 +66,29 @@ class AlgoliaAnalytics {
 
   version: string = version;
 
-  protected sendEvent: (
-    eventType: InsightsEventType,
-    data: InsightsEvent
-  ) => void;
+  protected sendEvent: ReturnType<typeof makeSendEvent>;
   protected _hasCredentials: boolean = false;
 
   // Public methods
-  public init: (params: InitParams) => void;
+  public init: typeof init;
+  public getVersion: typeof getVersion;
+  public addAlgoliaAgent: typeof addAlgoliaAgent;
 
-  public getVersion: (callback: (version: string) => void) => void;
+  public setUserToken: typeof setUserToken;
+  public setAnonymousUserToken: typeof setAnonymousUserToken;
+  public getUserToken: typeof getUserToken;
+  public onUserTokenChange: typeof onUserTokenChange;
 
-  public addAlgoliaAgent: (algoliaAgent: string) => void;
+  public clickedObjectIDsAfterSearch: typeof clickedObjectIDsAfterSearch;
+  public clickedObjectIDs: typeof clickedObjectIDs;
+  public clickedFilters: typeof clickedFilters;
 
-  public setUserToken: (userToken: string) => void;
-  public setAnonymousUserToken: () => void;
-  public getUserToken: (
-    options?: any,
-    callback?: (err: any, userToken: string) => void
-  ) => string;
-  public onUserTokenChange: (
-    callback?: (userToken: string) => void,
-    options?: { immediate: boolean }
-  ) => void;
+  public convertedObjectIDsAfterSearch: typeof convertedObjectIDsAfterSearch;
+  public convertedObjectIDs: typeof convertedObjectIDs;
+  public convertedFilters: typeof convertedFilters;
 
-  public clickedObjectIDsAfterSearch: (
-    params: InsightsSearchClickEvent
-  ) => void;
-  public clickedObjectIDs: (params: InsightsClickObjectIDsEvent) => void;
-  public clickedFilters: (params: InsightsClickFiltersEvent) => void;
-  public convertedObjectIDsAfterSearch: (
-    params: InsightsSearchConversionEvent
-  ) => void;
-  public convertedObjectIDs: (
-    params: InsightsSearchConversionObjectIDsEvent
-  ) => void;
-  public convertedFilters: (
-    params: InsightsSearchConversionFiltersEvent
-  ) => void;
-
-  public viewedObjectIDs: (params: InsightsSearchViewObjectIDsEvent) => void;
-  public viewedFilters: (params: InsightsSearchViewFiltersEvent) => void;
+  public viewedObjectIDs: typeof viewedObjectIDs;
+  public viewedFilters: typeof viewedFilters;
 
   constructor({ requestFn }: { requestFn: RequestFnType }) {
     // Bind private methods to `this` class
