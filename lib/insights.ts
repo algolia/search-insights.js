@@ -97,8 +97,8 @@ class AlgoliaAnalytics {
     callback?: (err: any, userToken: string) => void
   ) => string;
   public onUserTokenChange: (
-    callback: (userToken: string) => void,
-    options: { immediate: boolean }
+    callback?: (userToken: string) => void,
+    options?: { immediate: boolean }
   ) => void;
 
   public clickedObjectIDsAfterSearch: (
