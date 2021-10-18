@@ -3,7 +3,7 @@ import * as utils from "../utils";
 import { getCookie } from "../_tokenUtils";
 
 describe("init", () => {
-  let analyticsInstance;
+  let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
     document.cookie = `_ALGOLIA=;${new Date().toUTCString()};path=/`;
@@ -285,6 +285,7 @@ describe("init", () => {
 
       it("should not throw an exception when setting user token after setting invalid callback", () => {
         analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
+        // @ts-expect-error wrong parameter
         analyticsInstance.onUserTokenChange("this is not a function");
 
         expect(() => {

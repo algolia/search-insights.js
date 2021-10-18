@@ -60,7 +60,7 @@ export function getUserToken(
 }
 
 export function onUserTokenChange(
-  callback: (userToken: string) => void,
+  callback?: (userToken: string) => void,
   options?: { immediate: boolean }
 ): void {
   this._onUserTokenChangeCallback = callback;
