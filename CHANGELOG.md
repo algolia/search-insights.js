@@ -1,3 +1,12 @@
+## [2.0.5](https://github.com/algolia/search-insights.js/compare/v2.0.4...v2.0.5) (2021-10-18)
+
+
+### Bug Fixes
+
+* **types:** make callback optional at onUserTokenChange ([#331](https://github.com/algolia/search-insights.js/issues/331)) ([36c980e](https://github.com/algolia/search-insights.js/commit/36c980e529b029ab1214f428f1d79d8f447617d9))
+
+
+
 ## [2.0.4](https://github.com/algolia/search-insights.js/compare/v2.0.3...v2.0.4) (2021-10-13)
 
 
