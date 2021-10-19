@@ -74,12 +74,3 @@ export type InsightsClient = <MethodName extends keyof InsightsMethodMap>(
   method: MethodName,
   ...args: InsightsMethodMap[MethodName]
 ) => void;
-
-type QueueItemMap = {
-  [MethodName in keyof InsightsMethodMap]: [
-    methodName: MethodName,
-    ...args: InsightsMethodMap[MethodName]
-  ];
-};
-
-export type QueueItem = QueueItemMap[keyof QueueItemMap];
