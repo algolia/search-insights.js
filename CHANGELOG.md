@@ -1,3 +1,12 @@
+# [2.1.0](https://github.com/algolia/search-insights.js/compare/v2.0.5...v2.1.0) (2021-10-26)
+
+
+### Features
+
+* export AlgoliaAnalytics, getFunctionalInterface and processQueue ([#333](https://github.com/algolia/search-insights.js/issues/333)) ([a95520b](https://github.com/algolia/search-insights.js/commit/a95520b7a17c07aa05ae735ac2c1d3c05a12b110))
+
+
+
 ## [2.0.5](https://github.com/algolia/search-insights.js/compare/v2.0.4...v2.0.5) (2021-10-18)
 
 
