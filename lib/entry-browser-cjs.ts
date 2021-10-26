@@ -1,13 +1,15 @@
 import AlgoliaAnalytics from "./insights";
 import { getFunctionalInterface } from "./_getFunctionalInterface";
 import { getRequesterForBrowser } from "./utils/getRequesterForBrowser";
-import { RequestFnType } from "./utils/request";
+import { processQueue } from "./_processQueue";
+import { createInsightsClient } from "./_createInsightsClient";
 
-export { getRequesterForBrowser };
+export {
+  getRequesterForBrowser,
+  AlgoliaAnalytics,
+  getFunctionalInterface,
+  processQueue
+};
 export * from "./types";
-
-export function createInsightsClient(requestFn: RequestFnType) {
-  return getFunctionalInterface(new AlgoliaAnalytics({ requestFn }));
-}
 
 export default createInsightsClient(getRequesterForBrowser());
