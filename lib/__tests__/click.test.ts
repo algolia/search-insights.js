@@ -22,10 +22,10 @@ describe("clickedObjectIDsAfterSearch", () => {
     (analyticsInstance as any).sendEvent = jest.fn();
     analyticsInstance.clickedObjectIDsAfterSearch(clickParams);
 
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
-      "click",
-      clickParams
-    );
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith({
+      eventType: "click",
+      ...clickParams
+    });
   });
 });
 
@@ -39,10 +39,10 @@ describe("clickedObjectIDs", () => {
     (analyticsInstance as any).sendEvent = jest.fn();
     analyticsInstance.clickedObjectIDs(clickParams);
 
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
-      "click",
-      clickParams
-    );
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith({
+      eventType: "click",
+      ...clickParams
+    });
   });
 });
 
@@ -56,9 +56,9 @@ describe("clickedFilters", () => {
     (analyticsInstance as any).sendEvent = jest.fn();
     analyticsInstance.clickedFilters(clickParams);
 
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
-      "click",
-      clickParams
-    );
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith({
+      eventType: "click",
+      ...clickParams
+    });
   });
 });

@@ -18,10 +18,11 @@ describe("convertedObjectIDsAfterSearch", () => {
       queryID: "test"
     });
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
-      "conversion",
-      { objectIDs: ["12345"], queryID: "test" }
-    );
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith({
+      eventType: "conversion",
+      objectIDs: ["12345"],
+      queryID: "test"
+    });
   });
 });
 
@@ -38,10 +39,10 @@ describe("convertedObjectIDs", () => {
       objectIDs: ["12345"]
     });
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
-      "conversion",
-      { objectIDs: ["12345"] }
-    );
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith({
+      eventType: "conversion",
+      objectIDs: ["12345"]
+    });
   });
 });
 
@@ -58,9 +59,9 @@ describe("convertedFilters", () => {
       filters: ["brands:apple"]
     });
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
-      "conversion",
-      { filters: ["brands:apple"] }
-    );
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith({
+      eventType: "conversion",
+      filters: ["brands:apple"]
+    });
   });
 });

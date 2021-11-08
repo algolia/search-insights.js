@@ -17,7 +17,8 @@ describe("viewedObjectIDs", () => {
       objectIDs: ["12345"]
     });
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith("view", {
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith({
+      eventType: "view",
       objectIDs: ["12345"]
     });
   });
@@ -36,7 +37,8 @@ describe("viewedFilters", () => {
       filters: ["brands:apple"]
     });
     expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith("view", {
+    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith({
+      eventType: "view",
       filters: ["brands:apple"]
     });
   });

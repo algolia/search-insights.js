@@ -1,5 +1,3 @@
-import { InsightsEvent } from "./_sendEvent";
-
 export interface InsightsSearchViewObjectIDsEvent {
   eventName: string;
   userToken?: string;
@@ -13,7 +11,7 @@ export interface InsightsSearchViewObjectIDsEvent {
  * @param params InsightsSearchViewObjectIDsEvent
  */
 export function viewedObjectIDs(params: InsightsSearchViewObjectIDsEvent) {
-  this.sendEvent("view", params as InsightsEvent);
+  this.sendEvent({ eventType: "view", ...params });
 }
 
 export interface InsightsSearchViewFiltersEvent {
@@ -29,5 +27,5 @@ export interface InsightsSearchViewFiltersEvent {
  * @param params InsightsSearchViewFiltersEvent
  */
 export function viewedFilters(params: InsightsSearchViewFiltersEvent) {
-  this.sendEvent("view", params as InsightsEvent);
+  this.sendEvent({ eventType: "view", ...params });
 }

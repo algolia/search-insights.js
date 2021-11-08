@@ -18,8 +18,7 @@ export type InsightsEvent = {
 
 export function makeSendEvent(requestFn: RequestFnType) {
   return function sendEvent(
-    eventType: InsightsEventType,
-    eventData?: InsightsEvent
+    ...eventData: InsightsEvent[]
   ) {
     if (this._userHasOptedOut) {
       return;
@@ -30,24 +29,23 @@ export function makeSendEvent(requestFn: RequestFnType) {
       );
     }
 
-    const event: InsightsEvent = {
-      ...eventData,
-      eventType,
-      userToken: eventData?.userToken ?? this._userToken
-    };
+    const events: InsightsEvent[] = eventData.map(data => ({
+      ...data,
+      userToken: data?.userToken ?? this._userToken
+    }))
 
-    return bulkSendEvent(
+    return sendRequest(
       requestFn,
       this._appId,
       this._apiKey,
       this._uaURIEncoded,
       this._endpointOrigin,
-      [event]
+      events
     );
   };
 }
 
-function bulkSendEvent(
+function sendRequest(
   requestFn: RequestFnType,
   appId: string,
   apiKey: string,

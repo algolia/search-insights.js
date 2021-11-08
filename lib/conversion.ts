@@ -1,5 +1,3 @@
-import { InsightsEvent } from "./_sendEvent";
-
 export interface InsightsSearchConversionEvent {
   eventName: string;
   userToken?: string;
@@ -17,7 +15,7 @@ export interface InsightsSearchConversionEvent {
 export function convertedObjectIDsAfterSearch(
   params: InsightsSearchConversionEvent
 ) {
-  this.sendEvent("conversion", params as InsightsEvent);
+  this.sendEvent({ eventType: "conversion", ...params });
 }
 
 export interface InsightsSearchConversionObjectIDsEvent {
@@ -35,7 +33,7 @@ export interface InsightsSearchConversionObjectIDsEvent {
 export function convertedObjectIDs(
   params: InsightsSearchConversionObjectIDsEvent
 ) {
-  this.sendEvent("conversion", params as InsightsEvent);
+  this.sendEvent({ eventType: "conversion", ...params });
 }
 
 export interface InsightsSearchConversionFiltersEvent {
@@ -51,5 +49,5 @@ export interface InsightsSearchConversionFiltersEvent {
  * @param params InsightsSearchConversionFiltersEvent
  */
 export function convertedFilters(params: InsightsSearchConversionFiltersEvent) {
-  this.sendEvent("conversion", params as InsightsEvent);
+  this.sendEvent({ eventType: "conversion", ...params });
 }

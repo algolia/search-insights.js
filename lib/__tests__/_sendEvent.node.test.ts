@@ -32,7 +32,8 @@ describe("_sendEvent in node env", () => {
 
   it("does not throw when user token is not set", () => {
     expect(() => {
-      aa("sendEvent", "click", {
+      aa("sendEvent", {
+        eventType: "click",
         ...defaultPayload
       });
     }).not.toThrowError();
@@ -52,7 +53,8 @@ describe("_sendEvent in node env", () => {
 
   it("does not throw when user token is included", () => {
     expect(() => {
-      aa("sendEvent", "click", {
+      aa("sendEvent", {
+        eventType: "click",
         ...defaultPayload,
         userToken: "aaa"
       });

@@ -66,7 +66,6 @@ class AlgoliaAnalytics {
 
   version: string = version;
 
-  protected sendEvent: ReturnType<typeof makeSendEvent>;
   protected _hasCredentials: boolean = false;
 
   // Public methods
@@ -78,6 +77,8 @@ class AlgoliaAnalytics {
   public setAnonymousUserToken: typeof setAnonymousUserToken;
   public getUserToken: typeof getUserToken;
   public onUserTokenChange: typeof onUserTokenChange;
+
+  public sendEvent: ReturnType<typeof makeSendEvent>;
 
   public clickedObjectIDsAfterSearch: typeof clickedObjectIDsAfterSearch;
   public clickedObjectIDs: typeof clickedObjectIDs;
@@ -91,10 +92,8 @@ class AlgoliaAnalytics {
   public viewedFilters: typeof viewedFilters;
 
   constructor({ requestFn }: { requestFn: RequestFnType }) {
-    // Bind private methods to `this` class
     this.sendEvent = makeSendEvent(requestFn).bind(this);
 
-    // Bind public methods to `this` class
     this.init = init.bind(this);
 
     this.addAlgoliaAgent = addAlgoliaAgent.bind(this);

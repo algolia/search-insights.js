@@ -46,7 +46,8 @@ describe("sendEvent", () => {
       window.navigator.sendBeacon = sendBeaconBackup;
     });
     it("should make a post request to /1/events", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -57,7 +58,8 @@ describe("sendEvent", () => {
       expect(url.parse(requestUrl).pathname).toBe("/1/events");
     });
     it("should pass over the payload with multiple events", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -73,7 +75,8 @@ describe("sendEvent", () => {
       });
     });
     it("should include X-Algolia-* query parameters", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -101,7 +104,8 @@ describe("sendEvent", () => {
       window.navigator.sendBeacon = sendBeaconBackup;
     });
     it("should use sendBeacon when available", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -111,7 +115,8 @@ describe("sendEvent", () => {
       expect(XMLHttpRequest.send).not.toHaveBeenCalled();
     });
     it("should call sendBeacon with /1/event", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -121,7 +126,8 @@ describe("sendEvent", () => {
       expect(url.parse(requestURL).pathname).toBe("/1/events");
     });
     it("should send the correct payload", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -137,7 +143,8 @@ describe("sendEvent", () => {
       });
     });
     it("should include X-Algolia-* query parameters", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -161,7 +168,8 @@ describe("sendEvent", () => {
       analyticsInstance = setupInstance(fakeRequestFn);
     });
     it("should call the requestFn with expected arguments", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -186,7 +194,8 @@ describe("sendEvent", () => {
     it("should allow a promise to be returned from requestFn", () => {
       fakeRequestFn.mockImplementationOnce(() => Promise.resolve("test"));
 
-      const result = (analyticsInstance as any).sendEvent("click", {
+      const result = (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -213,7 +222,8 @@ describe("sendEvent", () => {
     });
     it("should do nothing is _userHasOptedOut === true", () => {
       analyticsInstance._userHasOptedOut = true;
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -229,7 +239,8 @@ describe("sendEvent", () => {
     });
 
     it("should support multiple objectIDs and positions", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1", "2"],
@@ -255,7 +266,8 @@ describe("sendEvent", () => {
     });
 
     it("should not add a timestamp if not provided", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -265,7 +277,8 @@ describe("sendEvent", () => {
       expect(payload.events[0]).not.toHaveProperty("timestamp");
     });
     it("should pass over provided timestamp", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"],
@@ -290,7 +303,8 @@ describe("sendEvent", () => {
     });
 
     it("should add a userToken if not provided", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"]
@@ -306,7 +320,8 @@ describe("sendEvent", () => {
       });
     });
     it("should pass over provided userToken", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         objectIDs: ["1"],
@@ -331,7 +346,8 @@ describe("sendEvent", () => {
     });
 
     it("should pass over provided filters", () => {
-      (analyticsInstance as any).sendEvent("click", {
+      (analyticsInstance as any).sendEvent({
+        eventType: "click",
         eventName: "my-event",
         index: "my-index",
         filters: ["brand:Apple"]
