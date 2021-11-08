@@ -1,3 +1,4 @@
+import { addEventType } from "./_addEventType";
 export interface InsightsSearchConversionEvent {
   eventName: string;
   userToken?: string;
@@ -8,14 +9,10 @@ export interface InsightsSearchConversionEvent {
   objectIDs: string[];
 }
 
-/**
- * Sends a conversion report in the context of search
- * @param params InsightsSearchConversionEvent
- */
 export function convertedObjectIDsAfterSearch(
-  params: InsightsSearchConversionEvent
+  ...params: InsightsSearchConversionEvent[]
 ) {
-  this.sendEvent({ eventType: "conversion", ...params });
+  return this.sendEvent(...addEventType("conversion", params));
 }
 
 export interface InsightsSearchConversionObjectIDsEvent {
@@ -26,14 +23,11 @@ export interface InsightsSearchConversionObjectIDsEvent {
 
   objectIDs: string[];
 }
-/**
- * Sends a conversion report using objectIDs
- * @param params InsightsSearchConversionObjectIDsEvent
- */
+
 export function convertedObjectIDs(
-  params: InsightsSearchConversionObjectIDsEvent
+  ...params: InsightsSearchConversionObjectIDsEvent[]
 ) {
-  this.sendEvent({ eventType: "conversion", ...params });
+  return this.sendEvent(...addEventType("conversion", params));
 }
 
 export interface InsightsSearchConversionFiltersEvent {
@@ -44,10 +38,9 @@ export interface InsightsSearchConversionFiltersEvent {
 
   filters: string[];
 }
-/**
- * Sends a conversion report using filters, outside the context of a search
- * @param params InsightsSearchConversionFiltersEvent
- */
-export function convertedFilters(params: InsightsSearchConversionFiltersEvent) {
-  this.sendEvent({ eventType: "conversion", ...params });
+
+export function convertedFilters(
+  ...params: InsightsSearchConversionFiltersEvent[]
+) {
+  return this.sendEvent(...addEventType("conversion", params));
 }

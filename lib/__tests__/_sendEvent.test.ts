@@ -363,4 +363,90 @@ describe("sendEvent", () => {
       });
     });
   });
+
+  describe("multiple events", () => {
+    let analyticsInstance: AlgoliaAnalytics;
+    const fakeRequestFn = jest.fn();
+
+    beforeEach(() => {
+      fakeRequestFn.mockClear();
+      analyticsInstance = setupInstance(fakeRequestFn);
+    });
+
+    it("should send multiple events via clickedObjectIDs", () => {
+      analyticsInstance.clickedObjectIDs(
+        {
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        },
+        {
+          eventName: "my-event-2",
+          index: "my-index-2",
+          objectIDs: ["2"]
+        }
+      );
+
+      expect(fakeRequestFn).toHaveBeenCalledWith(
+        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)",
+        {
+          events: [
+            {
+              eventName: "my-event",
+              eventType: "click",
+              index: "my-index",
+              objectIDs: ["1"],
+              userToken: "mock-user-id"
+            },
+            {
+              eventName: "my-event-2",
+              eventType: "click",
+              index: "my-index-2",
+              objectIDs: ["2"],
+              userToken: "mock-user-id"
+            }
+          ]
+        }
+      );
+    });
+
+    it("should send multiple events via sendEvent", () => {
+      analyticsInstance.sendEvent(
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        },
+        {
+          eventType: "click",
+          eventName: "my-event-2",
+          index: "my-index-2",
+          objectIDs: ["2"]
+        }
+      );
+
+      expect(fakeRequestFn).toHaveBeenCalledWith(
+        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)",
+        {
+          events: [
+            {
+              eventName: "my-event",
+              eventType: "click",
+              index: "my-index",
+              objectIDs: ["1"],
+              userToken: "mock-user-id"
+            },
+            {
+              eventName: "my-event-2",
+              eventType: "click",
+              index: "my-index-2",
+              objectIDs: ["2"],
+              userToken: "mock-user-id"
+            }
+          ]
+        }
+      );
+    });
+  });
 });

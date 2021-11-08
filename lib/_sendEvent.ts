@@ -1,20 +1,5 @@
 import { RequestFnType } from "./utils/request";
-
-export type InsightsEventType = "click" | "conversion" | "view";
-export type InsightsEvent = {
-  eventType: InsightsEventType;
-
-  eventName: string;
-  userToken: string;
-  timestamp?: number;
-  index: string;
-
-  queryID?: string;
-  objectIDs?: string[];
-  positions?: number[];
-
-  filters?: string[];
-};
+import { InsightsEvent } from './types'
 
 export function makeSendEvent(requestFn: RequestFnType) {
   return function sendEvent(

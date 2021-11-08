@@ -74,3 +74,20 @@ export type InsightsClient = <MethodName extends keyof InsightsMethodMap>(
   method: MethodName,
   ...args: InsightsMethodMap[MethodName]
 ) => void;
+
+export type InsightsEventType = "click" | "conversion" | "view";
+
+export type InsightsEvent = {
+  eventType: InsightsEventType;
+
+  eventName: string;
+  userToken?: string;
+  timestamp?: number;
+  index: string;
+
+  queryID?: string;
+  objectIDs?: string[];
+  positions?: number[];
+
+  filters?: string[];
+};
