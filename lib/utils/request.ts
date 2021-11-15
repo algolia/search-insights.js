@@ -2,7 +2,9 @@ export type RequestFnType = (url: string, data: object) => void;
 
 export const requestWithSendBeacon: RequestFnType = (url, data) => {
   const serializedData = JSON.stringify(data);
-  navigator.sendBeacon(url, serializedData);
+  if (!navigator.sendBeacon(url, serializedData)) {
+    return requestWithXMLHttpRequest(url, data);
+  }
 };
 
 export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
