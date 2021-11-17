@@ -97,7 +97,7 @@ describe("sendEvent", () => {
     let sendBeaconBackup;
     beforeEach(() => {
       sendBeaconBackup = window.navigator.sendBeacon;
-      sendBeacon = window.navigator.sendBeacon = jest.fn();
+      sendBeacon = window.navigator.sendBeacon = jest.fn(() => true);
       analyticsInstance = setupInstance();
     });
     afterEach(() => {

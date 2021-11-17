@@ -15,7 +15,7 @@ describe("request", () => {
   const sendBeaconBackup = navigator.sendBeacon;
   const XMLHttpRequestBackup = window.XMLHttpRequest;
 
-  const sendBeacon = jest.fn();
+  const sendBeacon = jest.fn(() => true);
   const open = jest.fn();
   const send = jest.fn();
   const write = jest.fn();
@@ -79,6 +79,25 @@ describe("request", () => {
     const request = getRequesterForBrowser();
     request(url, data);
     expect(navigator.sendBeacon).not.toHaveBeenCalled();
+    expect(open).toHaveBeenCalledTimes(1);
+    expect(open).toHaveBeenLastCalledWith("POST", url);
+    expect(send).toHaveBeenCalledTimes(1);
+    expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
+    expect(nodeHttpRequest).not.toHaveBeenCalled();
+    expect(nodeHttpsRequest).not.toHaveBeenCalled();
+  });
+
+  it("should fall back to XMLHttpRequest if sendBeacon returns false", () => {
+    navigator.sendBeacon = jest.fn(() => false);
+    supportsSendBeacon.mockImplementation(() => true);
+    supportsXMLHttpRequest.mockImplementation(() => true);
+    supportsNodeHttpModule.mockImplementation(() => false);
+    const url = "https://random.url";
+    const data = { foo: "bar" };
+    const request = getRequesterForBrowser();
+    request(url, data);
+    expect(navigator.sendBeacon).toHaveBeenCalledTimes(1);
+
     expect(open).toHaveBeenCalledTimes(1);
     expect(open).toHaveBeenLastCalledWith("POST", url);
     expect(send).toHaveBeenCalledTimes(1);
