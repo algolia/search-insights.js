@@ -13,7 +13,7 @@ export function bindSearchClient(searchClient: SearchClient) {
 
   // @ts-expect-error patching the client intentionally
   searchClient.transporter.requester = {
-    send(request: Request): Promise<Response> {
+    send(request: Request): Readonly<Promise<Response>> {
       let newRequest: Request;
       try {
         const data = JSON.parse(request.data);
