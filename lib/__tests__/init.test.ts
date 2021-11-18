@@ -2,6 +2,11 @@ import AlgoliaAnalytics from "../insights";
 import * as utils from "../utils";
 import { getCookie } from "../_tokenUtils";
 
+// https://stackoverflow.com/questions/53162001/typeerror-during-jests-spyon-cannot-set-property-getrequest-of-object-which
+jest.mock("../utils", () => ({
+  ...jest.requireActual("../utils")
+}));
+
 describe("init", () => {
   let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {

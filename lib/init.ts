@@ -1,5 +1,8 @@
+import { SearchClient } from 'algoliasearch'
+
 import { isUndefined, isString, isNumber } from "./utils";
 import { DEFAULT_ALGOLIA_AGENT } from "./_algoliaAgent";
+import {bindSearchClient } from './_bindSearchClient'
 
 type InsightRegion = "de" | "us";
 const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
@@ -13,6 +16,7 @@ export interface InitParams {
   cookieDuration?: number;
   region?: InsightRegion;
   userToken?: string;
+  searchClient?: SearchClient;
 }
 
 /**
@@ -83,5 +87,9 @@ You can visit https://algolia.com/events/debugger instead.`);
     this.setUserToken(options.userToken);
   } else if (!this._userToken && !this._userHasOptedOut && this._useCookie) {
     this.setAnonymousUserToken();
+  }
+
+  if (options.searchClient) {
+    bindSearchClient.call(this, options.searchClient)
   }
 }
