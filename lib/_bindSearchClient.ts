@@ -13,10 +13,11 @@ export function bindSearchClient(searchClient: SearchClient) {
 
   // @ts-expect-error patching the client intentionally
   searchClient.transporter.requester = {
-    async send(request: Request): Promise<Response> {
-      let newRequest;
+    send(request: Request): Promise<Response> {
+      let newRequest: Request;
       try {
         const data = JSON.parse(request.data);
+
         if (Array.isArray(data.requests)) {
           // multi index
           newRequest = {
@@ -33,16 +34,18 @@ export function bindSearchClient(searchClient: SearchClient) {
         } else {
           newRequest = {
             ...request,
-            clickAnalytics: true,
-            userToken: getUserToken()
+            data: JSON.stringify({
+              ...data,
+              clickAnalytics: true,
+              userToken: getUserToken()
+            })
           };
         }
       } catch (e) {
         newRequest = request;
       }
 
-      const response = await requester.send(newRequest);
-      return response;
+      return requester.send(newRequest);
     }
   };
 }
