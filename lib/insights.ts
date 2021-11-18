@@ -4,7 +4,7 @@ import objectKeysPolyfill from "./polyfills/objectKeys";
 objectKeysPolyfill();
 objectAssignPolyfill();
 
-import { makeSendEvent } from "./_sendEvent";
+import { makeSendEvents } from "./_sendEvent";
 
 import { init } from "./init";
 import { addAlgoliaAgent } from "./_algoliaAgent";
@@ -78,7 +78,7 @@ class AlgoliaAnalytics {
   public getUserToken: typeof getUserToken;
   public onUserTokenChange: typeof onUserTokenChange;
 
-  public sendEvent: ReturnType<typeof makeSendEvent>;
+  public sendEvents: ReturnType<typeof makeSendEvents>;
 
   public clickedObjectIDsAfterSearch: typeof clickedObjectIDsAfterSearch;
   public clickedObjectIDs: typeof clickedObjectIDs;
@@ -92,7 +92,7 @@ class AlgoliaAnalytics {
   public viewedFilters: typeof viewedFilters;
 
   constructor({ requestFn }: { requestFn: RequestFnType }) {
-    this.sendEvent = makeSendEvent(requestFn).bind(this);
+    this.sendEvents = makeSendEvents(requestFn).bind(this);
 
     this.init = init.bind(this);
 

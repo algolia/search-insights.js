@@ -11,18 +11,20 @@ describe("convertedObjectIDsAfterSearch", () => {
   });
 
   it("Should send allow passing of queryID", () => {
-    (analyticsInstance as any).sendEvent = jest.fn();
+    (analyticsInstance as any).sendEvents = jest.fn();
     analyticsInstance.init(credentials);
     analyticsInstance.convertedObjectIDsAfterSearch({
       objectIDs: ["12345"],
       queryID: "test"
     });
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith({
-      eventType: "conversion",
-      objectIDs: ["12345"],
-      queryID: "test"
-    });
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalled();
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+      {
+        eventType: "conversion",
+        objectIDs: ["12345"],
+        queryID: "test"
+      }
+    ]);
   });
 });
 
@@ -33,16 +35,18 @@ describe("convertedObjectIDs", () => {
   });
 
   it("should send allow passing of queryID", () => {
-    (analyticsInstance as any).sendEvent = jest.fn();
+    (analyticsInstance as any).sendEvents = jest.fn();
     analyticsInstance.init(credentials);
     analyticsInstance.convertedObjectIDs({
       objectIDs: ["12345"]
     });
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith({
-      eventType: "conversion",
-      objectIDs: ["12345"]
-    });
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalled();
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+      {
+        eventType: "conversion",
+        objectIDs: ["12345"]
+      }
+    ]);
   });
 });
 
@@ -53,15 +57,17 @@ describe("convertedFilters", () => {
   });
 
   it("should send allow passing of queryID", () => {
-    (analyticsInstance as any).sendEvent = jest.fn();
+    (analyticsInstance as any).sendEvents = jest.fn();
     analyticsInstance.init(credentials);
     analyticsInstance.convertedFilters({
       filters: ["brands:apple"]
     });
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith({
-      eventType: "conversion",
-      filters: ["brands:apple"]
-    });
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalled();
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+      {
+        eventType: "conversion",
+        filters: ["brands:apple"]
+      }
+    ]);
   });
 });

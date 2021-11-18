@@ -1,9 +1,9 @@
 import { RequestFnType } from "./utils/request";
 import { InsightsEvent } from './types'
 
-export function makeSendEvent(requestFn: RequestFnType) {
-  return function sendEvent(
-    ...eventData: InsightsEvent[]
+export function makeSendEvents(requestFn: RequestFnType) {
+  return function sendEvents(
+    eventData: InsightsEvent[]
   ) {
     if (this._userHasOptedOut) {
       return;

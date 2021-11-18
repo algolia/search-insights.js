@@ -12,7 +12,7 @@ export interface InsightsSearchConversionEvent {
 export function convertedObjectIDsAfterSearch(
   ...params: InsightsSearchConversionEvent[]
 ) {
-  return this.sendEvent(...addEventType("conversion", params));
+  return this.sendEvents(addEventType("conversion", params));
 }
 
 export interface InsightsSearchConversionObjectIDsEvent {
@@ -27,7 +27,7 @@ export interface InsightsSearchConversionObjectIDsEvent {
 export function convertedObjectIDs(
   ...params: InsightsSearchConversionObjectIDsEvent[]
 ) {
-  return this.sendEvent(...addEventType("conversion", params));
+  return this.sendEvents(addEventType("conversion", params));
 }
 
 export interface InsightsSearchConversionFiltersEvent {
@@ -42,5 +42,5 @@ export interface InsightsSearchConversionFiltersEvent {
 export function convertedFilters(
   ...params: InsightsSearchConversionFiltersEvent[]
 ) {
-  return this.sendEvent(...addEventType("conversion", params));
+  return this.sendEvents(addEventType("conversion", params));
 }

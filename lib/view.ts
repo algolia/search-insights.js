@@ -10,7 +10,7 @@ export interface InsightsSearchViewObjectIDsEvent {
 }
 
 export function viewedObjectIDs(...params: InsightsSearchViewObjectIDsEvent[]) {
-  return this.sendEvent(...addEventType("view", params));
+  return this.sendEvents(addEventType("view", params));
 }
 
 export interface InsightsSearchViewFiltersEvent {
@@ -23,5 +23,5 @@ export interface InsightsSearchViewFiltersEvent {
 }
 
 export function viewedFilters(...params: InsightsSearchViewFiltersEvent[]) {
-  return this.sendEvent(...addEventType("view", params));
+  return this.sendEvents(addEventType("view", params));
 }
