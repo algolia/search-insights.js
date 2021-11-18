@@ -32,6 +32,7 @@ export function click({
   const queryID = indexObject.queryID;
   const objectIDPositionMap = indexObject.hits.reduce((acc, hit, index) => {
     acc[hit.objectID] = index;
+    return acc;
   }, {});
   const positions = objectIDs
     .map(objectID => objectIDPositionMap[objectID])
