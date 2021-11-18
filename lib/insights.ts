@@ -80,6 +80,7 @@ class AlgoliaAnalytics {
   public getUserToken: typeof getUserToken;
   public onUserTokenChange: typeof onUserTokenChange;
 
+  public click: typeof click;
   public clickedObjectIDsAfterSearch: typeof clickedObjectIDsAfterSearch;
   public clickedObjectIDs: typeof clickedObjectIDs;
   public clickedFilters: typeof clickedFilters;
