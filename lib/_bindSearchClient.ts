@@ -10,6 +10,7 @@ export function bindSearchClient(searchClient: SearchClient) {
   type Request = Parameters<typeof requester.send>[0];
   type Response = Awaited<ReturnType<typeof requester.send>>;
   const getUserToken = () => this._userToken;
+  const setResponse = response => (this._lastResponse = response);
 
   // @ts-expect-error patching the client intentionally
   searchClient.transporter.requester = {
@@ -45,7 +46,10 @@ export function bindSearchClient(searchClient: SearchClient) {
         newRequest = request;
       }
 
-      return requester.send(newRequest);
+      return requester.send(newRequest).then(result => {
+        setResponse(result);
+        return result;
+      });
     }
   };
 }
