@@ -38,7 +38,7 @@ export function click({
     .map(objectID => objectIDPositionMap[objectID])
     .map(position => indexObject.page * indexObject.hitsPerPage + position + 1);
 
-  this.sendEvent({
+  this.sendEvent('click', {
     eventName,
     userToken,
     timestamp,
