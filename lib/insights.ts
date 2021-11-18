@@ -13,6 +13,7 @@ import { getVersion } from "./_getVersion";
 import { RequestFnType } from "./utils/request";
 
 import {
+  click,
   clickedObjectIDsAfterSearch,
   clickedObjectIDs,
   clickedFilters
@@ -104,6 +105,7 @@ class AlgoliaAnalytics {
     this.getUserToken = getUserToken.bind(this);
     this.onUserTokenChange = onUserTokenChange.bind(this);
 
+    this.click = click.bind(this);
     this.clickedObjectIDsAfterSearch = clickedObjectIDsAfterSearch.bind(this);
     this.clickedObjectIDs = clickedObjectIDs.bind(this);
     this.clickedFilters = clickedFilters.bind(this);
