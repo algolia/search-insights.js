@@ -97,8 +97,8 @@ jobs:
       - run:
           name: Prepare release
           command: |
-            git config --global user.email "eunjae.lee@algolia.com"
-            git config --global user.name "Eunjae Lee"
+            git config --global user.email "algobot@users.noreply.github.com"
+            git config --global user.name "algobot"
             yarn run release --yes --no-browse
 
 workflows:
@@ -116,7 +116,7 @@ workflows:
   prepare_release_every_tuesday:
     triggers:
       - schedule:
-          cron: '0 9 * * 2'
+          cron: "0 9 * * 2"
           filters:
             branches:
               only:
