@@ -19,7 +19,7 @@ function setupInstance(requestFn = getRequesterForBrowser()) {
   return instance;
 }
 
-describe("sendEvent", () => {
+describe("sendEvents", () => {
   let XMLHttpRequest;
 
   beforeEach(() => {
@@ -46,22 +46,28 @@ describe("sendEvent", () => {
       window.navigator.sendBeacon = sendBeaconBackup;
     });
     it("should make a post request to /1/events", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
       expect(XMLHttpRequest.open).toHaveBeenCalledTimes(1);
       const [verb, requestUrl] = XMLHttpRequest.open.mock.calls[0];
       expect(verb).toBe("POST");
       expect(url.parse(requestUrl).pathname).toBe("/1/events");
     });
     it("should pass over the payload with multiple events", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
@@ -73,11 +79,14 @@ describe("sendEvent", () => {
       });
     });
     it("should include X-Algolia-* query parameters", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
       const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
       const { query } = url.parse(requestUrl);
       expect(querystring.parse(query)).toEqual({
@@ -101,31 +110,40 @@ describe("sendEvent", () => {
       window.navigator.sendBeacon = sendBeaconBackup;
     });
     it("should use sendBeacon when available", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
       expect(sendBeacon).toHaveBeenCalledTimes(1);
       expect(XMLHttpRequest.open).not.toHaveBeenCalled();
       expect(XMLHttpRequest.send).not.toHaveBeenCalled();
     });
     it("should call sendBeacon with /1/event", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
       const [requestURL] = sendBeacon.mock.calls[0];
 
       expect(url.parse(requestURL).pathname).toBe("/1/events");
     });
     it("should send the correct payload", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
       const payload = JSON.parse(sendBeacon.mock.calls[0][1]);
 
       expect(payload).toEqual({
@@ -137,11 +155,14 @@ describe("sendEvent", () => {
       });
     });
     it("should include X-Algolia-* query parameters", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
       const requestUrl = sendBeacon.mock.calls[0][0];
       const { query } = url.parse(requestUrl);
       expect(querystring.parse(query)).toEqual({
@@ -161,11 +182,14 @@ describe("sendEvent", () => {
       analyticsInstance = setupInstance(fakeRequestFn);
     });
     it("should call the requestFn with expected arguments", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
 
       expect(fakeRequestFn).toHaveBeenCalledWith(
         "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)",
@@ -186,11 +210,14 @@ describe("sendEvent", () => {
     it("should allow a promise to be returned from requestFn", () => {
       fakeRequestFn.mockImplementationOnce(() => Promise.resolve("test"));
 
-      const result = (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      });
+      const result = (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
 
       expect(result instanceof Promise).toBe(true);
       expect(result).resolves.toBe("test");
@@ -206,18 +233,21 @@ describe("sendEvent", () => {
     it("should throw if init was not called", () => {
       expect(() => {
         (analyticsInstance as any)._hasCredentials = false;
-        (analyticsInstance as any).sendEvent();
+        (analyticsInstance as any).sendEvents();
       }).toThrowError(
         "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
       );
     });
     it("should do nothing is _userHasOptedOut === true", () => {
       analyticsInstance._userHasOptedOut = true;
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(0);
     });
   });
@@ -229,12 +259,15 @@ describe("sendEvent", () => {
     });
 
     it("should support multiple objectIDs and positions", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1", "2"],
-        positions: [3, 5]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1", "2"],
+          positions: [3, 5]
+        }
+      ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
@@ -255,22 +288,28 @@ describe("sendEvent", () => {
     });
 
     it("should not add a timestamp if not provided", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload.events[0]).not.toHaveProperty("timestamp");
     });
     it("should pass over provided timestamp", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"],
-        timestamp: 1984
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"],
+          timestamp: 1984
+        }
+      ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
@@ -290,11 +329,14 @@ describe("sendEvent", () => {
     });
 
     it("should add a userToken if not provided", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
@@ -306,12 +348,15 @@ describe("sendEvent", () => {
       });
     });
     it("should pass over provided userToken", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"],
-        userToken: "007"
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"],
+          userToken: "007"
+        }
+      ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
@@ -331,11 +376,14 @@ describe("sendEvent", () => {
     });
 
     it("should pass over provided filters", () => {
-      (analyticsInstance as any).sendEvent("click", {
-        eventName: "my-event",
-        index: "my-index",
-        filters: ["brand:Apple"]
-      });
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          filters: ["brand:Apple"]
+        }
+      ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
@@ -345,6 +393,92 @@ describe("sendEvent", () => {
           })
         ]
       });
+    });
+  });
+
+  describe("multiple events", () => {
+    let analyticsInstance: AlgoliaAnalytics;
+    const fakeRequestFn = jest.fn();
+
+    beforeEach(() => {
+      fakeRequestFn.mockClear();
+      analyticsInstance = setupInstance(fakeRequestFn);
+    });
+
+    it("should send multiple events via clickedObjectIDs", () => {
+      analyticsInstance.clickedObjectIDs(
+        {
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        },
+        {
+          eventName: "my-event-2",
+          index: "my-index-2",
+          objectIDs: ["2"]
+        }
+      );
+
+      expect(fakeRequestFn).toHaveBeenCalledWith(
+        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)",
+        {
+          events: [
+            {
+              eventName: "my-event",
+              eventType: "click",
+              index: "my-index",
+              objectIDs: ["1"],
+              userToken: "mock-user-id"
+            },
+            {
+              eventName: "my-event-2",
+              eventType: "click",
+              index: "my-index-2",
+              objectIDs: ["2"],
+              userToken: "mock-user-id"
+            }
+          ]
+        }
+      );
+    });
+
+    it("should send multiple events via sendEvents", () => {
+      analyticsInstance.sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        },
+        {
+          eventType: "click",
+          eventName: "my-event-2",
+          index: "my-index-2",
+          objectIDs: ["2"]
+        }
+      ]);
+
+      expect(fakeRequestFn).toHaveBeenCalledWith(
+        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)",
+        {
+          events: [
+            {
+              eventName: "my-event",
+              eventType: "click",
+              index: "my-index",
+              objectIDs: ["1"],
+              userToken: "mock-user-id"
+            },
+            {
+              eventName: "my-event-2",
+              eventType: "click",
+              index: "my-index-2",
+              objectIDs: ["2"],
+              userToken: "mock-user-id"
+            }
+          ]
+        }
+      );
     });
   });
 });

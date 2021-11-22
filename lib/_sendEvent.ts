@@ -1,25 +1,9 @@
 import { RequestFnType } from "./utils/request";
+import { InsightsEvent } from './types'
 
-export type InsightsEventType = "click" | "conversion" | "view";
-export type InsightsEvent = {
-  eventType: InsightsEventType;
-
-  eventName: string;
-  userToken: string;
-  timestamp?: number;
-  index: string;
-
-  queryID?: string;
-  objectIDs?: string[];
-  positions?: number[];
-
-  filters?: string[];
-};
-
-export function makeSendEvent(requestFn: RequestFnType) {
-  return function sendEvent(
-    eventType: InsightsEventType,
-    eventData?: InsightsEvent
+export function makeSendEvents(requestFn: RequestFnType) {
+  return function sendEvents(
+    eventData: InsightsEvent[]
   ) {
     if (this._userHasOptedOut) {
       return;
@@ -30,24 +14,23 @@ export function makeSendEvent(requestFn: RequestFnType) {
       );
     }
 
-    const event: InsightsEvent = {
-      ...eventData,
-      eventType,
-      userToken: eventData?.userToken ?? this._userToken
-    };
+    const events: InsightsEvent[] = eventData.map(data => ({
+      ...data,
+      userToken: data?.userToken ?? this._userToken
+    }))
 
-    return bulkSendEvent(
+    return sendRequest(
       requestFn,
       this._appId,
       this._apiKey,
       this._uaURIEncoded,
       this._endpointOrigin,
-      [event]
+      events
     );
   };
 }
 
-function bulkSendEvent(
+function sendRequest(
   requestFn: RequestFnType,
   appId: string,
   apiKey: string,
