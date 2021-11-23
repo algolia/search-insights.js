@@ -1,3 +1,17 @@
+# [2.2.0](https://github.com/algolia/search-insights.js/compare/v2.1.0...v2.2.0) (2021-11-23)
+
+
+### Bug Fixes
+
+* fall back to XHR if sendBeacon returns false ([#336](https://github.com/algolia/search-insights.js/issues/336)) ([809fe47](https://github.com/algolia/search-insights.js/commit/809fe47c3b03cdc4cab9fcfd259410aefbaaf480))
+
+
+### Features
+
+* support multiple events ([#335](https://github.com/algolia/search-insights.js/issues/335)) ([79a1de4](https://github.com/algolia/search-insights.js/commit/79a1de478c3f712ed3d2a8270debefb20459fd8b))
+
+
+
 # [2.1.0](https://github.com/algolia/search-insights.js/compare/v2.0.5...v2.1.0) (2021-10-26)
 
 
