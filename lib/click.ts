@@ -17,12 +17,7 @@ export function click({
 }: InsightsClickEvent) {
   // https://codesandbox.io/s/cold-brook-is5k3?file=/src/index.js
 
-  let lastResponse;
-  try {
-    lastResponse = JSON.parse(this._lastResponse.content);
-  } catch (e) {
-    // TODO: failed to parse
-  }
+  let lastResponse = this._lastResponse;
   const indices = Array.isArray(lastResponse.results)
     ? lastResponse.results
     : [lastResponse];
@@ -38,7 +33,7 @@ export function click({
     .map(objectID => objectIDPositionMap[objectID])
     .map(position => indexObject.page * indexObject.hitsPerPage + position + 1);
 
-  this.sendEvent('click', {
+  this.sendEvent("click", {
     eventName,
     userToken,
     timestamp,
