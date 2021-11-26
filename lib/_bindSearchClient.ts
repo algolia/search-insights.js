@@ -8,7 +8,7 @@ export function bindSearchClient(searchClient: SearchClient) {
   const setResponse = response => (this._lastResponse = response);
 
   // @ts-expect-error we are patching a read-only function
-  searchClient.transporter.read = async (
+  searchClient.transporter.read = (
     request: Request,
     requestOptions?: RequestOptions
   ) => {
