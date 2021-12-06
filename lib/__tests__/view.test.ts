@@ -11,15 +11,18 @@ describe("viewedObjectIDs", () => {
   });
 
   it("should send allow passing of queryID", () => {
-    (analyticsInstance as any).sendEvent = jest.fn();
+    (analyticsInstance as any).sendEvents = jest.fn();
     analyticsInstance.init(credentials);
     analyticsInstance.viewedObjectIDs({
       objectIDs: ["12345"]
     });
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith("view", {
-      objectIDs: ["12345"]
-    });
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalled();
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+      {
+        eventType: "view",
+        objectIDs: ["12345"]
+      }
+    ]);
   });
 });
 
@@ -30,14 +33,17 @@ describe("viewedFilters", () => {
   });
 
   it("should send allow passing of queryID", () => {
-    (analyticsInstance as any).sendEvent = jest.fn();
+    (analyticsInstance as any).sendEvents = jest.fn();
     analyticsInstance.init(credentials);
     analyticsInstance.viewedFilters({
       filters: ["brands:apple"]
     });
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith("view", {
-      filters: ["brands:apple"]
-    });
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalled();
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+      {
+        eventType: "view",
+        filters: ["brands:apple"]
+      }
+    ]);
   });
 });

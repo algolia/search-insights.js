@@ -1,4 +1,4 @@
-import { InsightsEvent } from "./_sendEvent";
+import { addEventType } from "./_addEventType";
 
 export interface InsightsClickEvent {
   eventName: string;
@@ -55,12 +55,10 @@ export interface InsightsSearchClickEvent {
   positions: number[];
 }
 
-/**
- * Sends a click report in the context of search
- * @param params: InsightsSearchClickEvent
- */
-export function clickedObjectIDsAfterSearch(params: InsightsSearchClickEvent) {
-  this.sendEvent("click", params as InsightsEvent);
+export function clickedObjectIDsAfterSearch(
+  ...params: InsightsSearchClickEvent[]
+) {
+  return this.sendEvents(addEventType("click", params));
 }
 
 export interface InsightsClickObjectIDsEvent {
@@ -72,12 +70,8 @@ export interface InsightsClickObjectIDsEvent {
   objectIDs: string[];
 }
 
-/**
- * Sends a click report using objectIDs, outside the context of a search
- * @param params: InsightsClickObjectIDsEvent
- */
-export function clickedObjectIDs(params: InsightsClickObjectIDsEvent) {
-  this.sendEvent("click", params as InsightsEvent);
+export function clickedObjectIDs(...params: InsightsClickObjectIDsEvent[]) {
+  return this.sendEvents(addEventType("click", params));
 }
 
 export interface InsightsClickFiltersEvent {
@@ -89,10 +83,6 @@ export interface InsightsClickFiltersEvent {
   filters: string[];
 }
 
-/**
- * Sends a click report using filters
- * @param params: InsightsClickFiltersEvent
- */
-export function clickedFilters(params: InsightsClickFiltersEvent) {
-  this.sendEvent("click", params as InsightsEvent);
+export function clickedFilters(...params: InsightsClickFiltersEvent[]) {
+  return this.sendEvents(addEventType("click", params));
 }

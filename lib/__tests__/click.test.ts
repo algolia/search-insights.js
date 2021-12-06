@@ -11,7 +11,7 @@ beforeEach(() => {
 });
 
 describe("clickedObjectIDsAfterSearch", () => {
-  test("Should call sendEvent with proper params", () => {
+  test("Should call sendEvents with proper params", () => {
     const clickParams = {
       positions: [1],
       objectIDs: ["2"],
@@ -19,46 +19,52 @@ describe("clickedObjectIDsAfterSearch", () => {
     };
 
     analyticsInstance.init(credentials);
-    (analyticsInstance as any).sendEvent = jest.fn();
+    (analyticsInstance as any).sendEvents = jest.fn();
     analyticsInstance.clickedObjectIDsAfterSearch(clickParams);
 
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
-      "click",
-      clickParams
-    );
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+      {
+        eventType: "click",
+        ...clickParams
+      }
+    ]);
   });
 });
 
 describe("clickedObjectIDs", () => {
-  it("should call sendEvent with proper params", () => {
+  it("should call sendEvents with proper params", () => {
     const clickParams = {
       objectIDs: ["2"]
     };
 
     analyticsInstance.init(credentials);
-    (analyticsInstance as any).sendEvent = jest.fn();
+    (analyticsInstance as any).sendEvents = jest.fn();
     analyticsInstance.clickedObjectIDs(clickParams);
 
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
-      "click",
-      clickParams
-    );
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+      {
+        eventType: "click",
+        ...clickParams
+      }
+    ]);
   });
 });
 
 describe("clickedFilters", () => {
-  it("should call sendEvent with proper params", () => {
+  it("should call sendEvents with proper params", () => {
     const clickParams = {
       filters: ["brands:apple"]
     };
 
     analyticsInstance.init(credentials);
-    (analyticsInstance as any).sendEvent = jest.fn();
+    (analyticsInstance as any).sendEvents = jest.fn();
     analyticsInstance.clickedFilters(clickParams);
 
-    expect((analyticsInstance as any).sendEvent).toHaveBeenCalledWith(
-      "click",
-      clickParams
-    );
+    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+      {
+        eventType: "click",
+        ...clickParams
+      }
+    ]);
   });
 });

@@ -14,6 +14,7 @@ import {
 import { viewedObjectIDs, viewedFilters } from "./view";
 import { getVersion } from "./_getVersion";
 import { setSearchClient } from "./_setSearchClient";
+import { makeSendEvents } from "./_sendEvent";
 
 export type InsightsMethodMap = {
   init: Parameters<typeof init>;
@@ -33,6 +34,7 @@ export type InsightsMethodMap = {
   viewedObjectIDs: Parameters<typeof viewedObjectIDs>;
   viewedFilters: Parameters<typeof viewedFilters>;
   setSearchClient: Parameters<typeof setSearchClient>;
+  sendEvents: Parameters<ReturnType<typeof makeSendEvents>>;
 };
 
 type MethodType<MethodName extends keyof InsightsMethodMap> = (
@@ -74,7 +76,26 @@ export type ViewedFilters = MethodType<"viewedFilters">;
 
 export type SetSearchClient = MethodType<"setSearchClient">;
 
+export type SendEvents = MethodType<"sendEvents">;
+
 export type InsightsClient = <MethodName extends keyof InsightsMethodMap>(
   method: MethodName,
   ...args: InsightsMethodMap[MethodName]
 ) => void;
+
+export type InsightsEventType = "click" | "conversion" | "view";
+
+export type InsightsEvent = {
+  eventType: InsightsEventType;
+
+  eventName: string;
+  userToken?: string;
+  timestamp?: number;
+  index: string;
+
+  queryID?: string;
+  objectIDs?: string[];
+  positions?: number[];
+
+  filters?: string[];
+};

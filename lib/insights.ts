@@ -4,7 +4,7 @@ import objectKeysPolyfill from "./polyfills/objectKeys";
 objectKeysPolyfill();
 objectAssignPolyfill();
 
-import { makeSendEvent } from "./_sendEvent";
+import { makeSendEvents } from "./_sendEvent";
 
 import { init } from "./init";
 import { addAlgoliaAgent } from "./_algoliaAgent";
@@ -68,7 +68,6 @@ class AlgoliaAnalytics {
 
   version: string = version;
 
-  protected sendEvent: ReturnType<typeof makeSendEvent>;
   protected _hasCredentials: boolean = false;
 
   // Public methods
@@ -81,7 +80,8 @@ class AlgoliaAnalytics {
   public getUserToken: typeof getUserToken;
   public onUserTokenChange: typeof onUserTokenChange;
 
-  public click: typeof click;
+  public sendEvents: ReturnType<typeof makeSendEvents>;
+
   public clickedObjectIDsAfterSearch: typeof clickedObjectIDsAfterSearch;
   public clickedObjectIDs: typeof clickedObjectIDs;
   public clickedFilters: typeof clickedFilters;
@@ -96,10 +96,8 @@ class AlgoliaAnalytics {
   public setSearchClient: typeof setSearchClient;
 
   constructor({ requestFn }: { requestFn: RequestFnType }) {
-    // Bind private methods to `this` class
-    this.sendEvent = makeSendEvent(requestFn).bind(this);
+    this.sendEvents = makeSendEvents(requestFn).bind(this);
 
-    // Bind public methods to `this` class
     this.init = init.bind(this);
 
     this.addAlgoliaAgent = addAlgoliaAgent.bind(this);

@@ -32,9 +32,12 @@ describe("_sendEvent in node env", () => {
 
   it("does not throw when user token is not set", () => {
     expect(() => {
-      aa("sendEvent", "click", {
-        ...defaultPayload
-      });
+      aa("sendEvents", [
+        {
+          eventType: "click",
+          ...defaultPayload
+        }
+      ]);
     }).not.toThrowError();
 
     expect(requestFn).toHaveBeenCalledWith(defaultRequestUrl, {
@@ -52,10 +55,13 @@ describe("_sendEvent in node env", () => {
 
   it("does not throw when user token is included", () => {
     expect(() => {
-      aa("sendEvent", "click", {
-        ...defaultPayload,
-        userToken: "aaa"
-      });
+      aa("sendEvents", [
+        {
+          eventType: "click",
+          ...defaultPayload,
+          userToken: "aaa"
+        }
+      ]);
     }).not.toThrowError();
 
     expect(requestFn).toHaveBeenCalledWith(defaultRequestUrl, {
