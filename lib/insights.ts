@@ -10,10 +10,11 @@ import { init } from "./init";
 import { addAlgoliaAgent } from "./_algoliaAgent";
 import { getVersion } from "./_getVersion";
 
+import { setSearchClient } from "./_setSearchClient";
+
 import { RequestFnType } from "./utils/request";
 
 import {
-  click,
   clickedObjectIDsAfterSearch,
   clickedObjectIDs,
   clickedFilters
@@ -92,6 +93,8 @@ class AlgoliaAnalytics {
   public viewedObjectIDs: typeof viewedObjectIDs;
   public viewedFilters: typeof viewedFilters;
 
+  public setSearchClient: typeof setSearchClient;
+
   constructor({ requestFn }: { requestFn: RequestFnType }) {
     // Bind private methods to `this` class
     this.sendEvent = makeSendEvent(requestFn).bind(this);
@@ -106,7 +109,6 @@ class AlgoliaAnalytics {
     this.getUserToken = getUserToken.bind(this);
     this.onUserTokenChange = onUserTokenChange.bind(this);
 
-    this.click = click.bind(this);
     this.clickedObjectIDsAfterSearch = clickedObjectIDsAfterSearch.bind(this);
     this.clickedObjectIDs = clickedObjectIDs.bind(this);
     this.clickedFilters = clickedFilters.bind(this);
@@ -121,6 +123,8 @@ class AlgoliaAnalytics {
     this.viewedFilters = viewedFilters.bind(this);
 
     this.getVersion = getVersion.bind(this);
+
+    this.setSearchClient = setSearchClient.bind(this);
   }
 }
 

@@ -13,6 +13,7 @@ import {
 } from "./conversion";
 import { viewedObjectIDs, viewedFilters } from "./view";
 import { getVersion } from "./_getVersion";
+import { setSearchClient } from "./_setSearchClient";
 
 export type InsightsMethodMap = {
   init: Parameters<typeof init>;
@@ -31,6 +32,7 @@ export type InsightsMethodMap = {
   convertedFilters: Parameters<typeof convertedFilters>;
   viewedObjectIDs: Parameters<typeof viewedObjectIDs>;
   viewedFilters: Parameters<typeof viewedFilters>;
+  setSearchClient: Parameters<typeof setSearchClient>;
 };
 
 type MethodType<MethodName extends keyof InsightsMethodMap> = (
@@ -69,6 +71,8 @@ export type ConvertedFilters = MethodType<"convertedFilters">;
 export type ViewedObjectIDs = MethodType<"viewedObjectIDs">;
 
 export type ViewedFilters = MethodType<"viewedFilters">;
+
+export type SetSearchClient = MethodType<"setSearchClient">;
 
 export type InsightsClient = <MethodName extends keyof InsightsMethodMap>(
   method: MethodName,
