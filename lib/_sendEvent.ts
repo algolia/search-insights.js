@@ -1,5 +1,6 @@
 import { RequestFnType } from "./utils/request";
 import { InsightsEvent } from './types'
+import { isUndefined } from "./utils";
 
 export function makeSendEvents(requestFn: RequestFnType) {
   return function sendEvents(
@@ -14,10 +15,24 @@ export function makeSendEvents(requestFn: RequestFnType) {
       );
     }
 
-    const events: InsightsEvent[] = eventData.map(data => ({
-      ...data,
-      userToken: data?.userToken ?? this._userToken
-    }))
+    const events: InsightsEvent[] = eventData.map(data => {
+      const {filters, ...rest}  = data;
+      const payload: InsightsEvent = {
+        ...rest,
+        userToken: data?.userToken ?? this._userToken
+      };
+      if (!isUndefined(filters)) {
+        payload.filters = filters.map(filter => {
+          if (filter.indexOf(":") >= 0) {
+            const parts = filter.split(":");
+            return [parts[0], encodeURIComponent(parts[1])].join(":")
+          } else {
+            filter;
+          }
+        })
+      }
+      return payload;
+    })
 
     return sendRequest(
       requestFn,

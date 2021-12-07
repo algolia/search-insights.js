@@ -394,6 +394,26 @@ describe("sendEvents", () => {
         ]
       });
     });
+
+    it("should uri-encodes filters", () => {
+      (analyticsInstance as any).sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          filters: ["brand:Cool Brand"]
+        }
+      ]);
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            filters: ["brand:Cool%20Brand"]
+          })
+        ]
+      });
+    });
   });
 
   describe("multiple events", () => {
