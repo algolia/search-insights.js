@@ -10,7 +10,7 @@ import replace from "rollup-plugin-replace";
 const MODULE_NAME = "AlgoliaAnalytics",
   LIBRARY_OUTPUT_NAME = "search-insights";
 
-const createPlugins = ({ format }) => [
+const createPlugins = ({ format, flavor }) => [
   typescript(),
   resolve({
     preferBuiltins: false
@@ -24,6 +24,7 @@ const createPlugins = ({ format }) => [
       format === "umd" || format === "iife"
         ? false
         : 'process.env.NODE_ENV === "development"',
+    __FLAVOR__: JSON.stringify(flavor),
     exclude: ["package.json"]
   }),
   buble(),
@@ -41,7 +42,7 @@ export default [
       file: `./dist/${LIBRARY_OUTPUT_NAME}.min.js`,
       globals: {}
     },
-    plugins: createPlugins({ format: "umd" })
+    plugins: createPlugins({ format: "umd", flavor: "browser-umd" })
   },
   {
     input: "lib/entry-node-cjs.ts",
@@ -51,7 +52,7 @@ export default [
       file: `./dist/${LIBRARY_OUTPUT_NAME}-node.cjs.min.js`
     },
     external: ["http", "https"],
-    plugins: createPlugins({ format: "cjs" })
+    plugins: createPlugins({ format: "cjs", flavor: "node-cjs" })
   },
   {
     input: "lib/entry-browser-cjs.ts",
@@ -61,7 +62,7 @@ export default [
       file: `./dist/${LIBRARY_OUTPUT_NAME}-browser.cjs.min.js`
     },
     external: ["http", "https"],
-    plugins: createPlugins({ format: "cjs" })
+    plugins: createPlugins({ format: "cjs", flavor: "browser-cjs" })
   },
   {
     input: "lib/entry-umd.ts",
@@ -70,6 +71,6 @@ export default [
       name: MODULE_NAME,
       file: `./dist/${LIBRARY_OUTPUT_NAME}.iife.min.js`
     },
-    plugins: createPlugins({ format: "iife" })
+    plugins: createPlugins({ format: "iife", flavor: "browser-iife" })
   }
 ];
