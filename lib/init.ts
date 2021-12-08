@@ -76,8 +76,7 @@ You can visit https://algolia.com/events/debugger instead.`);
   this._hasCredentials = true;
 
   // user agent
-  this._ua = DEFAULT_ALGOLIA_AGENT;
-  this._uaURIEncoded = encodeURIComponent(DEFAULT_ALGOLIA_AGENT);
+  this._ua = [DEFAULT_ALGOLIA_AGENT];
 
   if (options.userToken) {
     this.setUserToken(options.userToken);
