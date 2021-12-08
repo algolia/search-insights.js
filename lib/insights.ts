@@ -61,8 +61,7 @@ class AlgoliaAnalytics {
   _cookieDuration: number;
 
   // user agent
-  _ua: string = "";
-  _uaURIEncoded: string = "";
+  _ua: string[] = [];
 
   version: string = version;
 
