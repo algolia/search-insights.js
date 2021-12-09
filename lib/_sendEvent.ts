@@ -1,5 +1,5 @@
 import { RequestFnType } from "./utils/request";
-import { InsightsEvent } from './types'
+import { InsightsEvent } from "./types";
 
 export function makeSendEvents(requestFn: RequestFnType) {
   return function sendEvents(
@@ -23,7 +23,7 @@ export function makeSendEvents(requestFn: RequestFnType) {
       requestFn,
       this._appId,
       this._apiKey,
-      this._uaURIEncoded,
+      this._ua,
       this._endpointOrigin,
       events
     );
@@ -34,11 +34,12 @@ function sendRequest(
   requestFn: RequestFnType,
   appId: string,
   apiKey: string,
-  userAgent: string,
+  userAgents: string[],
   endpointOrigin: string,
   events: InsightsEvent[]
 ) {
   // Auth query
-  const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${userAgent}`;
+  const ua = encodeURIComponent(userAgents.join('; '));
+  const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${ua}`;
   return requestFn(reportingURL, { events });
 }
