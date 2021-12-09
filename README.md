@@ -294,7 +294,7 @@ aa('onUserTokenChange', callback, options);
 | `immediate` | `boolean`  | Fire the callback as soon as it's attached     |
 
 ```js
-aa('init', { ... });  // ← This sets an anonymous user token if cookie is available.
+aa('init', { ..., useCookie: true });  // ← This sets an anonymous user token if cookie is available.
 
 aa('onUserTokenChange', (userToken) => {
   console.log(userToken);  // prints out the anonymous user token
