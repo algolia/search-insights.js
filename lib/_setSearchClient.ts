@@ -1,6 +1,20 @@
 import { SearchClient } from "algoliasearch";
 
-function revertSearchClientBinding() {}
+type Read = SearchClient["transporter"]["read"];
+type Request = Parameters<Read>[0];
+type RequestOptions = Parameters<Read>[1];
+
+type SearchClientBinding = {
+  instance: SearchClient;
+  read: Read;
+  requests: Array<{
+    request: Request;
+    requestOptions: RequestOptions;
+  }>;
+  responses: any[];
+};
+
+const LIMIT_HISTORY = 10;
 
 export function setSearchClient(searchClient: SearchClient) {
   if (!this._searchClientBinding) {
@@ -11,16 +25,29 @@ export function setSearchClient(searchClient: SearchClient) {
     return;
   }
 
+  const read = searchClient.transporter.read;
+
   this._searchClientBinding = {
     instance: searchClient,
-    read: searchClient.transporter.read
-  };
+    read,
+    requests: [],
+    responses: []
+  } as SearchClientBinding;
 
-  const read = searchClient.transporter.read;
-  type Request = Parameters<typeof read>[0];
-  type RequestOptions = Parameters<typeof read>[1];
   const getUserToken = () => this._userToken;
-  const setResponse = response => (this._lastResponse = response);
+
+  const addRequest = (request: Request, requestOptions: RequestOptions) => {
+    this._searchClientBinding.requests.push({ request, requestOptions });
+    this._searchClientBinding.requests = capMaximumItems(
+      this._searchClientBinding.requests
+    );
+  };
+  const addResponse = (response) => {
+    this._searchClientBinding.responses.push(response);
+    this._searchClientBinding.responses = capMaximumItems(
+      this._searchClientBinding.responses
+    );
+  };
 
   // @ts-expect-error we are patching a read-only function
   searchClient.transporter.read = (
@@ -48,7 +75,7 @@ export function setSearchClient(searchClient: SearchClient) {
           ...request,
           data: {
             ...data,
-            requests: data.requests.map(request => ({
+            requests: data.requests.map((request) => ({
               clickAnalytics: true,
               userToken: getUserToken(),
               ...request
@@ -69,11 +96,27 @@ export function setSearchClient(searchClient: SearchClient) {
       newRequest = request;
     }
 
+    addRequest(request, requestOptions);
     return read
       .call(searchClient.transporter, newRequest, requestOptions)
-      .then(result => {
-        setResponse(result);
-        return result;
+      .then((response) => {
+        addResponse(response);
+        return response;
       });
   };
+}
+
+function capMaximumItems<T = any>(array: T[], limit = LIMIT_HISTORY) {
+  // keep the latest N items
+  if (array.length <= limit) {
+    return array;
+  }
+  return array.slice(array.length - limit);
+}
+
+function revertSearchClientBinding() {
+  if (this._searchClientBinding) {
+    this._searchClientBinding.instance.transporter.read = this._searchClientBinding.read;
+    this._searchClientBinding = undefined;
+  }
 }
