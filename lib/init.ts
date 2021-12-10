@@ -1,5 +1,5 @@
 import { isUndefined, isString, isNumber } from "./utils";
-import { DEFAULT_ALGOLIA_AGENT } from "./_algoliaAgent";
+import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
 
 type InsightRegion = "de" | "us";
 const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
@@ -76,7 +76,7 @@ You can visit https://algolia.com/events/debugger instead.`);
   this._hasCredentials = true;
 
   // user agent
-  this._ua = [DEFAULT_ALGOLIA_AGENT];
+  this._ua = [...DEFAULT_ALGOLIA_AGENTS];
 
   if (options.userToken) {
     this.setUserToken(options.userToken);

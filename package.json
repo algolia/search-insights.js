@@ -120,7 +120,8 @@
       "jest-watch-typeahead/testname"
     ],
     "globals": {
-      "__DEV__": true
+      "__DEV__": true,
+      "__FLAVOR__": "node-cjs"
     }
   },
   "dependencies": {},

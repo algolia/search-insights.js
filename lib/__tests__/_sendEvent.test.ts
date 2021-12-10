@@ -91,7 +91,7 @@ describe("sendEvents", () => {
       const { query } = url.parse(requestUrl);
       expect(querystring.parse(query)).toEqual({
         "X-Algolia-API-Key": "testKey",
-        "X-Algolia-Agent": "insights-js (1.0.1)",
+        "X-Algolia-Agent": "insights-js (1.0.1); insights-js-node-cjs (1.0.1)",
         "X-Algolia-Application-Id": "testId"
       });
     });
@@ -167,7 +167,7 @@ describe("sendEvents", () => {
       const { query } = url.parse(requestUrl);
       expect(querystring.parse(query)).toEqual({
         "X-Algolia-API-Key": "testKey",
-        "X-Algolia-Agent": "insights-js (1.0.1)",
+        "X-Algolia-Agent": "insights-js (1.0.1); insights-js-node-cjs (1.0.1)",
         "X-Algolia-Application-Id": "testId"
       });
     });
@@ -192,7 +192,7 @@ describe("sendEvents", () => {
       ]);
 
       expect(fakeRequestFn).toHaveBeenCalledWith(
-        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)",
+        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)",
         {
           events: [
             {
@@ -440,7 +440,7 @@ describe("sendEvents", () => {
       );
 
       expect(fakeRequestFn).toHaveBeenCalledWith(
-        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)",
+        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)",
         {
           events: [
             {
@@ -479,7 +479,7 @@ describe("sendEvents", () => {
       ]);
 
       expect(fakeRequestFn).toHaveBeenCalledWith(
-        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)",
+        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)",
         {
           events: [
             {
