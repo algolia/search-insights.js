@@ -10,7 +10,7 @@ import { init } from "./init";
 import { addAlgoliaAgent } from "./_algoliaAgent";
 import { getVersion } from "./_getVersion";
 
-import { setSearchClient } from "./_setSearchClient";
+import { setSearchClient, SearchClientBinding } from "./_setSearchClient";
 
 import { RequestFnType } from "./utils/request";
 
@@ -61,6 +61,8 @@ class AlgoliaAnalytics {
   _userHasOptedOut: boolean;
   _useCookie: boolean;
   _cookieDuration: number;
+
+  _searchClientBinding: SearchClientBinding;
 
   // user agent
   _ua: string = "";

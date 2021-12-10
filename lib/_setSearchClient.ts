@@ -1,17 +1,21 @@
 import { SearchClient } from "algoliasearch";
+import {
+  SearchResponse,
+  MultipleQueriesResponse
+} from "@algolia/client-search";
 
 type Read = SearchClient["transporter"]["read"];
 type Request = Parameters<Read>[0];
 type RequestOptions = Parameters<Read>[1];
 
-type SearchClientBinding = {
+export type SearchClientBinding = {
   instance: SearchClient;
   read: Read;
   requests: Array<{
     request: Request;
     requestOptions: RequestOptions;
   }>;
-  responses: any[];
+  responses: Array<SearchResponse | MultipleQueriesResponse<{}>>;
 };
 
 const LIMIT_HISTORY = 10;
@@ -32,7 +36,7 @@ export function setSearchClient(searchClient: SearchClient) {
     read,
     requests: [],
     responses: []
-  } as SearchClientBinding;
+  };
 
   const getUserToken = () => this._userToken;
 
