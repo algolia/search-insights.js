@@ -10,7 +10,8 @@ import { init } from "./init";
 import { addAlgoliaAgent } from "./_algoliaAgent";
 import { getVersion } from "./_getVersion";
 
-import { setSearchClient, SearchClientBinding } from "./_setSearchClient";
+import { setSearchClient } from "./_setSearchClient";
+import { SearchClientBinding } from "./types";
 
 import { RequestFnType } from "./utils/request";
 

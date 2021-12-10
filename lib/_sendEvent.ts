@@ -1,11 +1,11 @@
 import { SearchResponse, MultipleQueriesResponse } from '@algolia/client-search'
 
 import { RequestFnType } from "./utils/request";
-import { InsightsEvent } from './types'
+import { InsightsEvent, InsightsEventFunction } from './types'
 
 export function makeSendEvents(requestFn: RequestFnType) {
   return function sendEvents(
-    eventData: InsightsEvent[]
+    eventData: InsightsEvent[] | InsightsEventFunction
   ) {
     if (this._userHasOptedOut) {
       return;
@@ -16,11 +16,27 @@ export function makeSendEvents(requestFn: RequestFnType) {
       );
     }
 
-    const events: InsightsEvent[] = eventData.map(data => ({
-      ...infer.call(this, data),
-      ...data,
-      userToken: data?.userToken ?? this._userToken
-    }))
+    let events: InsightsEvent[]
+
+    if (isEventDataFunction(eventData)) {
+      if (!this._searchClientBinding ) {
+        throw new Error("Cannot pass a function to `sendEvents()` without calling `setSearchClient` method first.\n  > aa('setSearchClient', searchClient);")
+      }
+
+      events = eventData({
+        userToken: this._userToken,
+        lastRequest: this._searchClientBinding.requests[this._searchClientBinding.requests.length - 1],
+        lastResponse: this._searchClientBinding.responses[this._searchClientBinding.responses.length - 1],
+        recentRequests: this._searchClientBinding.requests,
+        recentResponse: this._searchClientBinding.responses,
+      })
+    } else{
+      events = eventData.map(data => ({
+        ...infer.call(this, data),
+        ...data,
+        userToken: data?.userToken ?? this._userToken
+      }))
+    }
 
     return sendRequest(
       requestFn,
@@ -31,6 +47,10 @@ export function makeSendEvents(requestFn: RequestFnType) {
       events
     );
   };
+}
+
+function isEventDataFunction(eventData: InsightsEvent[] | InsightsEventFunction): eventData is InsightsEventFunction {
+  return typeof eventData === 'function'
 }
 
 function infer(data: Partial<InsightsEvent>) {

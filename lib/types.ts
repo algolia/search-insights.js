@@ -1,3 +1,9 @@
+import { SearchClient } from "algoliasearch";
+import {
+  SearchResponse,
+  MultipleQueriesResponse
+} from "@algolia/client-search";
+
 import { init } from "./init";
 import { addAlgoliaAgent } from "./_algoliaAgent";
 import { getUserToken, setUserToken, onUserTokenChange } from "./_tokenUtils";
@@ -99,3 +105,25 @@ export type InsightsEvent = {
 
   filters?: string[];
 };
+
+type Read = SearchClient["transporter"]["read"];
+type Request = Parameters<Read>[0];
+type RequestOptions = Parameters<Read>[1];
+
+export type SearchClientBinding = {
+  instance: SearchClient;
+  read: Read;
+  requests: Array<{
+    request: Request;
+    requestOptions: RequestOptions;
+  }>;
+  responses: Array<SearchResponse | MultipleQueriesResponse<{}>>;
+};
+
+export type InsightsEventFunction = (params: {
+  userToken: string;
+  lastRequest: SearchClientBinding["requests"][0];
+  lastResponse: SearchClientBinding["responses"][0];
+  recentRequests: SearchClientBinding["requests"];
+  recentResponse: SearchClientBinding["responses"];
+}) => InsightsEvent[];
