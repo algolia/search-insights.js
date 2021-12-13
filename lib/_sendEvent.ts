@@ -22,14 +22,7 @@ export function makeSendEvents(requestFn: RequestFnType) {
         userToken: data?.userToken ?? this._userToken
       };
       if (!isUndefined(filters)) {
-        payload.filters = filters.map(filter => {
-          if (filter.indexOf(":") >= 0) {
-            const parts = filter.split(":");
-            return [parts[0], encodeURIComponent(parts[1])].join(":")
-          } else {
-            filter;
-          }
-        })
+        payload.filters = filters.map(encodeURIComponent)
       }
       return payload;
     })

@@ -389,7 +389,7 @@ describe("sendEvents", () => {
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            filters: ["brand:Apple"]
+            filters: ["brand%3AApple"]
           })
         ]
       });
@@ -409,7 +409,7 @@ describe("sendEvents", () => {
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            filters: ["brand:Cool%20Brand"]
+            filters: ["brand%3ACool%20Brand"]
           })
         ]
       });
