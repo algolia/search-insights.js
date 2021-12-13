@@ -128,7 +128,7 @@
   "bundlesize": [
     {
       "path": "./dist/search-insights.min.js",
-      "maxSize": "2.4 kB"
+      "maxSize": "2.75 kB"
     }
   ]
 }
