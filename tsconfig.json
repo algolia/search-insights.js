@@ -1,23 +1,18 @@
 {
   "compilerOptions": {
-    "resolveJsonModule": false,
-    "moduleResolution": "node",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "Node",
+    "strict": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "noEmit": true,
     "noUnusedLocals": true,
-    "outDir": "./dist",
-    "rootDir": "./lib",
-    "module": "es6",
-    "target": "es6",
-    "strict": true,
-    "noImplicitThis": false,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "allowJs": true
+    "noUnusedParameters": true,
+    "noImplicitReturns": true
   },
-  "files": [
-    "./lib/typings.d.ts",
-    "./lib/entry-umd.ts",
-    "./lib/entry-node-cjs.ts",
-    "./lib/entry-browser-cjs.ts"
-  ]
+  "include": ["./lib"],
 }
