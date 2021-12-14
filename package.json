@@ -6,20 +6,28 @@
     "node": ">=8.16.0"
   },
   "files": [
-    "dist"
+    "dist",
+    "empty-module.cjs.js",
+    "empty-module.cjs.d.ts",
+    "index-browser.cjs.d.ts",
+    "index-node.cjs.d.ts"
   ],
-  "main": "./dist/search-insights.umd.js",
-  "module": "./dist/search-insights.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/search-insights.es.js",
-      "require": "./dist/search-insights.umd.js"
-    }
+  "jsdelivr": "dist/search-insights.browser.umd.js",
+  "main": "index-node.cjs.js",
+  "browser": "index-browser.cjs.js",
+  "react-native": {
+    "http": "./empty-module.cjs.js",
+    "https": "./empty-module.cjs.js"
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "prebuild": "rm -rf ./dist",
+    "build": "tsc && yarn build:browser:umd && yarn build:browser:es && yarn build:node",
+    "build:browser:umd": "vite build --config vite.browser.umd.config.js --emptyOutDir false",
+    "build:browser:es": "vite build --config vite.browser.es.config.js --emptyOutDir false",
+    "build:node": "vite build --config vite.node.config.js --emptyOutDir false",
     "preview": "vite preview",
+    "test:size": "bundlesize",
     "release": "shipjs prepare"
   },
   "repository": {
@@ -34,11 +42,12 @@
   "dependencies": {},
   "bundlesize": [
     {
-      "path": "./dist/search-insights.min.js",
+      "path": "./dist/search-insights.umd.js",
       "maxSize": "2.75 kB"
     }
   ],
   "devDependencies": {
+    "bundlesize": "0.18.1",
     "typescript": "4.5.4",
     "vite": "2.7.2"
   }
