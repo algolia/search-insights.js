@@ -5,6 +5,17 @@
   "engines": {
     "node": ">=8.16.0"
   },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/search-insights.umd.js",
+  "module": "./dist/search-insights.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/search-insights.es.js",
+      "require": "./dist/search-insights.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
