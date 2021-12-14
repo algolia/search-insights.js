@@ -1,15 +1,16 @@
 import AlgoliaAnalytics from "./insights";
 import { getFunctionalInterface } from "./_getFunctionalInterface";
-import { getRequesterForNode } from "./utils/getRequesterForNode";
+import { getRequesterForBrowser } from "./utils/getRequesterForBrowser";
 import { processQueue } from "./_processQueue";
 import { createInsightsClient } from "./_createInsightsClient";
 
 export {
-  getRequesterForNode,
+  createInsightsClient,
+  getRequesterForBrowser,
   AlgoliaAnalytics,
   getFunctionalInterface,
   processQueue
 };
 export * from "./types";
 
-export default createInsightsClient(getRequesterForNode());
+export default createInsightsClient(getRequesterForBrowser());

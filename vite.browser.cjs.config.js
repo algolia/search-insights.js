@@ -1,6 +1,18 @@
-const config = require("./vite.browser.base.config");
+const path = require("path");
+const { defineConfig } = require("vite");
 
-config.build.lib.formats = ["cjs"];
-config.define = { __UMD__: false };
-
-module.exports = config;
+module.exports = defineConfig({
+  build: {
+    lib: {
+      entry: path.resolve(__dirname, "lib/entry-browser-cjs.ts"),
+      name: "AlgoliaAnalytics",
+      fileName: (format) => `search-insights.browser.${format}.js`,
+      formats: ["cjs"]
+    },
+    rollupOptions: {
+      output: {
+        exports: "named"
+      }
+    }
+  }
+});

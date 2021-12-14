@@ -23,7 +23,7 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "rm -rf ./dist",
-    "build": "yarn build:types && yarn build:browser:umd && yarn build:browser:cjs && yarn build:node",
+    "build": "yarn build:browser:umd && yarn build:browser:cjs && yarn build:node",
     "build:types": "tsc --build tsconfig.declaration.json",
     "build:browser:umd": "vite build --config vite.browser.umd.config.js --emptyOutDir false",
     "build:browser:cjs": "vite build --config vite.browser.cjs.config.js --emptyOutDir false",

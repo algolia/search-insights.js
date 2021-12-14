@@ -1,6 +1,18 @@
-const config = require("./vite.browser.base.config");
+const path = require("path");
+const { defineConfig } = require("vite");
 
-config.build.lib.formats = ["umd", "iife"];
-config.define = { __UMD__: true };
-
-module.exports = config;
+module.exports = defineConfig({
+  build: {
+    lib: {
+      entry: path.resolve(__dirname, "lib/entry-browser-umd.ts"),
+      name: "AlgoliaAnalytics",
+      fileName: (format) => `search-insights.browser.${format}.js`,
+      formats: ["umd", "iife"]
+    },
+    rollupOptions: {
+      output: {
+        exports: "named"
+      }
+    }
+  }
+});
