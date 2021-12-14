@@ -7,7 +7,7 @@ module.exports = defineConfig({
       entry: path.resolve(__dirname, "lib/entry-node.ts"),
       name: "AlgoliaAnalytics",
       fileName: (format) => `search-insights.node.${format}.js`,
-      formats: ["cjs", "es"]
+      formats: ["cjs"]
     },
     rollupOptions: {
       output: {

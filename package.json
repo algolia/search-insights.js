@@ -2,6 +2,14 @@
   "name": "search-insights",
   "description": "Library for reporting click, conversion and view metrics using the Algolia Insights API",
   "version": "2.2.1",
+  "jsdelivr": "dist/search-insights.browser.umd.js",
+  "main": "index-node.cjs.js",
+  "types": "index-node.cjs.d.ts",
+  "browser": "index-browser.cjs.js",
+  "react-native": {
+    "http": "./empty-module.cjs.js",
+    "https": "./empty-module.cjs.js"
+  },
   "engines": {
     "node": ">=8.16.0"
   },
@@ -12,22 +20,17 @@
     "index-browser.cjs.d.ts",
     "index-node.cjs.d.ts"
   ],
-  "jsdelivr": "dist/search-insights.browser.umd.js",
-  "main": "index-node.cjs.js",
-  "browser": "index-browser.cjs.js",
-  "react-native": {
-    "http": "./empty-module.cjs.js",
-    "https": "./empty-module.cjs.js"
-  },
   "scripts": {
     "dev": "vite",
     "prebuild": "rm -rf ./dist",
-    "build": "tsc && yarn build:browser:umd && yarn build:browser:es && yarn build:node",
+    "build": "yarn build:types && yarn build:browser:umd && yarn build:browser:cjs && yarn build:node",
+    "build:types": "tsc --build tsconfig.declaration.json",
     "build:browser:umd": "vite build --config vite.browser.umd.config.js --emptyOutDir false",
-    "build:browser:es": "vite build --config vite.browser.es.config.js --emptyOutDir false",
+    "build:browser:cjs": "vite build --config vite.browser.cjs.config.js --emptyOutDir false",
     "build:node": "vite build --config vite.node.config.js --emptyOutDir false",
     "preview": "vite preview",
     "test:size": "bundlesize",
+    "test:type": "tsc",
     "release": "shipjs prepare"
   },
   "repository": {

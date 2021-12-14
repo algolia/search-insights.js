@@ -1,3 +1,3 @@
-export * from "./dist/search-insights.browser.cjs";
-import aa from "./dist/search-insights.browser.cjs";
+export * from "./dist/entry-browser";
+import aa from "./dist/entry-browser";
 export default aa;
