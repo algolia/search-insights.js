@@ -1,3 +1,11 @@
+## [2.2.1](https://github.com/algolia/search-insights.js/compare/v2.2.0...v2.2.1) (2021-12-14)
+
+
+### Bug Fixes
+
+* encodeURIComponent filters ([#342](https://github.com/algolia/search-insights.js/issues/342)) ([d4012a7](https://github.com/algolia/search-insights.js/commit/d4012a7dc8baad93ac9f0489dbae88a9d752d961))
+
+
 # [2.2.0](https://github.com/algolia/search-insights.js/compare/v2.1.0...v2.2.0) (2021-12-07)
 
 
