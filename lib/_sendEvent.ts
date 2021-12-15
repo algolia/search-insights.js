@@ -1,9 +1,11 @@
 import { RequestFnType } from "./utils/request";
-import { InsightsEvent } from './types'
+import { InsightsEvent } from "./types";
 import { isUndefined } from "./utils";
+import AlgoliaAnalytics from "./insights";
 
 export function makeSendEvents(requestFn: RequestFnType) {
   return function sendEvents(
+    this: AlgoliaAnalytics,
     eventData: InsightsEvent[]
   ) {
     if (this._userHasOptedOut) {
@@ -15,24 +17,24 @@ export function makeSendEvents(requestFn: RequestFnType) {
       );
     }
 
-    const events: InsightsEvent[] = eventData.map(data => {
-      const {filters, ...rest}  = data;
+    const events: InsightsEvent[] = eventData.map((data) => {
+      const { filters, ...rest } = data;
       const payload: InsightsEvent = {
         ...rest,
         userToken: data?.userToken ?? this._userToken
       };
       if (!isUndefined(filters)) {
-        payload.filters = filters.map(encodeURIComponent)
+        payload.filters = filters.map(encodeURIComponent);
       }
       return payload;
-    })
+    });
 
     return sendRequest(
       requestFn,
-      this._appId,
-      this._apiKey,
+      this._appId!,
+      this._apiKey!,
       this._ua,
-      this._endpointOrigin,
+      this._endpointOrigin!,
       events
     );
   };
@@ -47,7 +49,7 @@ function sendRequest(
   events: InsightsEvent[]
 ) {
   // Auth query
-  const ua = encodeURIComponent(userAgents.join('; '));
+  const ua = encodeURIComponent(userAgents.join("; "));
   const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${ua}`;
   return requestFn(reportingURL, { events });
 }

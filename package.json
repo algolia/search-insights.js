@@ -50,6 +50,7 @@
     }
   ],
   "devDependencies": {
+    "@types/node": "16.11.13",
     "bundlesize": "0.18.1",
     "typescript": "4.5.4",
     "vite": "2.7.2"

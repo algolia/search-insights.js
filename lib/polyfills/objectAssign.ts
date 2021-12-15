@@ -8,7 +8,7 @@
 
 export default function objectAssignPolyfill() {
   if (typeof Object.assign !== "function") {
-    Object.assign = function(target, varArgs) {
+    Object.assign = function (target: any) {
       // .length of function is 2
 
       if (target == null) {

@@ -1,3 +1,4 @@
+import AlgoliaAnalytics from "./insights";
 import { isUndefined, isString, isNumber } from "./utils";
 import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
 
@@ -19,7 +20,7 @@ export interface InitParams {
  * Binds credentials and settings to class
  * @param options: initParams
  */
-export function init(options: InitParams) {
+export function init(this: AlgoliaAnalytics, options: InitParams) {
   if (!options) {
     throw new Error(
       "Init function should be called with an object argument containing your apiKey and appId"

@@ -51,15 +51,15 @@ declare global {
  *  AlgoliaAnalytics class
  */
 class AlgoliaAnalytics {
-  _apiKey: string;
-  _appId: string;
-  _region: string;
-  _endpointOrigin: string;
-  _userToken: string;
-  _userHasOptedOut: boolean;
-  _useCookie: boolean;
-  _cookieDuration: number;
-
+  _apiKey?: string;
+  _appId?: string;
+  _region?: string;
+  _endpointOrigin?: string;
+  _userToken?: string;
+  _userHasOptedOut?: boolean;
+  _useCookie?: boolean;
+  _cookieDuration?: number;
+  _onUserTokenChangeCallback?: (userToken: string | undefined) => void;
   // user agent
   _ua: string[] = [];
 
@@ -106,9 +106,8 @@ class AlgoliaAnalytics {
     this.clickedObjectIDs = clickedObjectIDs.bind(this);
     this.clickedFilters = clickedFilters.bind(this);
 
-    this.convertedObjectIDsAfterSearch = convertedObjectIDsAfterSearch.bind(
-      this
-    );
+    this.convertedObjectIDsAfterSearch =
+      convertedObjectIDsAfterSearch.bind(this);
     this.convertedObjectIDs = convertedObjectIDs.bind(this);
     this.convertedFilters = convertedFilters.bind(this);
 
