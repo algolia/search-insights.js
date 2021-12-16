@@ -29,7 +29,7 @@ import {
   setAnonymousUserToken,
   onUserTokenChange
 } from "./_tokenUtils";
-import { version } from "../package.json";
+import { version } from "./_version";
 
 type Queue = {
   queue: string[][];

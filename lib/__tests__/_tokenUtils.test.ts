@@ -1,11 +1,5 @@
 import { getCookie } from "../_tokenUtils";
 import AlgoliaAnalytics from "../insights";
-import { createUUID } from "../utils/uuid";
-import * as utils from "../utils";
-
-jest.mock("../utils/uuid", () => ({
-  createUUID: jest.fn()
-}));
 
 const credentials = {
   apiKey: "test",
@@ -17,6 +11,8 @@ const DAY = 86400000; /* 1 day in ms*/
 const DATE_TOMORROW = new Date(Date.now() + DAY).toUTCString();
 const DATE_YESTERDAY = new Date(Date.now() - DAY).toUTCString();
 
+const ANONYMOUS_TOKEN_COOKIE_REGEX = /_ALGOLIA=anonymous-.+/;
+
 describe("tokenUtils", () => {
   let analyticsInstance;
   beforeEach(() => {
@@ -24,11 +20,6 @@ describe("tokenUtils", () => {
       requestFn: () => {}
     });
     analyticsInstance.init(credentials);
-    createUUID.mockReset();
-    createUUID
-      .mockReturnValueOnce("mock-uuid-1")
-      .mockReturnValueOnce("mock-uuid-2")
-      .mockReturnValue("mock-uuid-2+");
     // clear cookies
     document.cookie = "_ALGOLIA=;expires=Thu, 01-Jan-1970 00:00:01 GMT;";
   });
@@ -36,21 +27,23 @@ describe("tokenUtils", () => {
     describe("anonymous userToken", () => {
       it("should create a cookie with a UUID", () => {
         analyticsInstance.setAnonymousUserToken();
-        expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
+        expect(document.cookie).toEqual(
+          expect.stringMatching(ANONYMOUS_TOKEN_COOKIE_REGEX)
+        );
       });
       it("should reuse previously created UUID", () => {
         analyticsInstance.setAnonymousUserToken();
-        expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
+        const firstCookie = document.cookie;
         analyticsInstance.setAnonymousUserToken();
-        expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
+        expect(document.cookie).toEqual(firstCookie);
       });
       it("should not reuse UUID from an expired cookie", () => {
         analyticsInstance.setAnonymousUserToken();
-        expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
+        const firstCookie = document.cookie;
         // set cookie as expired
         document.cookie = "_ALGOLIA=;expires=Thu, 01-Jan-1970 00:00:01 GMT;";
         analyticsInstance.setAnonymousUserToken();
-        expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-2");
+        expect(document.cookie).not.toEqual(firstCookie);
       });
     });
     describe("provided userToken", () => {
@@ -62,13 +55,15 @@ describe("tokenUtils", () => {
         analyticsInstance.setUserToken("007");
         expect(document.cookie).toBe("");
         analyticsInstance.setAnonymousUserToken();
-        expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
+        expect(document.cookie).toEqual(
+          expect.stringMatching(ANONYMOUS_TOKEN_COOKIE_REGEX)
+        );
       });
       it("should preserve the cookie with same uuid when userToken provided after anonymous", () => {
         analyticsInstance.setAnonymousUserToken();
-        expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
+        const firstCookie = document.cookie;
         analyticsInstance.setUserToken("007");
-        expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
+        expect(document.cookie).toBe(firstCookie);
       });
     });
   });

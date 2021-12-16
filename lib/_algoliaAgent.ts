@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+import { version } from "./_version";
 import AlgoliaAnalytics from "./insights";
 
 export const DEFAULT_ALGOLIA_AGENTS = [

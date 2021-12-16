@@ -1,3 +1,4 @@
+import { jest } from "@jest/globals";
 import { processQueue } from "../_processQueue";
 
 const makeGlobalObject = () => {
@@ -6,7 +7,7 @@ const makeGlobalObject = () => {
   // cf. https://github.com/algolia/search-insights.js#loading-and-initializing-the-library
   const globalObject: any = {};
   globalObject.AlgoliaAnalyticsObject = "aa";
-  globalObject.aa = function() {
+  globalObject.aa = function () {
     globalObject.aa.queue = globalObject.aa.queue || [];
     globalObject.aa.queue.push(arguments);
   };

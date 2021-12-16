@@ -1,11 +1,9 @@
-/**
- * @jest-environment node
- */
+import { jest } from "@jest/globals";
 import AlgoliaAnalytics from "../insights";
 import { getRequesterForNode } from "../utils/getRequesterForNode";
 import { getFunctionalInterface } from "../_getFunctionalInterface";
 import { setUserToken } from "../_tokenUtils";
-import { version } from "../../package.json";
+import { version } from "../_version";
 
 const credentials = {
   apiKey: "testKey",

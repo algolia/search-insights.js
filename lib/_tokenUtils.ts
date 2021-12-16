@@ -1,5 +1,6 @@
 import { createUUID } from "./utils/uuid";
-import { isFunction, supportsCookies } from "./utils";
+import { isFunction } from "./utils/typeCheckers";
+import { supportsCookies } from "./utils/featureDetection";
 import AlgoliaAnalytics from "./insights";
 
 const COOKIE_KEY = "_ALGOLIA";

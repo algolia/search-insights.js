@@ -1,6 +1,6 @@
+import { jest } from "@jest/globals";
 import AlgoliaAnalytics from "../insights";
-
-jest.mock("../../package.json", () => ({ version: "1.0.1" }));
+import { version } from "../_version";
 
 describe("algoliaAgent", () => {
   let analyticsInstance;
@@ -14,16 +14,16 @@ describe("algoliaAgent", () => {
 
   it("should initialize the client with a default algoliaAgent string", () => {
     expect(analyticsInstance._ua).toEqual([
-      "insights-js (1.0.1)",
-      "insights-js-node-cjs (1.0.1)"
+      `insights-js (${version})`,
+      `insights-js-browser-cjs (${version})`
     ]);
   });
 
   it("should allow adding a string to algoliaAgent", () => {
     analyticsInstance.addAlgoliaAgent("other string");
     expect(analyticsInstance._ua).toEqual([
-      "insights-js (1.0.1)",
-      "insights-js-node-cjs (1.0.1)",
+      `insights-js (${version})`,
+      `insights-js-browser-cjs (${version})`,
       "other string"
     ]);
   });
@@ -33,8 +33,8 @@ describe("algoliaAgent", () => {
     analyticsInstance.addAlgoliaAgent("duplicated string");
 
     expect(analyticsInstance._ua).toEqual([
-      "insights-js (1.0.1)",
-      "insights-js-node-cjs (1.0.1)",
+      `insights-js (${version})`,
+      `insights-js-browser-cjs (${version})`,
       "duplicated string"
     ]);
   });
@@ -51,7 +51,7 @@ describe("algoliaAgent", () => {
     ]);
 
     expect(requestFn.mock.calls[0][0]).toEqual(
-      "https://insights.algolia.io/1/events?X-Algolia-Application-Id=test&X-Algolia-API-Key=test&X-Algolia-Agent=insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)%3B%20other%20string"
+      `https://insights.algolia.io/1/events?X-Algolia-Application-Id=test&X-Algolia-API-Key=test&X-Algolia-Agent=insights-js%20(${version})%3B%20insights-js-browser-cjs%20(${version})%3B%20other%20string`
     );
   });
 });

@@ -1,11 +1,8 @@
+import { jest } from "@jest/globals";
 import AlgoliaAnalytics from "../insights";
 import { getRequesterForBrowser } from "../utils/getRequesterForBrowser";
-import * as url from "url";
-import * as querystring from "querystring";
 
-jest.mock("../../package.json", () => ({
-  version: "1.0.1"
-}));
+import { version } from "../_version";
 
 const credentials = {
   apiKey: "testKey",
@@ -57,7 +54,7 @@ describe("sendEvents", () => {
       expect(XMLHttpRequest.open).toHaveBeenCalledTimes(1);
       const [verb, requestUrl] = XMLHttpRequest.open.mock.calls[0];
       expect(verb).toBe("POST");
-      expect(url.parse(requestUrl).pathname).toBe("/1/events");
+      expect(new URL(requestUrl).pathname).toBe("/1/events");
     });
     it("should pass over the payload with multiple events", () => {
       (analyticsInstance as any).sendEvents([
@@ -88,12 +85,12 @@ describe("sendEvents", () => {
         }
       ]);
       const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
-      const { query } = url.parse(requestUrl);
-      expect(querystring.parse(query)).toEqual({
-        "X-Algolia-API-Key": "testKey",
-        "X-Algolia-Agent": "insights-js (1.0.1); insights-js-node-cjs (1.0.1)",
-        "X-Algolia-Application-Id": "testId"
-      });
+      const params = new URLSearchParams(new URL(requestUrl).search);
+      expect(params.get("X-Algolia-API-Key")).toEqual("testKey");
+      expect(params.get("X-Algolia-Agent")).toEqual(
+        `insights-js (${version}); insights-js-browser-cjs (${version})`
+      );
+      expect(params.get("X-Algolia-Application-Id")).toEqual("testId");
     });
   });
 
@@ -133,7 +130,7 @@ describe("sendEvents", () => {
       ]);
       const [requestURL] = sendBeacon.mock.calls[0];
 
-      expect(url.parse(requestURL).pathname).toBe("/1/events");
+      expect(new URL(requestURL).pathname).toBe("/1/events");
     });
     it("should send the correct payload", () => {
       (analyticsInstance as any).sendEvents([
@@ -164,12 +161,12 @@ describe("sendEvents", () => {
         }
       ]);
       const requestUrl = sendBeacon.mock.calls[0][0];
-      const { query } = url.parse(requestUrl);
-      expect(querystring.parse(query)).toEqual({
-        "X-Algolia-API-Key": "testKey",
-        "X-Algolia-Agent": "insights-js (1.0.1); insights-js-node-cjs (1.0.1)",
-        "X-Algolia-Application-Id": "testId"
-      });
+      const params = new URLSearchParams(new URL(requestUrl).search);
+      expect(params.get("X-Algolia-API-Key")).toEqual("testKey");
+      expect(params.get("X-Algolia-Agent")).toEqual(
+        `insights-js (${version}); insights-js-browser-cjs (${version})`
+      );
+      expect(params.get("X-Algolia-Application-Id")).toEqual("testId");
     });
   });
 
@@ -192,7 +189,7 @@ describe("sendEvents", () => {
       ]);
 
       expect(fakeRequestFn).toHaveBeenCalledWith(
-        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)",
+        `https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(${version})%3B%20insights-js-browser-cjs%20(${version})`,
         {
           events: [
             {
@@ -440,7 +437,7 @@ describe("sendEvents", () => {
       );
 
       expect(fakeRequestFn).toHaveBeenCalledWith(
-        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)",
+        `https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(${version})%3B%20insights-js-browser-cjs%20(${version})`,
         {
           events: [
             {
@@ -479,7 +476,7 @@ describe("sendEvents", () => {
       ]);
 
       expect(fakeRequestFn).toHaveBeenCalledWith(
-        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)",
+        `https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(${version})%3B%20insights-js-browser-cjs%20(${version})`,
         {
           events: [
             {

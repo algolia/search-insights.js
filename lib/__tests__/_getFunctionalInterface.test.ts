@@ -1,3 +1,4 @@
+import { jest } from "@jest/globals";
 import AlgoliaAnalytics from "../insights";
 import { getFunctionalInterface } from "../_getFunctionalInterface";
 
