@@ -6,68 +6,80 @@ const credentials = {
   appId: "test"
 };
 describe("convertedObjectIDsAfterSearch", () => {
-  let analyticsInstance;
+  let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
-  it("Should send allow passing of queryID", () => {
-    (analyticsInstance as any).sendEvents = jest.fn();
+  it("should attach eventType", () => {
+    analyticsInstance.sendEvents = jest.fn();
     analyticsInstance.init(credentials);
     analyticsInstance.convertedObjectIDsAfterSearch({
       objectIDs: ["12345"],
-      queryID: "test"
+      queryID: "test",
+      eventName: "testEvent",
+      index: "my-index"
     });
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+    expect(analyticsInstance.sendEvents).toHaveBeenCalled();
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([
       {
         eventType: "conversion",
         objectIDs: ["12345"],
-        queryID: "test"
+        queryID: "test",
+        eventName: "testEvent",
+        index: "my-index"
       }
     ]);
   });
 });
 
 describe("convertedObjectIDs", () => {
-  let analyticsInstance;
+  let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
-  it("should send allow passing of queryID", () => {
-    (analyticsInstance as any).sendEvents = jest.fn();
+  it("should attach eventType", () => {
+    analyticsInstance.sendEvents = jest.fn();
     analyticsInstance.init(credentials);
     analyticsInstance.convertedObjectIDs({
-      objectIDs: ["12345"]
+      objectIDs: ["12345"],
+      eventName: "testEvent",
+      index: "my-index"
     });
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+    expect(analyticsInstance.sendEvents).toHaveBeenCalled();
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([
       {
         eventType: "conversion",
-        objectIDs: ["12345"]
+        objectIDs: ["12345"],
+        eventName: "testEvent",
+        index: "my-index"
       }
     ]);
   });
 });
 
 describe("convertedFilters", () => {
-  let analyticsInstance;
+  let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
-  it("should send allow passing of queryID", () => {
-    (analyticsInstance as any).sendEvents = jest.fn();
+  it("should attach eventType", () => {
+    analyticsInstance.sendEvents = jest.fn();
     analyticsInstance.init(credentials);
     analyticsInstance.convertedFilters({
-      filters: ["brands:apple"]
+      filters: ["brands:apple"],
+      eventName: "testEvent",
+      index: "my-index"
     });
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+    expect(analyticsInstance.sendEvents).toHaveBeenCalled();
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([
       {
         eventType: "conversion",
-        filters: ["brands:apple"]
+        filters: ["brands:apple"],
+        eventName: "testEvent",
+        index: "my-index"
       }
     ]);
   });

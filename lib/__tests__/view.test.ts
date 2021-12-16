@@ -6,19 +6,20 @@ const credentials = {
   appId: "test"
 };
 describe("viewedObjectIDs", () => {
-  let analyticsInstance;
+  let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
-  it("should send allow passing of queryID", () => {
-    (analyticsInstance as any).sendEvents = jest.fn();
+  it("should attach eventType", () => {
+    analyticsInstance.sendEvents = jest.fn();
     analyticsInstance.init(credentials);
+    // @ts-expect-error
     analyticsInstance.viewedObjectIDs({
       objectIDs: ["12345"]
     });
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+    expect(analyticsInstance.sendEvents).toHaveBeenCalled();
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([
       {
         eventType: "view",
         objectIDs: ["12345"]
@@ -28,19 +29,20 @@ describe("viewedObjectIDs", () => {
 });
 
 describe("viewedFilters", () => {
-  let analyticsInstance;
+  let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
-  it("should send allow passing of queryID", () => {
-    (analyticsInstance as any).sendEvents = jest.fn();
+  it("should attach eventType", () => {
+    analyticsInstance.sendEvents = jest.fn();
     analyticsInstance.init(credentials);
+    // @ts-expect-error
     analyticsInstance.viewedFilters({
       filters: ["brands:apple"]
     });
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
+    expect(analyticsInstance.sendEvents).toHaveBeenCalled();
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([
       {
         eventType: "view",
         filters: ["brands:apple"]

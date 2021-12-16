@@ -21,6 +21,7 @@ describe("featureDetection in jsdom env", () => {
     it("should return true if available", () => {
       navigator.sendBeacon = jest.fn();
       expect(supportsSendBeacon()).toBe(true);
+      // @ts-expect-error
       delete navigator.sendBeacon;
     });
   });

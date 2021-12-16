@@ -1,15 +1,25 @@
 import { jest } from "@jest/globals";
 import { processQueue } from "../_processQueue";
 
-const makeGlobalObject = () => {
+interface AaFunctionForm extends Function {
+  queue?: any[];
+}
+
+type GlobalObject = {
+  AlgoliaAnalyticsObject: string;
+  aa: AaFunctionForm;
+};
+
+const makeGlobalObject = (): GlobalObject => {
   // this is a simplified typescript tolerable version of the code we ask our
   // customers to embed when installing the insights client in the browser.
   // cf. https://github.com/algolia/search-insights.js#loading-and-initializing-the-library
-  const globalObject: any = {};
-  globalObject.AlgoliaAnalyticsObject = "aa";
-  globalObject.aa = function () {
-    globalObject.aa.queue = globalObject.aa.queue || [];
-    globalObject.aa.queue.push(arguments);
+  const globalObject: GlobalObject = {
+    AlgoliaAnalyticsObject: "aa",
+    aa: function () {
+      globalObject.aa.queue = globalObject.aa.queue || [];
+      globalObject.aa.queue.push(arguments);
+    }
   };
   return globalObject;
 };
@@ -22,13 +32,14 @@ class FakeAlgoliaAnalytics {
     this.init = jest.fn();
     this.otherMethod = jest.fn(() => "otherMethodReturnedValue");
 
+    // @ts-expect-error
     this.processQueue = processQueue.bind(this); // the function we'll be testing
   }
 }
 
 describe("processQueue", () => {
-  let insights;
-  let globalObject;
+  let insights: FakeAlgoliaAnalytics;
+  let globalObject: GlobalObject;
 
   beforeEach(() => {
     globalObject = makeGlobalObject();

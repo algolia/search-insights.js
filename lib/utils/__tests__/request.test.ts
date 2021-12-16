@@ -12,7 +12,8 @@ describe("request", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     navigator.sendBeacon = sendBeacon;
-    window.XMLHttpRequest = function () {
+    // @ts-expect-error
+    window.XMLHttpRequest = function (this: XMLHttpRequest) {
       this.open = open;
       this.send = send;
     };
@@ -38,6 +39,7 @@ describe("request", () => {
   });
 
   it("should send with XMLHttpRequest if sendBeacon is not available", () => {
+    // @ts-expect-error removing sendBeacon to mimic the environment that does not support sendBeacon
     navigator.sendBeacon = undefined;
     const url = "https://random.url";
     const data = { foo: "bar" };

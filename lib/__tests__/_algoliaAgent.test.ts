@@ -3,11 +3,11 @@ import AlgoliaAnalytics from "../insights";
 import { version } from "../_version";
 
 describe("algoliaAgent", () => {
-  let analyticsInstance;
-  let requestFn;
+  let analyticsInstance: AlgoliaAnalytics;
+  let requestFn = jest.fn();
 
   beforeEach(() => {
-    requestFn = jest.fn();
+    requestFn.mockReset();
     analyticsInstance = new AlgoliaAnalytics({ requestFn });
     analyticsInstance.init({ apiKey: "test", appId: "test" });
   });

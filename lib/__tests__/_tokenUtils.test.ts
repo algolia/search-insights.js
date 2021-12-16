@@ -14,7 +14,7 @@ const DATE_YESTERDAY = new Date(Date.now() - DAY).toUTCString();
 const ANONYMOUS_TOKEN_COOKIE_REGEX = /_ALGOLIA=anonymous-.+/;
 
 describe("tokenUtils", () => {
-  let analyticsInstance;
+  let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({
       requestFn: () => {}

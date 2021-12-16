@@ -21,8 +21,8 @@ describe("sendEvents", () => {
 
   beforeEach(() => {
     XMLHttpRequest = {
-      open: jest.spyOn((window as any).XMLHttpRequest.prototype, "open"),
-      send: jest.spyOn((window as any).XMLHttpRequest.prototype, "send")
+      open: jest.spyOn(window.XMLHttpRequest.prototype, "open"),
+      send: jest.spyOn(window.XMLHttpRequest.prototype, "send")
     };
   });
 
@@ -32,18 +32,19 @@ describe("sendEvents", () => {
   });
 
   describe("with XMLHttpRequest", () => {
-    let analyticsInstance;
-    let sendBeaconBackup;
+    let analyticsInstance: AlgoliaAnalytics;
+    let sendBeaconBackup: typeof window.navigator.sendBeacon;
     beforeEach(() => {
       sendBeaconBackup = window.navigator.sendBeacon;
-      window.navigator.sendBeacon = undefined; // force usage of XMLHttpRequest
+      // @ts-expect-error force usage of XMLHttpRequest
+      window.navigator.sendBeacon = undefined;
       analyticsInstance = setupInstance();
     });
     afterEach(() => {
       window.navigator.sendBeacon = sendBeaconBackup;
     });
     it("should make a post request to /1/events", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -57,7 +58,7 @@ describe("sendEvents", () => {
       expect(new URL(requestUrl).pathname).toBe("/1/events");
     });
     it("should pass over the payload with multiple events", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -76,7 +77,7 @@ describe("sendEvents", () => {
       });
     });
     it("should include X-Algolia-* query parameters", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -95,9 +96,9 @@ describe("sendEvents", () => {
   });
 
   describe("with sendBeacon", () => {
-    let analyticsInstance;
-    let sendBeacon;
-    let sendBeaconBackup;
+    let analyticsInstance: AlgoliaAnalytics;
+    let sendBeacon: typeof window.navigator.sendBeacon;
+    let sendBeaconBackup: typeof window.navigator.sendBeacon;
     beforeEach(() => {
       sendBeaconBackup = window.navigator.sendBeacon;
       sendBeacon = window.navigator.sendBeacon = jest.fn(() => true);
@@ -107,7 +108,7 @@ describe("sendEvents", () => {
       window.navigator.sendBeacon = sendBeaconBackup;
     });
     it("should use sendBeacon when available", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -120,7 +121,7 @@ describe("sendEvents", () => {
       expect(XMLHttpRequest.send).not.toHaveBeenCalled();
     });
     it("should call sendBeacon with /1/event", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -133,7 +134,7 @@ describe("sendEvents", () => {
       expect(new URL(requestURL).pathname).toBe("/1/events");
     });
     it("should send the correct payload", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -152,7 +153,7 @@ describe("sendEvents", () => {
       });
     });
     it("should include X-Algolia-* query parameters", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -171,7 +172,7 @@ describe("sendEvents", () => {
   });
 
   describe("with custom requestFn", () => {
-    let analyticsInstance;
+    let analyticsInstance: AlgoliaAnalytics;
     const fakeRequestFn = jest.fn();
 
     beforeEach(() => {
@@ -179,7 +180,7 @@ describe("sendEvents", () => {
       analyticsInstance = setupInstance(fakeRequestFn);
     });
     it("should call the requestFn with expected arguments", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -207,7 +208,7 @@ describe("sendEvents", () => {
     it("should allow a promise to be returned from requestFn", () => {
       fakeRequestFn.mockImplementationOnce(() => Promise.resolve("test"));
 
-      const result = (analyticsInstance as any).sendEvents([
+      const result = analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -222,22 +223,22 @@ describe("sendEvents", () => {
   });
 
   describe("init", () => {
-    let analyticsInstance;
+    let analyticsInstance: AlgoliaAnalytics;
     beforeEach(() => {
       analyticsInstance = setupInstance();
     });
 
     it("should throw if init was not called", () => {
       expect(() => {
-        (analyticsInstance as any)._hasCredentials = false;
-        (analyticsInstance as any).sendEvents();
+        analyticsInstance._hasCredentials = false;
+        analyticsInstance.sendEvents();
       }).toThrowError(
         "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
       );
     });
     it("should do nothing is _userHasOptedOut === true", () => {
       analyticsInstance._userHasOptedOut = true;
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -250,13 +251,13 @@ describe("sendEvents", () => {
   });
 
   describe("objectIDs and positions", () => {
-    let analyticsInstance;
+    let analyticsInstance: AlgoliaAnalytics;
     beforeEach(() => {
       analyticsInstance = setupInstance();
     });
 
     it("should support multiple objectIDs and positions", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -279,13 +280,13 @@ describe("sendEvents", () => {
   });
 
   describe("timestamp", () => {
-    let analyticsInstance;
+    let analyticsInstance: AlgoliaAnalytics;
     beforeEach(() => {
       analyticsInstance = setupInstance();
     });
 
     it("should not add a timestamp if not provided", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -298,7 +299,7 @@ describe("sendEvents", () => {
       expect(payload.events[0]).not.toHaveProperty("timestamp");
     });
     it("should pass over provided timestamp", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -320,13 +321,13 @@ describe("sendEvents", () => {
   });
 
   describe("userToken", () => {
-    let analyticsInstance;
+    let analyticsInstance: AlgoliaAnalytics;
     beforeEach(() => {
       analyticsInstance = setupInstance();
     });
 
     it("should add a userToken if not provided", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -345,7 +346,7 @@ describe("sendEvents", () => {
       });
     });
     it("should pass over provided userToken", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -367,13 +368,13 @@ describe("sendEvents", () => {
   });
 
   describe("filters", () => {
-    let analyticsInstance;
+    let analyticsInstance: AlgoliaAnalytics;
     beforeEach(() => {
       analyticsInstance = setupInstance();
     });
 
     it("should pass over provided filters", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -393,7 +394,7 @@ describe("sendEvents", () => {
     });
 
     it("should uri-encodes filters", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
