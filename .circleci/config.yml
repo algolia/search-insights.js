@@ -20,11 +20,6 @@ aliases:
     name: Install dependencies
     command: yarn install
 
-node_v10: &node_v10
-  working_directory: ~/search-insights
-  docker:
-    - image: cimg/node:10.24.1-browsers
-
 node_v14: &node_v14
   working_directory: ~/search-insights
   docker:
@@ -62,7 +57,7 @@ jobs:
           command: yarn run type-check
 
   'unit tests':
-    <<: *node_v10
+    <<: *node_v14
     steps:
       - checkout
       - run: *install_yarn_version
