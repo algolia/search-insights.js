@@ -14,5 +14,10 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true
   },
-  "include": ["./lib"]
+  "files": [
+    "./lib/typings.d.ts",
+    "./lib/entry-umd.ts",
+    "./lib/entry-node-cjs.ts",
+    "./lib/entry-browser-cjs.ts"
+  ]
 }
