@@ -25,15 +25,15 @@ node_v10: &node_v10
   docker:
     - image: cimg/node:10.24.1-browsers
 
-node_v12: &node_v12
+node_v14: &node_v14
   working_directory: ~/search-insights
   docker:
-    - image: cimg/node:12.14.1
+    - image: cimg/node:14.17.6
 
 version: 2
 jobs:
-  "build and size":
-    <<: *node_v12
+  'build and size':
+    <<: *node_v14
     steps:
       - checkout
       - run: *install_yarn_version
@@ -47,7 +47,7 @@ jobs:
             yarn run test:size
 
   lint:
-    <<: *node_v12
+    <<: *node_v14
     steps:
       - checkout
       - run: *install_yarn_version
@@ -61,7 +61,7 @@ jobs:
           name: Type Checking
           command: yarn run type-check
 
-  "unit tests":
+  'unit tests':
     <<: *node_v10
     steps:
       - checkout
@@ -74,8 +74,8 @@ jobs:
           name: Unit tests
           command: yarn run test
 
-  "release if needed":
-    <<: *node_v12
+  'release if needed':
+    <<: *node_v14
     steps:
       - checkout
       - run: *install_yarn_version
@@ -86,8 +86,8 @@ jobs:
           name: Trigger a release if the latest commit is a release commit
           command: |
             yarn shipjs trigger
-  "prepare release":
-    <<: *node_v12
+  'prepare release':
+    <<: *node_v14
     steps:
       - checkout
       - run: *install_yarn_version
@@ -108,7 +108,7 @@ workflows:
       - build and size
       - unit tests
       - lint
-      - "release if needed":
+      - 'release if needed':
           filters:
             branches:
               only:
@@ -116,7 +116,7 @@ workflows:
   prepare_release_every_tuesday:
     triggers:
       - schedule:
-          cron: "0 9 * * 2"
+          cron: '0 9 * * 2'
           filters:
             branches:
               only:
