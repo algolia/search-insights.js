@@ -50,7 +50,7 @@
   "dependencies": {},
   "bundlesize": [
     {
-      "path": "./dist/search-insights.umd.js",
+      "path": "./dist/search-insights.browser.umd.js",
       "maxSize": "2.75 kB"
     }
   ],
