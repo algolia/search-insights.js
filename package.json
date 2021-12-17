@@ -32,6 +32,7 @@
     "preview": "vite preview",
     "lint": "eslint --ext .js,.ts .",
     "lint:fix": "yarn run lint --fix",
+    "test": "yarn run test:type && yarn run test:unit:browser",
     "test:unit:browser": "vite-jest --config jest.browser.config.js --no-cache",
     "test:unit:node": "vite-jest --config jest.node.config.js --no-cache",
     "test:size": "bundlesize",
