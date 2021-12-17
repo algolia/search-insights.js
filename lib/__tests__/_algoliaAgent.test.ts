@@ -1,53 +1,54 @@
-import { jest } from "@jest/globals";
-import AlgoliaAnalytics from "../insights";
-import { version } from "../_version";
+import { jest } from '@jest/globals';
 
-describe("algoliaAgent", () => {
+import { version } from '../_version';
+import AlgoliaAnalytics from '../insights';
+
+describe('algoliaAgent', () => {
   let analyticsInstance: AlgoliaAnalytics;
-  let requestFn = jest.fn();
+  const requestFn = jest.fn();
 
   beforeEach(() => {
     requestFn.mockReset();
     analyticsInstance = new AlgoliaAnalytics({ requestFn });
-    analyticsInstance.init({ apiKey: "test", appId: "test" });
+    analyticsInstance.init({ apiKey: 'test', appId: 'test' });
   });
 
-  it("should initialize the client with a default algoliaAgent string", () => {
-    expect(analyticsInstance._ua).toEqual([
-      `insights-js (${version})`,
-      `insights-js-browser-cjs (${version})`
-    ]);
-  });
-
-  it("should allow adding a string to algoliaAgent", () => {
-    analyticsInstance.addAlgoliaAgent("other string");
+  it('should initialize the client with a default algoliaAgent string', () => {
     expect(analyticsInstance._ua).toEqual([
       `insights-js (${version})`,
       `insights-js-browser-cjs (${version})`,
-      "other string"
     ]);
   });
 
-  it("should duplicate a string when added twice", () => {
-    analyticsInstance.addAlgoliaAgent("duplicated string");
-    analyticsInstance.addAlgoliaAgent("duplicated string");
+  it('should allow adding a string to algoliaAgent', () => {
+    analyticsInstance.addAlgoliaAgent('other string');
+    expect(analyticsInstance._ua).toEqual([
+      `insights-js (${version})`,
+      `insights-js-browser-cjs (${version})`,
+      'other string',
+    ]);
+  });
+
+  it('should duplicate a string when added twice', () => {
+    analyticsInstance.addAlgoliaAgent('duplicated string');
+    analyticsInstance.addAlgoliaAgent('duplicated string');
 
     expect(analyticsInstance._ua).toEqual([
       `insights-js (${version})`,
       `insights-js-browser-cjs (${version})`,
-      "duplicated string"
+      'duplicated string',
     ]);
   });
 
-  it("should be joined and encoded for URL", () => {
-    analyticsInstance.addAlgoliaAgent("other string");
+  it('should be joined and encoded for URL', () => {
+    analyticsInstance.addAlgoliaAgent('other string');
     analyticsInstance.sendEvents([
       {
-        eventType: "click",
-        eventName: "my-event",
-        index: "my-index",
-        objectIDs: ["1"]
-      }
+        eventType: 'click',
+        eventName: 'my-event',
+        index: 'my-index',
+        objectIDs: ['1'],
+      },
     ]);
 
     expect(requestFn.mock.calls[0][0]).toEqual(

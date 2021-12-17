@@ -1,17 +1,17 @@
-const log = require('logToConsole');
+const copyFromWindow = require('copyFromWindow');
 const createArgumentsQueue = require('createArgumentsQueue');
 const injectScript = require('injectScript');
+const log = require('logToConsole');
+const makeInteger = require('makeInteger');
 const queryPermission = require('queryPermission');
 const setInWindow = require('setInWindow');
-const copyFromWindow = require('copyFromWindow');
-const makeInteger = require('makeInteger');
 
 const TEMPLATE_VERSION = '1.0.1';
 const INSIGHTS_OBJECT_NAME = 'AlgoliaAnalyticsObject';
 const aa = createArgumentsQueue('aa', 'aa.queue');
 
 function isInitialized() {
-  return !!copyFromWindow(INSIGHTS_OBJECT_NAME);
+  return Boolean(copyFromWindow(INSIGHTS_OBJECT_NAME));
 }
 
 function formatValueToList(value) {
@@ -20,7 +20,7 @@ function formatValueToList(value) {
 }
 
 function logger(message, event) {
-  log('[GTM-DEBUG] Search Insights > ' + message, event || '');
+  log(`[GTM-DEBUG] Search Insights > ${message}`, event || '');
 }
 
 switch (data.method) {
@@ -39,11 +39,11 @@ switch (data.method) {
       );
     } else {
       logger(
-        'The library endpoint is not allowed in the "Injects Scripts" permissions.\n\n' +
-          'You need to add the value: "' +
-          data.searchInsightsSource +
-          '"\n\n' +
-          'See https://www.simoahava.com/analytics/custom-templates-guide-for-google-tag-manager/#step-4-modify-permissions'
+        `${
+          'The library endpoint is not allowed in the "Injects Scripts" permissions.\n\n' +
+          'You need to add the value: "'
+        }${data.searchInsightsSource}"\n\n` +
+          `See https://www.simoahava.com/analytics/custom-templates-guide-for-google-tag-manager/#step-4-modify-permissions`
       );
       break;
     }
@@ -59,7 +59,7 @@ switch (data.method) {
     logger(data.method, initOptions);
     aa(data.method, initOptions);
 
-    const userAgent = 'insights-gtm (' + TEMPLATE_VERSION + ')';
+    const userAgent = `insights-gtm (${TEMPLATE_VERSION})`;
     logger('addAlgoliaAgent', userAgent);
     aa('addAlgoliaAgent', userAgent);
 

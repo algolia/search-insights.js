@@ -1,2 +1,2 @@
-export * from "./typeCheckers";
-export * from "./featureDetection";
+export * from './typeCheckers';
+export * from './featureDetection';

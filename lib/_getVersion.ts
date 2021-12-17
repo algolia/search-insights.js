@@ -1,5 +1,5 @@
-import AlgoliaAnalytics from "./insights";
-import { isFunction } from "./utils";
+import type AlgoliaAnalytics from './insights';
+import { isFunction } from './utils';
 
 export function getVersion(
   this: AlgoliaAnalytics,

@@ -1,5 +1,6 @@
-import AlgoliaAnalytics from "./insights";
-import { addEventType } from "./_addEventType";
+import { addEventType } from './_addEventType';
+import type AlgoliaAnalytics from './insights';
+
 export interface InsightsSearchConversionEvent {
   eventName: string;
   userToken?: string;
@@ -14,7 +15,7 @@ export function convertedObjectIDsAfterSearch(
   this: AlgoliaAnalytics,
   ...params: InsightsSearchConversionEvent[]
 ) {
-  return this.sendEvents(addEventType("conversion", params));
+  return this.sendEvents(addEventType('conversion', params));
 }
 
 export interface InsightsSearchConversionObjectIDsEvent {
@@ -30,7 +31,7 @@ export function convertedObjectIDs(
   this: AlgoliaAnalytics,
   ...params: InsightsSearchConversionObjectIDsEvent[]
 ) {
-  return this.sendEvents(addEventType("conversion", params));
+  return this.sendEvents(addEventType('conversion', params));
 }
 
 export interface InsightsSearchConversionFiltersEvent {
@@ -46,5 +47,5 @@ export function convertedFilters(
   this: AlgoliaAnalytics,
   ...params: InsightsSearchConversionFiltersEvent[]
 ) {
-  return this.sendEvents(addEventType("conversion", params));
+  return this.sendEvents(addEventType('conversion', params));
 }

@@ -1,5 +1,7 @@
-const fs = require('fs-extra');
 const path = require('path');
+
+const fs = require('fs-extra');
+
 const { main: mainPath } = require('../package.json');
 
 const ROOT_DIR = path.resolve('src');

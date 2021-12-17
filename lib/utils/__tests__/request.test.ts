@@ -1,7 +1,8 @@
-import { jest } from "@jest/globals";
-import { getRequesterForBrowser } from "../getRequesterForBrowser";
+import { jest } from '@jest/globals';
 
-describe("request", () => {
+import { getRequesterForBrowser } from '../getRequesterForBrowser';
+
+describe('request', () => {
   const sendBeaconBackup = navigator.sendBeacon;
   const XMLHttpRequestBackup = window.XMLHttpRequest;
 
@@ -24,9 +25,9 @@ describe("request", () => {
     window.XMLHttpRequest = XMLHttpRequestBackup;
   });
 
-  it("should pick sendBeacon first if available", () => {
-    const url = "https://random.url";
-    const data = { foo: "bar" };
+  it('should pick sendBeacon first if available', () => {
+    const url = 'https://random.url';
+    const data = { foo: 'bar' };
     const request = getRequesterForBrowser();
     request(url, data);
     expect(navigator.sendBeacon).toHaveBeenCalledTimes(1);
@@ -38,29 +39,29 @@ describe("request", () => {
     expect(send).not.toHaveBeenCalled();
   });
 
-  it("should send with XMLHttpRequest if sendBeacon is not available", () => {
+  it('should send with XMLHttpRequest if sendBeacon is not available', () => {
     // @ts-expect-error removing sendBeacon to mimic the environment that does not support sendBeacon
     navigator.sendBeacon = undefined;
-    const url = "https://random.url";
-    const data = { foo: "bar" };
+    const url = 'https://random.url';
+    const data = { foo: 'bar' };
     const request = getRequesterForBrowser();
     request(url, data);
     expect(open).toHaveBeenCalledTimes(1);
-    expect(open).toHaveBeenLastCalledWith("POST", url);
+    expect(open).toHaveBeenLastCalledWith('POST', url);
     expect(send).toHaveBeenCalledTimes(1);
     expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
   });
 
-  it("should fall back to XMLHttpRequest if sendBeacon returns false", () => {
-    navigator.sendBeacon = jest.fn(() => false);
-    const url = "https://random.url";
-    const data = { foo: "bar" };
+  it('should fall back to XMLHttpRequest if sendBeacon returns false', () => {
+    jest.spyOn(navigator, 'sendBeacon').mockImplementation(() => false);
+    const url = 'https://random.url';
+    const data = { foo: 'bar' };
     const request = getRequesterForBrowser();
     request(url, data);
     expect(navigator.sendBeacon).toHaveBeenCalledTimes(1);
 
     expect(open).toHaveBeenCalledTimes(1);
-    expect(open).toHaveBeenLastCalledWith("POST", url);
+    expect(open).toHaveBeenLastCalledWith('POST', url);
     expect(send).toHaveBeenCalledTimes(1);
     expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
   });

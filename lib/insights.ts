@@ -1,35 +1,31 @@
-import objectAssignPolyfill from "./polyfills/objectAssign";
-import objectKeysPolyfill from "./polyfills/objectKeys";
-
-objectKeysPolyfill();
-objectAssignPolyfill();
-
-import { makeSendEvents } from "./_sendEvent";
-
-import { init } from "./init";
-import { addAlgoliaAgent } from "./_algoliaAgent";
-import { getVersion } from "./_getVersion";
-
-import { RequestFnType } from "./utils/request";
-
-import {
-  clickedObjectIDsAfterSearch,
-  clickedObjectIDs,
-  clickedFilters
-} from "./click";
-import {
-  convertedObjectIDsAfterSearch,
-  convertedObjectIDs,
-  convertedFilters
-} from "./conversion";
-import { viewedObjectIDs, viewedFilters } from "./view";
+import { addAlgoliaAgent } from './_algoliaAgent';
+import { getVersion } from './_getVersion';
+import { makeSendEvents } from './_sendEvent';
 import {
   getUserToken,
   setUserToken,
   setAnonymousUserToken,
-  onUserTokenChange
-} from "./_tokenUtils";
-import { version } from "./_version";
+  onUserTokenChange,
+} from './_tokenUtils';
+import { version } from './_version';
+import {
+  clickedObjectIDsAfterSearch,
+  clickedObjectIDs,
+  clickedFilters,
+} from './click';
+import {
+  convertedObjectIDsAfterSearch,
+  convertedObjectIDs,
+  convertedFilters,
+} from './conversion';
+import { init } from './init';
+import objectAssignPolyfill from './polyfills/objectAssign';
+import objectKeysPolyfill from './polyfills/objectKeys';
+import type { RequestFnType } from './utils/request';
+import { viewedObjectIDs, viewedFilters } from './view';
+
+objectKeysPolyfill();
+objectAssignPolyfill();
 
 type Queue = {
   queue: string[][];
@@ -39,7 +35,7 @@ type AnalyticsFunction = {
   [key: string]: (fnName: string, fnArgs: any[]) => void;
 };
 
-type AlgoliaAnalyticsObject = Queue | AnalyticsFunction;
+type AlgoliaAnalyticsObject = AnalyticsFunction | Queue;
 
 declare global {
   interface Window {
@@ -48,8 +44,9 @@ declare global {
 }
 
 /**
- *  AlgoliaAnalytics class
+ *  AlgoliaAnalytics class.
  */
+/* eslint-disable @typescript-eslint/member-ordering */
 class AlgoliaAnalytics {
   _apiKey?: string;
   _appId?: string;
@@ -68,27 +65,27 @@ class AlgoliaAnalytics {
   protected _hasCredentials: boolean = false;
 
   // Public methods
-  public init: typeof init;
-  public getVersion: typeof getVersion;
-  public addAlgoliaAgent: typeof addAlgoliaAgent;
+  init: typeof init;
+  getVersion: typeof getVersion;
+  addAlgoliaAgent: typeof addAlgoliaAgent;
 
-  public setUserToken: typeof setUserToken;
-  public setAnonymousUserToken: typeof setAnonymousUserToken;
-  public getUserToken: typeof getUserToken;
-  public onUserTokenChange: typeof onUserTokenChange;
+  setUserToken: typeof setUserToken;
+  setAnonymousUserToken: typeof setAnonymousUserToken;
+  getUserToken: typeof getUserToken;
+  onUserTokenChange: typeof onUserTokenChange;
 
-  public sendEvents: ReturnType<typeof makeSendEvents>;
+  sendEvents: ReturnType<typeof makeSendEvents>;
 
-  public clickedObjectIDsAfterSearch: typeof clickedObjectIDsAfterSearch;
-  public clickedObjectIDs: typeof clickedObjectIDs;
-  public clickedFilters: typeof clickedFilters;
+  clickedObjectIDsAfterSearch: typeof clickedObjectIDsAfterSearch;
+  clickedObjectIDs: typeof clickedObjectIDs;
+  clickedFilters: typeof clickedFilters;
 
-  public convertedObjectIDsAfterSearch: typeof convertedObjectIDsAfterSearch;
-  public convertedObjectIDs: typeof convertedObjectIDs;
-  public convertedFilters: typeof convertedFilters;
+  convertedObjectIDsAfterSearch: typeof convertedObjectIDsAfterSearch;
+  convertedObjectIDs: typeof convertedObjectIDs;
+  convertedFilters: typeof convertedFilters;
 
-  public viewedObjectIDs: typeof viewedObjectIDs;
-  public viewedFilters: typeof viewedFilters;
+  viewedObjectIDs: typeof viewedObjectIDs;
+  viewedFilters: typeof viewedFilters;
 
   constructor({ requestFn }: { requestFn: RequestFnType }) {
     this.sendEvents = makeSendEvents(requestFn).bind(this);
@@ -117,5 +114,5 @@ class AlgoliaAnalytics {
     this.getVersion = getVersion.bind(this);
   }
 }
-
+/* eslint-enable @typescript-eslint/member-ordering */
 export default AlgoliaAnalytics;

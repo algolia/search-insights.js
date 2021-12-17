@@ -1,7 +1,7 @@
-import AlgoliaAnalytics from "./insights";
-import { getFunctionalInterface } from "./_getFunctionalInterface";
-import { RequestFnType } from "./utils/request";
-import { processQueue } from "./_processQueue";
+import { getFunctionalInterface } from './_getFunctionalInterface';
+import { processQueue } from './_processQueue';
+import AlgoliaAnalytics from './insights';
+import type { RequestFnType } from './utils/request';
 
 export function createInsightsClient(requestFn: RequestFnType) {
   return getFunctionalInterface(new AlgoliaAnalytics({ requestFn }));
@@ -9,7 +9,7 @@ export function createInsightsClient(requestFn: RequestFnType) {
 
 export function createInsightsClientForUMD(requestFn: RequestFnType) {
   const instance = new AlgoliaAnalytics({ requestFn });
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     // Process queue upon script execution
     processQueue.call(instance, window);
   }

@@ -1,8 +1,8 @@
-declare module "*/package.json";
+declare module '*/package.json';
 
 declare const __DEV__: boolean;
 declare const __FLAVOR__:
-  | "browser-cjs"
-  | "browser-umd"
-  | "browser-iife"
-  | "node-cjs";
+  | 'browser-cjs'
+  | 'browser-iife'
+  | 'browser-umd'
+  | 'node-cjs';

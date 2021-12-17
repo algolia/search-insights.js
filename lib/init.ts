@@ -1,9 +1,9 @@
-import AlgoliaAnalytics from "./insights";
-import { isUndefined, isString, isNumber } from "./utils";
-import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
+import { DEFAULT_ALGOLIA_AGENTS } from './_algoliaAgent';
+import type AlgoliaAnalytics from './insights';
+import { isUndefined, isString, isNumber } from './utils';
 
-type InsightRegion = "de" | "us";
-const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
+type InsightRegion = 'de' | 'us';
+const SUPPORTED_REGIONS: InsightRegion[] = ['de', 'us'];
 const MONTH = 30 * 24 * 60 * 60 * 1000;
 
 export interface InitParams {
@@ -17,23 +17,22 @@ export interface InitParams {
 }
 
 /**
- * Binds credentials and settings to class
- * @param options: initParams
+ * Binds credentials and settings to class.
  */
 export function init(this: AlgoliaAnalytics, options: InitParams) {
   if (!options) {
     throw new Error(
-      "Init function should be called with an object argument containing your apiKey and appId"
+      'Init function should be called with an object argument containing your apiKey and appId'
     );
   }
   if (isUndefined(options.apiKey) || !isString(options.apiKey)) {
     throw new Error(
-      "apiKey is missing, please provide it so we can authenticate the application"
+      'apiKey is missing, please provide it so we can authenticate the application'
     );
   }
   if (isUndefined(options.appId) || !isString(options.appId)) {
     throw new Error(
-      "appId is missing, please provide it, so we can properly attribute data to your application"
+      'appId is missing, please provide it, so we can properly attribute data to your application'
     );
   }
   if (
@@ -42,7 +41,7 @@ export function init(this: AlgoliaAnalytics, options: InitParams) {
   ) {
     throw new Error(
       `optional region is incorrect, please provide either one of: ${SUPPORTED_REGIONS.join(
-        ", "
+        ', '
       )}.`
     );
   }
@@ -58,17 +57,18 @@ export function init(this: AlgoliaAnalytics, options: InitParams) {
   }
 
   if (__DEV__) {
+    // eslint-disable-next-line no-console
     console.info(`Since v2.0.4, search-insights no longer validates event payloads.
 You can visit https://algolia.com/events/debugger instead.`);
   }
 
   this._apiKey = options.apiKey;
   this._appId = options.appId;
-  this._userHasOptedOut = !!options.userHasOptedOut;
+  this._userHasOptedOut = Boolean(options.userHasOptedOut);
   this._region = options.region;
   this._endpointOrigin = options.region
     ? `https://insights.${options.region}.algolia.io`
-    : "https://insights.algolia.io";
+    : 'https://insights.algolia.io';
   this._useCookie = options.useCookie ?? false;
   this._cookieDuration = options.cookieDuration
     ? options.cookieDuration

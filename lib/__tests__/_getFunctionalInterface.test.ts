@@ -1,8 +1,9 @@
-import { jest } from "@jest/globals";
-import AlgoliaAnalytics from "../insights";
-import { getFunctionalInterface } from "../_getFunctionalInterface";
+import { jest } from '@jest/globals';
 
-describe("_getFunctionalInterface", () => {
+import { getFunctionalInterface } from '../_getFunctionalInterface';
+import AlgoliaAnalytics from '../insights';
+
+describe('_getFunctionalInterface', () => {
   let aa: ReturnType<typeof getFunctionalInterface>;
 
   beforeEach(() => {
@@ -10,13 +11,15 @@ describe("_getFunctionalInterface", () => {
     aa = getFunctionalInterface(analyticsInstance);
   });
 
-  it("warn about unknown function name", () => {
-    console.warn = jest.fn();
+  /* eslint-disable no-console */
+  it('warn about unknown function name', () => {
+    jest.spyOn(console, 'warn').mockImplementation();
     // @ts-expect-error
-    aa("unknown-function");
+    aa('unknown-function');
     expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.warn).toHaveBeenCalledWith(
       "The method `unknown-function` doesn't exist."
     );
   });
+  /* eslint-enable no-console */
 });
