@@ -59,6 +59,7 @@
     "bundlesize": "0.18.1",
     "jest": "27.4.5",
     "jest-environment-jsdom": "27.4.4",
+    "shipjs": "0.24.1",
     "typescript": "4.5.4",
     "vite": "2.7.2",
     "vite-jest": "0.1.4"
