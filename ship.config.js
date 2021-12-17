@@ -12,6 +12,11 @@ module.exports = {
   buildCommand: () => "yarn build && /bin/bash ./pre-deploy.sh",
   pullRequestTeamReviewers: ["@algolia/instantsearch-for-websites"],
   versionUpdated: ({ version, releaseType, dir }) => {
+    fs.writeFileSync(
+      path.resolve(dir, 'lib', '_version.ts'),
+      `export const version = '${version}';\n`
+    );
+
     if (
       releaseType === "major" ||
       releaseType === "minor" ||
