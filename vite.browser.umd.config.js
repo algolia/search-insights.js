@@ -1,3 +1,4 @@
+const replace = require("@rollup/plugin-replace");
 const path = require("path");
 const { defineConfig } = require("vite");
 
@@ -7,9 +8,15 @@ module.exports = defineConfig({
       entry: path.resolve(__dirname, "lib/entry-browser-umd.ts"),
       name: "AlgoliaAnalytics",
       fileName: (format) => `search-insights.browser.${format}.js`,
-      formats: ["umd", "iife"]
+      formats: ["umd"]
     },
     rollupOptions: {
+      plugins: [
+        replace({
+          __DEV__: false,
+          __FLAVOR__: "'browser-umd'"
+        })
+      ],
       output: {
         exports: "named"
       }

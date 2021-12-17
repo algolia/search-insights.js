@@ -23,9 +23,10 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "rm -rf ./dist",
-    "build": "yarn build:browser:umd && yarn build:browser:cjs && yarn build:node",
+    "build": "yarn build:browser:umd && yarn build:browser:iife && yarn build:browser:cjs && yarn build:node",
     "build:types": "tsc --build tsconfig.declaration.json",
     "build:browser:umd": "vite build --config vite.browser.umd.config.js --emptyOutDir false",
+    "build:browser:iife": "vite build --config vite.browser.iife.config.js --emptyOutDir false",
     "build:browser:cjs": "vite build --config vite.browser.cjs.config.js --emptyOutDir false",
     "build:node": "vite build --config vite.node.config.js --emptyOutDir false",
     "preview": "vite preview",
@@ -50,6 +51,7 @@
     }
   ],
   "devDependencies": {
+    "@rollup/plugin-replace": "3.0.0",
     "bundlesize": "0.18.1",
     "typescript": "4.5.4",
     "vite": "2.7.2"
