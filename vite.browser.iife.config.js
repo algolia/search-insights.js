@@ -5,16 +5,16 @@ const { defineConfig } = require("vite");
 module.exports = defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, "lib/entry-browser-cjs.ts"),
+      entry: path.resolve(__dirname, "lib/entry-browser-umd.ts"),
       name: "AlgoliaAnalytics",
       fileName: (format) => `search-insights.browser.${format}.js`,
-      formats: ["cjs"]
+      formats: ["iife"]
     },
     rollupOptions: {
       plugins: [
         replace({
-          __DEV__: 'process.env.NODE_ENV === "development"',
-          __FLAVOR__: "'browser-cjs'"
+          __DEV__: false,
+          __FLAVOR__: "'browser-iife'"
         })
       ],
       output: {
