@@ -1,4 +1,6 @@
+const replace = require("@rollup/plugin-replace");
 const path = require("path");
+
 const { defineConfig } = require("vite");
 
 module.exports = defineConfig({
@@ -10,6 +12,12 @@ module.exports = defineConfig({
       formats: ["cjs"]
     },
     rollupOptions: {
+      plugins: [
+        replace({
+          __DEV__: 'process.env.NODE_ENV === "development"',
+          __FLAVOR__: "'node-cjs'"
+        })
+      ],
       output: {
         exports: "named"
       }
