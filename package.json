@@ -30,6 +30,7 @@
     "build:browser:cjs": "vite build --config vite.browser.cjs.config.js --emptyOutDir false",
     "build:node": "vite build --config vite.node.config.js --emptyOutDir false",
     "preview": "vite preview",
+    "test": "yarn test:unit && yarn test:size && yarn test:type",
     "test:unit": "yarn test:unit:browser && yarn test:unit:node",
     "test:unit:browser": "vitest --config vite.browser.cjs.config.js --watch false",
     "test:unit:node": "vitest --config vite.node.config.js --watch false",
