@@ -36,6 +36,7 @@
     "test:unit": "yarn test:unit:browser && yarn test:unit:node",
     "test:unit:browser": "vitest --config vite.browser.cjs.config.js --watch false",
     "test:unit:node": "vitest --config vite.node.config.js --watch false",
+    "pretest:size": "yarn build",
     "test:size": "bundlesize",
     "test:type": "tsc",
     "release": "shipjs prepare"
