@@ -1,12 +1,13 @@
-import { describe, it, expect } from "vitest";
-import { isFunction, isNumber, isString, isUndefined } from "../index";
+import { describe, it, expect } from 'vitest';
 
-describe("isUndefined", () => {
+import { isFunction, isNumber, isString, isUndefined } from '../index';
+
+describe('isUndefined', () => {
   const list = [
     [42, false],
-    ["a string", false],
+    ['a string', false],
     [undefined, true],
-    [() => null, false]
+    [() => null, false],
   ];
 
   list.forEach(([input, expected]) => {
@@ -16,12 +17,12 @@ describe("isUndefined", () => {
   });
 });
 
-describe("isNumber", () => {
+describe('isNumber', () => {
   const list = [
     [42, true],
-    ["a string", false],
+    ['a string', false],
     [undefined, false],
-    [() => null, false]
+    [() => null, false],
   ];
 
   list.forEach(([input, expected]) => {
@@ -31,12 +32,12 @@ describe("isNumber", () => {
   });
 });
 
-describe("isString", () => {
+describe('isString', () => {
   const list = [
     [42, false],
-    ["a string", true],
+    ['a string', true],
     [undefined, false],
-    [() => null, false]
+    [() => null, false],
   ];
 
   list.forEach(([input, expected]) => {
@@ -46,12 +47,12 @@ describe("isString", () => {
   });
 });
 
-describe("isFunction", () => {
+describe('isFunction', () => {
   const list = [
     [42, false],
-    ["a string", false],
+    ['a string', false],
     [undefined, false],
-    [() => null, true]
+    [() => null, true],
   ];
 
   list.forEach(([input, expected]) => {

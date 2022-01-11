@@ -1,0 +1,5 @@
+dist
+node_modules
+gtm
+lib/polyfills 
+tests/production

@@ -1,8 +1,9 @@
-import { describe, it, beforeEach, expect, vi } from "vitest";
-import AlgoliaAnalytics from "../insights";
-import { getFunctionalInterface } from "../_getFunctionalInterface";
+import { describe, it, beforeEach, expect, vi } from 'vitest';
 
-describe("_getFunctionalInterface", () => {
+import { getFunctionalInterface } from '../_getFunctionalInterface';
+import AlgoliaAnalytics from '../insights';
+
+describe('_getFunctionalInterface', () => {
   let aa: ReturnType<typeof getFunctionalInterface>;
 
   beforeEach(() => {
@@ -10,13 +11,15 @@ describe("_getFunctionalInterface", () => {
     aa = getFunctionalInterface(analyticsInstance);
   });
 
-  it("warn about unknown function name", () => {
+  /* eslint-disable no-console */
+  it('warn about unknown function name', () => {
     console.warn = vi.fn();
     // @ts-expect-error
-    aa("unknown-function");
+    aa('unknown-function');
     expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.warn).toHaveBeenCalledWith(
       "The method `unknown-function` doesn't exist."
     );
   });
+  /* eslint-enable no-console */
 });

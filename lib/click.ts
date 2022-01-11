@@ -1,5 +1,5 @@
-import AlgoliaAnalytics from "./insights";
-import { addEventType } from "./_addEventType";
+import { addEventType } from './_addEventType';
+import type AlgoliaAnalytics from './insights';
 
 export interface InsightsSearchClickEvent {
   eventName: string;
@@ -16,7 +16,7 @@ export function clickedObjectIDsAfterSearch(
   this: AlgoliaAnalytics,
   ...params: InsightsSearchClickEvent[]
 ) {
-  return this.sendEvents(addEventType("click", params));
+  return this.sendEvents(addEventType('click', params));
 }
 
 export interface InsightsClickObjectIDsEvent {
@@ -32,7 +32,7 @@ export function clickedObjectIDs(
   this: AlgoliaAnalytics,
   ...params: InsightsClickObjectIDsEvent[]
 ) {
-  return this.sendEvents(addEventType("click", params));
+  return this.sendEvents(addEventType('click', params));
 }
 
 export interface InsightsClickFiltersEvent {
@@ -48,5 +48,5 @@ export function clickedFilters(
   this: AlgoliaAnalytics,
   ...params: InsightsClickFiltersEvent[]
 ) {
-  return this.sendEvents(addEventType("click", params));
+  return this.sendEvents(addEventType('click', params));
 }

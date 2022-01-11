@@ -1,9 +1,10 @@
-import { describe, it, beforeEach, expect, vi } from "vitest";
-import AlgoliaAnalytics from "../insights";
+import { describe, it, beforeEach, expect, vi } from 'vitest';
+
+import AlgoliaAnalytics from '../insights';
 
 const credentials = {
-  apiKey: "test",
-  appId: "test"
+  apiKey: 'test',
+  appId: 'test',
 };
 
 let analyticsInstance: AlgoliaAnalytics;
@@ -11,14 +12,14 @@ beforeEach(() => {
   analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
 });
 
-describe("clickedObjectIDsAfterSearch", () => {
-  it("should attach eventType", () => {
+describe('clickedObjectIDsAfterSearch', () => {
+  it('should attach eventType', () => {
     const clickParams = {
       positions: [1],
-      objectIDs: ["2"],
-      queryID: "testing",
-      eventName: "testEvent",
-      index: "my-index"
+      objectIDs: ['2'],
+      queryID: 'testing',
+      eventName: 'testEvent',
+      index: 'my-index',
     };
 
     analyticsInstance.init(credentials);
@@ -27,19 +28,19 @@ describe("clickedObjectIDsAfterSearch", () => {
 
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([
       {
-        eventType: "click",
-        ...clickParams
-      }
+        eventType: 'click',
+        ...clickParams,
+      },
     ]);
   });
 });
 
-describe("clickedObjectIDs", () => {
-  it("should attach eventType", () => {
+describe('clickedObjectIDs', () => {
+  it('should attach eventType', () => {
     const clickParams = {
-      objectIDs: ["2"],
-      eventName: "testEvent",
-      index: "my-index"
+      objectIDs: ['2'],
+      eventName: 'testEvent',
+      index: 'my-index',
     };
 
     analyticsInstance.init(credentials);
@@ -48,19 +49,19 @@ describe("clickedObjectIDs", () => {
 
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([
       {
-        eventType: "click",
-        ...clickParams
-      }
+        eventType: 'click',
+        ...clickParams,
+      },
     ]);
   });
 });
 
-describe("clickedFilters", () => {
-  it("should attach eventType", () => {
+describe('clickedFilters', () => {
+  it('should attach eventType', () => {
     const clickParams = {
-      filters: ["brands:apple"],
-      eventName: "testEvent",
-      index: "my-index"
+      filters: ['brands:apple'],
+      eventName: 'testEvent',
+      index: 'my-index',
     };
 
     analyticsInstance.init(credentials);
@@ -69,9 +70,9 @@ describe("clickedFilters", () => {
 
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([
       {
-        eventType: "click",
-        ...clickParams
-      }
+        eventType: 'click',
+        ...clickParams,
+      },
     ]);
   });
 });

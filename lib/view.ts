@@ -1,5 +1,5 @@
-import AlgoliaAnalytics from "./insights";
-import { addEventType } from "./_addEventType";
+import { addEventType } from './_addEventType';
+import type AlgoliaAnalytics from './insights';
 
 export interface InsightsSearchViewObjectIDsEvent {
   eventName: string;
@@ -14,7 +14,7 @@ export function viewedObjectIDs(
   this: AlgoliaAnalytics,
   ...params: InsightsSearchViewObjectIDsEvent[]
 ) {
-  return this.sendEvents(addEventType("view", params));
+  return this.sendEvents(addEventType('view', params));
 }
 
 export interface InsightsSearchViewFiltersEvent {
@@ -30,5 +30,5 @@ export function viewedFilters(
   this: AlgoliaAnalytics,
   ...params: InsightsSearchViewFiltersEvent[]
 ) {
-  return this.sendEvents(addEventType("view", params));
+  return this.sendEvents(addEventType('view', params));
 }

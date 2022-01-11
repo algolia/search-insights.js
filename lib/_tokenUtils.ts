@@ -1,9 +1,9 @@
-import { createUUID } from "./utils/uuid";
-import { isFunction } from "./utils/typeCheckers";
-import { supportsCookies } from "./utils/featureDetection";
-import AlgoliaAnalytics from "./insights";
+import type AlgoliaAnalytics from './insights';
+import { supportsCookies } from './utils/featureDetection';
+import { isFunction } from './utils/typeCheckers';
+import { createUUID } from './utils/uuid';
 
-const COOKIE_KEY = "_ALGOLIA";
+const COOKIE_KEY = '_ALGOLIA';
 
 const setCookie = (name: string, value: string, duration: number) => {
   const d = new Date();
@@ -14,17 +14,17 @@ const setCookie = (name: string, value: string, duration: number) => {
 
 export const getCookie = (name: string): string => {
   const prefix = `${name}=`;
-  const ca = document.cookie.split(";");
+  const ca = document.cookie.split(';');
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
-    while (c.charAt(0) === " ") {
+    while (c.charAt(0) === ' ') {
       c = c.substring(1);
     }
     if (c.indexOf(prefix) === 0) {
       return c.substring(prefix.length, c.length);
     }
   }
-  return "";
+  return '';
 };
 
 export function setAnonymousUserToken(this: AlgoliaAnalytics): void {
@@ -33,7 +33,7 @@ export function setAnonymousUserToken(this: AlgoliaAnalytics): void {
   }
   const foundToken = getCookie(COOKIE_KEY);
   const isTokenFromCookieValid =
-    foundToken && foundToken !== "" && foundToken.indexOf("anonymous-") === 0;
+    foundToken && foundToken !== '' && foundToken.indexOf('anonymous-') === 0;
 
   if (isTokenFromCookieValid) {
     this.setUserToken(foundToken);

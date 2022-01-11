@@ -1,52 +1,53 @@
-import { describe, it, beforeEach, expect, vi } from "vitest";
-import AlgoliaAnalytics from "../insights";
+import { describe, it, beforeEach, expect, vi } from 'vitest';
+
+import AlgoliaAnalytics from '../insights';
 
 const credentials = {
-  apiKey: "test",
-  appId: "test"
+  apiKey: 'test',
+  appId: 'test',
 };
-describe("viewedObjectIDs", () => {
+describe('viewedObjectIDs', () => {
   let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
-  it("should attach eventType", () => {
+  it('should attach eventType', () => {
     analyticsInstance.sendEvents = vi.fn();
     analyticsInstance.init(credentials);
     // @ts-expect-error
     analyticsInstance.viewedObjectIDs({
-      objectIDs: ["12345"]
+      objectIDs: ['12345'],
     });
     expect(analyticsInstance.sendEvents).toHaveBeenCalled();
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([
       {
-        eventType: "view",
-        objectIDs: ["12345"]
-      }
+        eventType: 'view',
+        objectIDs: ['12345'],
+      },
     ]);
   });
 });
 
-describe("viewedFilters", () => {
+describe('viewedFilters', () => {
   let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
-  it("should attach eventType", () => {
+  it('should attach eventType', () => {
     analyticsInstance.sendEvents = vi.fn();
     analyticsInstance.init(credentials);
     // @ts-expect-error
     analyticsInstance.viewedFilters({
-      filters: ["brands:apple"]
+      filters: ['brands:apple'],
     });
     expect(analyticsInstance.sendEvents).toHaveBeenCalled();
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([
       {
-        eventType: "view",
-        filters: ["brands:apple"]
-      }
+        eventType: 'view',
+        filters: ['brands:apple'],
+      },
     ]);
   });
 });

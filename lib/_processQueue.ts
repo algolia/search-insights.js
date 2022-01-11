@@ -2,14 +2,14 @@
  * Processes queue that might have been set before
  * the script was actually loaded and reassigns
  * class over globalObject variable to execute commands
- * instead of putting them to the queue
+ * instead of putting them to the queue.
  */
-import AlgoliaAnalytics from "./insights";
-import { getFunctionalInterface } from "./_getFunctionalInterface";
+import { getFunctionalInterface } from './_getFunctionalInterface';
+import type AlgoliaAnalytics from './insights';
 
 export function processQueue(this: AlgoliaAnalytics, globalObject: any) {
   // Set pointer which allows renaming of the script
-  const pointer = globalObject["AlgoliaAnalyticsObject"] as string;
+  const pointer = globalObject.AlgoliaAnalyticsObject as string;
 
   if (pointer) {
     const _aa = getFunctionalInterface(this);
@@ -28,10 +28,7 @@ export function processQueue(this: AlgoliaAnalytics, globalObject: any) {
       _aa(functionName, ...functionArguments);
     });
 
-    // FIXME: Reassigning the pointer is a bad idea (cf: https://github.com/algolia/search-insights.js/issues/127)
-    //   to remove this without any breaking change, we redefine the Array.prototype.push method on the queue array.
-    //   for next major version, use a custom method instead of push.
-    // @ts-ignore (otherwise typescript won't let you change the signature)
+    // @ts-expect-error (otherwise typescript won't let you change the signature)
     queue.push = (args: IArguments) => {
       const [functionName, ...functionArguments] = [].slice.call(args);
       _aa(functionName, ...functionArguments);
