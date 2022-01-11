@@ -1,8 +1,17 @@
-const replace = require("@rollup/plugin-replace");
-const path = require("path");
-const { defineConfig } = require("vite");
+/// <reference types="vitest" />
 
-module.exports = defineConfig({
+import { defineConfig } from "vite";
+import replace from "@rollup/plugin-replace";
+import path from "path";
+
+export default defineConfig({
+  test: {
+    include: ["**/*.test.(js|ts)"],
+    exclude: ["**/*.node.test.(js|ts)", "node_modules/**"],
+    environment: "jsdom",
+    global: true,
+    setupFiles: ["tests/setup.browser.ts"]
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, "lib/entry-browser-cjs.ts"),

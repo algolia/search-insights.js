@@ -1,4 +1,4 @@
-import { jest } from "@jest/globals";
+import { describe, it, beforeEach, expect, vi } from "vitest";
 import AlgoliaAnalytics from "../insights";
 
 const credentials = {
@@ -12,7 +12,7 @@ describe("convertedObjectIDsAfterSearch", () => {
   });
 
   it("should attach eventType", () => {
-    analyticsInstance.sendEvents = jest.fn();
+    analyticsInstance.sendEvents = vi.fn();
     analyticsInstance.init(credentials);
     analyticsInstance.convertedObjectIDsAfterSearch({
       objectIDs: ["12345"],
@@ -40,7 +40,7 @@ describe("convertedObjectIDs", () => {
   });
 
   it("should attach eventType", () => {
-    analyticsInstance.sendEvents = jest.fn();
+    analyticsInstance.sendEvents = vi.fn();
     analyticsInstance.init(credentials);
     analyticsInstance.convertedObjectIDs({
       objectIDs: ["12345"],
@@ -66,7 +66,7 @@ describe("convertedFilters", () => {
   });
 
   it("should attach eventType", () => {
-    analyticsInstance.sendEvents = jest.fn();
+    analyticsInstance.sendEvents = vi.fn();
     analyticsInstance.init(credentials);
     analyticsInstance.convertedFilters({
       filters: ["brands:apple"],

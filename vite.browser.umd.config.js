@@ -1,6 +1,6 @@
-const replace = require("@rollup/plugin-replace");
-const path = require("path");
-const { defineConfig } = require("vite");
+import { defineConfig } from "vite";
+import replace from "@rollup/plugin-replace";
+import path from "path";
 
 module.exports = defineConfig({
   build: {

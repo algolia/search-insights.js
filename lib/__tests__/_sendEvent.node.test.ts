@@ -1,4 +1,4 @@
-import { jest } from "@jest/globals";
+import { describe, it, beforeEach, expect, vi } from "vitest";
 import AlgoliaAnalytics from "../insights";
 import { getRequesterForNode } from "../utils/getRequesterForNode";
 import { getFunctionalInterface } from "../_getFunctionalInterface";
@@ -22,7 +22,7 @@ describe("_sendEvent in node env", () => {
   let aa;
   let requestFn;
   beforeEach(() => {
-    requestFn = jest.fn((url, data) => {});
+    requestFn = vi.fn((url, data) => {});
     const instance = new AlgoliaAnalytics({ requestFn });
     aa = getFunctionalInterface(instance);
     aa("init", credentials);

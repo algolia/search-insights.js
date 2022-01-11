@@ -30,8 +30,9 @@
     "build:browser:cjs": "vite build --config vite.browser.cjs.config.js --emptyOutDir false",
     "build:node": "vite build --config vite.node.config.js --emptyOutDir false",
     "preview": "vite preview",
-    "test:unit:browser": "vite-jest --config jest.browser.config.js --no-cache",
-    "test:unit:node": "vite-jest --config jest.node.config.js --no-cache",
+    "test:unit": "yarn test:unit:browser && yarn test:unit:node",
+    "test:unit:browser": "vitest --config vite.browser.cjs.config.js --watch false",
+    "test:unit:node": "vitest --config vite.node.config.js --watch false",
     "test:size": "bundlesize",
     "test:type": "tsc",
     "release": "shipjs prepare"
@@ -54,15 +55,12 @@
   ],
   "devDependencies": {
     "@rollup/plugin-replace": "3.0.0",
-    "@types/jest": "27.0.3",
     "@types/node": "16.11.13",
     "bundlesize": "0.18.1",
-    "jest": "27.4.5",
-    "jest-environment-jsdom": "27.4.4",
-    "jest-environment-node": "27.4.4",
+    "jsdom": "19.0.0",
     "shipjs": "0.24.1",
     "typescript": "4.5.4",
     "vite": "2.7.2",
-    "vite-jest": "0.1.4"
+    "vitest": "0.0.140"
   }
 }

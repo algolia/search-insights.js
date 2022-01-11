@@ -1,4 +1,4 @@
-import { jest } from "@jest/globals";
+import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
 import AlgoliaAnalytics from "../insights";
 import { getCookie } from "../_tokenUtils";
 
@@ -80,20 +80,19 @@ describe("init", () => {
     const month = 30 * 24 * 60 * 60 * 1000;
     expect(analyticsInstance._cookieDuration).toBe(6 * month);
   });
-  it.each(["not a string", 0.002, NaN])(
-    "should throw if cookieDuration passed but is not an integer (eg. %s)",
-    (cookieDuration) => {
+  ["not a string", 0.002, NaN].forEach((value) => {
+    it(`should throw if cookieDuration passed but is not an integer (eg. ${value})`, () => {
       expect(() => {
         (analyticsInstance as any).init({
-          cookieDuration,
+          cookieDuration: value,
           apiKey: "***",
           appId: "XXX"
         });
       }).toThrowErrorMatchingInlineSnapshot(
         `"optional cookieDuration is incorrect, expected an integer."`
       );
-    }
-  );
+    });
+  });
   it("should use passed cookieDuration", () => {
     analyticsInstance.init({
       apiKey: "***",
@@ -126,7 +125,7 @@ describe("init", () => {
       writable: true
     });
 
-    const setAnonymousUserToken = jest.spyOn(
+    const setAnonymousUserToken = vi.spyOn(
       analyticsInstance,
       "setAnonymousUserToken"
     );
@@ -147,7 +146,7 @@ describe("init", () => {
       writable: true
     });
 
-    const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+    const setUserToken = vi.spyOn(analyticsInstance, "setUserToken");
 
     analyticsInstance.init({
       apiKey: "***",
@@ -170,7 +169,7 @@ describe("init", () => {
       writable: true
     });
 
-    const setAnonymousUserToken = jest.spyOn(
+    const setAnonymousUserToken = vi.spyOn(
       analyticsInstance,
       "setAnonymousUserToken"
     );
@@ -186,7 +185,7 @@ describe("init", () => {
     setAnonymousUserToken.mockRestore();
   });
   it("should not set anonymous userToken if a token is already set", () => {
-    const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+    const setUserToken = vi.spyOn(analyticsInstance, "setUserToken");
     analyticsInstance.init({
       apiKey: "***",
       appId: "XXX",
@@ -228,7 +227,7 @@ describe("init", () => {
         // Because cookie is enabled, anonymous token must be generated already.
         expect(analyticsInstance._userToken).toBeTruthy();
         expect(analyticsInstance._userToken!.length).toBeGreaterThan(0);
-        const callback = jest.fn();
+        const callback = vi.fn();
         analyticsInstance.onUserTokenChange(callback, { immediate: true });
         expect(callback).toHaveBeenCalledWith(analyticsInstance._userToken); // anonymous user token
         expect(callback).toHaveBeenCalledTimes(1);
@@ -244,7 +243,7 @@ describe("init", () => {
         });
 
         analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
-        const callback = jest.fn();
+        const callback = vi.fn();
         analyticsInstance.onUserTokenChange(callback, { immediate: true });
         expect(callback).toHaveBeenCalledWith(undefined);
         expect(callback).toHaveBeenCalledTimes(1);
@@ -264,7 +263,7 @@ describe("init", () => {
         analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
         analyticsInstance.setUserToken("abc");
 
-        const callback = jest.fn();
+        const callback = vi.fn();
         analyticsInstance.onUserTokenChange(callback);
         expect(callback).toHaveBeenCalledTimes(0);
 
@@ -276,7 +275,7 @@ describe("init", () => {
       it("is triggered by setAnonymousUserToken", () => {
         analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
 
-        const callback = jest.fn();
+        const callback = vi.fn();
         analyticsInstance.onUserTokenChange(callback);
         expect(callback).toHaveBeenCalledTimes(0);
 
@@ -315,11 +314,11 @@ describe("init", () => {
   });
 
   describe("userToken param", () => {
-    let setUserToken: ReturnType<typeof jest.spyOn>;
-    let setAnonymousUserToken: ReturnType<typeof jest.spyOn>;
+    let setUserToken: ReturnType<typeof vi.spyOn>;
+    let setAnonymousUserToken: ReturnType<typeof vi.spyOn>;
     beforeEach(() => {
-      setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
-      setAnonymousUserToken = jest.spyOn(
+      setUserToken = vi.spyOn(analyticsInstance, "setUserToken");
+      setAnonymousUserToken = vi.spyOn(
         analyticsInstance,
         "setAnonymousUserToken"
       );

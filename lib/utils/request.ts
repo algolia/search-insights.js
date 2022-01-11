@@ -1,3 +1,5 @@
+import { getNodeHttpModule } from "./getNodeHttpModule";
+
 export type RequestFnType = (url: string, data: object) => void;
 
 export const requestWithSendBeacon: RequestFnType = (url, data) => {
@@ -28,8 +30,7 @@ export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
     }
   };
 
-  const { request: nodeRequest } =
-    url.indexOf("https://") === 0 ? require("https") : require("http");
+  const { request: nodeRequest } = getNodeHttpModule(url);
   const req = nodeRequest(options);
 
   req.on("error", (error: any) => {

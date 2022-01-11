@@ -1,4 +1,4 @@
-import { jest } from "@jest/globals";
+import { describe, it, beforeEach, expect, vi } from "vitest";
 import {
   supportsCookies,
   supportsSendBeacon,
@@ -19,7 +19,7 @@ describe("featureDetection in jsdom env", () => {
     });
 
     it("should return true if available", () => {
-      navigator.sendBeacon = jest.fn();
+      navigator.sendBeacon = vi.fn();
       expect(supportsSendBeacon()).toBe(true);
       // @ts-expect-error
       delete navigator.sendBeacon;

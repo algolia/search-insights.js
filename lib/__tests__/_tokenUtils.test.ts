@@ -1,3 +1,4 @@
+import { describe, it, beforeEach, expect } from "vitest";
 import { getCookie } from "../_tokenUtils";
 import AlgoliaAnalytics from "../insights";
 

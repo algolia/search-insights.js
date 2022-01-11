@@ -1,4 +1,4 @@
-import { jest } from "@jest/globals";
+import { describe, it, beforeEach, expect, vi } from "vitest";
 import { processQueue } from "../_processQueue";
 
 interface AaFunctionForm extends Function {
@@ -29,8 +29,8 @@ class FakeAlgoliaAnalytics {
   public otherMethod: Function;
   public processQueue: Function;
   constructor() {
-    this.init = jest.fn();
-    this.otherMethod = jest.fn(() => "otherMethodReturnedValue");
+    this.init = vi.fn();
+    this.otherMethod = vi.fn(() => "otherMethodReturnedValue");
 
     // @ts-expect-error
     this.processQueue = processQueue.bind(this); // the function we'll be testing
@@ -47,7 +47,7 @@ describe("processQueue", () => {
   });
 
   it("should forward method calls that happen before the queue is processed", () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     globalObject.aa("init", { appID: "xxx", apiKey: "yyy" });
     globalObject.aa("otherMethod", { objectIDs: ["1"] }, callback);
 
@@ -64,7 +64,7 @@ describe("processQueue", () => {
   });
 
   it("should forward method calls that happen after the queue is processed", () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     insights.processQueue(globalObject);
 
     expect(insights.init).not.toHaveBeenCalled();

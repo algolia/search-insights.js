@@ -1,16 +1,19 @@
-import { jest } from "@jest/globals";
+import { describe, it, beforeEach, afterAll, expect, vi } from "vitest";
 import { getRequesterForBrowser } from "../getRequesterForBrowser";
 
 describe("request", () => {
   const sendBeaconBackup = navigator.sendBeacon;
   const XMLHttpRequestBackup = window.XMLHttpRequest;
 
-  const sendBeacon = jest.fn(() => true);
-  const open = jest.fn();
-  const send = jest.fn();
+  const sendBeacon = vi.fn(() => true);
+  const open = vi.fn();
+  const send = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    sendBeacon.mockClear();
+    open.mockClear();
+    send.mockClear();
+
     navigator.sendBeacon = sendBeacon;
     // @ts-expect-error
     window.XMLHttpRequest = function (this: XMLHttpRequest) {
@@ -52,7 +55,7 @@ describe("request", () => {
   });
 
   it("should fall back to XMLHttpRequest if sendBeacon returns false", () => {
-    navigator.sendBeacon = jest.fn(() => false);
+    navigator.sendBeacon = vi.fn(() => false);
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForBrowser();

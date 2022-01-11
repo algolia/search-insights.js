@@ -1,4 +1,4 @@
-import { jest } from "@jest/globals";
+import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
 import AlgoliaAnalytics from "../insights";
 import { getRequesterForBrowser } from "../utils/getRequesterForBrowser";
 
@@ -21,8 +21,8 @@ describe("sendEvents", () => {
 
   beforeEach(() => {
     XMLHttpRequest = {
-      open: jest.spyOn(window.XMLHttpRequest.prototype, "open"),
-      send: jest.spyOn(window.XMLHttpRequest.prototype, "send")
+      open: vi.spyOn(window.XMLHttpRequest.prototype, "open"),
+      send: vi.spyOn(window.XMLHttpRequest.prototype, "send")
     };
   });
 
@@ -101,7 +101,7 @@ describe("sendEvents", () => {
     let sendBeaconBackup: typeof window.navigator.sendBeacon;
     beforeEach(() => {
       sendBeaconBackup = window.navigator.sendBeacon;
-      sendBeacon = window.navigator.sendBeacon = jest.fn(() => true);
+      sendBeacon = window.navigator.sendBeacon = vi.fn(() => true);
       analyticsInstance = setupInstance();
     });
     afterEach(() => {
@@ -173,7 +173,7 @@ describe("sendEvents", () => {
 
   describe("with custom requestFn", () => {
     let analyticsInstance: AlgoliaAnalytics;
-    const fakeRequestFn = jest.fn();
+    const fakeRequestFn = vi.fn();
 
     beforeEach(() => {
       fakeRequestFn.mockClear();
@@ -416,7 +416,7 @@ describe("sendEvents", () => {
 
   describe("multiple events", () => {
     let analyticsInstance: AlgoliaAnalytics;
-    const fakeRequestFn = jest.fn();
+    const fakeRequestFn = vi.fn();
 
     beforeEach(() => {
       fakeRequestFn.mockClear();

@@ -16,8 +16,8 @@
   },
   "files": [
     "./lib/typings.d.ts",
-    "./lib/entry-umd.ts",
-    "./lib/entry-node-cjs.ts",
+    "./lib/entry-node.ts",
+    "./lib/entry-browser-umd.ts",
     "./lib/entry-browser-cjs.ts"
   ]
 }

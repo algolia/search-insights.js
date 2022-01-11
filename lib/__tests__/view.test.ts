@@ -1,4 +1,4 @@
-import { jest } from "@jest/globals";
+import { describe, it, beforeEach, expect, vi } from "vitest";
 import AlgoliaAnalytics from "../insights";
 
 const credentials = {
@@ -12,7 +12,7 @@ describe("viewedObjectIDs", () => {
   });
 
   it("should attach eventType", () => {
-    analyticsInstance.sendEvents = jest.fn();
+    analyticsInstance.sendEvents = vi.fn();
     analyticsInstance.init(credentials);
     // @ts-expect-error
     analyticsInstance.viewedObjectIDs({
@@ -35,7 +35,7 @@ describe("viewedFilters", () => {
   });
 
   it("should attach eventType", () => {
-    analyticsInstance.sendEvents = jest.fn();
+    analyticsInstance.sendEvents = vi.fn();
     analyticsInstance.init(credentials);
     // @ts-expect-error
     analyticsInstance.viewedFilters({

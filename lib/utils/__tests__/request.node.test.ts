@@ -1,48 +1,45 @@
-import { jest } from "@jest/globals";
+import { describe, it, beforeAll, expect, vi, beforeEach } from "vitest";
 import http from "http";
 import https from "https";
-import { getRequesterForNode } from "../getRequesterForNode";
-import { supportsNodeHttpModule } from "../featureDetection";
+import { getNodeHttpModule } from "../getNodeHttpModule";
+import { requestWithNodeHttpModule } from "../request";
 
-const nodeHttpRequest = http.request;
-const nodeHttpsRequest = https.request;
-
-jest.mock("../featureDetection");
-jest.mock("http");
-jest.mock("https");
+vi.mock("../getNodeHttpModule");
 
 describe("request", () => {
-  const write = jest.fn();
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  const write = vi.fn();
 
   beforeAll(() => {
-    nodeHttpRequest.mockImplementation(() => {
+    vi.spyOn(http, "request").mockImplementation(() => {
       return {
-        on: jest.fn(),
+        on: vi.fn(),
         write,
-        end: jest.fn()
+        end: vi.fn()
       };
     });
-    nodeHttpsRequest.mockImplementation(() => {
+
+    vi.spyOn(https, "request").mockImplementation(() => {
       return {
-        on: jest.fn(),
+        on: vi.fn(),
         write,
-        end: jest.fn()
+        end: vi.fn()
       };
     });
+  });
+
+  beforeEach(() => {
+    write.mockClear();
+    vi.mocked(http.request).mockClear();
+    vi.mocked(https.request).mockClear();
   });
 
   it("should send with nodeHttpRequest if url does not start with https://", () => {
-    supportsNodeHttpModule.mockImplementation(() => true);
     const url = "http://random.url";
     const data = { foo: "bar" };
-    const request = getRequesterForNode();
-    request(url, data);
-    expect(nodeHttpsRequest).not.toHaveBeenCalled();
-    expect(nodeHttpRequest).toHaveBeenLastCalledWith({
+    vi.mocked(getNodeHttpModule).mockImplementation(() => http);
+    requestWithNodeHttpModule(url, data);
+    expect(https.request).not.toHaveBeenCalled();
+    expect(http.request).toHaveBeenLastCalledWith({
       protocol: "http:",
       host: "random.url",
       path: "/",
@@ -52,19 +49,18 @@ describe("request", () => {
         "Content-Length": JSON.stringify(data).length
       }
     });
-    expect(nodeHttpRequest).toHaveBeenCalledTimes(1);
+    expect(http.request).toHaveBeenCalledTimes(1);
     expect(write).toHaveBeenLastCalledWith(JSON.stringify(data));
     expect(write).toHaveBeenCalledTimes(1);
   });
 
   it("should send with nodeHttpsRequest if url starts with https://", () => {
-    supportsNodeHttpModule.mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
-    const request = getRequesterForNode();
-    request(url, data);
-    expect(nodeHttpRequest).not.toHaveBeenCalled();
-    expect(nodeHttpsRequest).toHaveBeenLastCalledWith({
+    vi.mocked(getNodeHttpModule).mockImplementation(() => https);
+    requestWithNodeHttpModule(url, data);
+    expect(http.request).not.toHaveBeenCalled();
+    expect(https.request).toHaveBeenLastCalledWith({
       protocol: "https:",
       host: "random.url",
       path: "/",
@@ -74,7 +70,7 @@ describe("request", () => {
         "Content-Length": JSON.stringify(data).length
       }
     });
-    expect(nodeHttpsRequest).toHaveBeenCalledTimes(1);
+    expect(https.request).toHaveBeenCalledTimes(1);
     expect(write).toHaveBeenLastCalledWith(JSON.stringify(data));
     expect(write).toHaveBeenCalledTimes(1);
   });

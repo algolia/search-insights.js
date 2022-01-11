@@ -1,4 +1,4 @@
-import { jest } from "@jest/globals";
+import { describe, it, beforeEach, expect, vi } from "vitest";
 import AlgoliaAnalytics from "../insights";
 import { getFunctionalInterface } from "../_getFunctionalInterface";
 
@@ -11,7 +11,7 @@ describe("_getFunctionalInterface", () => {
   });
 
   it("warn about unknown function name", () => {
-    console.warn = jest.fn();
+    console.warn = vi.fn();
     // @ts-expect-error
     aa("unknown-function");
     expect(console.warn).toHaveBeenCalledTimes(1);

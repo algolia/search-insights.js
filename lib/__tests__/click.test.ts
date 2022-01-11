@@ -1,4 +1,4 @@
-import { jest } from "@jest/globals";
+import { describe, it, beforeEach, expect, vi } from "vitest";
 import AlgoliaAnalytics from "../insights";
 
 const credentials = {
@@ -12,7 +12,7 @@ beforeEach(() => {
 });
 
 describe("clickedObjectIDsAfterSearch", () => {
-  test("should attach eventType", () => {
+  it("should attach eventType", () => {
     const clickParams = {
       positions: [1],
       objectIDs: ["2"],
@@ -22,7 +22,7 @@ describe("clickedObjectIDsAfterSearch", () => {
     };
 
     analyticsInstance.init(credentials);
-    analyticsInstance.sendEvents = jest.fn();
+    analyticsInstance.sendEvents = vi.fn();
     analyticsInstance.clickedObjectIDsAfterSearch(clickParams);
 
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([
@@ -43,7 +43,7 @@ describe("clickedObjectIDs", () => {
     };
 
     analyticsInstance.init(credentials);
-    analyticsInstance.sendEvents = jest.fn();
+    analyticsInstance.sendEvents = vi.fn();
     analyticsInstance.clickedObjectIDs(clickParams);
 
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([
@@ -64,7 +64,7 @@ describe("clickedFilters", () => {
     };
 
     analyticsInstance.init(credentials);
-    analyticsInstance.sendEvents = jest.fn();
+    analyticsInstance.sendEvents = vi.fn();
     analyticsInstance.clickedFilters(clickParams);
 
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith([

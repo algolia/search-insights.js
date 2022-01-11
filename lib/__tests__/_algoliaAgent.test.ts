@@ -1,10 +1,10 @@
-import { jest } from "@jest/globals";
+import { describe, it, beforeEach, expect, vi } from "vitest";
 import AlgoliaAnalytics from "../insights";
 import { version } from "../_version";
 
 describe("algoliaAgent", () => {
   let analyticsInstance: AlgoliaAnalytics;
-  let requestFn = jest.fn();
+  let requestFn = vi.fn();
 
   beforeEach(() => {
     requestFn.mockReset();

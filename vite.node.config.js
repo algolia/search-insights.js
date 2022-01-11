@@ -1,9 +1,15 @@
-const replace = require("@rollup/plugin-replace");
-const path = require("path");
+/// <reference types="vitest" />
 
-const { defineConfig } = require("vite");
+import { defineConfig } from "vite";
+import replace from "@rollup/plugin-replace";
+import path from "path";
 
 module.exports = defineConfig({
+  test: {
+    include: ["**/*.node.test.(js|ts)"],
+    environment: "node",
+    setupFiles: ["tests/setup.node.ts"]
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, "lib/entry-node.ts"),
