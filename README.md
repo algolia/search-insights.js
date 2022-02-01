@@ -402,6 +402,27 @@ aa('viewedFilters', {
 | `eventName` | `string`   | The name of the event                                            |
 | `filters`   | `string[]` | The list of filters that was clicked as `'${attr}${op}${value}'` |
 
+### Batch Events
+
+You can send multiple events in a single HTTP request, by using `sendEvents` method.
+
+```js
+aa('sendEvents', [
+  {
+    eventType,
+    eventName,
+    userToken,
+    ...
+  }
+]);
+```
+
+| Option      | Type                            | Description                                    |
+| ----------- | ------------------------------- | ---------------------------------------------- |
+| `eventType` | `view`                          | `click` | `conversion` | The name of the index related to the event     |
+| `eventName` | `string`                        | The name of the event                          |
+| `userToken` | `string` (optional)             | You can specify userToken per event. |
+
 ## Examples
 
 The following examples assume that the Search Insights library is loaded.
