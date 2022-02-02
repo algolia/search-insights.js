@@ -421,7 +421,7 @@ aa('sendEvents', [
 | ----------- | ------------------------------- | ---------------------------------------------- |
 | `eventType` | `view`                          | `click` | `conversion` | The name of the index related to the event.    |
 | `eventName` | `string`                        | The name of the event.                         |
-| `userToken` | `string` (optional)             | You can specify userToken per event. |
+| `userToken` | `string` (optional)             | search-insights uses anonymous user token or a token set by `setUserToken` method. You can override it by providing a `userToken` per event object. |
 
 ## Examples
 
