@@ -419,8 +419,8 @@ aa('sendEvents', [
 
 | Option      | Type                            | Description                                    |
 | ----------- | ------------------------------- | ---------------------------------------------- |
-| `eventType` | `view`                          | `click` | `conversion` | The name of the index related to the event     |
-| `eventName` | `string`                        | The name of the event                          |
+| `eventType` | `view`                          | `click` | `conversion` | The name of the index related to the event.    |
+| `eventName` | `string`                        | The name of the event.                         |
 | `userToken` | `string` (optional)             | You can specify userToken per event. |
 
 ## Examples
