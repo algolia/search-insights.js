@@ -1,3 +1,13 @@
+## [2.2.2](https://github.com/algolia/search-insights.js/compare/v2.2.1...v2.2.2) (2022-11-16)
+
+
+### Bug Fixes
+
+* add default `Content-Type` and `Content-Length` headers to `XMLHttpRequest` instance ([1249920](https://github.com/algolia/search-insights.js/commit/1249920aabe8053415d5bac44c66cf3debf55634))
+* check headers setup in tests ([39a29a6](https://github.com/algolia/search-insights.js/commit/39a29a6d6db6b3febb2c4067c4fe913ed13d9463))
+
+
+
 ## [2.2.1](https://github.com/algolia/search-insights.js/compare/v2.2.0...v2.2.1) (2021-12-14)
 
 
