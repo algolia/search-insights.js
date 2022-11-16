@@ -11,6 +11,8 @@ export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
   const serializedData = JSON.stringify(data);
   const report = new XMLHttpRequest();
   report.open("POST", url);
+  report.setRequestHeader("Content-Type", "application/json");
+  report.setRequestHeader("Content-Length", `${serializedData.length}`);
   report.send(serializedData);
 };
 
