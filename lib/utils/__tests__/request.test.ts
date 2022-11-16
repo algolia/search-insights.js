@@ -19,6 +19,7 @@ describe("request", () => {
   const open = jest.fn();
   const send = jest.fn();
   const setRequestHeader = jest.fn();
+  const addEventListener = jest.fn();
   const write = jest.fn();
 
   beforeEach(() => {
@@ -31,6 +32,7 @@ describe("request", () => {
       this.open = open;
       this.send = send;
       this.setRequestHeader = setRequestHeader;
+      this.addEventListener = addEventListener;
     };
     nodeHttpRequest.mockImplementation(() => {
       return {
@@ -69,6 +71,7 @@ describe("request", () => {
     expect(open).not.toHaveBeenCalled();
     expect(send).not.toHaveBeenCalled();
     expect(setRequestHeader).not.toHaveBeenCalled();
+    expect(addEventListener).not.toHaveBeenCalled();
     expect(nodeHttpRequest).not.toHaveBeenCalled();
     expect(nodeHttpsRequest).not.toHaveBeenCalled();
   });
@@ -84,6 +87,7 @@ describe("request", () => {
     expect(navigator.sendBeacon).not.toHaveBeenCalled();
     expect(open).toHaveBeenCalledTimes(1);
     expect(setRequestHeader).toHaveBeenCalledTimes(2);
+    expect(addEventListener).toHaveBeenCalledTimes(1);
     expect(open).toHaveBeenLastCalledWith("POST", url);
     expect(send).toHaveBeenCalledTimes(1);
     expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
@@ -104,6 +108,7 @@ describe("request", () => {
 
     expect(open).toHaveBeenCalledTimes(1);
     expect(setRequestHeader).toHaveBeenCalledTimes(2);
+    expect(addEventListener).toHaveBeenCalledTimes(1);
     expect(open).toHaveBeenLastCalledWith("POST", url);
     expect(send).toHaveBeenCalledTimes(1);
     expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
@@ -123,6 +128,7 @@ describe("request", () => {
     expect(open).not.toHaveBeenCalled();
     expect(send).not.toHaveBeenCalled();
     expect(setRequestHeader).not.toHaveBeenCalled();
+    expect(addEventListener).not.toHaveBeenCalled();
     expect(nodeHttpsRequest).not.toHaveBeenCalled();
     expect(nodeHttpRequest).toHaveBeenLastCalledWith({
       protocol: "http:",
@@ -150,6 +156,7 @@ describe("request", () => {
     expect(navigator.sendBeacon).not.toHaveBeenCalled();
     expect(open).not.toHaveBeenCalled();
     expect(setRequestHeader).not.toHaveBeenCalled();
+    expect(addEventListener).not.toHaveBeenCalled();
     expect(send).not.toHaveBeenCalled();
     expect(nodeHttpRequest).not.toHaveBeenCalled();
     expect(nodeHttpsRequest).toHaveBeenLastCalledWith({
