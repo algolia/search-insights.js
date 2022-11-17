@@ -4,7 +4,7 @@ import objectKeysPolyfill from "./polyfills/objectKeys";
 objectKeysPolyfill();
 objectAssignPolyfill();
 
-import { makeSendEvents } from "./_sendEvent";
+import { makeSendEvents, onError } from "./_sendEvent";
 
 import { init } from "./init";
 import { addAlgoliaAgent } from "./_algoliaAgent";
@@ -90,6 +90,8 @@ class AlgoliaAnalytics {
   public viewedObjectIDs: typeof viewedObjectIDs;
   public viewedFilters: typeof viewedFilters;
 
+  public onError: typeof onError;
+
   constructor({ requestFn }: { requestFn: RequestFnType }) {
     this.sendEvents = makeSendEvents(requestFn).bind(this);
 
@@ -116,6 +118,8 @@ class AlgoliaAnalytics {
     this.viewedFilters = viewedFilters.bind(this);
 
     this.getVersion = getVersion.bind(this);
+
+    this.onError = onError.bind(this);
   }
 }
 

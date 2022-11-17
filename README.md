@@ -148,10 +148,10 @@ const { createInsightsClient } = require("search-insights");
 // OR via the UMD
 const createInsightsClient = window.AlgoliaAnalytics.createInsightsClient;
 
-function requestFn(url, data) {
+function requestFn(url, data, options) {
   const serializedData = JSON.stringify(data);
   const { protocol, host, path } = require("url").parse(url);
-  const options = {
+  const reqOptions = {
     protocol,
     host,
     path,
@@ -164,10 +164,12 @@ function requestFn(url, data) {
 
   const { request: nodeRequest } =
     url.indexOf("https://") === 0 ? require("https") : require("http");
-  const req = nodeRequest(options);
+  const req = nodeRequest(reqOptions);
 
   req.on("error", error => {
     console.error(error);
+    // or use the `onError` callback
+    options?.errorCallback?.(error);
   });
 
   req.write(serializedData);
@@ -422,6 +424,17 @@ aa('sendEvents', [
 | `eventType` | `'view'` \| `'click'` \| `'conversion'` | The name of the index related to the event.    |
 | `eventName` | `string`                        | The name of the event.                         |
 | `userToken` | `string` (optional)             | search-insights uses anonymous user token or a token set by `setUserToken` method. You can override it by providing a `userToken` per event object. |
+
+### Handling request errors
+
+You can set an error callback which will be called whenever an error happens during a request.
+
+```js
+aa('onError', (event) => {
+    console.error(event);
+    throw new Error("Oops!");
+});
+```
 
 ## Examples
 

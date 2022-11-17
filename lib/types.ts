@@ -13,7 +13,7 @@ import {
 } from "./conversion";
 import { viewedObjectIDs, viewedFilters } from "./view";
 import { getVersion } from "./_getVersion";
-import { makeSendEvents } from "./_sendEvent";
+import { makeSendEvents, onError } from "./_sendEvent";
 
 export type InsightsMethodMap = {
   init: Parameters<typeof init>;
@@ -33,6 +33,7 @@ export type InsightsMethodMap = {
   viewedObjectIDs: Parameters<typeof viewedObjectIDs>;
   viewedFilters: Parameters<typeof viewedFilters>;
   sendEvents: Parameters<ReturnType<typeof makeSendEvents>>;
+  onError: Parameters<typeof onError>;
 };
 
 type MethodType<MethodName extends keyof InsightsMethodMap> = (
@@ -73,6 +74,8 @@ export type ViewedObjectIDs = MethodType<"viewedObjectIDs">;
 export type ViewedFilters = MethodType<"viewedFilters">;
 
 export type SendEvents = MethodType<"sendEvents">;
+
+export type OnError = MethodType<"onError">;
 
 export type InsightsClient = <MethodName extends keyof InsightsMethodMap>(
   method: MethodName,

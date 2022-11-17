@@ -1,6 +1,6 @@
 import { RequestFnType } from "./utils/request";
 import { InsightsEvent } from './types'
-import { isUndefined } from "./utils";
+import {isFunction, isUndefined} from "./utils";
 
 export function makeSendEvents(requestFn: RequestFnType) {
   return function sendEvents(
@@ -33,10 +33,13 @@ export function makeSendEvents(requestFn: RequestFnType) {
       this._apiKey,
       this._ua,
       this._endpointOrigin,
-      events
+      events,
+      this._onErrorCallback
     );
   };
 }
+
+type OnErrorCallback = (requestEventTarget?: ProgressEvent<XMLHttpRequestEventTarget> | Error) => void;
 
 function sendRequest(
   requestFn: RequestFnType,
@@ -44,10 +47,19 @@ function sendRequest(
   apiKey: string,
   userAgents: string[],
   endpointOrigin: string,
-  events: InsightsEvent[]
+  events: InsightsEvent[],
+  errorCallback?: OnErrorCallback
 ) {
   // Auth query
   const ua = encodeURIComponent(userAgents.join('; '));
   const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${ua}`;
-  return requestFn(reportingURL, { events });
+  return requestFn(reportingURL, { events }, { errorCallback });
+}
+
+export function onError(
+    errCallback?: OnErrorCallback
+): void {
+  if (isFunction(errCallback)) {
+    this._onErrorCallback = errCallback;
+  }
 }

@@ -1,34 +1,44 @@
-export type RequestFnType = (url: string, data: object) => void;
+export type RequestFnType = (
+  url: string,
+  data: object,
+  options?: {
+    errorCallback: (
+      event: ProgressEvent<XMLHttpRequestEventTarget> | Error
+    ) => void;
+  }
+) => void;
 
-export const requestWithSendBeacon: RequestFnType = (url, data) => {
+export const requestWithSendBeacon: RequestFnType = (url, data, options?) => {
   const serializedData = JSON.stringify(data);
   if (!navigator.sendBeacon(url, serializedData)) {
-    return requestWithXMLHttpRequest(url, data);
+    return requestWithXMLHttpRequest(url, data, options);
   }
 };
 
-export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
+export const requestWithXMLHttpRequest: RequestFnType = (
+  url,
+  data,
+  options?
+) => {
   const serializedData = JSON.stringify(data);
   const report = new XMLHttpRequest();
-  report.addEventListener("error", event => {
-    if (event && event.currentTarget) {
-      console.error(
-        "XMLHttpRequest failed to send the request",
-        event.currentTarget
-      );
-    }
-    throw new Error("XMLHttpRequest failed to send the request");
-  });
+  if (options && options.errorCallback) {
+    report.addEventListener("error", options.errorCallback);
+  }
   report.open("POST", url);
   report.setRequestHeader("Content-Type", "application/json");
   report.setRequestHeader("Content-Length", `${serializedData.length}`);
   report.send(serializedData);
 };
 
-export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
+export const requestWithNodeHttpModule: RequestFnType = (
+  url,
+  data,
+  options?
+) => {
   const serializedData = JSON.stringify(data);
   const { protocol, host, path } = require("url").parse(url);
-  const options = {
+  const reqOpts = {
     protocol,
     host,
     path,
@@ -41,10 +51,13 @@ export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
 
   const { request: nodeRequest } =
     url.indexOf("https://") === 0 ? require("https") : require("http");
-  const req = nodeRequest(options);
+  const req = nodeRequest(reqOpts);
 
   req.on("error", error => {
     console.error(error);
+    if (options && options.errorCallback) {
+      options.errorCallback(error);
+    }
   });
 
   req.write(serializedData);
