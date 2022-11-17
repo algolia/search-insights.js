@@ -1,9 +1,11 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlReplaceWebpackPlugin = require('html-replace-webpack-plugin');
-require('dotenv').config();
+import path from "path";
+import webpack from "webpack";
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import HtmlReplaceWebpackPlugin from "html-replace-webpack-plugin";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const isProd = process.env.NODE_ENV === "production";
 const { NODE_ENV, APP_ID, API_KEY, INDEX_NAME } = process.env;
@@ -37,7 +39,9 @@ const replaceHTMLPlugin = new HtmlReplaceWebpackPlugin([
 ]);
 
 const PLUGINS = [
-  new ExtractTextPlugin('[name].[hash].css'),
+  new MiniCssExtractPlugin({
+    filename: `[name].[hash].css`
+  }),
   replaceHTMLPlugin,
   new webpack.DefinePlugin({
     'process.env': {
@@ -48,7 +52,9 @@ const PLUGINS = [
       SCRIPT_SRC: JSON.stringify(SCRIPT_SRC)
     },
   }),
-  new ExtractTextPlugin('[name].css'),
+  new MiniCssExtractPlugin({
+    filename: `[name].css`
+  }),
   new HtmlWebpackPlugin({
     template: path.join(process.cwd(), 'examples/instantsearch/instantsearch.html'),
     filename: "instantsearch.html",
@@ -61,7 +67,7 @@ const exampleEntries = {
   instantsearch: path.join(process.cwd(), 'examples/instantsearch/instantsearchExample.js'),
 }
 
-module.exports = {
+export default {
   entry: exampleEntries,
   output: {
     path: path.resolve(process.cwd(), 'tests/production'),
@@ -87,10 +93,13 @@ module.exports = {
       }
     }, {
       test: /\.scss$/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: ['css-loader?minimize', 'sass-loader']
-      })
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          'css-loader',
+          'sass-loader'
+        ]
     }, {
       test: /\.(eot|svg|ttf|woff|woff2)$/,
       use: 'file-loader'
