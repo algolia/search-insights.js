@@ -203,7 +203,8 @@ describe("sendEvents", () => {
               userToken: "mock-user-id"
             }
           ]
-        }
+        },
+        { errorCallback: undefined }
       );
     });
 
@@ -458,7 +459,8 @@ describe("sendEvents", () => {
               userToken: "mock-user-id"
             }
           ]
-        }
+        },
+        { errorCallback: undefined }
       );
     });
 
@@ -497,7 +499,8 @@ describe("sendEvents", () => {
               userToken: "mock-user-id"
             }
           ]
-        }
+        },
+        { errorCallback: undefined }
       );
     });
   });

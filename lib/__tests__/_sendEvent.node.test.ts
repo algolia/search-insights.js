@@ -28,6 +28,7 @@ describe("_sendEvent in node env", () => {
     const instance = new AlgoliaAnalytics({ requestFn });
     aa = getFunctionalInterface(instance);
     aa("init", credentials);
+    // aa("onError", console.error);
   });
 
   it("does not throw when user token is not set", () => {
@@ -40,17 +41,21 @@ describe("_sendEvent in node env", () => {
       ]);
     }).not.toThrowError();
 
-    expect(requestFn).toHaveBeenCalledWith(defaultRequestUrl, {
-      events: [
-        {
-          eventName: "my-event",
-          eventType: "click",
-          index: "my-index",
-          objectIDs: ["1"],
-          userToken: undefined
-        }
-      ]
-    });
+    expect(requestFn).toHaveBeenCalledWith(
+      defaultRequestUrl,
+      {
+        events: [
+          {
+            eventName: "my-event",
+            eventType: "click",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: undefined
+          }
+        ]
+      },
+      { errorCallback: undefined }
+    );
   });
 
   it("does not throw when user token is included", () => {
@@ -64,16 +69,50 @@ describe("_sendEvent in node env", () => {
       ]);
     }).not.toThrowError();
 
-    expect(requestFn).toHaveBeenCalledWith(defaultRequestUrl, {
-      events: [
+    expect(requestFn).toHaveBeenCalledWith(
+      defaultRequestUrl,
+      {
+        events: [
+          {
+            eventName: "my-event",
+            eventType: "click",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: "aaa"
+          }
+        ]
+      },
+      { errorCallback: undefined }
+    );
+  });
+
+  it("forwards an error callback", () => {
+    const errorCallback = err => {};
+    aa("onError", errorCallback);
+    expect(() => {
+      aa("sendEvents", [
         {
-          eventName: "my-event",
           eventType: "click",
-          index: "my-index",
-          objectIDs: ["1"],
+          ...defaultPayload,
           userToken: "aaa"
         }
-      ]
-    });
+      ]);
+    }).not.toThrowError();
+
+    expect(requestFn).toHaveBeenCalledWith(
+      defaultRequestUrl,
+      {
+        events: [
+          {
+            eventName: "my-event",
+            eventType: "click",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: "aaa"
+          }
+        ]
+      },
+      { errorCallback }
+    );
   });
 });

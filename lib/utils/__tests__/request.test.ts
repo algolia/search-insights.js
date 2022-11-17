@@ -87,6 +87,25 @@ describe("request", () => {
     expect(navigator.sendBeacon).not.toHaveBeenCalled();
     expect(open).toHaveBeenCalledTimes(1);
     expect(setRequestHeader).toHaveBeenCalledTimes(2);
+    expect(addEventListener).not.toHaveBeenCalled();
+    expect(open).toHaveBeenLastCalledWith("POST", url);
+    expect(send).toHaveBeenCalledTimes(1);
+    expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
+    expect(nodeHttpRequest).not.toHaveBeenCalled();
+    expect(nodeHttpsRequest).not.toHaveBeenCalled();
+  });
+
+  it("should handle XMLHttpRequest error with given callback", () => {
+    supportsSendBeacon.mockImplementation(() => false);
+    supportsXMLHttpRequest.mockImplementation(() => true);
+    supportsNodeHttpModule.mockImplementation(() => true);
+    const url = "https://random.url";
+    const data = { foo: "bar" };
+    const request = getRequesterForBrowser();
+    request(url, data, { errorCallback: err => {} });
+    expect(navigator.sendBeacon).not.toHaveBeenCalled();
+    expect(open).toHaveBeenCalledTimes(1);
+    expect(setRequestHeader).toHaveBeenCalledTimes(2);
     expect(addEventListener).toHaveBeenCalledTimes(1);
     expect(open).toHaveBeenLastCalledWith("POST", url);
     expect(send).toHaveBeenCalledTimes(1);
@@ -108,8 +127,8 @@ describe("request", () => {
 
     expect(open).toHaveBeenCalledTimes(1);
     expect(setRequestHeader).toHaveBeenCalledTimes(2);
-    expect(addEventListener).toHaveBeenCalledTimes(1);
     expect(open).toHaveBeenLastCalledWith("POST", url);
+    expect(addEventListener).not.toHaveBeenCalled();
     expect(send).toHaveBeenCalledTimes(1);
     expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
     expect(nodeHttpRequest).not.toHaveBeenCalled();
