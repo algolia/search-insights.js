@@ -121,6 +121,9 @@ describe("sendEvents", () => {
 
       expect(onError).toHaveBeenCalledTimes(1);
       expect(onError).toHaveBeenCalledWith("Mocked request failure");
+
+      XMLHttpRequest.send.mockRestore();
+      XMLHttpRequest.addEventListener.mockRestore();
     });
   });
 
