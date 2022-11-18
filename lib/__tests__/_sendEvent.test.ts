@@ -25,13 +25,18 @@ describe("sendEvents", () => {
   beforeEach(() => {
     XMLHttpRequest = {
       open: jest.spyOn((window as any).XMLHttpRequest.prototype, "open"),
-      send: jest.spyOn((window as any).XMLHttpRequest.prototype, "send")
+      send: jest.spyOn((window as any).XMLHttpRequest.prototype, "send"),
+      addEventListener: jest.spyOn(
+        (window as any).XMLHttpRequest.prototype,
+        "addEventListener"
+      )
     };
   });
 
   afterEach(() => {
     XMLHttpRequest.open.mockClear();
     XMLHttpRequest.send.mockClear();
+    XMLHttpRequest.addEventListener.mockClear();
   });
 
   describe("with XMLHttpRequest", () => {
@@ -94,6 +99,28 @@ describe("sendEvents", () => {
         "X-Algolia-Agent": "insights-js (1.0.1); insights-js-node-cjs (1.0.1)",
         "X-Algolia-Application-Id": "testId"
       });
+    });
+
+    it("should have its error handled", () => {
+      const onError = jest.fn();
+
+      // Mock addEventListener, so we can control how the error event being called can be checked
+      XMLHttpRequest.addEventListener.mockImplementation(
+        (eventName, callback) => {
+          XMLHttpRequest[eventName] = callback;
+        }
+      );
+
+      // Mock send method, so we can simulate a request failure
+      XMLHttpRequest.send.mockImplementation(() => {
+        XMLHttpRequest["error"]("Mocked request failure");
+      });
+
+      (analyticsInstance as any).onError(onError);
+      (analyticsInstance as any).sendEvents([]);
+
+      expect(onError).toHaveBeenCalledTimes(1);
+      expect(onError).toHaveBeenCalledWith("Mocked request failure");
     });
   });
 

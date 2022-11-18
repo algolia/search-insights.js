@@ -1,6 +1,6 @@
 import { RequestFnType } from "./utils/request";
 import { InsightsEvent } from './types'
-import {isFunction, isUndefined} from "./utils";
+import { isFunction, isUndefined } from "./utils";
 
 export function makeSendEvents(requestFn: RequestFnType) {
   return function sendEvents(

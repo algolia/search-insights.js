@@ -28,7 +28,6 @@ describe("_sendEvent in node env", () => {
     const instance = new AlgoliaAnalytics({ requestFn });
     aa = getFunctionalInterface(instance);
     aa("init", credentials);
-    // aa("onError", console.error);
   });
 
   it("does not throw when user token is not set", () => {

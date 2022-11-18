@@ -432,7 +432,6 @@ You can set an error callback which will be called whenever an error happens dur
 ```js
 aa('onError', (event) => {
     console.error(event);
-    throw new Error("Oops!");
 });
 ```
 
