@@ -12,7 +12,7 @@
     "https": "./empty-module.cjs.js"
   },
   "engines": {
-    "node": ">=8.16.0"
+    "node": "^14.21.1 || ^16.16.0 || >=18.0.0"
   },
   "files": [
     "dist",
