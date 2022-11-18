@@ -2,9 +2,8 @@
  * @jest-environment node
  */
 import AlgoliaAnalytics from "../insights";
-import { getRequesterForNode } from "../utils/getRequesterForNode";
 import { getFunctionalInterface } from "../_getFunctionalInterface";
-import { setUserToken } from "../_tokenUtils";
+// @ts-ignore
 import { version } from "../../package.json";
 
 const credentials = {
@@ -40,17 +39,21 @@ describe("_sendEvent in node env", () => {
       ]);
     }).not.toThrowError();
 
-    expect(requestFn).toHaveBeenCalledWith(defaultRequestUrl, {
-      events: [
-        {
-          eventName: "my-event",
-          eventType: "click",
-          index: "my-index",
-          objectIDs: ["1"],
-          userToken: undefined
-        }
-      ]
-    });
+    expect(requestFn).toHaveBeenCalledWith(
+      defaultRequestUrl,
+      {
+        events: [
+          {
+            eventName: "my-event",
+            eventType: "click",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: undefined
+          }
+        ]
+      },
+      { errorCallback: undefined }
+    );
   });
 
   it("does not throw when user token is included", () => {
@@ -64,16 +67,20 @@ describe("_sendEvent in node env", () => {
       ]);
     }).not.toThrowError();
 
-    expect(requestFn).toHaveBeenCalledWith(defaultRequestUrl, {
-      events: [
-        {
-          eventName: "my-event",
-          eventType: "click",
-          index: "my-index",
-          objectIDs: ["1"],
-          userToken: "aaa"
-        }
-      ]
-    });
+    expect(requestFn).toHaveBeenCalledWith(
+      defaultRequestUrl,
+      {
+        events: [
+          {
+            eventName: "my-event",
+            eventType: "click",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: "aaa"
+          }
+        ]
+      },
+      { errorCallback: undefined }
+    );
   });
 });

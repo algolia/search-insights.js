@@ -53,7 +53,7 @@ export const requestWithNodeHttpModule: RequestFnType = (
     url.indexOf("https://") === 0 ? require("https") : require("http");
   const req = nodeRequest(reqOpts);
 
-  req.on("error", error => {
+  req.on("error", (error) => {
     console.error(error);
     if (options && options.errorCallback) {
       options.errorCallback(error);

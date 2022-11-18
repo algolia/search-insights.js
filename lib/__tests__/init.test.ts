@@ -1,5 +1,15 @@
+// @ts-ignore
+import { supportsCookies } from "../utils";
+
+const supportsCookiesMock = jest.fn();
+
+jest.mock("../utils", () => ({
+  ...jest.requireActual("../utils"),
+  supportsCookies: supportsCookiesMock,
+  __esModule: true
+}));
+
 import AlgoliaAnalytics from "../insights";
-import * as utils from "../utils";
 import { getCookie } from "../_tokenUtils";
 
 describe("init", () => {
@@ -81,7 +91,7 @@ describe("init", () => {
   });
   it.each(["not a string", 0.002, NaN])(
     "should throw if cookieDuration passed but is not an integer (eg. %s)",
-    cookieDuration => {
+    (cookieDuration) => {
       expect(() => {
         (analyticsInstance as any).init({
           cookieDuration,
@@ -120,9 +130,7 @@ describe("init", () => {
     );
   });
   it("should set anonymous userToken if environment supports cookies", () => {
-    const supportsCookies = jest
-      .spyOn(utils, "supportsCookies")
-      .mockReturnValue(true);
+    supportsCookiesMock.mockReturnValue(true);
     const setAnonymousUserToken = jest.spyOn(
       analyticsInstance,
       "setAnonymousUserToken"
@@ -137,24 +145,20 @@ describe("init", () => {
     expect(setAnonymousUserToken).toHaveBeenCalledTimes(1);
 
     setAnonymousUserToken.mockRestore();
-    supportsCookies.mockRestore();
+    supportsCookiesMock.mockRestore();
   });
   it("should not set anonymous userToken if environment does not supports cookies", () => {
-    const supportsCookies = jest
-      .spyOn(utils, "supportsCookies")
-      .mockReturnValue(false);
+    supportsCookiesMock.mockReturnValue(false);
     const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
 
     analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
     expect(setUserToken).not.toHaveBeenCalled();
 
     setUserToken.mockRestore();
-    supportsCookies.mockRestore();
+    supportsCookiesMock.mockRestore();
   });
   it("should not set anonymous userToken if useCookie is false", () => {
-    const supportsCookies = jest
-      .spyOn(utils, "supportsCookies")
-      .mockReturnValue(true);
+    supportsCookiesMock.mockReturnValue(true);
     const setAnonymousUserToken = jest.spyOn(
       analyticsInstance,
       "setAnonymousUserToken"
@@ -169,9 +173,10 @@ describe("init", () => {
     expect(setAnonymousUserToken).not.toHaveBeenCalled();
 
     setAnonymousUserToken.mockRestore();
-    supportsCookies.mockRestore();
+    supportsCookiesMock.mockRestore();
   });
-  it("should not set anonymous userToken if a token is already set", () => {
+  it("should not set anonymous userToken if a token is already set", async () => {
+    supportsCookiesMock.mockReturnValue(true);
     const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
     analyticsInstance.init({
       apiKey: "***",
@@ -194,14 +199,13 @@ describe("init", () => {
     expect(setUserToken).toHaveBeenCalledTimes(2);
 
     setUserToken.mockRestore();
+    supportsCookiesMock.mockRestore();
   });
 
   describe("callback for userToken", () => {
     describe("immediate: true", () => {
       it("should trigger callback when userToken is set with cookie support", () => {
-        const supportsCookies = jest
-          .spyOn(utils, "supportsCookies")
-          .mockReturnValue(true);
+        supportsCookiesMock.mockReturnValue(true);
 
         analyticsInstance.init({
           apiKey: "***",
@@ -219,13 +223,11 @@ describe("init", () => {
 
         analyticsInstance.setUserToken("abc");
         expect(callback).toHaveBeenCalledWith("abc"); // explicit user token
-        supportsCookies.mockRestore();
+        supportsCookiesMock.mockRestore();
       });
 
       it("should trigger callback when userToken is set without cookie support", () => {
-        const supportsCookies = jest
-          .spyOn(utils, "supportsCookies")
-          .mockReturnValue(false);
+        supportsCookiesMock.mockReturnValue(false);
 
         analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
         const callback = jest.fn();
@@ -236,7 +238,7 @@ describe("init", () => {
         analyticsInstance.setUserToken("abc");
         expect(callback).toHaveBeenCalledWith("abc");
         expect(callback).toHaveBeenCalledTimes(2);
-        supportsCookies.mockRestore();
+        supportsCookiesMock.mockRestore();
       });
     });
 
@@ -255,6 +257,7 @@ describe("init", () => {
       });
 
       it("is triggered by setAnonymousUserToken", () => {
+        supportsCookiesMock.mockReturnValue(true);
         analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "de" });
 
         const callback = jest.fn();
@@ -266,6 +269,7 @@ describe("init", () => {
           expect.stringMatching(/^anonymous-[-\w]+$/)
         );
         expect(callback).toHaveBeenCalledTimes(1);
+        supportsCookiesMock.mockRestore();
       });
     });
 
@@ -330,7 +334,7 @@ describe("init", () => {
       expect(setAnonymousUserToken).not.toHaveBeenCalled();
     });
 
-    it("can set userToken manually afterwards", done => {
+    it("can set userToken manually afterwards", (done) => {
       analyticsInstance.init({ apiKey: "***", appId: "XXX", userToken: "abc" });
       analyticsInstance.setUserToken("def");
       expect(setUserToken).toHaveBeenCalledTimes(2);

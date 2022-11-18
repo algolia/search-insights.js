@@ -1,11 +1,15 @@
-import { getCookie } from "../_tokenUtils";
-import AlgoliaAnalytics from "../insights";
+// @ts-ignore
 import { createUUID } from "../utils/uuid";
-import * as utils from "../utils";
+
+const createUUIDMock = jest.fn();
 
 jest.mock("../utils/uuid", () => ({
-  createUUID: jest.fn()
+  createUUID: createUUIDMock,
+  __esModule: true
 }));
+
+import { getCookie } from "../_tokenUtils";
+import AlgoliaAnalytics from "../insights";
 
 const credentials = {
   apiKey: "test",
@@ -24,8 +28,8 @@ describe("tokenUtils", () => {
       requestFn: () => {}
     });
     analyticsInstance.init(credentials);
-    createUUID.mockReset();
-    createUUID
+    createUUIDMock.mockReset();
+    createUUIDMock
       .mockReturnValueOnce("mock-uuid-1")
       .mockReturnValueOnce("mock-uuid-2")
       .mockReturnValue("mock-uuid-2+");
