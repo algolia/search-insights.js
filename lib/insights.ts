@@ -117,8 +117,6 @@ class AlgoliaAnalytics {
 
     this.getVersion = getVersion.bind(this);
 
-    console.log("instanced");
-
     window.addEventListener(
       "message",
       event => {
