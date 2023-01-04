@@ -12,7 +12,4 @@ export {
 };
 export * from "./types";
 
-const aa = createInsightsClient(getRequesterForBrowser());
-// @ts-ignore
-window._test = aa;
-export default aa;
+export default createInsightsClient(getRequesterForBrowser());
