@@ -117,15 +117,28 @@ class AlgoliaAnalytics {
 
     this.getVersion = getVersion.bind(this);
 
+    window._test = this
+
     window.addEventListener(
       "message",
       event => {
-        if (
-          event.data &&
-          (event.data.package === "search-insights" &&
-            event.data.action === "get:version")
-        ) {
-          window.postMessage({ action: "post:version", payload: version }, "/");
+        if (event.data && event.data.package === "search-insights") {
+          switch (event.data.action) {
+            case "get:version":
+              window.postMessage(
+                { action: "post:version", payload: version },
+                "/"
+              );
+              break;
+
+            case "get:instance":
+              window.postMessage(
+                { action: "post:instance", payload: this },
+                "/",
+                [this]
+              );
+              break;
+          }
         }
       },
       false
