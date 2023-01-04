@@ -117,9 +117,6 @@ class AlgoliaAnalytics {
 
     this.getVersion = getVersion.bind(this);
 
-    // @ts-ignore
-    window._test = this;
-
     window.addEventListener(
       "message",
       event => {
