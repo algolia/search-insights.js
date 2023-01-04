@@ -117,7 +117,7 @@ class AlgoliaAnalytics {
 
     this.getVersion = getVersion.bind(this);
 
-    window._test = this
+    window._test = this;
 
     window.addEventListener(
       "message",
@@ -134,8 +134,7 @@ class AlgoliaAnalytics {
             case "get:instance":
               window.postMessage(
                 { action: "post:instance", payload: this },
-                "/",
-                [this]
+                "/"
               );
               break;
           }
