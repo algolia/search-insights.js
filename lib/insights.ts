@@ -125,9 +125,9 @@ class AlgoliaAnalytics {
         if (
           event.data &&
           (event.data.package === "search-insights" &&
-            event.data.action === "version")
+            event.data.action === "get:version")
         ) {
-          window.postMessage(version, "/");
+          window.postMessage({ action: "post:version", payload: version }, "/");
         }
       },
       false
