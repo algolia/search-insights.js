@@ -123,9 +123,9 @@ class AlgoliaAnalytics {
         if (
           event.data &&
           (event.data.package === "search-insights" &&
-            event.data.action === "instance")
+            event.data.action === "version")
         ) {
-          window.postMessage(this, "/");
+          window.postMessage(version, "/");
         }
       },
       false
