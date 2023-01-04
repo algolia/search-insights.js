@@ -116,6 +116,20 @@ class AlgoliaAnalytics {
     this.viewedFilters = viewedFilters.bind(this);
 
     this.getVersion = getVersion.bind(this);
+
+    window.addEventListener(
+      "message",
+      event => {
+        if (
+          event.data &&
+          (event.data.package === "search-insights" &&
+            event.data.action === "instance")
+        ) {
+          window.postMessage(this, "/");
+        }
+      },
+      false
+    );
   }
 }
 
