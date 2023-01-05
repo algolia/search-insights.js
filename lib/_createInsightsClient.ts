@@ -7,7 +7,6 @@ export function createInsightsClient(requestFn: RequestFnType) {
     new AlgoliaAnalytics({ requestFn })
   );
   if (typeof window !== "undefined") {
-    // @ts-ignore
     window.aaInterface = aaInterface;
   }
   return aaInterface;
