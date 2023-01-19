@@ -62,6 +62,16 @@ export function init(options: InitParams) {
 You can visit https://algolia.com/events/debugger instead.`);
   }
 
+  const setCookieDuration = () => {
+    if (options.cookieDuration) {
+      return options.cookieDuration;
+    } else if (!options.userToken && !this._userHasOptedOut && this._useCookie) {
+      return HOUR;
+    } else {
+      return MONTH;
+    }
+  }
+
   this._apiKey = options.apiKey;
   this._appId = options.appId;
   this._userHasOptedOut = !!options.userHasOptedOut;
@@ -70,11 +80,7 @@ You can visit https://algolia.com/events/debugger instead.`);
     ? `https://insights.${options.region}.algolia.io`
     : "https://insights.algolia.io";
   this._useCookie = options.useCookie ?? true;
-  this._cookieDuration = options.cookieDuration
-    ? options.cookieDuration
-    : !options.userToken && !this._userHasOptedOut && this._useCookie
-    ? HOUR
-    : MONTH;
+  this._cookieDuration = setCookieDuration();
   // Set hasCredentials
   this._hasCredentials = true;
 
