@@ -90,18 +90,18 @@ describe("tokenUtils", () => {
     describe("getCookie", () => {
       it("should return '' _ALGOLIA cookie when not available", () => {
         document.cookie = `_ALGOLIA=value;expires=${DATE_YESTERDAY};path=/`;
-        expect(getCookie("_ALGOLIA")).toEqual("");
+        expect(getCookie("_ALGOLIA", 60 * 60 * 1000)).toEqual("");
       });
       it("should get _ALGOLIA cookie when available", () => {
         document.cookie = `_ALGOLIA=value;expires=${DATE_TOMORROW};path=/`;
 
-        expect(getCookie("_ALGOLIA")).toEqual("value");
+        expect(getCookie("_ALGOLIA", 60 * 60 * 1000)).toEqual("value");
       });
       it("should not care about other cookie if malformed", () => {
         document.cookie = `_ALGOLIA=value;expires=${DATE_TOMORROW};path=/`;
         document.cookie = `BAD_COOKIE=val%ue;expires=${DATE_TOMORROW};path=/`;
 
-        expect(getCookie("_ALGOLIA")).toEqual("value");
+        expect(getCookie("_ALGOLIA", 60 * 60 * 1000)).toEqual("value");
       });
     });
   });

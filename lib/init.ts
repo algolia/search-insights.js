@@ -4,6 +4,7 @@ import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
 type InsightRegion = "de" | "us";
 const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
 const MONTH = 30 * 24 * 60 * 60 * 1000;
+const HOUR = 60 * 60 * 1000;
 
 export interface InitParams {
   apiKey: string;
@@ -68,10 +69,12 @@ You can visit https://algolia.com/events/debugger instead.`);
   this._endpointOrigin = options.region
     ? `https://insights.${options.region}.algolia.io`
     : "https://insights.algolia.io";
-  this._useCookie = options.useCookie ?? false;
+  this._useCookie = options.useCookie ?? true;
   this._cookieDuration = options.cookieDuration
     ? options.cookieDuration
-    : 6 * MONTH;
+    : !options.userToken && !this._userHasOptedOut && this._useCookie
+    ? HOUR
+    : MONTH;
   // Set hasCredentials
   this._hasCredentials = true;
 

@@ -3,14 +3,19 @@ import { isFunction, supportsCookies } from "./utils";
 
 const COOKIE_KEY = "_ALGOLIA";
 
-const setCookie = (name: string, value: number | string, duration: number) => {
+const getExpiry = (duration: number) => {
   const d = new Date();
   d.setTime(d.getTime() + duration);
-  const expires = `expires=${d.toUTCString()}`;
-  document.cookie = `${name}=${value};${expires};path=/`;
+  return d;
 };
 
-export const getCookie = (name: string): string => {
+const setCookie = (name: string, value: number | string, duration: number) => {
+  const expires = `expires=${getExpiry(duration).toUTCString()}`;
+  document.cookie = `${name}=${value};${expires};path=/`;
+  return value.toString();
+};
+
+export const getCookie = (name: string, duration: number): string => {
   const prefix = `${name}=`;
   const ca = document.cookie.split(";");
   for (let i = 0; i < ca.length; i++) {
@@ -19,7 +24,7 @@ export const getCookie = (name: string): string => {
       c = c.substring(1);
     }
     if (c.indexOf(prefix) === 0) {
-      return c.substring(prefix.length, c.length);
+      return setCookie(name, c.substring(prefix.length), duration);
     }
   }
   return "";
@@ -29,7 +34,7 @@ export function setAnonymousUserToken(): void {
   if (!supportsCookies()) {
     return;
   }
-  const foundToken = getCookie(COOKIE_KEY);
+  const foundToken = getCookie(COOKIE_KEY, this._cookieDuration);
   if (
     !foundToken ||
     foundToken === "" ||

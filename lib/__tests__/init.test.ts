@@ -72,12 +72,15 @@ describe("init", () => {
       userHasOptedOut: true
     });
     expect(analyticsInstance._userToken).toBeUndefined();
-    expect(getCookie("_ALGOLIA")).toBe("");
+    expect(getCookie("_ALGOLIA", 60 * 60 * 1000)).toBe("");
   });
-  it("should use 6 months cookieDuration by default", () => {
+  it("should use 1hr cookieDuration by default", () => {
     analyticsInstance.init({ apiKey: "***", appId: "XXX" });
-    const month = 30 * 24 * 60 * 60 * 1000;
-    expect(analyticsInstance._cookieDuration).toBe(6 * month);
+    expect(analyticsInstance._cookieDuration).toBe(60 * 60 * 1000);
+  });
+  it("should use 1month cookieDuration by default if userToken provided", () => {
+    analyticsInstance.init({ apiKey: "***", appId: "XXX", userToken: "abc" });
+    expect(analyticsInstance._cookieDuration).toBe(30 * 24 * 60 * 60 * 1000);
   });
   it.each(["not a string", 0.002, NaN])(
     "should throw if cookieDuration passed but is not an integer (eg. %s)",
@@ -131,8 +134,7 @@ describe("init", () => {
     analyticsInstance.init({
       apiKey: "***",
       appId: "XXX",
-      region: "de",
-      useCookie: true
+      region: "de"
     });
     expect(setAnonymousUserToken).toHaveBeenCalledTimes(1);
 
@@ -175,8 +177,7 @@ describe("init", () => {
     const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
     analyticsInstance.init({
       apiKey: "***",
-      appId: "XXX",
-      useCookie: true
+      appId: "XXX"
     });
     expect(setUserToken).toHaveBeenCalledTimes(1);
     expect(setUserToken).toHaveBeenCalledWith(
@@ -206,8 +207,7 @@ describe("init", () => {
         analyticsInstance.init({
           apiKey: "***",
           appId: "XXX",
-          region: "de",
-          useCookie: true
+          region: "de"
         });
         // Because cookie is enabled, anonymous token must be generated already.
         expect(analyticsInstance._userToken).toBeTruthy();
@@ -321,8 +321,7 @@ describe("init", () => {
       analyticsInstance.init({
         apiKey: "***",
         appId: "XXX",
-        userToken: "abc",
-        useCookie: true
+        userToken: "abc"
       });
       expect(setUserToken).toHaveBeenCalledTimes(1);
       expect(setUserToken).toHaveBeenCalledWith("abc");
