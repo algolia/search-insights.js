@@ -4,6 +4,25 @@ type BufferedMethodCall = [string, unknown];
 
 type SnippetAlgoliaInsights = Array<BufferedMethodCall>;
 
+type ObjectIDsAfterSearchEvent = {
+  eventName: string;
+  index: string;
+  queryID: string;
+  objectIDs: string[];
+}
+
+type ObjectIDsEvent = {
+  eventName: string;
+  index: string;
+  objectIDs: string[];
+}
+
+type FiltersEvent = {
+  eventName: string;
+  index: string;
+  filters: string[];
+}
+
 function flush(insights: SnippetAlgoliaInsights) {
   if (!Array.isArray(insights)) return [];
   const buffered = insights.splice(0, insights.length);
@@ -77,17 +96,60 @@ class AlgoliaInsights {
         ...event,
     })
   }
-
-  public clickedObjectIDsAfterSearch(event: {
-    eventName: string,
-    index: string;
-    queryID: string;
-    objectIDs: string[];
-    positions: number[];
-  }) {
+  
+  public clickedObjectIDsAfterSearch(event: ObjectIDsAfterSearchEvent & { positions: number[] }) {
     this.sendEvent({
         eventType: "click",
         ...event,
+    })
+  }
+
+  public clickedObjectIDs(event: ObjectIDsEvent) {
+    this.sendEvent({
+      eventType: "click",
+      ...event,
+    })
+  }
+
+  public clickedFilters(event: FiltersEvent) {
+    this.sendEvent({
+      eventType: "click",
+      ...event,
+    })
+  }
+
+  public convertedObjectIDsAfterSearch(event: ObjectIDsAfterSearchEvent) {
+    this.sendEvent({
+      eventType: "conversion",
+      ...event
+    });
+  }
+
+  public convertedObjectIDs(event: ObjectIDsEvent) {
+    this.sendEvent({
+      eventType: "conversion",
+      ...event
+    });
+  }
+  
+  public convertedFilters(event: FiltersEvent) {
+    this.sendEvent({
+      eventType: "conversion",
+      ...event
+    });
+  }
+  
+  public viewedObjectIDs(event: ObjectIDsEvent) {
+    this.sendEvent({
+      eventType: "view",
+      ...event,
+    })
+  }
+  
+  public viewedFilters(event: FiltersEvent) {
+    this.sendEvent({
+      eventType: "view",
+      ...event,
     })
   }
 }
