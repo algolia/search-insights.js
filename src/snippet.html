@@ -1,0 +1,61 @@
+<script async src="https://cdn.wathver/search-inisghts.js"></script>
+<script>
+  (function () {
+	var insights = (window.insights = window.insights || []);
+	if (insights.initalized) {
+	  return;
+	}
+	if (insights.invoked) {
+	  if (window.console && console.error) {
+		console.error("Algolia insights snippet included twice.");
+	  }
+	  return;
+	}
+
+	insights.invoked = true;
+	insights.methods = [
+		"init",
+
+		"sendEvent",
+		"setUserToken",
+
+		"clickedObjectIDsAfterSearch",
+		"clickedObjectIDs",
+		"clickedFilters",
+
+		"convertedObjectIDsAfterSearch",
+		"convertedObjectIDs",
+		"convertedFilters",
+
+		"viewedObjectIDs",
+		"viewedFilters",
+	];
+
+	// Define a factory to create stubs. These are placeholders
+	// for methods in insights.js so that you never have to wait
+	// for it to load to actually record data. The `method` is
+	// stored as the first argument, so we can replay the data.
+	insights.factory = function (method) {
+	  return function () {
+		var args = Array.prototype.slice.call(arguments);
+		args.unshift(method);
+		insights.push(args);
+		return insights;
+	  };
+	};
+	// For each of our methods, generate a queueing stub.
+	for (var i = 0; i < insights.methods.length; i++) {
+	  var key = insights.methods[i];
+	  insights[key] = insights.factory(key);
+	}
+
+	insights.init({
+		applicationId: "test123",
+		apiKey: "test123",
+
+		// region: "us",
+		// anonmoyousId: { enabled: true, lease: 60 },
+		// userToken: { cookie: true, lease: 1440 }
+	})
+  })();
+</script>
