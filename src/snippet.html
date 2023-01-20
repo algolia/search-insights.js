@@ -1,4 +1,3 @@
-<script async src="https://cdn.wathver/search-inisghts.js"></script>
 <script>
   (function () {
 	var insights = (window.insights = window.insights || []);
@@ -15,9 +14,11 @@
 	insights.invoked = true;
 	insights.methods = [
 		"init",
+		"on",
 
-		"sendEvent",
 		"setUserToken",
+
+		"sendEvents",
 
 		"clickedObjectIDsAfterSearch",
 		"clickedObjectIDs",
@@ -48,6 +49,22 @@
 	  var key = insights.methods[i];
 	  insights[key] = insights.factory(key);
 	}
+
+	insights.load = function(version) {
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.async = true;
+		var cdnPath = "https://cdn.jsdelivr.net/npm/search-insights"
+		if (version) {
+			cdnPath += "@" + version
+		}
+		script.src = cdnPath
+
+		// Insert our script next to the first script element.
+		var first = document.getElementsByTagName("script")[0];
+		first.parentNode.insertBefore(script, first);
+	}
+	insights.load()
 
 	insights.init({
 		applicationId: "test123",

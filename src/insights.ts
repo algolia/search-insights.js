@@ -1,4 +1,6 @@
+import { EventEmitter, EventEmitterCallback } from "./eventEmitter";
 import { InsightsApiBeaconClient, InsightsApiEvent } from "./insightsAPIBeaconClient";
+import { UserToken, UserTokenOptions } from "./userToken";
 
 type BufferedMethodCall = [string, unknown];
 
@@ -34,6 +36,7 @@ class AlgoliaInsights {
   [k: string]: any;
 
   private beacon?: InsightsApiBeaconClient;
+  private emitter = new EventEmitter();
 
   constructor(insights: SnippetAlgoliaInsights | AlgoliaInsights) {
     if ("initalized" in insights && insights.initalized) {
@@ -56,20 +59,31 @@ class AlgoliaInsights {
     });
   }
 
-  public init({applicationId, apiKey, region}) {
+  public init(opts: {applicationId: string, apiKey: string, region?: "us" | "de" } & UserTokenOptions) {
+    this.userToken = new UserToken({anonmyousId: opts.anonmyousId, userToken: opts.userToken})
+
     this.beacon = new InsightsApiBeaconClient({
-        applicationId,
-        apiKey,
-        region,
+        applicationId: opts.applicationId,
+        apiKey: opts.apiKey,
+        region: opts.region,
     });
 
     // Flush and purge any existing events sitting in localStorage.
     this.beacon.flushAndPurgeEvents()
   }
 
-  private userToken?: string;
+  private userToken: UserToken;
   public setUserToken(userToken) {
-    this.userToken = userToken;
+    this.userToken.setUserToken(userToken)
+    this.emitter.emit("userToken:changed", userToken)
+  }
+
+  public on(type: string, handler: EventEmitterCallback) {
+    this.emitter.on(type, handler)
+  }
+
+  private addAlgoliaAgent(agent: string) {
+    this.beacon?.addAlgoliaAgent(agent)
   }
 
   public sendEvents(events: Array<Omit<InsightsApiEvent, "userToken" | "timestamp">>) {
@@ -91,12 +105,12 @@ class AlgoliaInsights {
 
     this.beacon.send({
         timestamp: Date.now(),
-        userToken: this.userToken,
+        userToken: this.userToken.getUserToken(),
 
         ...event,
     })
   }
-  
+
   public clickedObjectIDsAfterSearch(event: ObjectIDsAfterSearchEvent & { positions: number[] }) {
     this.sendEvent({
         eventType: "click",
@@ -131,21 +145,21 @@ class AlgoliaInsights {
       ...event
     });
   }
-  
+
   public convertedFilters(event: FiltersEvent) {
     this.sendEvent({
       eventType: "conversion",
       ...event
     });
   }
-  
+
   public viewedObjectIDs(event: ObjectIDsEvent) {
     this.sendEvent({
       eventType: "view",
       ...event,
     })
   }
-  
+
   public viewedFilters(event: FiltersEvent) {
     this.sendEvent({
       eventType: "view",

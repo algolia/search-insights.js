@@ -52,13 +52,18 @@ export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
     return "https://insights.algolia.io"
   }
 
+  private algoliaAgents = {
+    [`search-insights.js (${process.env.__VERSION__ || process.env.NODE_ENV})`]: null
+  }
+  addAlgoliaAgent(agent: string) {
+    this.algoliaAgents[agent] = null
+  }
+
   private headers() {
     return {
       "X-Algolia-Application-Id": this.applicationId,
       "X-Algolia-API-Key": this.apiKey,
-      "X-Algolia-Agent": `search-insights.js (${
-        process.env.__VERSION__ || process.env.NODE_ENV
-      })`,
+      "X-Algolia-Agent": Object.keys(this.algoliaAgents).join(" "),
     };
   }
 }
