@@ -26,7 +26,7 @@
   "scripts": {
     "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js && tsc --build tsconfig.declaration.json",
     "build:dev": "rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
-    "build:examples": "webpack --config config/webpack.config.js --color --progress",
+    "build:examples": "NODE_OPTIONS=--openssl-legacy-provider webpack --config config/webpack.config.js --color --progress",
     "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
     "lint": "tslint ./lib/**/*.ts",
     "lint:fix": "yarn lint -- --fix",
@@ -54,6 +54,7 @@
     "@types/jsdom": "^20.0.1",
     "algoliasearch": "^4.14.2",
     "algoliasearch-helper": "^3.11.1",
+    "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "body-parser": "^1.20.1",
