@@ -4,9 +4,8 @@ orbs:
 
 jobs:
   "build and size":
-    executor:
-      name: node/default
-      tag: 'lts'
+    working_directory: ~/search-insights
+    executor: node/default
     steps:
       - checkout
       - node/install-packages:
@@ -20,9 +19,8 @@ jobs:
             yarn run test:size
 
   lint:
-    executor:
-      name: node/default
-      tag: 'lts'
+    working_directory: ~/search-insights
+    executor: node/default
     steps:
       - checkout
       - node/install-packages:
@@ -37,9 +35,8 @@ jobs:
           command: yarn run type-check
 
   "unit tests":
-    executor:
-      name: node/default
-      tag: 'lts'
+    working_directory: ~/search-insights
+    executor: node/default
     steps:
       - checkout
       - node/install-packages:
@@ -51,9 +48,8 @@ jobs:
           command: yarn run test
 
   "release if needed":
-    executor:
-      name: node/default
-      tag: 'lts'
+    working_directory: ~/search-insights
+    executor: node/default
     steps:
       - checkout
       - node/install-packages:
@@ -65,9 +61,8 @@ jobs:
           command: yarn shipjs trigger
 
   "prepare release":
-    executor:
-      name: node/default
-      tag: 'lts'
+    working_directory: ~/search-insights
+    executor: node/default
     steps:
       - checkout
       - node/install-packages:
