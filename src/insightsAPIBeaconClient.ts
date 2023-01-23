@@ -26,12 +26,9 @@ export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
   apiKey: string;
   region?: "us" | "de";
 
-  constructor(
-    opts: InsightsApiBeaconClientOptions,
-  ) {
+  constructor(opts: InsightsApiBeaconClientOptions) {
     super();
 
-    // this.device = device;
     this.applicationId = opts.applicationId;
     this.apiKey = opts.apiKey;
     this.region = opts.region;
@@ -41,29 +38,30 @@ export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
     return fetch(this.endpoint() + "/1/events", {
       method: "POST",
       headers: this.headers(),
-      body: JSON.stringify({ events: [event] }),
+      body: JSON.stringify({ events: [event] })
     });
   }
 
   private endpoint() {
     if (this.region) {
-      return `https://insights.${this.region}.algolia.io`
+      return `https://insights.${this.region}.algolia.io`;
     }
-    return "https://insights.algolia.io"
+    return "https://insights.algolia.io";
   }
 
   private algoliaAgents = {
-    [`search-insights.js (${process.env.__VERSION__ || process.env.NODE_ENV})`]: null
-  }
+    [`search-insights.js (${process.env.__VERSION__ || process.env.NODE_ENV})`]:
+      null
+  };
   addAlgoliaAgent(agent: string) {
-    this.algoliaAgents[agent] = null
+    this.algoliaAgents[agent] = null;
   }
 
   private headers() {
     return {
       "X-Algolia-Application-Id": this.applicationId,
       "X-Algolia-API-Key": this.apiKey,
-      "X-Algolia-Agent": Object.keys(this.algoliaAgents).join(" "),
+      "X-Algolia-Agent": Object.keys(this.algoliaAgents).join(" ")
     };
   }
 }
