@@ -111,9 +111,14 @@ class AlgoliaInsights {
       );
     }
 
+    const userToken = this.userToken.getUserToken();
+    if (!userToken) {
+      throw new Error("userToken required to send event");
+    }
+
     this.beacon.send({
+      userToken,
       timestamp: Date.now(),
-      userToken: this.userToken.getUserToken() ?? "",
 
       ...event
     });
