@@ -73,7 +73,7 @@ and if the configuration has cookie storage enabled, store the userToken in a co
 */
 
 export const USER_TOKEN_KEY = "alg:userToken";
-export const ANONMYOUS_ID_KEY = "alg:anonmyousId";
+export const ANONYMOUS_ID_KEY = "alg:anonymousId";
 
 export class UserToken {
   private anonmyousIdStore?: ExpiringCookieStore;
@@ -93,7 +93,7 @@ export class UserToken {
 
   setUserToken(userToken: string) {
     this.userTokenStore.write(USER_TOKEN_KEY, userToken);
-    this.anonmyousIdStore?.delete(ANONMYOUS_ID_KEY);
+    this.anonmyousIdStore?.delete(ANONYMOUS_ID_KEY);
   }
 
   getUserToken() {
@@ -110,13 +110,13 @@ export class UserToken {
       return undefined;
     }
 
-    const id = this.anonmyousIdStore?.read(ANONMYOUS_ID_KEY);
+    const id = this.anonmyousIdStore?.read(ANONYMOUS_ID_KEY);
     if (id) {
       return id;
     }
 
     return this.anonmyousIdStore?.write(
-      ANONMYOUS_ID_KEY,
+      ANONYMOUS_ID_KEY,
       `anon-${this.uuid()}`
     );
   }
