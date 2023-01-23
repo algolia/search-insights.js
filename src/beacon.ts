@@ -14,7 +14,7 @@ type BeaconEvent<Event> = {
 };
 
 export class Beacon<Event> {
-  private events: Array<BeaconEvent<Event>>;
+  private events: BeaconEvent<Event>[];
   private STORAGE_KEY: string;
 
   constructor(storageKey?: string) {
@@ -24,9 +24,9 @@ export class Beacon<Event> {
 
   send(event: Event) {
     this.events.push({
+      event,
       timestamp: Date.now(),
-      sent: false,
-      event: event,
+      sent: false
     });
     this.persistEvents();
     this.flushEvents();
@@ -47,7 +47,7 @@ export class Beacon<Event> {
   }
 
   private async flushEvents() {
-    const eventsToEmit: Array<Promise<void>> = [];
+    const eventsToEmit: Promise<void>[] = [];
     this.events.forEach(({ event, sent }, idx) => {
       if (sent) {
         return;

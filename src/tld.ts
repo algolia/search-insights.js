@@ -3,11 +3,11 @@ import cookie from "js-cookie";
 /**
  * Levels returns all levels of the given url.
  */
-function levels(url: URL): Array<string> {
+function levels(url: URL): string[] {
   const host = url.hostname;
   const parts = host.split(".");
   const last = parts[parts.length - 1];
-  const levels: Array<string> = [];
+  const levels: string[] = [];
 
   // Ip address.
   if (parts.length === 4 && parseInt(last, 10) > 0) {
@@ -44,7 +44,7 @@ export function tld(url: string) {
   // Lookup the real top level one.
   for (const domain of lvls) {
     const cname = "__tld__";
-    const opts = { domain: "." + domain };
+    const opts = { domain: `.${domain}` };
 
     try {
       // cookie access throw an error if the library is ran inside a sandboxed environment (e.g. sandboxed iframe)

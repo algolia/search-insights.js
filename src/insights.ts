@@ -1,29 +1,32 @@
 import { EventEmitter, EventEmitterCallback } from "./eventEmitter";
-import { InsightsApiBeaconClient, InsightsApiEvent } from "./insightsAPIBeaconClient";
+import {
+  InsightsApiBeaconClient,
+  InsightsApiEvent
+} from "./insightsAPIBeaconClient";
 import { UserToken, UserTokenOptions } from "./userToken";
 
 type BufferedMethodCall = [string, unknown];
 
-type SnippetAlgoliaInsights = Array<BufferedMethodCall>;
+type SnippetAlgoliaInsights = BufferedMethodCall[];
 
 type ObjectIDsAfterSearchEvent = {
   eventName: string;
   index: string;
   queryID: string;
   objectIDs: string[];
-}
+};
 
 type ObjectIDsEvent = {
   eventName: string;
   index: string;
   objectIDs: string[];
-}
+};
 
 type FiltersEvent = {
   eventName: string;
   index: string;
   filters: string[];
-}
+};
 
 function flush(insights: SnippetAlgoliaInsights) {
   if (!Array.isArray(insights)) return [];
@@ -32,104 +35,111 @@ function flush(insights: SnippetAlgoliaInsights) {
 }
 
 class AlgoliaInsights {
-  initalized: boolean = false;
+  initialized: boolean = false;
   [k: string]: any;
 
   private beacon?: InsightsApiBeaconClient;
   private emitter = new EventEmitter();
 
-  constructor(insights: SnippetAlgoliaInsights | AlgoliaInsights) {
-    if ("initalized" in insights && insights.initalized) {
-      return insights;
+  constructor(i: SnippetAlgoliaInsights | AlgoliaInsights) {
+    if ("initialized" in i && i.initialized) {
+      return i;
     }
 
-    insights = insights as SnippetAlgoliaInsights;
+    const insights = i as SnippetAlgoliaInsights;
 
-    const flushedActions = flush(insights)
+    const flushedActions = flush(insights);
     if (flushedActions.length > 0 && flushedActions[0].methodName !== "init") {
-        throw new Error("init must be called first")
+      throw new Error("init must be called first");
     }
 
-    const initAction = flushedActions.shift()
-    this.init.apply(this, initAction?.args)
-    this.initalized = true;
+    const initAction = flushedActions.shift();
+    this.init.apply(this, initAction?.args);
+    this.initialized = true;
 
     flushedActions.forEach(({ methodName, args }) => {
       this[methodName].apply(this, args);
     });
   }
 
-  public init(opts: {applicationId: string, apiKey: string, region?: "us" | "de" } & UserTokenOptions) {
-    this.userToken = new UserToken({anonmyousId: opts.anonmyousId, userToken: opts.userToken})
+  public init(
+    opts: {
+      applicationId: string;
+      apiKey: string;
+      region?: "us" | "de";
+    } & UserTokenOptions
+  ) {
+    this.userToken = new UserToken({
+      anonmyousId: opts.anonmyousId,
+      userToken: opts.userToken
+    });
 
     this.beacon = new InsightsApiBeaconClient({
-        applicationId: opts.applicationId,
-        apiKey: opts.apiKey,
-        region: opts.region,
+      applicationId: opts.applicationId,
+      apiKey: opts.apiKey,
+      region: opts.region
     });
 
     // Flush and purge any existing events sitting in localStorage.
-    this.beacon.flushAndPurgeEvents()
+    this.beacon.flushAndPurgeEvents();
   }
 
   private userToken: UserToken;
   public setUserToken(userToken) {
-    this.userToken.setUserToken(userToken)
-    this.emitter.emit("userToken:changed", userToken)
+    this.userToken.setUserToken(userToken);
+    this.emitter.emit("userToken:changed", userToken);
   }
 
   public on(type: string, handler: EventEmitterCallback) {
-    this.emitter.on(type, handler)
+    this.emitter.on(type, handler);
   }
 
   private addAlgoliaAgent(agent: string) {
-    this.beacon?.addAlgoliaAgent(agent)
+    this.beacon?.addAlgoliaAgent(agent);
   }
 
-  public sendEvents(events: Array<Omit<InsightsApiEvent, "userToken" | "timestamp">>) {
-    events.forEach(event => this.sendEvent(event))
+  public sendEvents(
+    events: Omit<InsightsApiEvent, "userToken" | "timestamp">[]
+  ) {
+    events.forEach((event) => this.sendEvent(event));
   }
 
   private sendEvent(event: Omit<InsightsApiEvent, "userToken" | "timestamp">) {
-    if (!this.beacon) {
-        // TODO: log something saying you need to call init
-        // or throw an error idk.
-        return;
-    }
-
-    if (!this.userToken) {
-        // TODO: log something saying you need to call init
-        // or throw an error idk.
-        return;
+    if (!this.beacon || !this.userToken) {
+      throw new Error(
+        "Before calling any other method, you need to initialize the library by calling the 'init' function with appId and apiKey parameters"
+      );
     }
 
     this.beacon.send({
-        timestamp: Date.now(),
-        userToken: this.userToken.getUserToken(),
+      timestamp: Date.now(),
+      userToken: this.userToken.getUserToken() ?? "",
 
-        ...event,
-    })
+      ...event
+    });
   }
 
-  public clickedObjectIDsAfterSearch(event: ObjectIDsAfterSearchEvent & { positions: number[] }) {
+  public clickedObjectIDsAfterSearch(
+    event: ObjectIDsAfterSearchEvent & { positions: number[] }
+  ) {
     this.sendEvent({
-        eventType: "click",
-        ...event,
-    })
+      eventType: "click",
+      ...event
+    });
   }
 
   public clickedObjectIDs(event: ObjectIDsEvent) {
     this.sendEvent({
       eventType: "click",
-      ...event,
-    })
+      ...event
+    });
   }
 
   public clickedFilters(event: FiltersEvent) {
     this.sendEvent({
       eventType: "click",
-      ...event,
-    })
+      ...event
+    });
   }
 
   public convertedObjectIDsAfterSearch(event: ObjectIDsAfterSearchEvent) {
@@ -156,15 +166,15 @@ class AlgoliaInsights {
   public viewedObjectIDs(event: ObjectIDsEvent) {
     this.sendEvent({
       eventType: "view",
-      ...event,
-    })
+      ...event
+    });
   }
 
   public viewedFilters(event: FiltersEvent) {
     this.sendEvent({
       eventType: "view",
-      ...event,
-    })
+      ...event
+    });
   }
 }
 

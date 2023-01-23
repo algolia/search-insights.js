@@ -35,7 +35,7 @@ export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
   }
 
   protected emit(event: InsightsApiEvent) {
-    return fetch(this.endpoint() + "/1/events", {
+    return fetch(`${this.endpoint()}/1/events`, {
       method: "POST",
       headers: this.headers(),
       body: JSON.stringify({ events: [event] })
