@@ -30,7 +30,7 @@
     "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
     "lint": "eslint --ext .js,.ts,.tsx .",
     "lint:fix": "yarn run lint --fix",
-    "prettier": "prettier lib/**/*.ts examples/**/* --write",
+    "prettier": "prettier lib/**/*.ts examples/**/* src/** --write",
     "test": "NODE_ENV=development yarn build:examples && yarn build && jest",
     "test:watch": "yarn test --watch",
     "test:size": "filesize",

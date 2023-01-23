@@ -110,14 +110,14 @@ export class UserToken {
       return undefined;
     }
 
-    let id = this.anonmyousIdStore?.read(ANONMYOUS_ID_KEY);
+    const id = this.anonmyousIdStore?.read(ANONMYOUS_ID_KEY);
     if (id) {
       return id;
     }
 
     return this.anonmyousIdStore?.write(
       ANONMYOUS_ID_KEY,
-      "anon-" + this.uuid()
+      `anon-${this.uuid()}`
     );
   }
 
