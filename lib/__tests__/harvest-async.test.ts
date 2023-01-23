@@ -1,3 +1,11 @@
+import AlgoliaAnalytics from '../insights';
+
+declare global {
+  interface Window {
+    aa: AlgoliaAnalytics;
+  }
+}
+
 describe('Before script loads', () => {
   beforeAll(() => {
     (window as any).AlgoliaAnalyticsObject = 'aa';
