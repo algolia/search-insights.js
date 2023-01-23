@@ -1,6 +1,7 @@
 import AlgoliaAnalytics from "../insights";
 import { getCookie } from "../_tokenUtils";
-// `jest.spyOn(utils, "supportsCookies")` throws an error - this is a workaround:
+// `import * as utils from "../utils"` results in an error when used in
+// `jest.spyOn(utils, "supportsCookies")`. Workaround:
 // https://github.com/aelbore/esbuild-jest/issues/26#issuecomment-893763840
 import { supportsCookies } from "../utils";
 const utils = { supportsCookies };
