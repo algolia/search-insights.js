@@ -72,8 +72,8 @@ and if the configuration has cookie storage enabled, store the userToken in a co
 
 */
 
-const USER_TOKEN_KEY = "alg:userToken";
-const ANONMYOUS_ID_KEY = "alg:anonmyousId";
+export const USER_TOKEN_KEY = "alg:userToken";
+export const ANONMYOUS_ID_KEY = "alg:anonmyousId";
 
 export class UserToken {
   private anonmyousIdStore?: ExpiringCookieStore;

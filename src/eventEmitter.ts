@@ -6,7 +6,9 @@ export class EventEmitter {
   emit(type: string, data: any) {
     const handlerFuncs = this.handlers[type];
     if (!handlerFuncs || handlerFuncs.length === 0) {
-      return;
+      throw new Error(
+        `No event callbacks of type "${type}" found. Register an event callback function with 'on' before calling 'emit'`
+      );
     }
 
     handlerFuncs.forEach((fn) => {
