@@ -130,5 +130,6 @@
       "brotli": "2.75 kB",
       "gzip": "2.75 kB"
     }
-  }
+  },
+  "packageManager": "yarn@3.3.1"
 }
