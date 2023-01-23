@@ -14,7 +14,6 @@ jobs:
     <<: *node_lts
     steps:
       - checkout
-      - run: *install_yarn_version
       - run: *run_yarn_install
       - run:
           name: Build & Test packages size
@@ -26,7 +25,6 @@ jobs:
     <<: *node_lts
     steps:
       - checkout
-      - run: *install_yarn_version
       - run: *run_yarn_install
       - run:
           name: Lint & Code styles
@@ -34,12 +32,20 @@ jobs:
       - run:
           name: Type Checking
           command: yarn run type-check
+  
+  "unit tests":
+    <<: *node_lts
+    steps:
+      - checkout
+      - run: *run_yarn_install
+      - run:
+          name: Unit tests
+          command: yarn run test
 
   "release if needed":
     <<: *node_lts
     steps:
       - checkout
-      - run: *install_yarn_version
       - run: *run_yarn_install
       - run:
           name: Trigger a release if the latest commit is a release commit
@@ -50,7 +56,6 @@ jobs:
     <<: *node_lts
     steps:
       - checkout
-      - run: *install_yarn_version
       - run: *run_yarn_install
       - run:
           name: Prepare release
