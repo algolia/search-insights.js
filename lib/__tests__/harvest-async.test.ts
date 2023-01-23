@@ -3,7 +3,7 @@ describe("Before script loads", () => {
     (window as any)["AlgoliaAnalyticsObject"] = "aa";
     window["aa"] =
       window["aa"] ||
-      function() {
+      function () {
         (window["aa"].queue = window["aa"].queue || []).push(arguments);
       };
   });
