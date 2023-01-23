@@ -1411,13 +1411,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^29.2.3":
+"@types/jest@npm:^29.2.4":
   version: 29.2.6
   resolution: "@types/jest@npm:29.2.6"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
   checksum: 90190ac830334af1470d255853f9621fe657e5030b4d96773fc1f884833cd303c76580b00c1b86dc38a8db94f1c7141d462190437a10af31852b8845a57c48ba
+  languageName: node
+  linkType: hard
+
+"@types/js-cookie@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@types/js-cookie@npm:3.0.2"
+  checksum: 7ab964288dd26373e134ed0bcde4a7dbea7e6f5de1805e2d1e48eac847e89a0e7f5fdc9164c37931680ec97c6e6e5a73e3e4039e0d08527c2e21badd7bee62d1
   languageName: node
   linkType: hard
 
@@ -8085,6 +8092,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-cookie@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "js-cookie@npm:3.0.1"
+  checksum: bb48de67e2a6bd1ae3dfd6b2d5a167c33dd0c5a37e909206161eb0358c98f17cb55acd55827a58e9eea3630d89444e7479f7938ef4420dda443218b8c434a4c3
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -11459,7 +11473,8 @@ __metadata:
   resolution: "search-insights@workspace:."
   dependencies:
     "@ampproject/filesize": ^4.3.0
-    "@types/jest": ^29.2.3
+    "@types/jest": ^29.2.4
+    "@types/js-cookie": ^3.0.2
     "@types/jsdom": ^20.0.1
     algoliasearch: ^4.14.2
     algoliasearch-helper: ^3.11.1
@@ -11478,6 +11493,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     jest-watch-typeahead: ^2.2.1
+    js-cookie: ^3.0.1
     lunr: ^2.3.9
     markdown-toc: ^1.2.0
     mini-css-extract-plugin: ^1.6.2

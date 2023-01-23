@@ -50,7 +50,8 @@
   "license": "MIT",
   "devDependencies": {
     "@ampproject/filesize": "^4.3.0",
-    "@types/jest": "^29.2.3",
+    "@types/jest": "^29.2.4",
+    "@types/js-cookie": "^3.0.2",
     "@types/jsdom": "^20.0.1",
     "algoliasearch": "^4.14.2",
     "algoliasearch-helper": "^3.11.1",
@@ -131,5 +132,8 @@
       "gzip": "2.75 kB"
     }
   },
-  "packageManager": "yarn@3.3.1"
+  "packageManager": "yarn@3.3.1",
+  "dependencies": {
+    "js-cookie": "^3.0.1"
+  }
 }

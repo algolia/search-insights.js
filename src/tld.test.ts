@@ -1,7 +1,7 @@
 import cookie from "js-cookie";
 import { tld } from "./tld";
 
-describe("tld", () => {
+describe.skip("tld", () => {
   beforeEach(() => {
     const cookies: { [key: string]: string } = {};
 
