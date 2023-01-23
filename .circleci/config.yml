@@ -4,12 +4,12 @@ orbs:
 
 jobs:
   "build and size":
-    working_directory: ~/search-insights
     executor: node/default
     steps:
       - checkout
       - run: corepack enable
       - node/install-packages:
+          app-dir: ~/project
           check-cache: always
           pkg-manager: yarn-berry
           with-cache: false
@@ -20,12 +20,12 @@ jobs:
             yarn run test:size
 
   lint:
-    working_directory: ~/search-insights
     executor: node/default
     steps:
       - checkout
       - run: corepack enable
       - node/install-packages:
+          app-dir: ~/project
           check-cache: always
           pkg-manager: yarn-berry
           with-cache: false
@@ -37,12 +37,12 @@ jobs:
           command: yarn run type-check
 
   "unit tests":
-    working_directory: ~/search-insights
     executor: node/default
     steps:
       - checkout
       - run: corepack enable
       - node/install-packages:
+          app-dir: ~/project
           check-cache: always
           pkg-manager: yarn-berry
           with-cache: false
@@ -51,12 +51,12 @@ jobs:
           command: yarn run test
 
   "release if needed":
-    working_directory: ~/search-insights
     executor: node/default
     steps:
       - checkout
       - run: corepack enable
       - node/install-packages:
+          app-dir: ~/project
           check-cache: always
           pkg-manager: yarn-berry
           with-cache: false
@@ -65,12 +65,12 @@ jobs:
           command: yarn shipjs trigger
 
   "prepare release":
-    working_directory: ~/search-insights
     executor: node/default
     steps:
       - checkout
       - run: corepack enable
       - node/install-packages:
+          app-dir: ~/project
           check-cache: always
           pkg-manager: yarn-berry
           with-cache: false
