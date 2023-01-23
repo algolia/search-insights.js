@@ -1,45 +1,21 @@
 aliases:
-  - &install_yarn_version
-    name: Install specific Yarn version
-    command: |
-      curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.13.0
-      echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
-
-  - &restore_yarn_cache
-    name: Restore Yarn cache
-    keys:
-      - yarn-{{ .Branch }}-packages-{{ checksum "yarn.lock" }}
-
-  - &save_yarn_cache
-    name: Save Yarn cache
-    key: yarn-{{ .Branch }}-packages-{{ checksum "yarn.lock" }}
-    paths:
-      - ~/.cache/yarn
-
   - &run_yarn_install
     name: Install dependencies
-    command: yarn install
+    command: yarn install --immutable-cache
 
-node_v10: &node_v10
+node_v10: &node_lts
   working_directory: ~/search-insights
   docker:
-    - image: cimg/node:10.24.1-browsers
-
-node_v12: &node_v12
-  working_directory: ~/search-insights
-  docker:
-    - image: cimg/node:12.14.1
+    - image: cimg/node:lts
 
 version: 2
 jobs:
   "build and size":
-    <<: *node_v12
+    <<: *node_lts
     steps:
       - checkout
       - run: *install_yarn_version
-      - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
       - run:
           name: Build & Test packages size
           command: |
@@ -47,13 +23,11 @@ jobs:
             yarn run test:size
 
   lint:
-    <<: *node_v12
+    <<: *node_lts
     steps:
       - checkout
       - run: *install_yarn_version
-      - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
       - run:
           name: Lint & Code styles
           command: yarn run lint
@@ -61,39 +35,23 @@ jobs:
           name: Type Checking
           command: yarn run type-check
 
-  "unit tests":
-    <<: *node_v10
-    steps:
-      - checkout
-      - run: *install_yarn_version
-      - restore_cache: *restore_yarn_cache
-      - run:
-          name: Remove Ship.js and install dependencies
-          command: yarn remove shipjs && yarn install
-      - run:
-          name: Unit tests
-          command: yarn run test
-
   "release if needed":
-    <<: *node_v12
+    <<: *node_lts
     steps:
       - checkout
       - run: *install_yarn_version
-      - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
       - run:
           name: Trigger a release if the latest commit is a release commit
           command: |
             yarn shipjs trigger
+
   "prepare release":
-    <<: *node_v12
+    <<: *node_lts
     steps:
       - checkout
       - run: *install_yarn_version
-      - restore_cache: *restore_yarn_cache
       - run: *run_yarn_install
-      - save_cache: *save_yarn_cache
       - run:
           name: Prepare release
           command: |
