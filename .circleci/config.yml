@@ -1,20 +1,18 @@
-aliases:
-  - &run_yarn_install
-    name: Install dependencies
-    command: yarn install --immutable-cache
+version: 2.1
+orbs:
+  node: circleci/node@5.1.0
 
-node_v10: &node_lts
-  working_directory: ~/search-insights
-  docker:
-    - image: cimg/node:lts
-
-version: 2
 jobs:
   "build and size":
-    <<: *node_lts
+    executor:
+      name: node/default
+      tag: 'lts'
     steps:
       - checkout
-      - run: *run_yarn_install
+      - node/install-packages:
+          check-cache: always
+          pkg-manager: yarn-berry
+          with-cache: false
       - run:
           name: Build & Test packages size
           command: |
@@ -22,41 +20,60 @@ jobs:
             yarn run test:size
 
   lint:
-    <<: *node_lts
+    executor:
+      name: node/default
+      tag: 'lts'
     steps:
       - checkout
-      - run: *run_yarn_install
+      - node/install-packages:
+          check-cache: always
+          pkg-manager: yarn-berry
+          with-cache: false
       - run:
           name: Lint & Code styles
           command: yarn run lint
       - run:
           name: Type Checking
           command: yarn run type-check
-  
+
   "unit tests":
-    <<: *node_lts
+    executor:
+      name: node/default
+      tag: 'lts'
     steps:
       - checkout
-      - run: *run_yarn_install
+      - node/install-packages:
+          check-cache: always
+          pkg-manager: yarn-berry
+          with-cache: false
       - run:
           name: Unit tests
           command: yarn run test
 
   "release if needed":
-    <<: *node_lts
+    executor:
+      name: node/default
+      tag: 'lts'
     steps:
       - checkout
-      - run: *run_yarn_install
+      - node/install-packages:
+          check-cache: always
+          pkg-manager: yarn-berry
+          with-cache: false
       - run:
           name: Trigger a release if the latest commit is a release commit
-          command: |
-            yarn shipjs trigger
+          command: yarn shipjs trigger
 
   "prepare release":
-    <<: *node_lts
+    executor:
+      name: node/default
+      tag: 'lts'
     steps:
       - checkout
-      - run: *run_yarn_install
+      - node/install-packages:
+          check-cache: always
+          pkg-manager: yarn-berry
+          with-cache: false
       - run:
           name: Prepare release
           command: |
@@ -65,17 +82,17 @@ jobs:
             yarn run release --yes --no-browse
 
 workflows:
-  version: 2
   ci:
     jobs:
-      - build and size
-      - unit tests
-      - lint
+      - "build and size"
+      - "lint"
+      - "unit tests"
       - "release if needed":
           filters:
             branches:
               only:
                 - master
+
   prepare_release_every_tuesday:
     triggers:
       - schedule:
@@ -85,4 +102,4 @@ workflows:
               only:
                 - master
     jobs:
-      - prepare release
+      - "prepare release"
