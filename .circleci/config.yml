@@ -7,9 +7,8 @@ jobs:
     executor: node/default
     steps:
       - checkout
-      - run: corepack enable
       - node/install-packages:
-          app-dir: ~/project
+          cache-path: ./.yarn/cache
           check-cache: always
           pkg-manager: yarn-berry
           with-cache: false
@@ -23,9 +22,7 @@ jobs:
     executor: node/default
     steps:
       - checkout
-      - run: corepack enable
       - node/install-packages:
-          app-dir: ~/project
           check-cache: always
           pkg-manager: yarn-berry
           with-cache: false
@@ -40,9 +37,7 @@ jobs:
     executor: node/default
     steps:
       - checkout
-      - run: corepack enable
       - node/install-packages:
-          app-dir: ~/project
           check-cache: always
           pkg-manager: yarn-berry
           with-cache: false
@@ -54,9 +49,7 @@ jobs:
     executor: node/default
     steps:
       - checkout
-      - run: corepack enable
       - node/install-packages:
-          app-dir: ~/project
           check-cache: always
           pkg-manager: yarn-berry
           with-cache: false
@@ -68,9 +61,7 @@ jobs:
     executor: node/default
     steps:
       - checkout
-      - run: corepack enable
       - node/install-packages:
-          app-dir: ~/project
           check-cache: always
           pkg-manager: yarn-berry
           with-cache: false
