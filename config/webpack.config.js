@@ -11,12 +11,14 @@ dotenv.config();
 const isProd = process.env.NODE_ENV === 'production';
 const { NODE_ENV, APP_ID, API_KEY, INDEX_NAME } = process.env;
 if ([NODE_ENV, APP_ID, API_KEY, INDEX_NAME].some((v) => !v)) {
+  /* eslint-disable no-console, no-process-exit */
   console.error(`The following environment variables are required:`);
   console.error(`  > NODE_ENV, APP_ID, API_KEY, INDEX_NAME`);
   console.error(`You can either specify them when running command,`);
   console.error(`or create .env file to store them locally.`);
   console.error('');
   process.exit(1);
+  /* eslint-enable no-console, no-process-exit */
 }
 const SCRIPT_SRC =
   NODE_ENV === 'production'
