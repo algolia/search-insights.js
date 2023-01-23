@@ -1,8 +1,8 @@
-import { isUndefined, isString, isNumber } from "./utils";
-import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
+import { DEFAULT_ALGOLIA_AGENTS } from './_algoliaAgent';
+import { isUndefined, isString, isNumber } from './utils';
 
-type InsightRegion = "de" | "us";
-const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
+type InsightRegion = 'de' | 'us';
+const SUPPORTED_REGIONS: InsightRegion[] = ['de', 'us'];
 const MONTH = 30 * 24 * 60 * 60 * 1000;
 
 export interface InitParams {
@@ -15,24 +15,25 @@ export interface InitParams {
   userToken?: string;
 }
 
-/**
+/** ............................
  * Binds credentials and settings to class
+ *
  * @param options: initParams
  */
 export function init(options: InitParams) {
   if (!options) {
     throw new Error(
-      "Init function should be called with an object argument containing your apiKey and appId"
+      'Init function should be called with an object argument containing your apiKey and appId'
     );
   }
   if (isUndefined(options.apiKey) || !isString(options.apiKey)) {
     throw new Error(
-      "apiKey is missing, please provide it so we can authenticate the application"
+      'apiKey is missing, please provide it so we can authenticate the application'
     );
   }
   if (isUndefined(options.appId) || !isString(options.appId)) {
     throw new Error(
-      "appId is missing, please provide it, so we can properly attribute data to your application"
+      'appId is missing, please provide it, so we can properly attribute data to your application'
     );
   }
   if (
@@ -41,7 +42,7 @@ export function init(options: InitParams) {
   ) {
     throw new Error(
       `optional region is incorrect, please provide either one of: ${SUPPORTED_REGIONS.join(
-        ", "
+        ', '
       )}.`
     );
   }
@@ -63,11 +64,11 @@ You can visit https://algolia.com/events/debugger instead.`);
 
   this._apiKey = options.apiKey;
   this._appId = options.appId;
-  this._userHasOptedOut = !!options.userHasOptedOut;
+  this._userHasOptedOut = Boolean(options.userHasOptedOut);
   this._region = options.region;
   this._endpointOrigin = options.region
     ? `https://insights.${options.region}.algolia.io`
-    : "https://insights.algolia.io";
+    : 'https://insights.algolia.io';
   this._useCookie = options.useCookie ?? false;
   this._cookieDuration = options.cookieDuration
     ? options.cookieDuration

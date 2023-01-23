@@ -1,4 +1,4 @@
-import { addEventType } from "./_addEventType";
+import { addEventType } from './_addEventType';
 
 export interface InsightsSearchViewObjectIDsEvent {
   eventName: string;
@@ -10,7 +10,7 @@ export interface InsightsSearchViewObjectIDsEvent {
 }
 
 export function viewedObjectIDs(...params: InsightsSearchViewObjectIDsEvent[]) {
-  return this.sendEvents(addEventType("view", params));
+  return this.sendEvents(addEventType('view', params));
 }
 
 export interface InsightsSearchViewFiltersEvent {
@@ -23,5 +23,5 @@ export interface InsightsSearchViewFiltersEvent {
 }
 
 export function viewedFilters(...params: InsightsSearchViewFiltersEvent[]) {
-  return this.sendEvents(addEventType("view", params));
+  return this.sendEvents(addEventType('view', params));
 }

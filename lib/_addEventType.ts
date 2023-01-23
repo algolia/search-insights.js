@@ -1,11 +1,11 @@
-import { InsightsEvent, InsightsEventType } from "./types";
+import type { InsightsEvent, InsightsEventType } from './types';
 
 export function addEventType(
   eventType: InsightsEventType,
-  params: Omit<InsightsEvent, "eventType">[]
+  params: Array<Omit<InsightsEvent, 'eventType'>>
 ): InsightsEvent[] {
   return params.map((event) => ({
     eventType,
-    ...event
+    ...event,
   }));
 }
