@@ -1,0 +1,4 @@
+.yarn/**
+
+dist/**
+tests/production/**

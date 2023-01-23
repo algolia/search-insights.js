@@ -1,19 +1,23 @@
-import { init } from "./init";
-import { addAlgoliaAgent } from "./_algoliaAgent";
-import { getUserToken, setUserToken, onUserTokenChange } from "./_tokenUtils";
-import {
+import type { addAlgoliaAgent } from './_algoliaAgent';
+import type { getVersion } from './_getVersion';
+import type { makeSendEvents } from './_sendEvent';
+import type {
+  getUserToken,
+  setUserToken,
+  onUserTokenChange,
+} from './_tokenUtils';
+import type {
   clickedObjectIDsAfterSearch,
   clickedObjectIDs,
-  clickedFilters
-} from "./click";
-import {
+  clickedFilters,
+} from './click';
+import type {
   convertedObjectIDsAfterSearch,
   convertedObjectIDs,
-  convertedFilters
-} from "./conversion";
-import { viewedObjectIDs, viewedFilters } from "./view";
-import { getVersion } from "./_getVersion";
-import { makeSendEvents } from "./_sendEvent";
+  convertedFilters,
+} from './conversion';
+import type { init } from './init';
+import type { viewedObjectIDs, viewedFilters } from './view';
 
 export type InsightsMethodMap = {
   init: Parameters<typeof init>;
@@ -40,44 +44,44 @@ type MethodType<MethodName extends keyof InsightsMethodMap> = (
   ...args: InsightsMethodMap[MethodName]
 ) => void;
 
-export type Init = MethodType<"init">;
+export type Init = MethodType<'init'>;
 
-export type GetVersion = MethodType<"getVersion">;
+export type GetVersion = MethodType<'getVersion'>;
 
-export type AddAlgoliaAgent = MethodType<"addAlgoliaAgent">;
+export type AddAlgoliaAgent = MethodType<'addAlgoliaAgent'>;
 
-export type SetUserToken = MethodType<"setUserToken">;
+export type SetUserToken = MethodType<'setUserToken'>;
 
-export type GetUserToken = MethodType<"getUserToken">;
+export type GetUserToken = MethodType<'getUserToken'>;
 
-export type OnUserTokenChange = MethodType<"onUserTokenChange">;
+export type OnUserTokenChange = MethodType<'onUserTokenChange'>;
 
 export type ClickedObjectIDsAfterSearch =
-  MethodType<"clickedObjectIDsAfterSearch">;
+  MethodType<'clickedObjectIDsAfterSearch'>;
 
-export type ClickedObjectIDs = MethodType<"clickedObjectIDs">;
+export type ClickedObjectIDs = MethodType<'clickedObjectIDs'>;
 
-export type ClickedFilters = MethodType<"clickedFilters">;
+export type ClickedFilters = MethodType<'clickedFilters'>;
 
 export type ConvertedObjectIDsAfterSearch =
-  MethodType<"convertedObjectIDsAfterSearch">;
+  MethodType<'convertedObjectIDsAfterSearch'>;
 
-export type ConvertedObjectIDs = MethodType<"convertedObjectIDs">;
+export type ConvertedObjectIDs = MethodType<'convertedObjectIDs'>;
 
-export type ConvertedFilters = MethodType<"convertedFilters">;
+export type ConvertedFilters = MethodType<'convertedFilters'>;
 
-export type ViewedObjectIDs = MethodType<"viewedObjectIDs">;
+export type ViewedObjectIDs = MethodType<'viewedObjectIDs'>;
 
-export type ViewedFilters = MethodType<"viewedFilters">;
+export type ViewedFilters = MethodType<'viewedFilters'>;
 
-export type SendEvents = MethodType<"sendEvents">;
+export type SendEvents = MethodType<'sendEvents'>;
 
 export type InsightsClient = <MethodName extends keyof InsightsMethodMap>(
   method: MethodName,
   ...args: InsightsMethodMap[MethodName]
 ) => void;
 
-export type InsightsEventType = "click" | "conversion" | "view";
+export type InsightsEventType = 'click' | 'conversion' | 'view';
 
 export type InsightsEvent = {
   eventType: InsightsEventType;

@@ -1,4 +1,4 @@
-import { addEventType } from "./_addEventType";
+import { addEventType } from './_addEventType';
 
 export interface InsightsSearchClickEvent {
   eventName: string;
@@ -14,7 +14,7 @@ export interface InsightsSearchClickEvent {
 export function clickedObjectIDsAfterSearch(
   ...params: InsightsSearchClickEvent[]
 ) {
-  return this.sendEvents(addEventType("click", params));
+  return this.sendEvents(addEventType('click', params));
 }
 
 export interface InsightsClickObjectIDsEvent {
@@ -27,7 +27,7 @@ export interface InsightsClickObjectIDsEvent {
 }
 
 export function clickedObjectIDs(...params: InsightsClickObjectIDsEvent[]) {
-  return this.sendEvents(addEventType("click", params));
+  return this.sendEvents(addEventType('click', params));
 }
 
 export interface InsightsClickFiltersEvent {
@@ -40,5 +40,5 @@ export interface InsightsClickFiltersEvent {
 }
 
 export function clickedFilters(...params: InsightsClickFiltersEvent[]) {
-  return this.sendEvents(addEventType("click", params));
+  return this.sendEvents(addEventType('click', params));
 }

@@ -3,17 +3,17 @@
 /**
  * ES5 Object.assign polyfill
  * src:
- *   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+ *   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign.
  */
 
 export default function objectAssignPolyfill() {
-  if (typeof Object.assign !== "function") {
+  if (typeof Object.assign !== 'function') {
     Object.assign = function (target, varArgs) {
       // .length of function is 2
 
       if (target == null) {
         // TypeError if undefined or null
-        throw new TypeError("Cannot convert undefined or null to object");
+        throw new TypeError('Cannot convert undefined or null to object');
       }
 
       const to = Object(target);
