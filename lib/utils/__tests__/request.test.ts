@@ -34,15 +34,15 @@ describe("request", () => {
     };
     (nodeHttpRequest as jest.Mock).mockImplementation(() => {
       return {
-        on: jest.fn(),
         write,
+        on: jest.fn(),
         end: jest.fn()
       };
     });
     (nodeHttpsRequest as jest.Mock).mockImplementation(() => {
       return {
-        on: jest.fn(),
         write,
+        on: jest.fn(),
         end: jest.fn()
       };
     });

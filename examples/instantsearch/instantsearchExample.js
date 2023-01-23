@@ -35,29 +35,21 @@ search.addWidget(
   })
 );
 
-var hitTemplate = hit => `
+var hitTemplate = (hit) => `
   <article>
     <div class="product-picture-wrapper">
-      <div class="product-picture"><img src="https://image.tmdb.org/t/p/w45${
-        hit.image_path
-      }" /></div>
+      <div class="product-picture"><img src="https://image.tmdb.org/t/p/w45${hit.image_path}" /></div>
     </div>
     <div class="product-desc-wrapper">
       <div class="product-name">${hit._highlightResult.name.value}</div>
     </div>
-    <button data-query-id="${hit._queryID}" data-object-id="${
-  hit.objectID
-}" data-position="${
-  hit._hitPosition
-}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
-    <button data-query-id="${hit._queryID}" data-object-id="${
-  hit.objectID
-}" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
+    <button data-query-id="${hit._queryID}" data-object-id="${hit.objectID}" data-position="${hit._hitPosition}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
+    <button data-query-id="${hit._queryID}" data-object-id="${hit.objectID}" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
   </article>`;
 
 var noResultsTemplate = `<div class="text-center">No results found matching <strong>{{query}}</strong>.</div>`;
 
-var menuTemplate = menu => `
+var menuTemplate = (menu) => `
   <div class="facet-item ${menu.isRefined ? "active" : ""}">
     <span class="facet-name">
       <i class="fa fa-angle-right"></i>
@@ -82,7 +74,7 @@ search.addWidget(
       empty: noResultsTemplate,
       item: hitTemplate
     },
-    transformData: function(hit) {
+    transformData: function (hit) {
       var result = search.helper.lastResults;
       var offset = result.hitsPerPage * result.page;
 
@@ -179,7 +171,7 @@ const matches = (elem, selector) => {
   return fn.call(elem, selector);
 };
 
-document.addEventListener("click", e => {
+document.addEventListener("click", (e) => {
   if (matches(e.target, ".button-click")) {
     window.aa("clickedObjectIDsAfterSearch", {
       eventName: "hit-clicked",
