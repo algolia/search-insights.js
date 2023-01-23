@@ -79,6 +79,7 @@
     "instantsearch.js": "^4.49.1",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
+    "jest-fetch-mock": "^3.0.3",
     "jest-watch-typeahead": "^2.2.1",
     "lunr": "^2.3.9",
     "markdown-toc": "^1.2.0",
@@ -107,7 +108,7 @@
   "jest": {
     "testEnvironment": "jsdom",
     "setupFiles": [
-      "./tests/setupJest.js"
+      "./tests/setupJest.cjs"
     ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
