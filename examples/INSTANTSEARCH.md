@@ -72,7 +72,7 @@ After you've added the information to the DOM, you need to create the handlers t
 This can be done by specifying a global onclick event handler and checking the clicked element.
 
 ```js
-document.addEventListener("click", e => {
+document.addEventListener("click", (e) => {
   if (e.target.matches(".button-click")) {
     window.aa("click", {
       objectID: e.target.getAttribute("data-objectid"),
@@ -92,7 +92,7 @@ Sometimes - and it is often the case in ecommerce - users right-click and open t
 To be able to report that event as a click event, you will have to bind a global contextmenu event listener similar to the click event.
 
 ```js
-document.addEventListener("click", e => {
+document.addEventListener("click", (e) => {
   if (e.target.matches(".button-click")) {
     window.aa("click", {
       objectID: e.target.getAttribute("data-objectid"),

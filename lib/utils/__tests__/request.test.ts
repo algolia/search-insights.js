@@ -27,22 +27,22 @@ describe("request", () => {
 
   beforeAll(() => {
     navigator.sendBeacon = sendBeacon;
-    window.XMLHttpRequest = function() {
+    (window as any).XMLHttpRequest = function () {
       this.open = open;
       this.send = send;
       this.setRequestHeader = setRequestHeader;
     };
-    nodeHttpRequest.mockImplementation(() => {
+    (nodeHttpRequest as jest.Mock).mockImplementation(() => {
       return {
-        on: jest.fn(),
         write,
+        on: jest.fn(),
         end: jest.fn()
       };
     });
-    nodeHttpsRequest.mockImplementation(() => {
+    (nodeHttpsRequest as jest.Mock).mockImplementation(() => {
       return {
-        on: jest.fn(),
         write,
+        on: jest.fn(),
         end: jest.fn()
       };
     });
@@ -54,9 +54,9 @@ describe("request", () => {
   });
 
   it("should pick sendBeacon first if available", () => {
-    supportsSendBeacon.mockImplementation(() => true);
-    supportsXMLHttpRequest.mockImplementation(() => true);
-    supportsNodeHttpModule.mockImplementation(() => true);
+    (supportsSendBeacon as jest.Mock).mockImplementation(() => true);
+    (supportsXMLHttpRequest as jest.Mock).mockImplementation(() => true);
+    (supportsNodeHttpModule as jest.Mock).mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForBrowser();
@@ -74,9 +74,9 @@ describe("request", () => {
   });
 
   it("should send with XMLHttpRequest if sendBeacon is not available", () => {
-    supportsSendBeacon.mockImplementation(() => false);
-    supportsXMLHttpRequest.mockImplementation(() => true);
-    supportsNodeHttpModule.mockImplementation(() => true);
+    (supportsSendBeacon as jest.Mock).mockImplementation(() => false);
+    (supportsXMLHttpRequest as jest.Mock).mockImplementation(() => true);
+    (supportsNodeHttpModule as jest.Mock).mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForBrowser();
@@ -93,9 +93,9 @@ describe("request", () => {
 
   it("should fall back to XMLHttpRequest if sendBeacon returns false", () => {
     navigator.sendBeacon = jest.fn(() => false);
-    supportsSendBeacon.mockImplementation(() => true);
-    supportsXMLHttpRequest.mockImplementation(() => true);
-    supportsNodeHttpModule.mockImplementation(() => false);
+    (supportsSendBeacon as jest.Mock).mockImplementation(() => true);
+    (supportsXMLHttpRequest as jest.Mock).mockImplementation(() => true);
+    (supportsNodeHttpModule as jest.Mock).mockImplementation(() => false);
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForBrowser();
@@ -112,9 +112,9 @@ describe("request", () => {
   });
 
   it("should send with nodeHttpRequest if url does not start with https://", () => {
-    supportsSendBeacon.mockImplementation(() => false);
-    supportsXMLHttpRequest.mockImplementation(() => false);
-    supportsNodeHttpModule.mockImplementation(() => true);
+    (supportsSendBeacon as jest.Mock).mockImplementation(() => false);
+    (supportsXMLHttpRequest as jest.Mock).mockImplementation(() => false);
+    (supportsNodeHttpModule as jest.Mock).mockImplementation(() => true);
     const url = "http://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForNode();
@@ -140,9 +140,9 @@ describe("request", () => {
   });
 
   it("should send with nodeHttpsRequest if url starts with https://", () => {
-    supportsSendBeacon.mockImplementation(() => false);
-    supportsXMLHttpRequest.mockImplementation(() => false);
-    supportsNodeHttpModule.mockImplementation(() => true);
+    (supportsSendBeacon as jest.Mock).mockImplementation(() => false);
+    (supportsXMLHttpRequest as jest.Mock).mockImplementation(() => false);
+    (supportsNodeHttpModule as jest.Mock).mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForNode();
