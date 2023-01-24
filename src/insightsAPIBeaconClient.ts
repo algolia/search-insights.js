@@ -1,5 +1,4 @@
 import { Beacon } from "./beacon";
-import { InsightsRegion } from "./insights";
 
 export type InsightsApiEvent = {
   timestamp: ReturnType<typeof Date.now>;
@@ -15,6 +14,8 @@ export type InsightsApiEvent = {
   positions?: number[];
   filters?: string[];
 };
+
+export type InsightsRegion = "de" | "us";
 
 type InsightsApiBeaconClientOptions = {
   applicationId: string;

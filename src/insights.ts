@@ -1,15 +1,14 @@
 import { EventEmitter, EventEmitterCallback } from "./eventEmitter";
 import {
   InsightsApiBeaconClient,
-  InsightsApiEvent
+  InsightsApiEvent,
+  InsightsRegion
 } from "./insightsAPIBeaconClient";
 import { UserToken, UserTokenOptions } from "./userToken";
 
 type BufferedMethodCall = [string, unknown];
 
 type SnippetAlgoliaInsights = BufferedMethodCall[];
-
-export type InsightsRegion = "de" | "us";
 
 type ObjectIDsAfterSearchEvent = {
   eventName: string;
