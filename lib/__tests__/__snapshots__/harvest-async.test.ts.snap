@@ -2,7 +2,7 @@
 
 exports[`Before script loads Should create a queue before script is loaded 1`] = `
 [
-  Arguments [
+  [
     "init",
     {
       "random": "random",

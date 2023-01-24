@@ -90,6 +90,7 @@ describe('sendEvents', () => {
       ]);
       const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
       const { query } = url.parse(requestUrl);
+      if (!query) fail();
       expect(querystring.parse(query)).toEqual({
         'X-Algolia-API-Key': 'testKey',
         'X-Algolia-Agent': 'insights-js (1.0.1); insights-js-node-cjs (1.0.1)',
@@ -104,6 +105,7 @@ describe('sendEvents', () => {
     let sendBeaconBackup;
     beforeEach(() => {
       sendBeaconBackup = window.navigator.sendBeacon;
+      // eslint-disable-next-line no-multi-assign
       sendBeacon = window.navigator.sendBeacon = jest.fn(() => true);
       analyticsInstance = setupInstance();
     });
@@ -166,6 +168,7 @@ describe('sendEvents', () => {
       ]);
       const requestUrl = sendBeacon.mock.calls[0][0];
       const { query } = url.parse(requestUrl);
+      if (!query) fail();
       expect(querystring.parse(query)).toEqual({
         'X-Algolia-API-Key': 'testKey',
         'X-Algolia-Agent': 'insights-js (1.0.1); insights-js-node-cjs (1.0.1)',

@@ -64,11 +64,7 @@ export function onUserTokenChange(
   options?: { immediate: boolean }
 ): void {
   this._onUserTokenChangeCallback = callback;
-  if (
-    options &&
-    options.immediate &&
-    isFunction(this._onUserTokenChangeCallback)
-  ) {
+  if (options?.immediate && isFunction(this._onUserTokenChangeCallback)) {
     this._onUserTokenChangeCallback(this._userToken);
   }
 }

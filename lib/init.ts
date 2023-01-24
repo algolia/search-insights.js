@@ -15,10 +15,10 @@ export interface InitParams {
   userToken?: string;
 }
 
-/** ............................
- * Binds credentials and settings to class
+/**
+ * Binds credentials and settings to class.
  *
- * @param options: initParams
+ * @param options - `init` options. Must provide `apiKey` and `appId` properties.
  */
 export function init(options: InitParams) {
   if (!options) {
@@ -58,6 +58,7 @@ export function init(options: InitParams) {
   }
 
   if (__DEV__) {
+    // eslint-disable-next-line no-console
     console.info(`Since v2.0.4, search-insights no longer validates event payloads.
 You can visit https://algolia.com/events/debugger instead.`);
   }

@@ -177,7 +177,7 @@ document.addEventListener('click', (e) => {
       index: process.env.INDEX_NAME,
       queryID: e.target.getAttribute('data-query-id'),
       objectIDs: [e.target.getAttribute('data-object-id')],
-      positions: [parseInt(e.target.getAttribute('data-position'))],
+      positions: [parseInt(e.target.getAttribute('data-position'), 10)],
     });
   } else if (matches(e.target, '.button-convert')) {
     window.aa('convertedObjectIDsAfterSearch', {

@@ -22,7 +22,7 @@ describe('_sendEvent in node env', () => {
   let aa;
   let requestFn;
   beforeEach(() => {
-    requestFn = jest.fn((url, data) => {});
+    requestFn = jest.fn();
     const instance = new AlgoliaAnalytics({ requestFn });
     aa = getFunctionalInterface(instance);
     aa('init', credentials);

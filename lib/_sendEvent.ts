@@ -36,6 +36,7 @@ export function makeSendEvents(requestFn: RequestFnType) {
   };
 }
 
+// eslint-disable-next-line max-params
 function sendRequest(
   requestFn: RequestFnType,
   appId: string,

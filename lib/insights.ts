@@ -62,8 +62,6 @@ class AlgoliaAnalytics {
 
   version: string = version;
 
-  protected _hasCredentials: boolean = false;
-
   // Public methods
   init: typeof init;
   getVersion: typeof getVersion;
@@ -86,6 +84,8 @@ class AlgoliaAnalytics {
 
   viewedObjectIDs: typeof viewedObjectIDs;
   viewedFilters: typeof viewedFilters;
+
+  protected _hasCredentials: boolean = false;
 
   constructor({ requestFn }: { requestFn: RequestFnType }) {
     this.sendEvents = makeSendEvents(requestFn).bind(this);
