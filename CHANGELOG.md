@@ -1,3 +1,13 @@
+## [2.2.4](https://github.com/algolia/search-insights.js/compare/v2.2.3...v2.2.4) (2023-01-24)
+
+
+### Bug Fixes
+
+* get tests passing ([67ee919](https://github.com/algolia/search-insights.js/commit/67ee919567f2049640766c13671915975a0b7c09))
+* improve comment in init test ([e65492a](https://github.com/algolia/search-insights.js/commit/e65492a124e1270bb39d79f0fc57bff08aa1aad3))
+
+
+
 ## [2.2.3](https://github.com/algolia/search-insights.js/compare/v2.2.1...v2.2.3) (2022-11-16)
 
 
