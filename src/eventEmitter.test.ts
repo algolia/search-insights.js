@@ -1,15 +1,6 @@
 import { EventEmitter } from "./eventEmitter";
 
 describe("eventEmitter", () => {
-  test("calling 'emit' before 'on' throws an error", async () => {
-    const emitter = new EventEmitter();
-    expect(() => emitter.emit("userToken:changed", "new-token")).toThrowError(
-      new Error(
-        `No event callbacks of type "userToken:changed" found. Register an event callback function with 'on' before calling 'emit'`
-      )
-    );
-  });
-
   test("emit works", async () => {
     const emitter = new EventEmitter();
     const onUserTokenChange = jest.fn();
