@@ -6,17 +6,17 @@ const makeGlobalObject = () => {
   // cf. https://github.com/algolia/search-insights.js#loading-and-initializing-the-library
   const globalObject: any = {};
   globalObject.AlgoliaAnalyticsObject = 'aa';
-  globalObject.aa = function () {
+  globalObject.aa = function (...args) {
     globalObject.aa.queue = globalObject.aa.queue || [];
-    globalObject.aa.queue.push(arguments);
+    globalObject.aa.queue.push(args);
   };
   return globalObject;
 };
 
 class FakeAlgoliaAnalytics {
-  init: Function;
-  otherMethod: Function;
-  processQueue: Function;
+  init: () => void;
+  otherMethod: () => void;
+  processQueue: (globalObject: any) => void;
   constructor() {
     this.init = jest.fn();
     this.otherMethod = jest.fn(() => 'otherMethodReturnedValue');

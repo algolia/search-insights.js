@@ -10,6 +10,7 @@ export function getFunctionalInterface(
       // @ts-expect-error
       instance[functionName](...functionArguments);
     } else {
+      // eslint-disable-next-line no-console
       console.warn(`The method \`${functionName}\` doesn't exist.`);
     }
   };

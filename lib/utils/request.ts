@@ -3,13 +3,6 @@ export type RequestFnType = (
   data: Record<string, unknown>
 ) => void;
 
-export const requestWithSendBeacon: RequestFnType = (url, data) => {
-  const serializedData = JSON.stringify(data);
-  if (!navigator.sendBeacon(url, serializedData)) {
-    return requestWithXMLHttpRequest(url, data);
-  }
-};
-
 export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
   const serializedData = JSON.stringify(data);
   const report = new XMLHttpRequest();
@@ -19,8 +12,16 @@ export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
   report.send(serializedData);
 };
 
+export const requestWithSendBeacon: RequestFnType = (url, data) => {
+  const serializedData = JSON.stringify(data);
+  if (!navigator.sendBeacon(url, serializedData)) {
+    return requestWithXMLHttpRequest(url, data);
+  }
+};
+
 export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
   const serializedData = JSON.stringify(data);
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { protocol, host, path } = require('url').parse(url);
   const options = {
     protocol,
@@ -38,6 +39,7 @@ export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
   const req = nodeRequest(options);
 
   req.on('error', (error) => {
+    // eslint-disable-next-line no-console
     console.error(error);
   });
 

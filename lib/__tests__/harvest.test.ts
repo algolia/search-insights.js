@@ -128,7 +128,7 @@ test.skip('Integration tests', () => {
     });
 
     describe('loading', () => {
-      it('should retrieve a queryID on page load', async () => {
+      it('should retrieve a queryID on page load', () => {
         expect(data).toHaveProperty('queryID');
       });
 
@@ -136,6 +136,7 @@ test.skip('Integration tests', () => {
         const userToken = await page.evaluate(
           () =>
             new Promise((resolve, reject) =>
+              // eslint-disable-next-line no-promise-executor-return
               (window as any).aa('getUserToken', null, (err, res) => {
                 if (err) return reject(err);
                 resolve(res);
@@ -231,7 +232,8 @@ test.skip('Integration tests', () => {
   });
 
   function getPageResponse() {
-    return new Promise(async (resolve, reject) => {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve, _) => {
       page.on('response', async (interceptedRequest) => {
         const request = interceptedRequest.request();
 
@@ -239,10 +241,7 @@ test.skip('Integration tests', () => {
         if (url.includes('.algolia.net') || url.includes('.algolianet.com')) {
           const postData = JSON.parse(request.postData());
 
-          if (
-            postData.requests &&
-            postData.requests[0].params.includes('query=K')
-          ) {
+          if (postData.requests?.[0].params.includes('query=K')) {
             const data = await interceptedRequest.json();
             resolve(data.results[0]);
           }

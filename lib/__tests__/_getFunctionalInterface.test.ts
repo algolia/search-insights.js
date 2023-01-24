@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { getFunctionalInterface } from '../_getFunctionalInterface';
 import AlgoliaAnalytics from '../insights';
 

@@ -1,4 +1,4 @@
-import AlgoliaAnalytics from '../insights';
+import type AlgoliaAnalytics from '../insights';
 
 declare global {
   interface Window {
@@ -9,10 +9,10 @@ declare global {
 describe('Before script loads', () => {
   beforeAll(() => {
     (window as any).AlgoliaAnalyticsObject = 'aa';
-    window.aa =
+    (window.aa as any) =
       window.aa ||
-      function () {
-        (window.aa.queue = window.aa.queue || []).push(arguments);
+      function (...args) {
+        ((window.aa as any).queue = (window.aa as any).queue || []).push(args);
       };
   });
 
