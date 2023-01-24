@@ -21,7 +21,96 @@ const search = instantsearch({
   },
 });
 
-search.addWidget(
+// adding all widgets at once, since addWidget has been deprecated
+
+const searchWidgets = [
+  instantsearch.widgets.searchBox({
+    container: "#q",
+    placeholder: "Search a product"
+  }),
+  instantsearch.widgets.stats({
+    container: "#stats"
+  }),
+  instantsearch.widgets.hits({
+    container: "#hits",
+    hitsPerPage: 16,
+    templates: {
+      empty: noResultsTemplate,
+      item: hitTemplate
+    },
+    transformData: function (hit) {
+      var result = search.helper.lastResults;
+      var offset = result.hitsPerPage * result.page;
+
+      hit._queryID = result.queryID;
+      hit._hitPosition = offset + hit.__hitIndex + 1;
+
+      hit.stars = [];
+      for (var i = 1; i <= 5; ++i) {
+        hit.stars.push(i <= hit.rating);
+      }
+      return hit;
+    }
+  }),
+  instantsearch.widgets.pagination({
+    container: "#pagination",
+    cssClasses: {
+      active: "active"
+    },
+    labels: {
+      previous: '<i class="fa fa-angle-left fa-2x"></i> Previous page',
+      next: 'Next page <i class="fa fa-angle-right fa-2x"></i>'
+    },
+    showFirstLast: false
+  }),
+  instantsearch.widgets.hierarchicalMenu({
+    container: "#categories",
+    attributes: ["category", "sub_category", "sub_sub_category"],
+    sortBy: ["name:asc"],
+    templates: {
+      item: menuTemplate
+    }
+  }),
+  instantsearch.widgets.refinementList({
+    container: "#materials",
+    attributeName: "alternative_name",
+    operator: "or",
+    limit: 10,
+    templates: {
+      item: facetTemplateCheckbox,
+      header: '<div class="facet-title">Materials</div class="facet-title">'
+    }
+  }),
+  instantsearch.widgets.refinementList({
+    container: "#colors",
+    attributeName: "colors",
+    operator: "or",
+    limit: 10,
+    templates: {
+      item: facetTemplateColors,
+      header: '<div class="facet-title">Colors</div class="facet-title">'
+    }
+  }),
+  instantsearch.widgets.starRating({
+    container: "#rating",
+    attributeName: "rating",
+    templates: {
+      header: '<div class="facet-title">Ratings</div class="facet-title">'
+    }
+  }),
+  instantsearch.widgets.clearAll({
+    container: "#clear-all",
+    templates: {
+      link: '<i class="fa fa-eraser"></i> Clear all filters'
+    },
+    cssClasses: {
+      root: "btn btn-block btn-default"
+    },
+    autoHideContainer: true
+  })
+];
+
+/* search.addWidget(
   searchBox({
     container: '#q',
     placeholder: 'Search a product',
@@ -32,7 +121,7 @@ search.addWidget(
   stats({
     container: '#stats',
   })
-);
+); */
 
 const hitTemplate = (hit) => `
   <article>
@@ -65,7 +154,10 @@ const facetTemplateCheckbox =
 const facetTemplateColors =
   '<a href="javascript:void(0);" data-facet-value="{{name}}" class="facet-color {{#isRefined}}checked{{/isRefined}}"></a>';
 
-search.addWidget(
+// addWidget has been deprecated and replaced with addWidgets
+search.addWidgets(searchWidgets);
+
+/* search.addWidget(
   hits({
     container: '#hits',
     hitsPerPage: 16,
@@ -161,7 +253,7 @@ search.addWidget(
     },
     autoHideContainer: true,
   })
-);
+); */
 
 search.start();
 
