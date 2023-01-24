@@ -10,7 +10,7 @@ const consoleErrorSpy = jest.spyOn(console, "error");
 
 const clientOpts = { applicationId: "app123", apiKey: "key123" };
 
-const testEvent = {
+const testEvent: InsightsApiEvent = {
   timestamp: 1674450900226,
   userToken: "test-token",
   eventType: "click",
@@ -19,7 +19,7 @@ const testEvent = {
   queryID: "test-query",
   objectIDs: ["1"],
   positions: [1]
-} as InsightsApiEvent;
+};
 
 describe("InsightsApiBeaconClient", () => {
   afterEach(() => {

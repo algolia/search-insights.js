@@ -1,4 +1,5 @@
 import { Beacon } from "./beacon";
+import { InsightsRegion } from "./insights";
 
 export type InsightsApiEvent = {
   timestamp: ReturnType<typeof Date.now>;
@@ -18,13 +19,13 @@ export type InsightsApiEvent = {
 type InsightsApiBeaconClientOptions = {
   applicationId: string;
   apiKey: string;
-  region?: "us" | "de";
+  region?: InsightsRegion;
 };
 
 export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
   applicationId: string;
   apiKey: string;
-  region?: "us" | "de";
+  region?: InsightsRegion;
 
   constructor(opts: InsightsApiBeaconClientOptions) {
     super();
@@ -53,6 +54,7 @@ export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
     [`search-insights.js (${process.env.__VERSION__ || process.env.NODE_ENV})`]:
       null
   };
+
   addAlgoliaAgent(agent: string) {
     this.algoliaAgents[agent] = null;
   }

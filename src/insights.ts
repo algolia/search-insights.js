@@ -9,6 +9,8 @@ type BufferedMethodCall = [string, unknown];
 
 type SnippetAlgoliaInsights = BufferedMethodCall[];
 
+export type InsightsRegion = "de" | "us";
+
 type ObjectIDsAfterSearchEvent = {
   eventName: string;
   index: string;
@@ -66,7 +68,7 @@ class AlgoliaInsights {
     opts: {
       applicationId: string;
       apiKey: string;
-      region?: "us" | "de";
+      region?: InsightsRegion;
     } & UserTokenOptions
   ) {
     this.userToken = new UserToken({
