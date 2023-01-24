@@ -1,7 +1,7 @@
-import { createUUID } from "./utils/uuid";
-import { isFunction, supportsCookies } from "./utils";
+import { isFunction, supportsCookies } from './utils';
+import { createUUID } from './utils/uuid';
 
-const COOKIE_KEY = "_ALGOLIA";
+const COOKIE_KEY = '_ALGOLIA';
 
 const setCookie = (name: string, value: number | string, duration: number) => {
   const d = new Date();
@@ -12,17 +12,17 @@ const setCookie = (name: string, value: number | string, duration: number) => {
 
 export const getCookie = (name: string): string => {
   const prefix = `${name}=`;
-  const ca = document.cookie.split(";");
+  const ca = document.cookie.split(';');
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
-    while (c.charAt(0) === " ") {
+    while (c.charAt(0) === ' ') {
       c = c.substring(1);
     }
     if (c.indexOf(prefix) === 0) {
       return c.substring(prefix.length, c.length);
     }
   }
-  return "";
+  return '';
 };
 
 export function setAnonymousUserToken(): void {
@@ -32,8 +32,8 @@ export function setAnonymousUserToken(): void {
   const foundToken = getCookie(COOKIE_KEY);
   if (
     !foundToken ||
-    foundToken === "" ||
-    foundToken.indexOf("anonymous-") !== 0
+    foundToken === '' ||
+    foundToken.indexOf('anonymous-') !== 0
   ) {
     this.setUserToken(`anonymous-${createUUID()}`);
     setCookie(COOKIE_KEY, this._userToken, this._cookieDuration);
@@ -42,7 +42,7 @@ export function setAnonymousUserToken(): void {
   }
 }
 
-export function setUserToken(userToken: string | number): void {
+export function setUserToken(userToken: number | string): void {
   this._userToken = userToken;
   if (isFunction(this._onUserTokenChangeCallback)) {
     this._onUserTokenChangeCallback(this._userToken);
@@ -64,11 +64,7 @@ export function onUserTokenChange(
   options?: { immediate: boolean }
 ): void {
   this._onUserTokenChangeCallback = callback;
-  if (
-    options &&
-    options.immediate &&
-    isFunction(this._onUserTokenChangeCallback)
-  ) {
+  if (options?.immediate && isFunction(this._onUserTokenChangeCallback)) {
     this._onUserTokenChangeCallback(this._userToken);
   }
 }

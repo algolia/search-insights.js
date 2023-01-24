@@ -1,3 +1,5 @@
-export * from "./dist/entry-browser-cjs";
-import aa from "./dist/entry-browser-cjs";
+/* eslint-disable import/no-unresolved */
+import aa from './dist/entry-browser-cjs';
+
+export * from './dist/entry-browser-cjs';
 export default aa;

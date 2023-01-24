@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 export const supportsCookies = () => {
   try {
     return Boolean(navigator.cookieEnabled);
@@ -24,8 +26,8 @@ export const supportsXMLHttpRequest = () => {
 
 export const supportsNodeHttpModule = () => {
   try {
-    const { request: nodeHttpRequest } = require("http");
-    const { request: nodeHttpsRequest } = require("https");
+    const { request: nodeHttpRequest } = require('http');
+    const { request: nodeHttpsRequest } = require('https');
     return Boolean(nodeHttpRequest) && Boolean(nodeHttpsRequest);
   } catch (e) {
     return false;

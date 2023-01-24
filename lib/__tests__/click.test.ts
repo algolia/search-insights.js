@@ -1,8 +1,8 @@
-import AlgoliaAnalytics from "../insights";
+import AlgoliaAnalytics from '../insights';
 
 const credentials = {
-  apiKey: "test",
-  appId: "test"
+  apiKey: 'test',
+  appId: 'test',
 };
 
 let analyticsInstance;
@@ -10,12 +10,12 @@ beforeEach(() => {
   analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
 });
 
-describe("clickedObjectIDsAfterSearch", () => {
-  test("Should call sendEvents with proper params", () => {
+describe('clickedObjectIDsAfterSearch', () => {
+  test('Should call sendEvents with proper params', () => {
     const clickParams = {
       positions: [1],
-      objectIDs: ["2"],
-      queryID: "testing"
+      objectIDs: ['2'],
+      queryID: 'testing',
     };
 
     analyticsInstance.init(credentials);
@@ -24,17 +24,17 @@ describe("clickedObjectIDsAfterSearch", () => {
 
     expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
       {
-        eventType: "click",
-        ...clickParams
-      }
+        eventType: 'click',
+        ...clickParams,
+      },
     ]);
   });
 });
 
-describe("clickedObjectIDs", () => {
-  it("should call sendEvents with proper params", () => {
+describe('clickedObjectIDs', () => {
+  it('should call sendEvents with proper params', () => {
     const clickParams = {
-      objectIDs: ["2"]
+      objectIDs: ['2'],
     };
 
     analyticsInstance.init(credentials);
@@ -43,17 +43,17 @@ describe("clickedObjectIDs", () => {
 
     expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
       {
-        eventType: "click",
-        ...clickParams
-      }
+        eventType: 'click',
+        ...clickParams,
+      },
     ]);
   });
 });
 
-describe("clickedFilters", () => {
-  it("should call sendEvents with proper params", () => {
+describe('clickedFilters', () => {
+  it('should call sendEvents with proper params', () => {
     const clickParams = {
-      filters: ["brands:apple"]
+      filters: ['brands:apple'],
     };
 
     analyticsInstance.init(credentials);
@@ -62,9 +62,9 @@ describe("clickedFilters", () => {
 
     expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith([
       {
-        eventType: "click",
-        ...clickParams
-      }
+        eventType: 'click',
+        ...clickParams,
+      },
     ]);
   });
 });

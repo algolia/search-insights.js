@@ -1,6 +1,6 @@
-import { RequestFnType } from "./utils/request";
-import { InsightsEvent } from "./types";
-import { isUndefined } from "./utils";
+import type { InsightsEvent } from './types';
+import { isUndefined } from './utils';
+import type { RequestFnType } from './utils/request';
 
 export function makeSendEvents(requestFn: RequestFnType) {
   return function sendEvents(eventData: InsightsEvent[]) {
@@ -17,7 +17,7 @@ export function makeSendEvents(requestFn: RequestFnType) {
       const { filters, ...rest } = data;
       const payload: InsightsEvent = {
         ...rest,
-        userToken: data?.userToken ?? this._userToken
+        userToken: data?.userToken ?? this._userToken,
       };
       if (!isUndefined(filters)) {
         payload.filters = filters.map(encodeURIComponent);
@@ -36,6 +36,7 @@ export function makeSendEvents(requestFn: RequestFnType) {
   };
 }
 
+// eslint-disable-next-line max-params
 function sendRequest(
   requestFn: RequestFnType,
   appId: string,
@@ -45,7 +46,7 @@ function sendRequest(
   events: InsightsEvent[]
 ) {
   // Auth query
-  const ua = encodeURIComponent(userAgents.join("; "));
+  const ua = encodeURIComponent(userAgents.join('; '));
   const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${ua}`;
   return requestFn(reportingURL, { events });
 }

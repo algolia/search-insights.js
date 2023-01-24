@@ -1,8 +1,8 @@
-import { version } from "../package.json";
+import { version } from '../package.json';
 
 export const DEFAULT_ALGOLIA_AGENTS = [
   `insights-js (${version})`,
-  `insights-js-${__FLAVOR__} (${version})`
+  `insights-js-${__FLAVOR__} (${version})`,
 ];
 
 export function addAlgoliaAgent(algoliaAgent) {
