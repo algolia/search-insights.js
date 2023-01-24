@@ -1249,7 +1249,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/rest@npm:^17.0.0":
+"@octokit/rest@npm:^17.11.0":
   version: 17.11.2
   resolution: "@octokit/rest@npm:17.11.2"
   dependencies:
@@ -12121,7 +12121,7 @@ __metadata:
     rollup-plugin-typescript: ^1.0.1
     rollup-plugin-uglify: ^6.0.4
     sass-loader: ^6.0.7
-    shipjs: ^0.24.4
+    shipjs: ^0.25.1
     style-loader: ^3.3.1
     ts-jest: ^29.0.3
     ts-loader: ^9.4.1
@@ -12355,25 +12355,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shipjs-lib@npm:0.24.4":
-  version: 0.24.4
-  resolution: "shipjs-lib@npm:0.24.4"
+"shipjs-lib@npm:0.25.1":
+  version: 0.25.1
+  resolution: "shipjs-lib@npm:0.25.1"
   dependencies:
     deepmerge: ^4.2.2
     dotenv: ^8.1.0
     parse-github-url: 1.0.2
     semver: 6.3.0
     shelljs: 0.8.5
-  checksum: abe22b73a92fc63c44ba0a1c1922c6657b232e83d17f385b30228cf841960f79860820fae433335deaf3a5915c0196ca0ebe0127549faeb4fa1eab959e8adbf0
+  checksum: 8308ac5dbd68af24a3a828d57c1868b4cdce5c6a4ef4e91381bf8c6f54f8baa9a4d14657500f3c16c66d2527a5b86730a0dc35cd3838e2630ae2306758758621
   languageName: node
   linkType: hard
 
-"shipjs@npm:^0.24.4":
-  version: 0.24.4
-  resolution: "shipjs@npm:0.24.4"
+"shipjs@npm:^0.25.1":
+  version: 0.25.1
+  resolution: "shipjs@npm:0.25.1"
   dependencies:
     "@babel/runtime": ^7.6.3
-    "@octokit/rest": ^17.0.0
+    "@octokit/rest": ^17.11.0
     "@slack/webhook": ^5.0.1
     add-stream: ^1.0.0
     arg: 4.1.3
@@ -12394,12 +12394,12 @@ __metadata:
     prettier: ^2.0.0
     serialize-javascript: ^3.0.0
     shell-quote: ^1.7.2
-    shipjs-lib: 0.24.4
+    shipjs-lib: 0.25.1
     temp-write: 4.0.0
     tempfile: ^3.0.0
   bin:
     shipjs: bin/shipjs
-  checksum: 5aea64dd39b95eb80e7797a397132325ab4ece2f47b39791d4a31dd2c07a3b746cd21e68b7c74ba9eec34b770301d5ea2e983fd09527cc94f36b0326f14d09f0
+  checksum: a23b254a86b04114f306bff76536e09133a59043f9198e14c786c64177d227b8bc2fa53eee526f13e4457731a7318b854209945bae59bbf04009fce43736cb3b
   languageName: node
   linkType: hard
 
