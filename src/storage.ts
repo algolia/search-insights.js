@@ -28,7 +28,7 @@ export class Storage {
    */
   static set(key: string, item: any) {
     let contentToStore = item;
-    if (typeof item === "object") {
+    if (typeof item === 'object') {
       contentToStore = JSON.stringify(item);
     }
 

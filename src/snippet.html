@@ -6,30 +6,30 @@
     }
     if (insights.invoked) {
       if (window.console && console.error) {
-        console.error("Algolia insights snippet included twice.");
+        console.error('Algolia insights snippet included twice.');
       }
       return;
     }
 
     insights.invoked = true;
     insights.methods = [
-      "init",
-      "on",
+      'init',
+      'on',
 
-      "setUserToken",
+      'setUserToken',
 
-      "sendEvents",
+      'sendEvents',
 
-      "clickedObjectIDsAfterSearch",
-      "clickedObjectIDs",
-      "clickedFilters",
+      'clickedObjectIDsAfterSearch',
+      'clickedObjectIDs',
+      'clickedFilters',
 
-      "convertedObjectIDsAfterSearch",
-      "convertedObjectIDs",
-      "convertedFilters",
+      'convertedObjectIDsAfterSearch',
+      'convertedObjectIDs',
+      'convertedFilters',
 
-      "viewedObjectIDs",
-      "viewedFilters"
+      'viewedObjectIDs',
+      'viewedFilters',
     ];
 
     // Define a factory to create stubs. These are placeholders
@@ -51,24 +51,24 @@
     }
 
     insights.load = function (version) {
-      var script = document.createElement("script");
-      script.type = "text/javascript";
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
       script.async = true;
-      var cdnPath = "https://cdn.jsdelivr.net/npm/search-insights";
+      var cdnPath = 'https://cdn.jsdelivr.net/npm/search-insights';
       if (version) {
-        cdnPath += "@" + version;
+        cdnPath += '@' + version;
       }
       script.src = cdnPath;
 
       // Insert our script next to the first script element.
-      var first = document.getElementsByTagName("script")[0];
+      var first = document.getElementsByTagName('script')[0];
       first.parentNode.insertBefore(script, first);
     };
     insights.load();
 
     insights.init({
-      applicationId: "test123",
-      apiKey: "test123"
+      applicationId: 'test123',
+      apiKey: 'test123',
 
       // region: "us",
       // anonmoyousId: { enabled: true, lease: 60 },

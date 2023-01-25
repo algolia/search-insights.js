@@ -1,6 +1,6 @@
-import { Storage } from "./storage";
+import { Storage } from './storage';
 
-const DEFAULT_STORAGE_KEY = "alg:beacon:events";
+const DEFAULT_STORAGE_KEY = 'alg:beacon:events';
 const EVENT_EXPIRY_DAYS = 30;
 
 function expiry() {
@@ -26,7 +26,7 @@ export class Beacon<Event> {
     this.events.push({
       event,
       timestamp: Date.now(),
-      sent: false
+      sent: false,
     });
     this.persistEvents();
     this.flushEvents();
@@ -34,7 +34,7 @@ export class Beacon<Event> {
 
   protected emit(_: Event): Promise<unknown> {
     return new Promise((_, reject) => {
-      return reject("emit method not implemented");
+      return reject('emit method not implemented');
     });
   }
 

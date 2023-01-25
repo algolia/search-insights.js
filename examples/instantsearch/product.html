@@ -2,7 +2,7 @@
   <head>
     <script>
       (function (i, s, o, g, r, a, m) {
-        i["AlgoliaAnalyticsObject"] = r;
+        i['AlgoliaAnalyticsObject'] = r;
         i[r] =
           i[r] ||
           function () {
@@ -12,12 +12,12 @@
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m);
-      })(window, document, "script", "@@SCRIPT_SRC", "aa");
+      })(window, document, 'script', '@@SCRIPT_SRC', 'aa');
 
-      aa("init", {
-        apiKey: "@@API_KEY",
-        applicationID: "@@APP_ID",
-        useCookie: true
+      aa('init', {
+        apiKey: '@@API_KEY',
+        applicationID: '@@APP_ID',
+        useCookie: true,
       });
     </script>
   </head>
@@ -28,10 +28,10 @@
     </div>
 
     <script>
-      const button = document.querySelector("button");
-      button.addEventListener("click", () => {
-        aa("conversion", {
-          objectID: button.getAttribute("objectid")
+      const button = document.querySelector('button');
+      button.addEventListener('click', () => {
+        aa('conversion', {
+          objectID: button.getAttribute('objectid'),
         });
       });
     </script>

@@ -32,7 +32,7 @@ $sidebar-width: 230px;
 
 @mixin clearfix {
   &:after {
-    content: "";
+    content: '';
     display: table;
     clear: both;
   }
@@ -178,101 +178,101 @@ aside {
     &.checked {
       box-shadow: inset 0 0 0 4px rgba(#ffffff, 0.5);
     }
-    &[data-facet-value="White"] {
+    &[data-facet-value='White'] {
       background-color: #ffffff;
       box-shadow: inset 0 0 0 1px #ccc;
       &.checked {
         box-shadow: inset 0 0 0 4px rgba(#000000, 0.1);
       }
     }
-    &[data-facet-value="Black"] {
+    &[data-facet-value='Black'] {
       background-color: #000000;
     }
-    &[data-facet-value="Black-brown"] {
+    &[data-facet-value='Black-brown'] {
       background-color: #382919;
     }
-    &[data-facet-value="Pink"] {
+    &[data-facet-value='Pink'] {
       background-color: #c0116d;
     }
-    &[data-facet-value="Gray"] {
+    &[data-facet-value='Gray'] {
       background-color: #6f6e6c;
     }
-    &[data-facet-value="Blue"] {
+    &[data-facet-value='Blue'] {
       background-color: #5182a1;
     }
-    &[data-facet-value="Green"] {
+    &[data-facet-value='Green'] {
       background-color: #1e9c5e;
     }
-    &[data-facet-value="Brown"] {
+    &[data-facet-value='Brown'] {
       background-color: #7b6a63;
     }
-    &[data-facet-value="Red"] {
+    &[data-facet-value='Red'] {
       background-color: #bc1c1a;
     }
-    &[data-facet-value="Dark gray"] {
+    &[data-facet-value='Dark gray'] {
       background-color: #444348;
     }
-    &[data-facet-value="Silver color"] {
+    &[data-facet-value='Silver color'] {
       background-color: #aaaaa8;
     }
-    &[data-facet-value="Light brown"] {
+    &[data-facet-value='Light brown'] {
       background-color: #c19a6e;
     }
-    &[data-facet-value="Black-brown stain"] {
+    &[data-facet-value='Black-brown stain'] {
       background-color: #4b4640;
     }
-    &[data-facet-value="Off-white"] {
+    &[data-facet-value='Off-white'] {
       background-color: #d0c8b4;
     }
-    &[data-facet-value="Beige"] {
+    &[data-facet-value='Beige'] {
       background-color: #c9b8a3;
     }
-    &[data-facet-value="Light green"] {
+    &[data-facet-value='Light green'] {
       background-color: #abbd9b;
     }
-    &[data-facet-value="White stain"] {
+    &[data-facet-value='White stain'] {
       background-color: #e4e1dc;
     }
-    &[data-facet-value="Turquoise"] {
+    &[data-facet-value='Turquoise'] {
       background-color: #46bcc9;
     }
-    &[data-facet-value="Birch effect"] {
+    &[data-facet-value='Birch effect'] {
       background-color: #cbbfa4;
     }
-    &[data-facet-value="Yellow"] {
+    &[data-facet-value='Yellow'] {
       background-color: #f5e500;
     }
-    &[data-facet-value="Dark blue"] {
+    &[data-facet-value='Dark blue'] {
       background-color: #374063;
     }
-    &[data-facet-value="Galvanized"] {
+    &[data-facet-value='Galvanized'] {
       background-color: #726f6a;
     }
-    &[data-facet-value="Birch"] {
+    &[data-facet-value='Birch'] {
       background-color: #726f6a;
     }
-    &[data-facet-value="Dark brown"] {
+    &[data-facet-value='Dark brown'] {
       background-color: #74523e;
     }
-    &[data-facet-value="High gloss gray"] {
+    &[data-facet-value='High gloss gray'] {
       background-color: #e5e5e5;
     }
-    &[data-facet-value="Gray/white"] {
+    &[data-facet-value='Gray/white'] {
       background-color: #e5e5e5;
     }
-    &[data-facet-value="Red/white"] {
+    &[data-facet-value='Red/white'] {
       background-color: #fa757b;
     }
-    &[data-facet-value="Clear"] {
+    &[data-facet-value='Clear'] {
       background-color: #d5dae0;
     }
-    &[data-facet-value="Matte black"] {
+    &[data-facet-value='Matte black'] {
       background-color: #616872;
     }
-    &[data-facet-value="Matte white"] {
+    &[data-facet-value='Matte white'] {
       background-color: #dcdbd7;
     }
-    &[data-facet-value="White stained oak effect"] {
+    &[data-facet-value='White stained oak effect'] {
       background-color: #e7e8e0;
     }
     // to fix - add more colors
@@ -473,7 +473,7 @@ aside {
   border-radius: 4px;
   -webkit-transition: 0.2s;
   transition: 0.2s;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   box-shadow: 4px 4px 0 rgba(241, 241, 241, 0.35);
   font-size: 11px;
   box-sizing: border-box;
@@ -510,7 +510,7 @@ aside {
   background-color: #fff;
   border: 2px solid rgba(228, 228, 228, 0.6);
   border-top-width: 1px;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   width: 300px;
   margin-top: 10px;
   box-shadow: 4px 4px 0 rgba(241, 241, 241, 0.35);

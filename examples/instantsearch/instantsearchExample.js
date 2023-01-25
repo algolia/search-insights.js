@@ -25,18 +25,18 @@ const search = instantsearch({
 
 const searchWidgets = [
   instantsearch.widgets.searchBox({
-    container: "#q",
-    placeholder: "Search a product"
+    container: '#q',
+    placeholder: 'Search a product',
   }),
   instantsearch.widgets.stats({
-    container: "#stats"
+    container: '#stats',
   }),
   instantsearch.widgets.hits({
-    container: "#hits",
+    container: '#hits',
     hitsPerPage: 16,
     templates: {
       empty: noResultsTemplate,
-      item: hitTemplate
+      item: hitTemplate,
     },
     transformData: function (hit) {
       var result = search.helper.lastResults;
@@ -50,64 +50,64 @@ const searchWidgets = [
         hit.stars.push(i <= hit.rating);
       }
       return hit;
-    }
+    },
   }),
   instantsearch.widgets.pagination({
-    container: "#pagination",
+    container: '#pagination',
     cssClasses: {
-      active: "active"
+      active: 'active',
     },
     labels: {
       previous: '<i class="fa fa-angle-left fa-2x"></i> Previous page',
-      next: 'Next page <i class="fa fa-angle-right fa-2x"></i>'
+      next: 'Next page <i class="fa fa-angle-right fa-2x"></i>',
     },
-    showFirstLast: false
+    showFirstLast: false,
   }),
   instantsearch.widgets.hierarchicalMenu({
-    container: "#categories",
-    attributes: ["category", "sub_category", "sub_sub_category"],
-    sortBy: ["name:asc"],
+    container: '#categories',
+    attributes: ['category', 'sub_category', 'sub_sub_category'],
+    sortBy: ['name:asc'],
     templates: {
-      item: menuTemplate
-    }
+      item: menuTemplate,
+    },
   }),
   instantsearch.widgets.refinementList({
-    container: "#materials",
-    attributeName: "alternative_name",
-    operator: "or",
+    container: '#materials',
+    attributeName: 'alternative_name',
+    operator: 'or',
     limit: 10,
     templates: {
       item: facetTemplateCheckbox,
-      header: '<div class="facet-title">Materials</div class="facet-title">'
-    }
+      header: '<div class="facet-title">Materials</div class="facet-title">',
+    },
   }),
   instantsearch.widgets.refinementList({
-    container: "#colors",
-    attributeName: "colors",
-    operator: "or",
+    container: '#colors',
+    attributeName: 'colors',
+    operator: 'or',
     limit: 10,
     templates: {
       item: facetTemplateColors,
-      header: '<div class="facet-title">Colors</div class="facet-title">'
-    }
+      header: '<div class="facet-title">Colors</div class="facet-title">',
+    },
   }),
   instantsearch.widgets.starRating({
-    container: "#rating",
-    attributeName: "rating",
+    container: '#rating',
+    attributeName: 'rating',
     templates: {
-      header: '<div class="facet-title">Ratings</div class="facet-title">'
-    }
+      header: '<div class="facet-title">Ratings</div class="facet-title">',
+    },
   }),
   instantsearch.widgets.clearAll({
-    container: "#clear-all",
+    container: '#clear-all',
     templates: {
-      link: '<i class="fa fa-eraser"></i> Clear all filters'
+      link: '<i class="fa fa-eraser"></i> Clear all filters',
     },
     cssClasses: {
-      root: "btn btn-block btn-default"
+      root: 'btn btn-block btn-default',
     },
-    autoHideContainer: true
-  })
+    autoHideContainer: true,
+  }),
 ];
 
 /* search.addWidget(

@@ -1,11 +1,11 @@
-import cookie from "js-cookie";
+import cookie from 'js-cookie';
 
 /**
  * Levels returns all levels of the given url.
  */
 function levels(url: URL): string[] {
   const host = url.hostname;
-  const parts = host.split(".");
+  const parts = host.split('.');
   const last = parts[parts.length - 1];
   const levels: string[] = [];
 
@@ -21,7 +21,7 @@ function levels(url: URL): string[] {
 
   // Create levels.
   for (let i = parts.length - 2; i >= 0; --i) {
-    levels.push(parts.slice(i).join("."));
+    levels.push(parts.slice(i).join('.'));
   }
 
   return levels;
@@ -43,12 +43,12 @@ export function tld(url: string) {
 
   // Lookup the real top level one.
   for (const domain of lvls) {
-    const cname = "__tld__";
+    const cname = '__tld__';
     const opts = { domain: `.${domain}` };
 
     try {
       // cookie access throw an error if the library is ran inside a sandboxed environment (e.g. sandboxed iframe)
-      cookie.set(cname, "1", opts);
+      cookie.set(cname, '1', opts);
       if (cookie.get(cname)) {
         cookie.remove(cname, opts);
         return domain;

@@ -1,6 +1,6 @@
-import Cookies from "js-cookie";
-import { tld } from "./tld";
-import { createUUID } from "./utils/uuid";
+import Cookies from 'js-cookie';
+import { tld } from './tld';
+import { createUUID } from './utils/uuid';
 
 class ExpiringCookieStore {
   constructor(private lease: number = 60) {}
@@ -19,9 +19,9 @@ class ExpiringCookieStore {
     Cookies.set(key, value, {
       expires: this.getNewExpiry(),
       domain: tld(window.location.href),
-      path: "/",
-      sameSite: "Lax",
-      secure: undefined
+      path: '/',
+      sameSite: 'Lax',
+      secure: undefined,
     });
     return value;
   }
@@ -60,7 +60,7 @@ export type UserTokenOptions = Partial<{
 
 const DefaultUserTokenOptions = {
   anonmyousId: { enabled: true, lease: 60 },
-  userToken: { cookie: true, lease: 1440 }
+  userToken: { cookie: true, lease: 1440 },
 };
 
 /*
@@ -73,8 +73,8 @@ and if the configuration has cookie storage enabled, store the userToken in a co
 
 */
 
-export const USER_TOKEN_KEY = "alg:userToken";
-export const ANONYMOUS_ID_KEY = "alg:anonymousId";
+export const USER_TOKEN_KEY = 'alg:userToken';
+export const ANONYMOUS_ID_KEY = 'alg:anonymousId';
 
 export class UserToken {
   private anonmyousIdStore?: ExpiringCookieStore;

@@ -14,16 +14,16 @@
           (i = a.createElement(t)),
           (c = a.getElementsByTagName(t)[0]),
           (i.async = 1),
-          (i.src = "@@SCRIPT_SRC"),
+          (i.src = '@@SCRIPT_SRC'),
           c.parentNode.insertBefore(i, c);
-      })(window, document, "script", 0, "aa");
+      })(window, document, 'script', 0, 'aa');
 
-      aa("init", {
-        apiKey: "@@API_KEY",
-        appId: "@@APP_ID",
-        region: "us",
+      aa('init', {
+        apiKey: '@@API_KEY',
+        appId: '@@APP_ID',
+        region: 'us',
         useCookie: true,
-        cookieDuration: 10 * 24 * 60 * 60 * 1000 // 10 days
+        cookieDuration: 10 * 24 * 60 * 60 * 1000, // 10 days
       });
     </script>
   </head>

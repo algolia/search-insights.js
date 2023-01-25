@@ -1,10 +1,10 @@
-import { EventEmitter, EventEmitterCallback } from "./eventEmitter";
+import { EventEmitter, EventEmitterCallback } from './eventEmitter';
 import {
   InsightsApiBeaconClient,
   InsightsApiEvent,
-  InsightsRegion
-} from "./insightsAPIBeaconClient";
-import { UserToken, UserTokenOptions } from "./userToken";
+  InsightsRegion,
+} from './insightsAPIBeaconClient';
+import { UserToken, UserTokenOptions } from './userToken';
 
 type BufferedMethodCall = [string, unknown];
 
@@ -43,15 +43,15 @@ class AlgoliaInsights {
   private emitter = new EventEmitter();
 
   constructor(i: SnippetAlgoliaInsights | AlgoliaInsights) {
-    if ("initialized" in i && i.initialized) {
+    if ('initialized' in i && i.initialized) {
       return i;
     }
 
     const insights = i as SnippetAlgoliaInsights;
 
     const flushedActions = flush(insights);
-    if (flushedActions.length > 0 && flushedActions[0].methodName !== "init") {
-      throw new Error("init must be called first");
+    if (flushedActions.length > 0 && flushedActions[0].methodName !== 'init') {
+      throw new Error('init must be called first');
     }
 
     const initAction = flushedActions.shift();
@@ -72,13 +72,13 @@ class AlgoliaInsights {
   ) {
     this.userToken = new UserToken({
       anonmyousId: opts.anonmyousId,
-      userToken: opts.userToken
+      userToken: opts.userToken,
     });
 
     this.beacon = new InsightsApiBeaconClient({
       applicationId: opts.applicationId,
       apiKey: opts.apiKey,
-      region: opts.region
+      region: opts.region,
     });
 
     // Flush and purge any existing events sitting in localStorage.
@@ -88,7 +88,7 @@ class AlgoliaInsights {
   private userToken: UserToken;
   public setUserToken(userToken) {
     this.userToken.setUserToken(userToken);
-    this.emitter.emit("userToken:changed", userToken);
+    this.emitter.emit('userToken:changed', userToken);
   }
 
   public on(type: string, handler: EventEmitterCallback) {
@@ -100,12 +100,12 @@ class AlgoliaInsights {
   }
 
   public sendEvents(
-    events: Omit<InsightsApiEvent, "userToken" | "timestamp">[]
+    events: Omit<InsightsApiEvent, 'userToken' | 'timestamp'>[]
   ) {
     events.forEach((event) => this.sendEvent(event));
   }
 
-  private sendEvent(event: Omit<InsightsApiEvent, "userToken" | "timestamp">) {
+  private sendEvent(event: Omit<InsightsApiEvent, 'userToken' | 'timestamp'>) {
     if (!this.beacon || !this.userToken) {
       throw new Error(
         "Before calling any other method, you need to initialize the library by calling the 'init' function with appId and apiKey parameters"
@@ -114,14 +114,14 @@ class AlgoliaInsights {
 
     const userToken = this.userToken.getUserToken();
     if (!userToken) {
-      throw new Error("userToken required to send event");
+      throw new Error('userToken required to send event');
     }
 
     this.beacon.send({
       userToken,
       timestamp: Date.now(),
 
-      ...event
+      ...event,
     });
   }
 
@@ -129,57 +129,57 @@ class AlgoliaInsights {
     event: ObjectIDsAfterSearchEvent & { positions: number[] }
   ) {
     this.sendEvent({
-      eventType: "click",
-      ...event
+      eventType: 'click',
+      ...event,
     });
   }
 
   public clickedObjectIDs(event: ObjectIDsEvent) {
     this.sendEvent({
-      eventType: "click",
-      ...event
+      eventType: 'click',
+      ...event,
     });
   }
 
   public clickedFilters(event: FiltersEvent) {
     this.sendEvent({
-      eventType: "click",
-      ...event
+      eventType: 'click',
+      ...event,
     });
   }
 
   public convertedObjectIDsAfterSearch(event: ObjectIDsAfterSearchEvent) {
     this.sendEvent({
-      eventType: "conversion",
-      ...event
+      eventType: 'conversion',
+      ...event,
     });
   }
 
   public convertedObjectIDs(event: ObjectIDsEvent) {
     this.sendEvent({
-      eventType: "conversion",
-      ...event
+      eventType: 'conversion',
+      ...event,
     });
   }
 
   public convertedFilters(event: FiltersEvent) {
     this.sendEvent({
-      eventType: "conversion",
-      ...event
+      eventType: 'conversion',
+      ...event,
     });
   }
 
   public viewedObjectIDs(event: ObjectIDsEvent) {
     this.sendEvent({
-      eventType: "view",
-      ...event
+      eventType: 'view',
+      ...event,
     });
   }
 
   public viewedFilters(event: FiltersEvent) {
     this.sendEvent({
-      eventType: "view",
-      ...event
+      eventType: 'view',
+      ...event,
     });
   }
 }
