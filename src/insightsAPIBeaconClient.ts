@@ -4,7 +4,7 @@ export type InsightsApiEvent = {
   timestamp: ReturnType<typeof Date.now>;
   userToken: string;
 
-  eventType: 'view' | 'click' | 'conversion';
+  eventType: 'click' | 'conversion' | 'view';
   eventName: string;
 
   index: string;
@@ -28,12 +28,21 @@ export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
   apiKey: string;
   region?: InsightsRegion;
 
+  private algoliaAgents = {
+    [`search-insights.js (${process.env.__VERSION__ || process.env.NODE_ENV})`]:
+      null,
+  };
+
   constructor(opts: InsightsApiBeaconClientOptions) {
     super();
 
     this.applicationId = opts.applicationId;
     this.apiKey = opts.apiKey;
     this.region = opts.region;
+  }
+
+  addAlgoliaAgent(agent: string) {
+    this.algoliaAgents[agent] = null;
   }
 
   protected emit(event: InsightsApiEvent) {
@@ -49,15 +58,6 @@ export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
       return `https://insights.${this.region}.algolia.io`;
     }
     return 'https://insights.algolia.io';
-  }
-
-  private algoliaAgents = {
-    [`search-insights.js (${process.env.__VERSION__ || process.env.NODE_ENV})`]:
-      null,
-  };
-
-  addAlgoliaAgent(agent: string) {
-    this.algoliaAgents[agent] = null;
   }
 
   private headers() {

@@ -14,7 +14,7 @@ type BeaconEvent<Event> = {
 };
 
 export class Beacon<Event> {
-  private events: BeaconEvent<Event>[];
+  private events: Array<BeaconEvent<Event>>;
   private STORAGE_KEY: string;
 
   constructor(storageKey?: string) {
@@ -32,14 +32,14 @@ export class Beacon<Event> {
     this.flushEvents();
   }
 
-  protected emit(_: Event): Promise<unknown> {
-    return new Promise((_, reject) => {
-      return reject('emit method not implemented');
-    });
-  }
-
   flushAndPurgeEvents() {
     this.flushEvents().then(() => this.purgeExpiredEvents());
+  }
+
+  protected emit(_: Event): Promise<unknown> {
+    return new Promise((_, reject) => {
+      reject(new Error('emit method not implemented'));
+    });
   }
 
   private persistEvents() {
@@ -47,7 +47,7 @@ export class Beacon<Event> {
   }
 
   private async flushEvents() {
-    const eventsToEmit: Promise<void>[] = [];
+    const eventsToEmit: Array<Promise<void>> = [];
     this.events.forEach(({ event, sent }, idx) => {
       if (sent) {
         return;
@@ -63,6 +63,7 @@ export class Beacon<Event> {
 
     try {
       return await Promise.all(eventsToEmit);
+      // eslint-disable-next-line no-empty
     } catch {}
   }
 

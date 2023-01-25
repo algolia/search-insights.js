@@ -1,10 +1,12 @@
-import { EventEmitter, EventEmitterCallback } from './eventEmitter';
-import {
-  InsightsApiBeaconClient,
+import type { EventEmitterCallback } from './eventEmitter';
+import { EventEmitter } from './eventEmitter';
+import type {
   InsightsApiEvent,
   InsightsRegion,
 } from './insightsAPIBeaconClient';
-import { UserToken, UserTokenOptions } from './userToken';
+import { InsightsApiBeaconClient } from './insightsAPIBeaconClient';
+import type { UserTokenOptions } from './userToken';
+import { UserToken } from './userToken';
 
 type BufferedMethodCall = [string, unknown];
 
@@ -37,13 +39,14 @@ function flush(insights: SnippetAlgoliaInsights) {
 
 class AlgoliaInsights {
   initialized: boolean = false;
-  [k: string]: any;
 
   private beacon?: InsightsApiBeaconClient;
   private emitter = new EventEmitter();
+  private userToken: UserToken;
 
-  constructor(i: SnippetAlgoliaInsights | AlgoliaInsights) {
+  constructor(i: AlgoliaInsights | SnippetAlgoliaInsights) {
     if ('initialized' in i && i.initialized) {
+      // eslint-disable-next-line no-constructor-return
       return i;
     }
 
@@ -55,20 +58,21 @@ class AlgoliaInsights {
     }
 
     const initAction = flushedActions.shift();
+    // eslint-disable-next-line prefer-spread
     this.init.apply(this, initAction?.args);
     this.initialized = true;
 
     flushedActions.forEach(({ methodName, args }) => {
-      this[methodName].apply(this, args);
+      this[methodName](...args);
     });
   }
 
-  public init(
-    opts: {
+  init(
+    opts: UserTokenOptions & {
       applicationId: string;
       apiKey: string;
       region?: InsightsRegion;
-    } & UserTokenOptions
+    }
   ) {
     this.userToken = new UserToken({
       anonmyousId: opts.anonmyousId,
@@ -85,27 +89,78 @@ class AlgoliaInsights {
     this.beacon.flushAndPurgeEvents();
   }
 
-  private userToken: UserToken;
-  public setUserToken(userToken) {
+  setUserToken(userToken) {
     this.userToken.setUserToken(userToken);
     this.emitter.emit('userToken:changed', userToken);
   }
 
-  public on(type: string, handler: EventEmitterCallback) {
+  on(type: string, handler: EventEmitterCallback) {
     this.emitter.on(type, handler);
   }
 
-  private addAlgoliaAgent(agent: string) {
-    this.beacon?.addAlgoliaAgent(agent);
-  }
-
-  public sendEvents(
-    events: Omit<InsightsApiEvent, 'userToken' | 'timestamp'>[]
-  ) {
+  sendEvents(events: Array<Omit<InsightsApiEvent, 'timestamp' | 'userToken'>>) {
     events.forEach((event) => this.sendEvent(event));
   }
 
-  private sendEvent(event: Omit<InsightsApiEvent, 'userToken' | 'timestamp'>) {
+  clickedObjectIDsAfterSearch(
+    event: ObjectIDsAfterSearchEvent & { positions: number[] }
+  ) {
+    this.sendEvent({
+      eventType: 'click',
+      ...event,
+    });
+  }
+
+  clickedObjectIDs(event: ObjectIDsEvent) {
+    this.sendEvent({
+      eventType: 'click',
+      ...event,
+    });
+  }
+
+  clickedFilters(event: FiltersEvent) {
+    this.sendEvent({
+      eventType: 'click',
+      ...event,
+    });
+  }
+
+  convertedObjectIDsAfterSearch(event: ObjectIDsAfterSearchEvent) {
+    this.sendEvent({
+      eventType: 'conversion',
+      ...event,
+    });
+  }
+
+  convertedObjectIDs(event: ObjectIDsEvent) {
+    this.sendEvent({
+      eventType: 'conversion',
+      ...event,
+    });
+  }
+
+  convertedFilters(event: FiltersEvent) {
+    this.sendEvent({
+      eventType: 'conversion',
+      ...event,
+    });
+  }
+
+  viewedObjectIDs(event: ObjectIDsEvent) {
+    this.sendEvent({
+      eventType: 'view',
+      ...event,
+    });
+  }
+
+  viewedFilters(event: FiltersEvent) {
+    this.sendEvent({
+      eventType: 'view',
+      ...event,
+    });
+  }
+
+  private sendEvent(event: Omit<InsightsApiEvent, 'timestamp' | 'userToken'>) {
     if (!this.beacon || !this.userToken) {
       throw new Error(
         "Before calling any other method, you need to initialize the library by calling the 'init' function with appId and apiKey parameters"
@@ -125,63 +180,11 @@ class AlgoliaInsights {
     });
   }
 
-  public clickedObjectIDsAfterSearch(
-    event: ObjectIDsAfterSearchEvent & { positions: number[] }
-  ) {
-    this.sendEvent({
-      eventType: 'click',
-      ...event,
-    });
+  private addAlgoliaAgent(agent: string) {
+    this.beacon?.addAlgoliaAgent(agent);
   }
 
-  public clickedObjectIDs(event: ObjectIDsEvent) {
-    this.sendEvent({
-      eventType: 'click',
-      ...event,
-    });
-  }
-
-  public clickedFilters(event: FiltersEvent) {
-    this.sendEvent({
-      eventType: 'click',
-      ...event,
-    });
-  }
-
-  public convertedObjectIDsAfterSearch(event: ObjectIDsAfterSearchEvent) {
-    this.sendEvent({
-      eventType: 'conversion',
-      ...event,
-    });
-  }
-
-  public convertedObjectIDs(event: ObjectIDsEvent) {
-    this.sendEvent({
-      eventType: 'conversion',
-      ...event,
-    });
-  }
-
-  public convertedFilters(event: FiltersEvent) {
-    this.sendEvent({
-      eventType: 'conversion',
-      ...event,
-    });
-  }
-
-  public viewedObjectIDs(event: ObjectIDsEvent) {
-    this.sendEvent({
-      eventType: 'view',
-      ...event,
-    });
-  }
-
-  public viewedFilters(event: FiltersEvent) {
-    this.sendEvent({
-      eventType: 'view',
-      ...event,
-    });
-  }
+  [k: string]: any;
 }
 
 declare global {

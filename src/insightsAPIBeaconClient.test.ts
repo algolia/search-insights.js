@@ -1,8 +1,7 @@
-import {
-  InsightsApiBeaconClient,
-  InsightsApiEvent,
-} from './insightsAPIBeaconClient';
 import type { FetchMock } from 'jest-fetch-mock';
+
+import type { InsightsApiEvent } from './insightsAPIBeaconClient';
+import { InsightsApiBeaconClient } from './insightsAPIBeaconClient';
 
 const getItemMock = jest.spyOn(Object.getPrototypeOf(localStorage), 'getItem');
 const setItemMock = jest.spyOn(Object.getPrototypeOf(localStorage), 'setItem');

@@ -1,7 +1,7 @@
 import { EventEmitter } from './eventEmitter';
 
 describe('eventEmitter', () => {
-  test('emit works', async () => {
+  test('emit works', () => {
     const emitter = new EventEmitter();
     const onUserTokenChange = jest.fn();
     const onUserTokenChange2 = jest.fn();

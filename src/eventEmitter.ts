@@ -13,6 +13,7 @@ export class EventEmitter {
       try {
         fn(type, data);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error);
       }
     });

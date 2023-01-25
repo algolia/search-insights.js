@@ -1,56 +1,10 @@
-import Cookies from 'js-cookie';
-import { tld } from './tld';
-import { createUUID } from './utils/uuid';
+import { createUUID } from '../utils/uuid';
 
-class ExpiringCookieStore {
-  constructor(private lease: number = 60) {}
-
-  read(key: string) {
-    const value = Cookies.get(key);
-    if (value) {
-      // If value is present, renew it's lease.
-      return this.write(key, value);
-    }
-
-    return value;
-  }
-
-  write(key: string, value: string) {
-    Cookies.set(key, value, {
-      expires: this.getNewExpiry(),
-      domain: tld(window.location.href),
-      path: '/',
-      sameSite: 'Lax',
-      secure: undefined,
-    });
-    return value;
-  }
-
-  delete(key: string) {
-    Cookies.remove(key);
-  }
-
-  private getNewExpiry() {
-    return new Date(new Date().getTime() + this.lease * 60 * 1000);
-  }
-}
-
-class InMemoryStore {
-  private cache: Record<string, string> = {};
-
-  read(key: string) {
-    return this.cache[key];
-  }
-
-  write(key: string, value: string) {
-    this.cache[key] = value;
-    return value;
-  }
-}
+import { ExpiringCookieStore, InMemoryStore } from './stores';
 
 interface Store {
-  read(key: string): string | undefined;
-  write(key: string, value: string): string;
+  read: (key: string) => string | undefined;
+  write: (key: string, value: string) => string;
 }
 
 export type UserTokenOptions = Partial<{
@@ -122,10 +76,6 @@ export class UserToken {
     );
   }
 
-  /**
-   * Create UUID according to
-   * https://www.ietf.org/rfc/rfc4122.txt
-   */
   private uuid() {
     return createUUID();
   }

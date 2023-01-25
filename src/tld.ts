@@ -30,9 +30,8 @@ function levels(url: URL): string[] {
 function parseUrl(url: string) {
   try {
     return new URL(url);
-  } catch {
-    return;
-  }
+    // eslint-disable-next-line no-empty
+  } catch {}
 }
 
 export function tld(url: string) {

@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+
 import { ANONYMOUS_ID_KEY, USER_TOKEN_KEY, UserToken } from './userToken';
 
 function clearCookies() {
@@ -76,7 +77,7 @@ describe('UserToken', () => {
 
       expect(got).toBe(userToken);
       expect(Cookies.get(USER_TOKEN_KEY)).toBe(userToken);
-      expect(Cookies.get(ANONYMOUS_ID_KEY)).toBeUndefined;
+      expect(Cookies.get(ANONYMOUS_ID_KEY)).toBeUndefined();
     });
   });
 
