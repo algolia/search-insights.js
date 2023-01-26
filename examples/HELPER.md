@@ -1,6 +1,6 @@
 # AlgoliaSearch-helper example
 
-This example describes how to implement algolia-insights library with algoliasearch-helper library. It does not cover [loading the library itself](https://github.com/algolia/algolia-insights/blob/master/README.md#loading). Nor does it cover the larger subject of the [algoliasearch-helper library](https://github.com/algolia/algoliasearch-helper-js/).
+This example describes how to implement algolia-insights library with algoliasearch-helper library. It does not cover [loading the library itself](https://github.com/algolia/search-insights.js#1-load-the-library). Nor does it cover the larger subject of the [algoliasearch-helper library](https://github.com/algolia/algoliasearch-helper-js/).
 
 ## Enabling queryID response
 
