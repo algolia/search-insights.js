@@ -72,11 +72,7 @@ export class UserToken {
 
     return this.anonmyousIdStore?.write(
       ANONYMOUS_ID_KEY,
-      `anon-${this.uuid()}`
+      `anon-${createUUID()}`
     );
-  }
-
-  private uuid() {
-    return createUUID();
   }
 }
