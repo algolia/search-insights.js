@@ -37,7 +37,7 @@ function flush(insights: SnippetAlgoliaInsights) {
   return buffered.map(([methodName, ...args]) => ({ methodName, args }));
 }
 
-class AlgoliaInsights {
+export class AlgoliaInsights {
   initialized: boolean = false;
 
   private beacon?: InsightsApiBeaconClient;
@@ -87,6 +87,10 @@ class AlgoliaInsights {
 
     // Flush and purge any existing events sitting in localStorage.
     this.beacon.flushAndPurgeEvents();
+  }
+
+  addAlgoliaAgent(agent: string) {
+    this.beacon?.addAlgoliaAgent(agent);
   }
 
   setUserToken(userToken) {
@@ -179,18 +183,4 @@ class AlgoliaInsights {
       ...event,
     });
   }
-
-  private addAlgoliaAgent(agent: string) {
-    this.beacon?.addAlgoliaAgent(agent);
-  }
-
-  [k: string]: any;
 }
-
-declare global {
-  interface Window {
-    insights: AlgoliaInsights;
-  }
-}
-
-window.insights = new AlgoliaInsights(window.insights || []);
