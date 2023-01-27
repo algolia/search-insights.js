@@ -8,7 +8,7 @@ import { InsightsApiBeaconClient } from './insightsAPIBeaconClient';
 import type { UserTokenOptions } from './userToken';
 import { UserToken } from './userToken';
 
-type BufferedMethodCall = [string, unknown];
+type BufferedMethodCall = [string, unknown, unknown, unknown?];
 
 type SnippetAlgoliaInsights = BufferedMethodCall[];
 
@@ -58,8 +58,14 @@ export class AlgoliaInsights {
     }
 
     const initAction = flushedActions.shift();
-    // eslint-disable-next-line prefer-spread
-    this.init.apply(this, initAction?.args);
+    const initArgs = initAction?.args;
+    if (!initArgs || initArgs.length < 2) {
+      throw new Error(
+        'Not enough arguments provided to the init call. Expected at least `applicationId` and `apiKey` to be provided.'
+      );
+    }
+
+    this.init(initArgs[0] as string, initArgs[1] as string, initArgs[2] ?? {});
     this.initialized = true;
 
     flushedActions.forEach(({ methodName, args }) => {
@@ -68,21 +74,21 @@ export class AlgoliaInsights {
   }
 
   init(
-    opts: UserTokenOptions & {
-      applicationId: string;
-      apiKey: string;
+    applicationId: string,
+    apiKey: string,
+    opts?: UserTokenOptions & {
       region?: InsightsRegion;
     }
   ) {
     this.userToken = new UserToken({
-      anonmyousId: opts.anonmyousId,
-      userToken: opts.userToken,
+      anonmyousId: opts?.anonmyousId,
+      userToken: opts?.userToken,
     });
 
     this.beacon = new InsightsApiBeaconClient({
-      applicationId: opts.applicationId,
-      apiKey: opts.apiKey,
-      region: opts.region,
+      applicationId,
+      apiKey,
+      region: opts?.region,
     });
 
     // Flush and purge any existing events sitting in localStorage.
@@ -93,7 +99,7 @@ export class AlgoliaInsights {
     this.beacon?.addAlgoliaAgent(agent);
   }
 
-  setUserToken(userToken) {
+  setUserToken(userToken: string) {
     this.userToken.setUserToken(userToken);
     this.emitter.emit('userToken:changed', userToken);
   }
@@ -167,12 +173,13 @@ export class AlgoliaInsights {
   private sendEvent(event: Omit<InsightsApiEvent, 'timestamp' | 'userToken'>) {
     if (!this.beacon || !this.userToken) {
       throw new Error(
-        "Before calling any other method, you need to initialize the library by calling the 'init' function with appId and apiKey parameters"
+        "Before calling any other method, you need to initialize the library by calling the 'init' function with applicationId and apiKey parameters"
       );
     }
 
     const userToken = this.userToken.getUserToken();
     if (!userToken) {
+      // TODO(bhinchley): Introduce a debug mode, and only throw this error in debug mode.
       throw new Error('userToken required to send event');
     }
 

@@ -17,6 +17,7 @@
       'on',
 
       'setUserToken',
+      'addAlgoliaAgent',
 
       'sendEvents',
 
@@ -66,10 +67,7 @@
     };
     insights.load();
 
-    insights.init({
-      applicationId: 'test123',
-      apiKey: 'test123',
-
+    insights.init('YourApplicationID', 'YourSearchOnlyAPIKey', {
       // region: "us",
       // anonmoyousId: { enabled: true, lease: 60 },
       // userToken: { cookie: true, lease: 1440 }
