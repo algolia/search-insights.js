@@ -12,7 +12,8 @@
     "noImplicitThis": false,
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "allowJs": true
+    "allowJs": true,
+    "esModuleInterop": true
   },
   "files": [
     "./lib/typings.d.ts",

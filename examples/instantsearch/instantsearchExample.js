@@ -21,19 +21,6 @@ const search = instantsearch({
   },
 });
 
-search.addWidget(
-  searchBox({
-    container: '#q',
-    placeholder: 'Search a product',
-  })
-);
-
-search.addWidget(
-  stats({
-    container: '#stats',
-  })
-);
-
 const hitTemplate = (hit) => `
   <article>
     <div class="product-picture-wrapper">
@@ -65,7 +52,14 @@ const facetTemplateCheckbox =
 const facetTemplateColors =
   '<a href="javascript:void(0);" data-facet-value="{{name}}" class="facet-color {{#isRefined}}checked{{/isRefined}}"></a>';
 
-search.addWidget(
+const searchWidgets = [
+  searchBox({
+    container: '#q',
+    placeholder: 'Search a product',
+  }),
+  stats({
+    container: '#stats',
+  }),
   hits({
     container: '#hits',
     hitsPerPage: 16,
@@ -86,10 +80,7 @@ search.addWidget(
       }
       return hit;
     },
-  })
-);
-
-search.addWidget(
+  }),
   pagination({
     container: '#pagination',
     cssClasses: {
@@ -100,10 +91,7 @@ search.addWidget(
       next: 'Next page <i class="fa fa-angle-right fa-2x"></i>',
     },
     showFirstLast: false,
-  })
-);
-
-search.addWidget(
+  }),
   hierarchicalMenu({
     container: '#categories',
     attributes: ['category', 'sub_category', 'sub_sub_category'],
@@ -111,10 +99,7 @@ search.addWidget(
     templates: {
       item: menuTemplate,
     },
-  })
-);
-
-search.addWidget(
+  }),
   refinementList({
     container: '#materials',
     attributeName: 'alternative_name',
@@ -124,10 +109,7 @@ search.addWidget(
       item: facetTemplateCheckbox,
       header: '<div class="facet-title">Materials</div class="facet-title">',
     },
-  })
-);
-
-search.addWidget(
+  }),
   refinementList({
     container: '#colors',
     attributeName: 'colors',
@@ -137,20 +119,14 @@ search.addWidget(
       item: facetTemplateColors,
       header: '<div class="facet-title">Colors</div class="facet-title">',
     },
-  })
-);
-
-search.addWidget(
+  }),
   starRating({
     container: '#rating',
     attributeName: 'rating',
     templates: {
       header: '<div class="facet-title">Ratings</div class="facet-title">',
     },
-  })
-);
-
-search.addWidget(
+  }),
   clearAll({
     container: '#clear-all',
     templates: {
@@ -160,8 +136,10 @@ search.addWidget(
       root: 'btn btn-block btn-default',
     },
     autoHideContainer: true,
-  })
-);
+  }),
+];
+
+search.addWidgets(searchWidgets);
 
 search.start();
 

@@ -8,7 +8,7 @@ To enable the queryID response from the search API, algoliasearch-helper enables
 
 ```js
 const helper = algoliasearchHelper(client, INDEX_NAME, {
-  clickAnalytics: true
+  clickAnalytics: true,
 });
 ```
 
@@ -21,10 +21,10 @@ last queryID. We advise you do that once the helper has been instantiated.
 ```js
 helper.search();
 
-aa("initSearch", {
+aa('initSearch', {
   getQueryID: () => {
     return helper.lastResults && helper.lastResults._rawResults[0].queryID;
-  }
+  },
 });
 ```
 
@@ -54,15 +54,15 @@ After you've added the information to the DOM, you need to create the handlers t
 This can be done by specifying a global onclick event handler and checking the clicked element.
 
 ```js
-document.addEventListener("click", (e) => {
-  if (e.target.matches(".button-click")) {
-    window.aa("click", {
-      objectID: e.target.getAttribute("data-objectid"),
-      position: parseInt(e.target.getAttribute("data-position")) // parseInt as getAttribute always returns a string
+document.addEventListener('click', (e) => {
+  if (e.target.matches('.button-click')) {
+    window.aa('click', {
+      objectID: e.target.getAttribute('data-objectid'),
+      position: parseInt(e.target.getAttribute('data-position')), // parseInt as getAttribute always returns a string
     });
-  } else if (e.target.matches(".button-conversion")) {
-    window.aa("conversion", {
-      objectID: e.target.getAttribute("data-objectid")
+  } else if (e.target.matches('.button-conversion')) {
+    window.aa('conversion', {
+      objectID: e.target.getAttribute('data-objectid'),
     });
   }
 });
@@ -74,11 +74,11 @@ Sometimes - and it is often the case in ecommerce - users right-click and open t
 To be able to report those events as click events, you will have to bind a global contextmenu event listener similar to the click event.
 
 ```js
-document.addEventListener("click", (e) => {
-  if (e.target.matches(".button-click")) {
-    window.aa("click", {
-      objectID: e.target.getAttribute("data-objectid"),
-      position: parseInt(e.target.getAttribute("data-position")) // parseInt as getAttribute always returns a string
+document.addEventListener('click', (e) => {
+  if (e.target.matches('.button-click')) {
+    window.aa('click', {
+      objectID: e.target.getAttribute('data-objectid'),
+      position: parseInt(e.target.getAttribute('data-position')), // parseInt as getAttribute always returns a string
     });
   }
 });
