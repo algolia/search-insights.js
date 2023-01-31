@@ -1,3 +1,19 @@
+# [2.3.0](https://github.com/algolia/search-insights.js/compare/v2.2.3...v2.3.0) (2023-01-31)
+
+
+### Bug Fixes
+
+* correct broken link in example ([#379](https://github.com/algolia/search-insights.js/issues/379)) ([ded66c5](https://github.com/algolia/search-insights.js/commit/ded66c5ca45b2b1be7cea5540516ae43a739e2f8))
+* get tests passing ([67ee919](https://github.com/algolia/search-insights.js/commit/67ee919567f2049640766c13671915975a0b7c09))
+* improve comment in init test ([e65492a](https://github.com/algolia/search-insights.js/commit/e65492a124e1270bb39d79f0fc57bff08aa1aad3))
+
+
+### Features
+
+* implement client side retries and anonymous id handling ([#372](https://github.com/algolia/search-insights.js/issues/372)) ([fddeec0](https://github.com/algolia/search-insights.js/commit/fddeec0aa7e851e839b38ffe97d80122805d9ad4))
+
+
+
 ## [2.2.3](https://github.com/algolia/search-insights.js/compare/v2.2.1...v2.2.3) (2022-11-16)
 
 
