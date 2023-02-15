@@ -34,6 +34,7 @@ jobs:
 
   "unit tests":
     executor: node/default
+    resource_class: xlarge
     steps:
       - checkout
       - node/install-packages:
@@ -46,7 +47,6 @@ jobs:
 
   "release if needed":
     executor: node/default
-    resource_class: xlarge
     steps:
       - checkout
       - node/install-packages:
