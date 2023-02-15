@@ -46,6 +46,7 @@ jobs:
 
   "release if needed":
     executor: node/default
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
