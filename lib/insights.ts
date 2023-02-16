@@ -52,11 +52,11 @@ type AnalyticsFunction = {
   [key: string]: (fnName: string, fnArgs: any[]) => void;
 };
 
-type AlgoliaAnalyticsObject = Queue | AnalyticsFunction;
+export type AlgoliaAnalyticsObject = Queue | AnalyticsFunction;
 
 declare global {
   interface Window {
-    AlgoliaAnalyticsObject: AlgoliaAnalyticsObject;
+    AlgoliaAnalyticsObject?: string;
   }
 }
 
