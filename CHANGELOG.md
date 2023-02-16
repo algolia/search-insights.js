@@ -1,3 +1,12 @@
+# [2.3.0](https://github.com/algolia/search-insights.js/compare/v2.2.3...v2.3.0) (2023-02-16)
+
+
+### Features
+
+* **api:** expose window.AlgoliaAnalyticsObject if not yet set ([#390](https://github.com/algolia/search-insights.js/issues/390)) ([493eefd](https://github.com/algolia/search-insights.js/commit/493eefdb843629039e92e94fb14a67dd83b61bcc))
+
+
+
 ## [2.2.3](https://github.com/algolia/search-insights.js/compare/v2.2.1...v2.2.3) (2022-11-16)
 
 
