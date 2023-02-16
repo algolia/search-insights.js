@@ -6,17 +6,17 @@
     <script>
       !(function(e, a, t, n, s, i, c) {
         (e.AlgoliaAnalyticsObject = s),
-          (e.aa =
-            e.aa ||
-            function() {
-              (e.aa.queue = e.aa.queue || []).push(arguments);
+          (e[s] =
+            e[s] ||
+            function () {
+              (e[s].queue = e[s].queue || []).push(arguments);
             }),
           (i = a.createElement(t)),
           (c = a.getElementsByTagName(t)[0]),
           (i.async = 1),
-          (i.src = "@@SCRIPT_SRC"),
+          (i.src = n),
           c.parentNode.insertBefore(i, c);
-      })(window, document, "script", 0, "aa");
+      })(window, document, 'script', '@@SCRIPT_SRC', 'aa');
 
       aa("init", {
         apiKey: "@@API_KEY",

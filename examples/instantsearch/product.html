@@ -1,18 +1,19 @@
 <html>
   <head>
     <script>
-      (function(i, s, o, g, r, a, m) {
-        i["AlgoliaAnalyticsObject"] = r;
-        i[r] =
-          i[r] ||
-          function() {
-            (i[r].queue = i[r].queue || []).push(arguments);
-          };
-        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m);
-      })(window, document, "script", "@@SCRIPT_SRC", "aa");
+      !(function (e, a, t, n, s, i, c) {
+        (e.AlgoliaAnalyticsObject = s),
+          (e[s] =
+            e[s] ||
+            function () {
+              (e[s].queue = e[s].queue || []).push(arguments);
+            }),
+          (i = a.createElement(t)),
+          (c = a.getElementsByTagName(t)[0]),
+          (i.async = 1),
+          (i.src = n),
+          c.parentNode.insertBefore(i, c);
+      })(window, document, 'script', '@@SCRIPT_SRC', 'aa');
 
       aa("init", {
         apiKey: "@@API_KEY",
