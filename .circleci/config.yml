@@ -23,7 +23,7 @@ aliases:
 node_v8: &node_v8
   working_directory: ~/search-insights
   docker:
-    - image: cimg/node:8.14.0-browsers
+    - image: cimg/node:10.24.1-browsers
 
 node_v12: &node_v12
   working_directory: ~/search-insights
