@@ -99,3 +99,5 @@ workflows:
             branches:
               only:
                 - master
+                - v1
+                - v2
