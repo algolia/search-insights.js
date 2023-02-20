@@ -70,7 +70,7 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jsdoc": "^39.6.7",
+    "eslint-plugin-jsdoc": "^40.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "express": "^4.18.2",
     "html-loader": "^0.5.5",
