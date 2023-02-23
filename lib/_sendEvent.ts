@@ -13,8 +13,16 @@ export function makeSendEvents(requestFn: RequestFnType) {
       );
     }
 
+    let _appId: string | undefined;
+    let _apiKey: string | undefined;
     const events: InsightsEvent[] = eventData.map((data) => {
-      const { filters, ...rest } = data;
+      const { filters, appId, apiKey, ...rest } = data;
+
+      if (appId && apiKey) {
+        _appId = appId;
+        _apiKey = apiKey;
+      }
+
       const payload: InsightsEvent = {
         ...rest,
         userToken: data?.userToken ?? this._userToken,
@@ -27,8 +35,8 @@ export function makeSendEvents(requestFn: RequestFnType) {
 
     return sendRequest(
       requestFn,
-      this._appId,
-      this._apiKey,
+      _appId || this._appId,
+      _apiKey || this._apiKey,
       this._ua,
       this._endpointOrigin,
       events

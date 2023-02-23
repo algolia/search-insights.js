@@ -96,4 +96,7 @@ export type InsightsEvent = {
   positions?: number[];
 
   filters?: string[];
+
+  appId?: string;
+  apiKey?: string;
 };
