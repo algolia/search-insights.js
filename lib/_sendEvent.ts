@@ -15,6 +15,9 @@ export type InsightsEvent = {
   positions?: number[];
 
   filters?: string[];
+
+  appId?: string;
+  apiKey?: string;
 };
 
 export function makeSendEvent(requestFn: RequestFnType) {
@@ -126,10 +129,19 @@ export function makeSendEvent(requestFn: RequestFnType) {
       );
     }
 
+    let _appId: string | undefined;
+    let _apiKey: string | undefined;
+    const { appId, apiKey } = eventData;
+
+    if (appId && apiKey) {
+      _appId = appId;
+      _apiKey = apiKey;
+    }
+
     return bulkSendEvent(
       requestFn,
-      this._appId,
-      this._apiKey,
+      _appId || this._appId,
+      _apiKey || this._apiKey,
       this._uaURIEncoded,
       this._endpointOrigin,
       [event]
