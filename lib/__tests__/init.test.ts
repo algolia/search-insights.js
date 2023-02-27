@@ -81,7 +81,7 @@ describe("init", () => {
   });
   it.each(["not a string", 0.002, NaN])(
     "should throw if cookieDuration passed but is not an integer (eg. %s)",
-    cookieDuration => {
+    (cookieDuration) => {
       expect(() => {
         (analyticsInstance as any).init({
           cookieDuration,
@@ -194,6 +194,99 @@ describe("init", () => {
     expect(setUserToken).toHaveBeenCalledTimes(2);
 
     setUserToken.mockRestore();
+  });
+  it("should replace existing options when called again", () => {
+    analyticsInstance.init({
+      apiKey: "apiKey1",
+      appId: "appId1",
+      region: "de",
+      userHasOptedOut: true,
+      useCookie: true,
+      cookieDuration: 100,
+      userToken: "myUserToken"
+    });
+
+    expect(analyticsInstance._appId).toBe("appId1");
+    expect(analyticsInstance._apiKey).toBe("apiKey1");
+    expect(analyticsInstance._region).toBe("de");
+    expect(analyticsInstance._userHasOptedOut).toBe(true);
+    expect(analyticsInstance._useCookie).toBe(true);
+    expect(analyticsInstance._cookieDuration).toBe(100);
+    expect(analyticsInstance._userToken).toBe("myUserToken");
+
+    analyticsInstance.init({ apiKey: "apiKey2", appId: "appId2" });
+
+    expect(analyticsInstance._appId).toBe("appId2");
+    expect(analyticsInstance._apiKey).toBe("apiKey2");
+    expect(analyticsInstance._region).toBe(undefined);
+    expect(analyticsInstance._userHasOptedOut).toBe(false);
+    expect(analyticsInstance._useCookie).toBe(false);
+    expect(analyticsInstance._cookieDuration).toBe(15552000000);
+    // Custom user token isn't reset on `init` if not provided
+    expect(analyticsInstance._userToken).toBe("myUserToken");
+  });
+  it("should not merge with previous options when `patch` is `false`", () => {
+    analyticsInstance.init({
+      apiKey: "apiKey1",
+      appId: "appId1",
+      region: "de",
+      userHasOptedOut: true,
+      useCookie: true,
+      cookieDuration: 100,
+      userToken: "myUserToken"
+    });
+
+    expect(analyticsInstance._appId).toBe("appId1");
+    expect(analyticsInstance._apiKey).toBe("apiKey1");
+    expect(analyticsInstance._region).toBe("de");
+    expect(analyticsInstance._userHasOptedOut).toBe(true);
+    expect(analyticsInstance._useCookie).toBe(true);
+    expect(analyticsInstance._cookieDuration).toBe(100);
+    expect(analyticsInstance._userToken).toBe("myUserToken");
+
+    analyticsInstance.init({
+      apiKey: "apiKey2",
+      appId: "appId2",
+      patch: false
+    });
+
+    expect(analyticsInstance._appId).toBe("appId2");
+    expect(analyticsInstance._apiKey).toBe("apiKey2");
+    expect(analyticsInstance._region).toBe(undefined);
+    expect(analyticsInstance._userHasOptedOut).toBe(false);
+    expect(analyticsInstance._useCookie).toBe(false);
+    expect(analyticsInstance._cookieDuration).toBe(15552000000);
+    // The user token isn't reset on `init` when not provided
+    expect(analyticsInstance._userToken).toBe("myUserToken");
+  });
+  it("should merge with previous options when `patch` is `true`", () => {
+    analyticsInstance.init({
+      apiKey: "apiKey1",
+      appId: "appId1",
+      region: "de",
+      userHasOptedOut: true,
+      useCookie: true,
+      cookieDuration: 100,
+      userToken: "myUserToken"
+    });
+
+    expect(analyticsInstance._appId).toBe("appId1");
+    expect(analyticsInstance._apiKey).toBe("apiKey1");
+    expect(analyticsInstance._region).toBe("de");
+    expect(analyticsInstance._userHasOptedOut).toBe(true);
+    expect(analyticsInstance._useCookie).toBe(true);
+    expect(analyticsInstance._cookieDuration).toBe(100);
+    expect(analyticsInstance._userToken).toBe("myUserToken");
+
+    analyticsInstance.init({ apiKey: "apiKey2", appId: "appId2", patch: true });
+
+    expect(analyticsInstance._appId).toBe("appId2");
+    expect(analyticsInstance._apiKey).toBe("apiKey2");
+    expect(analyticsInstance._region).toBe("de");
+    expect(analyticsInstance._userHasOptedOut).toBe(true);
+    expect(analyticsInstance._useCookie).toBe(true);
+    expect(analyticsInstance._cookieDuration).toBe(100);
+    expect(analyticsInstance._userToken).toBe("myUserToken");
   });
 
   describe("callback for userToken", () => {
@@ -330,7 +423,7 @@ describe("init", () => {
       expect(setAnonymousUserToken).not.toHaveBeenCalled();
     });
 
-    it("can set userToken manually afterwards", done => {
+    it("can set userToken manually afterwards", (done) => {
       analyticsInstance.init({ apiKey: "***", appId: "XXX", userToken: "abc" });
       analyticsInstance.setUserToken("def");
       expect(setUserToken).toHaveBeenCalledTimes(2);

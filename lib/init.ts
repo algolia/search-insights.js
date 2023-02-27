@@ -13,6 +13,7 @@ export interface InitParams {
   cookieDuration?: number;
   region?: InsightRegion;
   userToken?: string;
+  patch?: boolean;
 }
 
 /**
@@ -63,15 +64,22 @@ You can visit https://algolia.com/events/debugger instead.`);
 
   this._apiKey = options.apiKey;
   this._appId = options.appId;
-  this._userHasOptedOut = !!options.userHasOptedOut;
-  this._region = options.region;
+
+  this._userHasOptedOut = options.patch
+    ? patchOption(options.userHasOptedOut, this._userHasOptedOut)
+    : !!options.userHasOptedOut;
+  this._region = options.patch
+    ? patchOption(options.region, this._region)
+    : options.region;
   this._endpointOrigin = options.region
     ? `https://insights.${options.region}.algolia.io`
     : "https://insights.algolia.io";
-  this._useCookie = options.useCookie ?? false;
-  this._cookieDuration = options.cookieDuration
-    ? options.cookieDuration
-    : 6 * MONTH;
+  this._useCookie = options.patch
+    ? patchOption(options.useCookie, this._useCookie)
+    : options.useCookie ?? false;
+  this._cookieDuration = options.patch
+    ? patchOption(options.cookieDuration, this._cookieDuration)
+    : options.cookieDuration || 6 * MONTH;
   // Set hasCredentials
   this._hasCredentials = true;
 
@@ -83,4 +91,8 @@ You can visit https://algolia.com/events/debugger instead.`);
   } else if (!this._userToken && !this._userHasOptedOut && this._useCookie) {
     this.setAnonymousUserToken();
   }
+}
+
+function patchOption<TOption>(option: TOption, fallback: TOption) {
+  return isUndefined(option) ? fallback : option;
 }
