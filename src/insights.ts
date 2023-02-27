@@ -5,6 +5,7 @@ import type {
   InsightsRegion,
 } from './insightsAPIBeaconClient';
 import { InsightsApiBeaconClient } from './insightsAPIBeaconClient';
+import type { Expand } from './types/utils';
 import type { UserTokenOptions } from './userToken';
 import { UserToken } from './userToken';
 
@@ -12,24 +13,27 @@ type BufferedMethodCall = [string, unknown, unknown, unknown?];
 
 type SnippetAlgoliaInsights = BufferedMethodCall[];
 
-type ObjectIDsAfterSearchEvent = {
-  eventName: string;
-  index: string;
+type BaseEvent<T> = Expand<
+  T & {
+    eventName: string;
+    index: string;
+    appId?: string;
+    apiKey?: string;
+  }
+>;
+
+type ObjectIDsAfterSearchEvent = BaseEvent<{
   queryID: string;
   objectIDs: string[];
-};
+}>;
 
-type ObjectIDsEvent = {
-  eventName: string;
-  index: string;
+type ObjectIDsEvent = BaseEvent<{
   objectIDs: string[];
-};
+}>;
 
-type FiltersEvent = {
-  eventName: string;
-  index: string;
+type FiltersEvent = BaseEvent<{
   filters: string[];
-};
+}>;
 
 function flush(insights: SnippetAlgoliaInsights) {
   if (!Array.isArray(insights)) return [];
