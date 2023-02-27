@@ -70,17 +70,32 @@ describe('InsightsApiBeaconClient', () => {
       apiKey: 'overrideKey123',
     };
 
-    beacon.send({
-      ...testEvent,
-      ...overrideCredentials,
-    });
-
+    beacon.send({ ...testEvent, ...overrideCredentials });
     expect(fetch).toHaveBeenCalledWith(
       expect.any(String),
       expect.objectContaining({
         headers: expect.objectContaining({
           'X-Algolia-Application-Id': overrideCredentials.appId,
           'X-Algolia-API-Key': overrideCredentials.apiKey,
+        }),
+      })
+    );
+
+    // Custom credentials are removed from the event payload
+    const lastSetItemCall =
+      setItemMock.mock.calls[setItemMock.mock.calls.length - 1];
+    const lastSetItemCallData = JSON.parse(lastSetItemCall[1] as any)[0];
+    expect(lastSetItemCallData.event.appId).toBeUndefined();
+    expect(lastSetItemCallData.event.apiKey).toBeUndefined();
+
+    // Subsequent calls should use the original credentials
+    beacon.send(testEvent);
+    expect(fetch).toHaveBeenLastCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          'X-Algolia-Application-Id': clientOpts.applicationId,
+          'X-Algolia-API-Key': clientOpts.apiKey,
         }),
       })
     );
