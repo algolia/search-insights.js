@@ -80,6 +80,24 @@ aa('setUserToken', 'USER_ID');
 | `cookieDuration`  | `number`       | `15552000000` (6 months) | The cookie duration in milliseconds            |
 | `userToken`       | `string`       | `undefined` (optional)   | Initial userToken. When given, anonymous userToken will not be set. |
 
+To update the client with new options, you can call `init` again.
+
+By default, all previously passed options that you don't redefine are reset to their default setting, except for the `userToken`. To preserve previously passed options without redeclaring them, use the `patch` option.
+
+```js
+aa("init", {
+  appId: "APP_ID",
+  apiKey: "SEARCH_API_KEY",
+  region: "de",
+});
+
+aa("init", {
+  appId: "APP_ID",
+  apiKey: "SEARCH_API_KEY",
+  patch: true,
+}); // `region` is still `"de"`
+```
+
 ##### Note for Require.js users
 
 When using [Require.js](https://requirejs.org/), the default UMD build might conflict and throw with a "Mismatched anonymous define() modules" message. This is a [known Require.js issue](https://requirejs.org/docs/errors.html#mismatch).
