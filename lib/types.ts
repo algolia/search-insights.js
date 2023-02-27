@@ -52,17 +52,15 @@ export type GetUserToken = MethodType<"getUserToken">;
 
 export type OnUserTokenChange = MethodType<"onUserTokenChange">;
 
-export type ClickedObjectIDsAfterSearch = MethodType<
-  "clickedObjectIDsAfterSearch"
->;
+export type ClickedObjectIDsAfterSearch =
+  MethodType<"clickedObjectIDsAfterSearch">;
 
 export type ClickedObjectIDs = MethodType<"clickedObjectIDs">;
 
 export type ClickedFilters = MethodType<"clickedFilters">;
 
-export type ConvertedObjectIDsAfterSearch = MethodType<
-  "convertedObjectIDsAfterSearch"
->;
+export type ConvertedObjectIDsAfterSearch =
+  MethodType<"convertedObjectIDsAfterSearch">;
 
 export type ConvertedObjectIDs = MethodType<"convertedObjectIDs">;
 
@@ -94,4 +92,7 @@ export type InsightsEvent = {
   positions?: number[];
 
   filters?: string[];
+
+  appId?: string;
+  apiKey?: string;
 };
