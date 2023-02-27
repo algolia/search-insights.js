@@ -48,6 +48,44 @@ describe('InsightsApiBeaconClient', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
+  test('it uses credentials from the constructor by default', () => {
+    const beacon = new InsightsApiBeaconClient(clientOpts);
+    beacon.send(testEvent);
+
+    expect(fetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          'X-Algolia-Application-Id': clientOpts.applicationId,
+          'X-Algolia-API-Key': clientOpts.apiKey,
+        }),
+      })
+    );
+  });
+
+  test('it overrides credentials if found in the event payload', () => {
+    const beacon = new InsightsApiBeaconClient(clientOpts);
+    const overrideCredentials = {
+      appId: 'overrideApp123',
+      apiKey: 'overrideKey123',
+    };
+
+    beacon.send({
+      ...testEvent,
+      ...overrideCredentials,
+    });
+
+    expect(fetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          'X-Algolia-Application-Id': overrideCredentials.appId,
+          'X-Algolia-API-Key': overrideCredentials.apiKey,
+        }),
+      })
+    );
+  });
+
   test('captures fetch error', () => {
     (fetch as FetchMock).mockReject(new Error('failure'));
 

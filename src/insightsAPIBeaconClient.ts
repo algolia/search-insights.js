@@ -13,6 +13,9 @@ export type InsightsApiEvent = {
   objectIDs?: string[];
   positions?: number[];
   filters?: string[];
+
+  appId?: string;
+  apiKey?: string;
 };
 
 export type InsightsRegion = 'de' | 'us';
@@ -46,10 +49,12 @@ export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
   }
 
   protected emit(event: InsightsApiEvent) {
+    const { appId, apiKey, ...payload } = event;
+
     return fetch(`${this.endpoint()}/1/events`, {
       method: 'POST',
-      headers: this.headers(),
-      body: JSON.stringify({ events: [event] }),
+      headers: this.headers(appId, apiKey),
+      body: JSON.stringify({ events: [payload] }),
     });
   }
 
@@ -60,10 +65,10 @@ export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
     return 'https://insights.algolia.io';
   }
 
-  private headers() {
+  private headers(appId = this.applicationId, apiKey = this.apiKey) {
     return {
-      'X-Algolia-Application-Id': this.applicationId,
-      'X-Algolia-API-Key': this.apiKey,
+      'X-Algolia-Application-Id': appId,
+      'X-Algolia-API-Key': apiKey,
       'X-Algolia-Agent': Object.keys(this.algoliaAgents).join(' '),
     };
   }
