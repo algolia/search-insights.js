@@ -66,7 +66,7 @@ describe('InsightsApiBeaconClient', () => {
     );
   });
 
-  test('it overrides credentials if specified as additionalParameters', () => {
+  test('it overrides credentials if specified as additionalParams', () => {
     const beacon = new InsightsApiBeaconClient(clientOpts);
     const additionalParams: InsightsAdditionalEventParams = {
       headers: {
