@@ -225,7 +225,7 @@ describe("init", () => {
     // Custom user token isn't reset on `init` if not provided
     expect(analyticsInstance._userToken).toBe("myUserToken");
   });
-  it("should not merge with previous options when `patch` is `false`", () => {
+  it("should not merge with previous options when `partial` is `false`", () => {
     analyticsInstance.init({
       apiKey: "apiKey1",
       appId: "appId1",
@@ -247,7 +247,7 @@ describe("init", () => {
     analyticsInstance.init({
       apiKey: "apiKey2",
       appId: "appId2",
-      patch: false
+      partial: false
     });
 
     expect(analyticsInstance._appId).toBe("appId2");
@@ -259,7 +259,7 @@ describe("init", () => {
     // The user token isn't reset on `init` when not provided
     expect(analyticsInstance._userToken).toBe("myUserToken");
   });
-  it("should merge with previous options when `patch` is `true`", () => {
+  it("should merge with previous options when `partial` is `true`", () => {
     analyticsInstance.init({
       apiKey: "apiKey1",
       appId: "appId1",
@@ -278,7 +278,11 @@ describe("init", () => {
     expect(analyticsInstance._cookieDuration).toBe(100);
     expect(analyticsInstance._userToken).toBe("myUserToken");
 
-    analyticsInstance.init({ apiKey: "apiKey2", appId: "appId2", patch: true });
+    analyticsInstance.init({
+      apiKey: "apiKey2",
+      appId: "appId2",
+      partial: true
+    });
 
     expect(analyticsInstance._appId).toBe("appId2");
     expect(analyticsInstance._apiKey).toBe("apiKey2");

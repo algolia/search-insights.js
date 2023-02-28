@@ -16,7 +16,7 @@ export interface InitParams {
   cookieDuration?: number;
   region?: InsightRegion;
   userToken?: string;
-  patch?: boolean;
+  partial?: boolean;
 }
 
 /**
@@ -101,10 +101,10 @@ type ThisParams = {
 
 function setOptions(
   target: ThisParams,
-  { patch, ...options }: InitParams,
+  { partial: partial, ...options }: InitParams,
   defaultValues: ThisParams
 ) {
-  if (!patch) {
+  if (!partial) {
     Object.assign(target, defaultValues);
   }
 
