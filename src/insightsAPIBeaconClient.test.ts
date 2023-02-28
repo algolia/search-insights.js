@@ -1,6 +1,9 @@
 import type { FetchMock } from 'jest-fetch-mock';
 
-import type { InsightsApiEvent } from './insightsAPIBeaconClient';
+import type {
+  InsightsApiEvent,
+  InsightsAdditionalEventParams,
+} from './insightsAPIBeaconClient';
 import { InsightsApiBeaconClient } from './insightsAPIBeaconClient';
 
 const getItemMock = jest.spyOn(Object.getPrototypeOf(localStorage), 'getItem');
@@ -63,21 +66,20 @@ describe('InsightsApiBeaconClient', () => {
     );
   });
 
-  test('it overrides credentials if found in the event payload', () => {
+  test('it overrides credentials if specified as additionalParameters', () => {
     const beacon = new InsightsApiBeaconClient(clientOpts);
-    const overrideCredentials = {
-      appId: 'overrideApp123',
-      apiKey: 'overrideKey123',
+    const additionalParams: InsightsAdditionalEventParams = {
+      headers: {
+        'X-Algolia-Application-Id': 'overrideApp123',
+        'X-Algolia-API-Key': 'overrideKey123',
+      },
     };
 
-    beacon.send({ ...testEvent, ...overrideCredentials });
+    beacon.send({ ...testEvent, additionalParams });
     expect(fetch).toHaveBeenCalledWith(
       expect.any(String),
       expect.objectContaining({
-        headers: expect.objectContaining({
-          'X-Algolia-Application-Id': overrideCredentials.appId,
-          'X-Algolia-API-Key': overrideCredentials.apiKey,
-        }),
+        headers: expect.objectContaining(additionalParams.headers),
       })
     );
 

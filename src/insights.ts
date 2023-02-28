@@ -3,6 +3,7 @@ import { EventEmitter } from './eventEmitter';
 import type {
   InsightsApiEvent,
   InsightsRegion,
+  InsightsAdditionalEventParams,
 } from './insightsAPIBeaconClient';
 import { InsightsApiBeaconClient } from './insightsAPIBeaconClient';
 import type { Expand } from './types/utils';
@@ -17,8 +18,6 @@ type BaseEvent<T> = Expand<
   T & {
     eventName: string;
     index: string;
-    appId?: string;
-    apiKey?: string;
   }
 >;
 
@@ -112,69 +111,126 @@ export class AlgoliaInsights {
     this.emitter.on(type, handler);
   }
 
-  sendEvents(events: Array<Omit<InsightsApiEvent, 'timestamp' | 'userToken'>>) {
-    events.forEach((event) => this.sendEvent(event));
+  sendEvents(
+    events: Array<
+      Omit<InsightsApiEvent, 'additionalParams' | 'timestamp' | 'userToken'>
+    >,
+    additionalParams?: InsightsAdditionalEventParams
+  ) {
+    events.forEach((event) => this.sendEvent(event, additionalParams));
   }
 
   clickedObjectIDsAfterSearch(
-    event: ObjectIDsAfterSearchEvent & { positions: number[] }
+    event: ObjectIDsAfterSearchEvent & { positions: number[] },
+    additionalParams?: InsightsAdditionalEventParams
   ) {
-    this.sendEvent({
-      eventType: 'click',
-      ...event,
-    });
+    this.sendEvent(
+      {
+        eventType: 'click',
+        ...event,
+      },
+      additionalParams
+    );
   }
 
-  clickedObjectIDs(event: ObjectIDsEvent) {
-    this.sendEvent({
-      eventType: 'click',
-      ...event,
-    });
+  clickedObjectIDs(
+    event: ObjectIDsEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) {
+    this.sendEvent(
+      {
+        eventType: 'click',
+        ...event,
+      },
+      additionalParams
+    );
   }
 
-  clickedFilters(event: FiltersEvent) {
-    this.sendEvent({
-      eventType: 'click',
-      ...event,
-    });
+  clickedFilters(
+    event: FiltersEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) {
+    this.sendEvent(
+      {
+        eventType: 'click',
+        ...event,
+      },
+      additionalParams
+    );
   }
 
-  convertedObjectIDsAfterSearch(event: ObjectIDsAfterSearchEvent) {
-    this.sendEvent({
-      eventType: 'conversion',
-      ...event,
-    });
+  convertedObjectIDsAfterSearch(
+    event: ObjectIDsAfterSearchEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) {
+    this.sendEvent(
+      {
+        eventType: 'conversion',
+        ...event,
+      },
+      additionalParams
+    );
   }
 
-  convertedObjectIDs(event: ObjectIDsEvent) {
-    this.sendEvent({
-      eventType: 'conversion',
-      ...event,
-    });
+  convertedObjectIDs(
+    event: ObjectIDsEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) {
+    this.sendEvent(
+      {
+        eventType: 'conversion',
+        ...event,
+      },
+      additionalParams
+    );
   }
 
-  convertedFilters(event: FiltersEvent) {
-    this.sendEvent({
-      eventType: 'conversion',
-      ...event,
-    });
+  convertedFilters(
+    event: FiltersEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) {
+    this.sendEvent(
+      {
+        eventType: 'conversion',
+        ...event,
+      },
+      additionalParams
+    );
   }
 
-  viewedObjectIDs(event: ObjectIDsEvent) {
-    this.sendEvent({
-      eventType: 'view',
-      ...event,
-    });
+  viewedObjectIDs(
+    event: ObjectIDsEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) {
+    this.sendEvent(
+      {
+        eventType: 'view',
+        ...event,
+      },
+      additionalParams
+    );
   }
 
-  viewedFilters(event: FiltersEvent) {
-    this.sendEvent({
-      eventType: 'view',
-      ...event,
-    });
+  viewedFilters(
+    event: FiltersEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) {
+    this.sendEvent(
+      {
+        eventType: 'view',
+        ...event,
+      },
+      additionalParams
+    );
   }
 
-  private sendEvent(event: Omit<InsightsApiEvent, 'timestamp' | 'userToken'>) {
+  private sendEvent(
+    event: Omit<
+      InsightsApiEvent,
+      'additionalParams' | 'timestamp' | 'userToken'
+    >,
+    additionalParams: InsightsAdditionalEventParams = {}
+  ) {
     if (!this.beacon || !this.userToken) {
       throw new Error(
         "Before calling any other method, you need to initialize the library by calling the 'init' function with applicationId and apiKey parameters"
@@ -192,6 +248,7 @@ export class AlgoliaInsights {
       timestamp: Date.now(),
 
       ...event,
+      additionalParams,
     });
   }
 }
