@@ -75,7 +75,7 @@ describe('InsightsApiBeaconClient', () => {
       },
     };
 
-    beacon.send({ ...testEvent, additionalParams });
+    beacon.send(testEvent, additionalParams);
     expect(fetch).toHaveBeenCalledWith(
       expect.any(String),
       expect.objectContaining({

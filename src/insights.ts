@@ -1,9 +1,9 @@
 import type { EventEmitterCallback } from './eventEmitter';
 import { EventEmitter } from './eventEmitter';
 import type {
+  InsightsAdditionalEventParams,
   InsightsApiEvent,
   InsightsRegion,
-  InsightsAdditionalEventParams,
 } from './insightsAPIBeaconClient';
 import { InsightsApiBeaconClient } from './insightsAPIBeaconClient';
 import type { Expand } from './types/utils';
@@ -243,12 +243,13 @@ export class AlgoliaInsights {
       throw new Error('userToken required to send event');
     }
 
-    this.beacon.send({
-      userToken,
-      timestamp: Date.now(),
-
-      ...event,
-      additionalParams,
-    });
+    this.beacon.send(
+      {
+        userToken,
+        timestamp: Date.now(),
+        ...event,
+      },
+      additionalParams
+    );
   }
 }

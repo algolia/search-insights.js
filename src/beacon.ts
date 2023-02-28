@@ -7,14 +7,15 @@ function expiry() {
   return Date.now() - EVENT_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
 }
 
-type BeaconEvent<Event> = {
+type BeaconEvent<Event, OptionalParams> = {
   timestamp: ReturnType<typeof Date.now>;
   sent: boolean;
   event: Event;
+  optionalParams?: OptionalParams;
 };
 
-export class Beacon<Event> {
-  private events: Array<BeaconEvent<Event>>;
+export class Beacon<Event, OptionalParams> {
+  private events: Array<BeaconEvent<Event, OptionalParams>>;
   private STORAGE_KEY: string;
 
   constructor(storageKey?: string) {
@@ -22,9 +23,10 @@ export class Beacon<Event> {
     this.events = Storage.get(this.STORAGE_KEY) || [];
   }
 
-  send(event: Event) {
+  send(event: Event, optionalParams?: OptionalParams) {
     this.events.push({
       event,
+      optionalParams,
       timestamp: Date.now(),
       sent: false,
     });
@@ -36,7 +38,7 @@ export class Beacon<Event> {
     this.flushEvents().then(() => this.purgeExpiredEvents());
   }
 
-  protected emit(_: Event): Promise<unknown> {
+  protected emit(_e: Event, _o: OptionalParams): Promise<unknown> {
     return new Promise((_, reject) => {
       reject(new Error('emit method not implemented'));
     });
@@ -48,13 +50,13 @@ export class Beacon<Event> {
 
   private async flushEvents() {
     const eventsToEmit: Array<Promise<void>> = [];
-    this.events.forEach(({ event, sent }, idx) => {
+    this.events.forEach(({ event, optionalParams, sent }, idx) => {
       if (sent) {
         return;
       }
 
       eventsToEmit.push(
-        this.emit(event).then(() => {
+        this.emit(event, optionalParams).then(() => {
           this.events[idx].sent = true;
           this.persistEvents();
         })

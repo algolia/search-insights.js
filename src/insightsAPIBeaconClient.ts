@@ -17,8 +17,6 @@ export type InsightsApiEvent = {
   objectIDs?: string[];
   positions?: number[];
   filters?: string[];
-
-  additionalParams?: InsightsAdditionalEventParams;
 };
 
 export type InsightsRegion = 'de' | 'us';
@@ -29,7 +27,10 @@ type InsightsApiBeaconClientOptions = {
   region?: InsightsRegion;
 };
 
-export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
+export class InsightsApiBeaconClient extends Beacon<
+  InsightsApiEvent,
+  InsightsAdditionalEventParams
+> {
   applicationId: string;
   apiKey: string;
   region?: InsightsRegion;
@@ -51,13 +52,14 @@ export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
     this.algoliaAgents[agent] = null;
   }
 
-  protected emit(event: InsightsApiEvent) {
-    const { additionalParams, ...payload } = event;
-
+  protected emit(
+    event: InsightsApiEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) {
     return fetch(`${this.endpoint()}/1/events`, {
       method: 'POST',
       headers: this.headers(additionalParams?.headers),
-      body: JSON.stringify({ events: [payload] }),
+      body: JSON.stringify({ events: [event] }),
     });
   }
 
