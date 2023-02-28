@@ -108,11 +108,11 @@ function setOptions(
     Object.assign(target, defaultValues);
   }
 
-  for (const key in options) {
-    const newValue = options[key];
-
-    if (!isUndefined(newValue)) {
-      target[`_${key}`] = newValue;
-    }
-  }
+  Object.assign(
+    target,
+    Object.keys(options).reduce(
+      (acc, key) => ({ ...acc, [`_${key}`]: options[key] }),
+      {}
+    )
+  );
 }
