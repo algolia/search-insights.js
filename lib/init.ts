@@ -1,5 +1,8 @@
 import { isUndefined, isString, isNumber } from "./utils";
 import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
+import objectAssignPolyfill from "./polyfills/objectAssign";
+
+objectAssignPolyfill();
 
 type InsightRegion = "de" | "us";
 const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
@@ -65,21 +68,17 @@ You can visit https://algolia.com/events/debugger instead.`);
   this._apiKey = options.apiKey;
   this._appId = options.appId;
 
-  this._userHasOptedOut = options.patch
-    ? patchOption(options.userHasOptedOut, this._userHasOptedOut)
-    : !!options.userHasOptedOut;
-  this._region = options.patch
-    ? patchOption(options.region, this._region)
-    : options.region;
+  setOptions(this, options, {
+    _userHasOptedOut: !!options.userHasOptedOut,
+    _region: options.region,
+    _useCookie: options.useCookie ?? false,
+    _cookieDuration: options.cookieDuration || 6 * MONTH
+  });
+
   this._endpointOrigin = options.region
     ? `https://insights.${options.region}.algolia.io`
     : "https://insights.algolia.io";
-  this._useCookie = options.patch
-    ? patchOption(options.useCookie, this._useCookie)
-    : options.useCookie ?? false;
-  this._cookieDuration = options.patch
-    ? patchOption(options.cookieDuration, this._cookieDuration)
-    : options.cookieDuration || 6 * MONTH;
+
   // Set hasCredentials
   this._hasCredentials = true;
 
@@ -93,6 +92,27 @@ You can visit https://algolia.com/events/debugger instead.`);
   }
 }
 
-function patchOption<TOption>(option: TOption, fallback: TOption) {
-  return isUndefined(option) ? fallback : option;
+type ThisParams = {
+  _userHasOptedOut: InitParams["userHasOptedOut"];
+  _useCookie: InitParams["useCookie"];
+  _cookieDuration: InitParams["cookieDuration"];
+  _region: InitParams["region"];
+};
+
+function setOptions(
+  target: ThisParams,
+  { patch, ...options }: InitParams,
+  defaultValues: ThisParams
+) {
+  if (!patch) {
+    Object.assign(target, defaultValues);
+  }
+
+  for (const key in options) {
+    const newValue = options[key];
+
+    if (!isUndefined(newValue)) {
+      target[`_${key}`] = newValue;
+    }
+  }
 }
