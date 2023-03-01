@@ -1,5 +1,9 @@
 import { Beacon } from './beacon';
 
+export type InsightsAdditionalEventParams = {
+  headers?: Record<string, string>;
+};
+
 export type InsightsApiEvent = {
   timestamp: ReturnType<typeof Date.now>;
   userToken: string;
@@ -23,7 +27,10 @@ type InsightsApiBeaconClientOptions = {
   region?: InsightsRegion;
 };
 
-export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
+export class InsightsApiBeaconClient extends Beacon<
+  InsightsApiEvent,
+  InsightsAdditionalEventParams
+> {
   applicationId: string;
   apiKey: string;
   region?: InsightsRegion;
@@ -45,10 +52,13 @@ export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
     this.algoliaAgents[agent] = null;
   }
 
-  protected emit(event: InsightsApiEvent) {
+  protected emit(
+    event: InsightsApiEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) {
     return fetch(`${this.endpoint()}/1/events`, {
       method: 'POST',
-      headers: this.headers(),
+      headers: this.headers(additionalParams?.headers),
       body: JSON.stringify({ events: [event] }),
     });
   }
@@ -60,11 +70,14 @@ export class InsightsApiBeaconClient extends Beacon<InsightsApiEvent> {
     return 'https://insights.algolia.io';
   }
 
-  private headers() {
+  private headers(
+    additionalHeaders: InsightsAdditionalEventParams['headers'] = {}
+  ) {
     return {
       'X-Algolia-Application-Id': this.applicationId,
       'X-Algolia-API-Key': this.apiKey,
       'X-Algolia-Agent': Object.keys(this.algoliaAgents).join(' '),
+      ...additionalHeaders,
     };
   }
 }
