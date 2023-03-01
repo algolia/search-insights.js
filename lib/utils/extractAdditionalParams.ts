@@ -10,11 +10,10 @@ export function extractAdditionalParams<TEventType extends { index: string }>(
   return params.reduce(
     ({ events, additionalParams }, param) => {
       if ("index" in param) {
-        events.push(param);
-      } else {
-        additionalParams = param;
+        return { additionalParams, events: [...events, param] };
       }
-      return { events, additionalParams };
+
+      return { events, additionalParams: param };
     },
     {
       events: [] as TEventType[],
