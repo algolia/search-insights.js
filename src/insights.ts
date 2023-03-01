@@ -112,9 +112,7 @@ export class AlgoliaInsights {
   }
 
   sendEvents(
-    events: Array<
-      Omit<InsightsApiEvent, 'additionalParams' | 'timestamp' | 'userToken'>
-    >,
+    events: Array<Omit<InsightsApiEvent, 'timestamp' | 'userToken'>>,
     additionalParams?: InsightsAdditionalEventParams
   ) {
     events.forEach((event) => this.sendEvent(event, additionalParams));
@@ -225,10 +223,7 @@ export class AlgoliaInsights {
   }
 
   private sendEvent(
-    event: Omit<
-      InsightsApiEvent,
-      'additionalParams' | 'timestamp' | 'userToken'
-    >,
+    event: Omit<InsightsApiEvent, 'timestamp' | 'userToken'>,
     additionalParams: InsightsAdditionalEventParams = {}
   ) {
     if (!this.beacon || !this.userToken) {
