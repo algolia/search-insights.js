@@ -1,4 +1,5 @@
 import { addEventType } from "./_addEventType";
+import { extractAdditionalParams, WithAdditionalParams } from "./utils";
 
 export interface InsightsSearchClickEvent {
   eventName: string;
@@ -12,9 +13,12 @@ export interface InsightsSearchClickEvent {
 }
 
 export function clickedObjectIDsAfterSearch(
-  ...params: InsightsSearchClickEvent[]
+  ...params: WithAdditionalParams<InsightsSearchClickEvent>[]
 ) {
-  return this.sendEvents(addEventType("click", params));
+  const { events, additionalParams } =
+    extractAdditionalParams<InsightsSearchClickEvent>(params);
+
+  return this.sendEvents(addEventType("click", events), additionalParams);
 }
 
 export interface InsightsClickObjectIDsEvent {
@@ -26,8 +30,13 @@ export interface InsightsClickObjectIDsEvent {
   objectIDs: string[];
 }
 
-export function clickedObjectIDs(...params: InsightsClickObjectIDsEvent[]) {
-  return this.sendEvents(addEventType("click", params));
+export function clickedObjectIDs(
+  ...params: WithAdditionalParams<InsightsClickObjectIDsEvent>[]
+) {
+  const { events, additionalParams } =
+    extractAdditionalParams<InsightsClickObjectIDsEvent>(params);
+
+  return this.sendEvents(addEventType("click", events), additionalParams);
 }
 
 export interface InsightsClickFiltersEvent {
@@ -39,6 +48,11 @@ export interface InsightsClickFiltersEvent {
   filters: string[];
 }
 
-export function clickedFilters(...params: InsightsClickFiltersEvent[]) {
-  return this.sendEvents(addEventType("click", params));
+export function clickedFilters(
+  ...params: WithAdditionalParams<InsightsClickFiltersEvent>[]
+) {
+  const { events, additionalParams } =
+    extractAdditionalParams<InsightsClickFiltersEvent>(params);
+
+  return this.sendEvents(addEventType("click", events), additionalParams);
 }

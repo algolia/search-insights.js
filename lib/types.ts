@@ -96,3 +96,7 @@ export type InsightsEvent = {
   appId?: string;
   apiKey?: string;
 };
+
+export type InsightsAdditionalEventParams = {
+  headers?: Record<string, string>;
+};

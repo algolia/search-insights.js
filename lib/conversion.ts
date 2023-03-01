@@ -1,4 +1,6 @@
 import { addEventType } from "./_addEventType";
+import { extractAdditionalParams, WithAdditionalParams } from "./utils";
+
 export interface InsightsSearchConversionEvent {
   eventName: string;
   userToken?: string;
@@ -10,9 +12,12 @@ export interface InsightsSearchConversionEvent {
 }
 
 export function convertedObjectIDsAfterSearch(
-  ...params: InsightsSearchConversionEvent[]
+  ...params: WithAdditionalParams<InsightsSearchConversionEvent>[]
 ) {
-  return this.sendEvents(addEventType("conversion", params));
+  const { events, additionalParams } =
+    extractAdditionalParams<InsightsSearchConversionEvent>(params);
+
+  return this.sendEvents(addEventType("conversion", events), additionalParams);
 }
 
 export interface InsightsSearchConversionObjectIDsEvent {
@@ -25,9 +30,12 @@ export interface InsightsSearchConversionObjectIDsEvent {
 }
 
 export function convertedObjectIDs(
-  ...params: InsightsSearchConversionObjectIDsEvent[]
+  ...params: WithAdditionalParams<InsightsSearchConversionObjectIDsEvent>[]
 ) {
-  return this.sendEvents(addEventType("conversion", params));
+  const { events, additionalParams } =
+    extractAdditionalParams<InsightsSearchConversionObjectIDsEvent>(params);
+
+  return this.sendEvents(addEventType("conversion", events), additionalParams);
 }
 
 export interface InsightsSearchConversionFiltersEvent {
@@ -40,7 +48,10 @@ export interface InsightsSearchConversionFiltersEvent {
 }
 
 export function convertedFilters(
-  ...params: InsightsSearchConversionFiltersEvent[]
+  ...params: WithAdditionalParams<InsightsSearchConversionFiltersEvent>[]
 ) {
-  return this.sendEvents(addEventType("conversion", params));
+  const { events, additionalParams } =
+    extractAdditionalParams<InsightsSearchConversionFiltersEvent>(params);
+
+  return this.sendEvents(addEventType("conversion", events), additionalParams);
 }

@@ -502,65 +502,59 @@ describe("sendEvents", () => {
     });
   });
 
-  describe("credentials override", () => {
-    let analyticsInstance;
-    beforeEach(() => {
-      analyticsInstance = setupInstance();
-    });
+  it("applies custom credentials when provided", () => {
+    const analyticsInstance = setupInstance();
 
-    const overrideCredentials = {
-      appId: "overrideTestId",
-      apiKey: "overrideTestKey"
-    };
+    const customAppId = "overrideTestId";
+    const customApiKey = "overrideTestKey";
 
-    it("should be applied when provided", () => {
-      (analyticsInstance as any).sendEvents([
-        {
-          eventType: "click",
-          eventName: "my-event",
-          index: "my-index",
-          objectIDs: ["1"],
-          ...overrideCredentials
-        }
-      ]);
-
-      {
-        const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
-        const { query } = url.parse(requestUrl);
-        expect(querystring.parse(query!)).toMatchObject(
-          expect.objectContaining({
-            "X-Algolia-Application-Id": overrideCredentials.appId,
-            "X-Algolia-API-Key": overrideCredentials.apiKey
-          })
-        );
-      }
-
-      // Custom credentials are removed from the event payload
-      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0])
-        .events[0];
-      expect(payload.appId).toBeUndefined();
-      expect(payload.apiKey).toBeUndefined();
-
-      // Subsequent calls should use the original credentials
-      (analyticsInstance as any).sendEvents([
+    analyticsInstance.sendEvents(
+      [
         {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
           objectIDs: ["1"]
         }
-      ]);
-
+      ],
       {
-        const requestUrl = XMLHttpRequest.open.mock.calls[1][1];
-        const { query } = url.parse(requestUrl);
-        expect(querystring.parse(query!)).toMatchObject(
-          expect.objectContaining({
-            "X-Algolia-Application-Id": credentials.appId,
-            "X-Algolia-API-Key": credentials.apiKey
-          })
-        );
+        headers: {
+          "X-Algolia-Application-Id": customAppId,
+          "X-Algolia-API-Key": customApiKey
+        }
       }
-    });
+    );
+
+    {
+      const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
+      const { query } = url.parse(requestUrl);
+      expect(querystring.parse(query!)).toMatchObject(
+        expect.objectContaining({
+          "X-Algolia-Application-Id": customAppId,
+          "X-Algolia-API-Key": customApiKey
+        })
+      );
+    }
+
+    // Subsequent calls should use the original credentials
+    (analyticsInstance as any).sendEvents([
+      {
+        eventType: "click",
+        eventName: "my-event",
+        index: "my-index",
+        objectIDs: ["1"]
+      }
+    ]);
+
+    {
+      const requestUrl = XMLHttpRequest.open.mock.calls[1][1];
+      const { query } = url.parse(requestUrl);
+      expect(querystring.parse(query!)).toMatchObject(
+        expect.objectContaining({
+          "X-Algolia-Application-Id": credentials.appId,
+          "X-Algolia-API-Key": credentials.apiKey
+        })
+      );
+    }
   });
 });
