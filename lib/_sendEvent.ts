@@ -58,8 +58,8 @@ function sendRequest(
     ...additionalHeaders
   };
 
-  const queryParameters = Object.entries(headers)
-    .map(([key, value]) => `${key}=${value}`)
+  const queryParameters = Object.keys(headers)
+    .map((key) => `${key}=${headers[key]}`)
     .join("&");
 
   const reportingURL = `${endpointOrigin}/1/events?${queryParameters}`;
