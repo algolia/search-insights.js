@@ -38,21 +38,13 @@ search.addWidget(
 var hitTemplate = hit => `
   <article>
     <div class="product-picture-wrapper">
-      <div class="product-picture"><img src="https://image.tmdb.org/t/p/w45${
-        hit.image_path
-      }" /></div>
+      <div class="product-picture"><img src="https://image.tmdb.org/t/p/w45${hit.image_path}" /></div>
     </div>
     <div class="product-desc-wrapper">
       <div class="product-name">${hit._highlightResult.name.value}</div>
     </div>
-    <button data-query-id="${hit._queryID}" data-object-id="${
-  hit.objectID
-}" data-position="${
-  hit._hitPosition
-}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
-    <button data-query-id="${hit._queryID}" data-object-id="${
-  hit.objectID
-}" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
+    <button data-query-id="${hit._queryID}" data-object-id="${hit.objectID}" data-position="${hit._hitPosition}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
+    <button data-query-id="${hit._queryID}" data-object-id="${hit.objectID}" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
   </article>`;
 
 var noResultsTemplate = `<div class="text-center">No results found matching <strong>{{query}}</strong>.</div>`;
