@@ -95,3 +95,7 @@ export type InsightsClient = Init &
   ConvertedFilters &
   ViewedObjectIDs &
   ViewedFilters;
+
+export type InsightsAdditionalEventParams = {
+  headers?: Record<string, string>;
+};
