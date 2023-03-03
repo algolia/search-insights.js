@@ -94,7 +94,7 @@ aa("init", {
 aa("init", {
   appId: "APP_ID",
   apiKey: "SEARCH_API_KEY",
-  patch: true,
+  partial: true,
 }); // `region` is still `"de"`
 ```
 
