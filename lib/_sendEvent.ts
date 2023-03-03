@@ -1,3 +1,4 @@
+import { InsightsAdditionalEventParams } from "./types";
 import { isNumber, isUndefined, isString } from "./utils";
 import { RequestFnType } from "./utils/request";
 
@@ -20,7 +21,8 @@ export type InsightsEvent = {
 export function makeSendEvent(requestFn: RequestFnType) {
   return function sendEvent(
     eventType: InsightsEventType,
-    eventData: InsightsEvent
+    eventData: InsightsEvent,
+    additionalParams?: InsightsAdditionalEventParams
   ) {
     if (this._userHasOptedOut) {
       return;
@@ -132,7 +134,8 @@ export function makeSendEvent(requestFn: RequestFnType) {
       this._apiKey,
       this._uaURIEncoded,
       this._endpointOrigin,
-      [event]
+      [event],
+      additionalParams?.headers
     );
   };
 }
@@ -143,9 +146,21 @@ function bulkSendEvent(
   apiKey: string,
   userAgent: string,
   endpointOrigin: string,
-  events: InsightsEvent[]
+  events: InsightsEvent[],
+  additionalHeaders: InsightsAdditionalEventParams["headers"] = {}
 ) {
   // Auth query
-  const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${userAgent}`;
+  const headers = {
+    "X-Algolia-Application-Id": appId,
+    "X-Algolia-API-Key": apiKey,
+    "X-Algolia-Agent": userAgent,
+    ...additionalHeaders
+  };
+
+  const queryParameters = Object.keys(headers)
+    .map((key) => `${key}=${headers[key]}`)
+    .join("&");
+
+  const reportingURL = `${endpointOrigin}/1/events?${queryParameters}`;
   return requestFn(reportingURL, { events });
 }

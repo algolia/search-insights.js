@@ -42,6 +42,7 @@ import {
   setAnonymousUserToken,
   onUserTokenChange
 } from "./_tokenUtils";
+import { InsightsAdditionalEventParams } from "./types";
 import { version } from "../package.json";
 
 type Queue = {
@@ -105,22 +106,39 @@ class AlgoliaAnalytics {
   ) => void;
 
   public clickedObjectIDsAfterSearch: (
-    params: InsightsSearchClickEvent
+    params: InsightsSearchClickEvent,
+    additionalParams?: InsightsAdditionalEventParams
   ) => void;
-  public clickedObjectIDs: (params: InsightsClickObjectIDsEvent) => void;
-  public clickedFilters: (params: InsightsClickFiltersEvent) => void;
-  public convertedObjectIDsAfterSearch: (
-    params: InsightsSearchConversionEvent
+  public clickedObjectIDs: (
+    params: InsightsClickObjectIDsEvent,
+    additionalParams?: InsightsAdditionalEventParams
   ) => void;
-  public convertedObjectIDs: (
-    params: InsightsSearchConversionObjectIDsEvent
-  ) => void;
-  public convertedFilters: (
-    params: InsightsSearchConversionFiltersEvent
+  public clickedFilters: (
+    params: InsightsClickFiltersEvent,
+    additionalParams?: InsightsAdditionalEventParams
   ) => void;
 
-  public viewedObjectIDs: (params: InsightsSearchViewObjectIDsEvent) => void;
-  public viewedFilters: (params: InsightsSearchViewFiltersEvent) => void;
+  public convertedObjectIDsAfterSearch: (
+    params: InsightsSearchConversionEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) => void;
+  public convertedObjectIDs: (
+    params: InsightsSearchConversionObjectIDsEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) => void;
+  public convertedFilters: (
+    params: InsightsSearchConversionFiltersEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) => void;
+
+  public viewedObjectIDs: (
+    params: InsightsSearchViewObjectIDsEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) => void;
+  public viewedFilters: (
+    params: InsightsSearchViewFiltersEvent,
+    additionalParams?: InsightsAdditionalEventParams
+  ) => void;
 
   public _get: (key: string, callback: GetCallback) => void;
 
@@ -143,9 +161,8 @@ class AlgoliaAnalytics {
     this.clickedObjectIDs = clickedObjectIDs.bind(this);
     this.clickedFilters = clickedFilters.bind(this);
 
-    this.convertedObjectIDsAfterSearch = convertedObjectIDsAfterSearch.bind(
-      this
-    );
+    this.convertedObjectIDsAfterSearch =
+      convertedObjectIDsAfterSearch.bind(this);
     this.convertedObjectIDs = convertedObjectIDs.bind(this);
     this.convertedFilters = convertedFilters.bind(this);
 

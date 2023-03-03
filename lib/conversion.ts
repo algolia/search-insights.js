@@ -1,3 +1,4 @@
+import { InsightsAdditionalEventParams } from "./types";
 import { InsightsEvent } from "./_sendEvent";
 
 export interface InsightsSearchConversionEvent {
@@ -14,7 +15,8 @@ export interface InsightsSearchConversionEvent {
  * @param params InsightsSearchConversionEvent
  */
 export function convertedObjectIDsAfterSearch(
-  params: InsightsSearchConversionEvent
+  params: InsightsSearchConversionEvent,
+  additionalParams?: InsightsAdditionalEventParams
 ) {
   if (!params) {
     throw new Error(
@@ -32,7 +34,7 @@ export function convertedObjectIDsAfterSearch(
     );
   }
 
-  this.sendEvent("conversion", params as InsightsEvent);
+  this.sendEvent("conversion", params as InsightsEvent, additionalParams);
 }
 
 export interface InsightsSearchConversionObjectIDsEvent {
@@ -48,7 +50,8 @@ export interface InsightsSearchConversionObjectIDsEvent {
  * @param params InsightsSearchConversionObjectIDsEvent
  */
 export function convertedObjectIDs(
-  params: InsightsSearchConversionObjectIDsEvent
+  params: InsightsSearchConversionObjectIDsEvent,
+  additionalParams?: InsightsAdditionalEventParams
 ) {
   if (!params) {
     throw new Error(
@@ -62,7 +65,7 @@ export function convertedObjectIDs(
     );
   }
 
-  this.sendEvent("conversion", params as InsightsEvent);
+  this.sendEvent("conversion", params as InsightsEvent, additionalParams);
 }
 
 export interface InsightsSearchConversionFiltersEvent {
@@ -77,7 +80,10 @@ export interface InsightsSearchConversionFiltersEvent {
  * Sends a conversion report using filters, outside the context of a search
  * @param params InsightsSearchConversionFiltersEvent
  */
-export function convertedFilters(params: InsightsSearchConversionFiltersEvent) {
+export function convertedFilters(
+  params: InsightsSearchConversionFiltersEvent,
+  additionalParams?: InsightsAdditionalEventParams
+) {
   if (!params) {
     throw new Error(
       "No params were sent to convertedFilters function, please provide `filters` to be reported"
@@ -89,5 +95,5 @@ export function convertedFilters(params: InsightsSearchConversionFiltersEvent) {
     );
   }
 
-  this.sendEvent("conversion", params as InsightsEvent);
+  this.sendEvent("conversion", params as InsightsEvent, additionalParams);
 }
