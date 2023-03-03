@@ -94,6 +94,23 @@ aa('init', {
 });
 ```
 
+To update the client with new options, you can call `init` again.
+
+By default, all previously passed options that you don't redefine are reset to their default setting, except for the `userToken`. To preserve previously passed options without redeclaring them, use the `patch` option.
+
+```js
+aa("init", {
+  appId: 'APPLICATION_ID',
+  apiKey: "SEARCH_API_KEY",
+  region: "de",
+});
+aa("init", {
+  appId: 'APPLICATION_ID',
+  apiKey: "SEARCH_API_KEY",
+  partial: true,
+}); // `region` is still `"de"`
+```
+
 #### Add `userToken`
 
 On the Node.js environment, unlike the browser environment, `userToken` must be specified when sending any event.
