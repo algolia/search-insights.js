@@ -1,10 +1,11 @@
 import { RequestFnType } from "./utils/request";
-import { InsightsEvent } from './types'
+import { InsightsAdditionalEventParams, InsightsEvent } from "./types";
 import { isUndefined } from "./utils";
 
 export function makeSendEvents(requestFn: RequestFnType) {
   return function sendEvents(
-    eventData: InsightsEvent[]
+    eventData: InsightsEvent[],
+    additionalParams?: InsightsAdditionalEventParams
   ) {
     if (this._userHasOptedOut) {
       return;
@@ -15,17 +16,18 @@ export function makeSendEvents(requestFn: RequestFnType) {
       );
     }
 
-    const events: InsightsEvent[] = eventData.map(data => {
-      const {filters, ...rest}  = data;
+    const events: InsightsEvent[] = eventData.map((data) => {
+      const { filters, ...rest } = data;
+
       const payload: InsightsEvent = {
         ...rest,
         userToken: data?.userToken ?? this._userToken
       };
       if (!isUndefined(filters)) {
-        payload.filters = filters.map(encodeURIComponent)
+        payload.filters = filters.map(encodeURIComponent);
       }
       return payload;
-    })
+    });
 
     return sendRequest(
       requestFn,
@@ -33,7 +35,8 @@ export function makeSendEvents(requestFn: RequestFnType) {
       this._apiKey,
       this._ua,
       this._endpointOrigin,
-      events
+      events,
+      additionalParams?.headers
     );
   };
 }
@@ -44,10 +47,21 @@ function sendRequest(
   apiKey: string,
   userAgents: string[],
   endpointOrigin: string,
-  events: InsightsEvent[]
+  events: InsightsEvent[],
+  additionalHeaders: InsightsAdditionalEventParams["headers"] = {}
 ) {
   // Auth query
-  const ua = encodeURIComponent(userAgents.join('; '));
-  const reportingURL = `${endpointOrigin}/1/events?X-Algolia-Application-Id=${appId}&X-Algolia-API-Key=${apiKey}&X-Algolia-Agent=${ua}`;
+  const headers = {
+    "X-Algolia-Application-Id": appId,
+    "X-Algolia-API-Key": apiKey,
+    "X-Algolia-Agent": encodeURIComponent(userAgents.join("; ")),
+    ...additionalHeaders
+  };
+
+  const queryParameters = Object.keys(headers)
+    .map((key) => `${key}=${headers[key]}`)
+    .join("&");
+
+  const reportingURL = `${endpointOrigin}/1/events?${queryParameters}`;
   return requestFn(reportingURL, { events });
 }

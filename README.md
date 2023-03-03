@@ -423,6 +423,49 @@ aa('sendEvents', [
 | `eventName` | `string`                        | The name of the event.                         |
 | `userToken` | `string` (optional)             | search-insights uses anonymous user token or a token set by `setUserToken` method. You can override it by providing a `userToken` per event object. |
 
+### Sending events to multiple Algolia applications
+
+The Search Insights library sends all events to the Algolia application it has been initialized with, by default. In some cases, you might have data coming from more than one Algolia application which all need events.
+
+You can use a single instance of the Search Insights library while still customizing the Algolia credentials on a per-event basis. All click, view and conversion methods support an additional argument where you can specify credentials that will override those set during initialization.
+
+```js
+aa('clickedObjectIDsAfterSearch', {
+  index: 'INDEX_NAME',
+  eventName: 'Click item',
+  queryID: getQueryID(),
+  objectIDs: ['object1'],
+  positions: [42],
+}, {
+  headers: {
+    'X-Algolia-Application-Id': 'OTHER_APP_ID',
+    'X-Algolia-API-Key': 'OTHER_SEARCH_API_KEY'
+  }
+});
+```
+
+This also works with event batching, using `sendEvents`:
+
+```js
+aa('sendEvents', [
+  {
+    eventType,
+    eventName,
+    userToken,
+    ...
+  }
+], {
+  headers: {
+    'X-Algolia-Application-Id': 'OTHER_APP_ID',
+    'X-Algolia-API-Key': 'OTHER_SEARCH_API_KEY'
+  }
+});
+```
+
+| Option    | Type                     | Description                                                  |
+| --------- | ------------------------ | ------------------------------------------------------------ |
+| `headers` | `Record<string, string>` | A dictionary of headers that will override those set by default. You can check out a list of headers for authentication in the [Algolia API reference](https://www.algolia.com/doc/rest-api/insights/#authentication). |
+
 ## Examples
 
 The following examples assume that the Search Insights library is loaded.
