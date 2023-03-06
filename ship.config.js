@@ -3,7 +3,7 @@ const path = require("path");
 
 module.exports = {
   buildCommand: () => "yarn build && /bin/bash ./pre-deploy.sh",
-  pullRequestTeamReviewers: ["@algolia/instantsearch-for-websites"],
+  pullRequestTeamReviewers: ["frontend-experiences-web"],
   versionUpdated: ({ version, releaseType, dir }) => {
     if (
       releaseType === "major" ||
