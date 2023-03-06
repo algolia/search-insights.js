@@ -1,3 +1,13 @@
+# [1.10.0](https://github.com/algolia/search-insights.js/compare/v1.9.0...v1.10.0) (2023-03-06)
+
+
+### Features
+
+* **v1:** allow to `init` again while preserving passed options ([#403](https://github.com/algolia/search-insights.js/issues/403)) ([d3f8de5](https://github.com/algolia/search-insights.js/commit/d3f8de53bd65363584ebce518d0354fd30195d46))
+* pass custom credentials as additional arguments of insights methods ([#400](https://github.com/algolia/search-insights.js/issues/400)) ([5054302](https://github.com/algolia/search-insights.js/commit/50543020c3cee21adba553d65ecc1d1e55dbbb20))
+
+
+
 # [1.9.0](https://github.com/algolia/search-insights.js/compare/v1.8.0...v1.9.0) (2023-02-16)
 
 
