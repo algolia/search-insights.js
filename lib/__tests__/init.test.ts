@@ -9,26 +9,10 @@ describe("init", () => {
     document.cookie = `_ALGOLIA=;${new Date().toUTCString()};path=/`;
   });
 
-  it("should throw if no parameters is passed", () => {
+  it("should not throw if no parameters are passed", () => {
     expect(() => {
       (analyticsInstance as any).init();
-    }).toThrowErrorMatchingInlineSnapshot(
-      `"Init function should be called with an object argument containing your apiKey and appId"`
-    );
-  });
-  it("should throw if apiKey is not sent", () => {
-    expect(() => {
-      (analyticsInstance as any).init({ appId: "***" });
-    }).toThrowErrorMatchingInlineSnapshot(
-      `"apiKey is missing, please provide it so we can authenticate the application"`
-    );
-  });
-  it("should throw if appId is not sent", () => {
-    expect(() => {
-      (analyticsInstance as any).init({ apiKey: "***" });
-    }).toThrowErrorMatchingInlineSnapshot(
-      `"appId is missing, please provide it, so we can properly attribute data to your application"`
-    );
+    }).not.toThrowError();
   });
   it("should throw if region is other than `de` | `us`", () => {
     expect(() => {
@@ -291,6 +275,23 @@ describe("init", () => {
     expect(analyticsInstance._useCookie).toBe(true);
     expect(analyticsInstance._cookieDuration).toBe(100);
     expect(analyticsInstance._userToken).toBe("myUserToken");
+  });
+  it("should merge with previous credentials when `partial` is `true`", () => {
+    analyticsInstance.init({
+      appId: "appId1",
+      apiKey: "apiKey1"
+    });
+
+    expect(analyticsInstance._appId).toBe("appId1");
+    expect(analyticsInstance._apiKey).toBe("apiKey1");
+
+    analyticsInstance.init({
+      appId: "appId2",
+      partial: true
+    });
+
+    expect(analyticsInstance._appId).toBe("appId2");
+    expect(analyticsInstance._apiKey).toBe("apiKey1");
   });
 
   describe("callback for userToken", () => {

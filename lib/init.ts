@@ -1,4 +1,4 @@
-import { isUndefined, isString, isNumber } from "./utils";
+import { isUndefined, isNumber } from "./utils";
 import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
 import objectAssignPolyfill from "./polyfills/objectAssign";
 
@@ -9,8 +9,8 @@ const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
 const MONTH = 30 * 24 * 60 * 60 * 1000;
 
 export interface InitParams {
-  apiKey: string;
-  appId: string;
+  apiKey?: string;
+  appId?: string;
   userHasOptedOut?: boolean;
   useCookie?: boolean;
   cookieDuration?: number;
@@ -23,22 +23,7 @@ export interface InitParams {
  * Binds credentials and settings to class
  * @param options: initParams
  */
-export function init(options: InitParams) {
-  if (!options) {
-    throw new Error(
-      "Init function should be called with an object argument containing your apiKey and appId"
-    );
-  }
-  if (isUndefined(options.apiKey) || !isString(options.apiKey)) {
-    throw new Error(
-      "apiKey is missing, please provide it so we can authenticate the application"
-    );
-  }
-  if (isUndefined(options.appId) || !isString(options.appId)) {
-    throw new Error(
-      "appId is missing, please provide it, so we can properly attribute data to your application"
-    );
-  }
+export function init(options: InitParams = {}) {
   if (
     !isUndefined(options.region) &&
     SUPPORTED_REGIONS.indexOf(options.region) === -1
@@ -65,9 +50,6 @@ export function init(options: InitParams) {
 You can visit https://algolia.com/events/debugger instead.`);
   }
 
-  this._apiKey = options.apiKey;
-  this._appId = options.appId;
-
   setOptions(this, options, {
     _userHasOptedOut: !!options.userHasOptedOut,
     _region: options.region,
@@ -80,7 +62,8 @@ You can visit https://algolia.com/events/debugger instead.`);
     : "https://insights.algolia.io";
 
   // Set hasCredentials
-  this._hasCredentials = true;
+  this._hasCredentials =
+    !isUndefined(this._apiKey) && !isUndefined(this._appId);
 
   // user agent
   this._ua = [...DEFAULT_ALGOLIA_AGENTS];
