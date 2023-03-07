@@ -94,7 +94,9 @@ export type InsightsClient = Init &
   ConvertedObjectIDs &
   ConvertedFilters &
   ViewedObjectIDs &
-  ViewedFilters;
+  ViewedFilters & {
+    version?: string;
+  };
 
 export type InsightsAdditionalEventParams = {
   headers?: Record<string, string>;
