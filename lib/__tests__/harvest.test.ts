@@ -4,7 +4,7 @@ const puppeteer = require("puppeteer");
 const url = require("url");
 
 // Path helper
-const examplePath = type => `http://localhost:8080/${type}.html`;
+const examplePath = (type) => `http://localhost:8080/${type}.html`;
 
 // vars
 let page;
@@ -42,8 +42,8 @@ describe("Library initialisation", () => {
     expect(analyticsInstance._userToken).not.toBeUndefined();
   });
 
-  it("should return version", done => {
-    analyticsInstance.getVersion(version => {
+  it("should return version", (done) => {
+    analyticsInstance.getVersion((version) => {
       expect(version).toEqual(expect.stringMatching(/\d+\.\d+\.\d+/));
       done();
     });
@@ -55,7 +55,7 @@ describe("Integration tests", () => {
 
   const startServer = () =>
     new Promise((resolve, reject) => {
-      handle = testServer.listen(8080, err => {
+      handle = testServer.listen(8080, (err) => {
         if (err) {
           reject(err);
           return;
@@ -66,7 +66,7 @@ describe("Integration tests", () => {
 
   const stopServer = () =>
     new Promise((resolve, reject) => {
-      handle.close(err => {
+      handle.close((err) => {
         if (err) {
           reject(err);
           return;
@@ -122,7 +122,7 @@ describe("Integration tests", () => {
 
         const cookies = await page.cookies();
         const algoliaCookie = cookies.find(
-          cookie => cookie.name === "_ALGOLIA"
+          (cookie) => cookie.name === "_ALGOLIA"
         );
 
         expect(userToken).toMatch(/^anonymous-[-\w]+$/);
@@ -146,8 +146,8 @@ describe("Integration tests", () => {
       it("should return version", async () => {
         const version = await page.evaluate(
           () =>
-            new Promise(resolve => {
-              window.aa("getVersion", version => resolve(version));
+            new Promise((resolve) => {
+              window.aa("getVersion", (version) => resolve(version));
             })
         );
         expect(version).toEqual(expect.stringMatching(/\d+\.\d+\.\d+/));
@@ -169,7 +169,7 @@ describe("Integration tests", () => {
           );
           await button.click();
           objectIDs = await page.evaluate(
-            elem => elem.getAttribute("data-object-id"),
+            (elem) => elem.getAttribute("data-object-id"),
             button
           );
         });
@@ -209,7 +209,7 @@ describe("Integration tests", () => {
 
   function getPageResponse() {
     return new Promise(async (resolve, reject) => {
-      page.on("response", async interceptedRequest => {
+      page.on("response", async (interceptedRequest) => {
         const request = interceptedRequest.request();
 
         const url = request.url();
@@ -233,7 +233,7 @@ describe("Integration tests", () => {
   async function captureNetworkWhile(callback) {
     const capture = new Promise<{ request: any; payload: any }>(
       (resolve, reject) => {
-        page.on("request", interceptedRequest => {
+        page.on("request", (interceptedRequest) => {
           if (interceptedRequest.url().includes("localhost:8080")) {
             const event = {
               request: interceptedRequest,

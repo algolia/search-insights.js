@@ -64,7 +64,7 @@ describe("init", () => {
   });
   it.each(["not a string", 0.002, NaN])(
     "should throw if cookieDuration passed but is not an integer (eg. %s)",
-    cookieDuration => {
+    (cookieDuration) => {
       expect(() => {
         (analyticsInstance as any).init({
           cookieDuration,
@@ -444,7 +444,7 @@ describe("init", () => {
       expect(setAnonymousUserToken).not.toHaveBeenCalled();
     });
 
-    it("can set userToken manually afterwards", done => {
+    it("can set userToken manually afterwards", (done) => {
       analyticsInstance.init({ apiKey: "***", appId: "XXX", userToken: "abc" });
       analyticsInstance.setUserToken("def");
       expect(setUserToken).toHaveBeenCalledTimes(2);
