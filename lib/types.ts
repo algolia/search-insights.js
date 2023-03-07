@@ -72,10 +72,10 @@ export type ViewedFilters = MethodType<"viewedFilters">;
 
 export type SendEvents = MethodType<"sendEvents">;
 
-export type InsightsClient = <MethodName extends keyof InsightsMethodMap>(
+export type InsightsClient = (<MethodName extends keyof InsightsMethodMap>(
   method: MethodName,
   ...args: InsightsMethodMap[MethodName]
-) => void;
+) => void) & { version?: string };
 
 export type InsightsEventType = "click" | "conversion" | "view";
 
