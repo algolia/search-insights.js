@@ -1,4 +1,5 @@
 import { createInsightsClient } from "../_createInsightsClient";
+import { version } from "../../package.json";
 
 describe("createInsightsClient", () => {
   beforeEach(() => {
@@ -7,6 +8,12 @@ describe("createInsightsClient", () => {
 
   it("should return a function", () => {
     expect(typeof createInsightsClient(() => {})).toBe("function");
+  });
+
+  it("returns its version number", () => {
+    const aa = createInsightsClient(() => {});
+
+    expect(aa.version).toEqual(version);
   });
 
   it("registers itself to window", () => {

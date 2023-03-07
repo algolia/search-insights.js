@@ -2,6 +2,7 @@ import AlgoliaAnalytics from './insights';
 import { getFunctionalInterface } from './_getFunctionalInterface';
 import { RequestFnType } from './utils/request';
 import { createUUID } from './utils/uuid';
+import { version } from '../package.json';
 
 export function createInsightsClient(requestFn: RequestFnType) {
   const aa = getFunctionalInterface(new AlgoliaAnalytics({ requestFn }));
@@ -16,6 +17,8 @@ export function createInsightsClient(requestFn: RequestFnType) {
       window[window.AlgoliaAnalyticsObject] = aa;
     }
   }
+
+  aa.version = version;
 
   return aa;
 }
