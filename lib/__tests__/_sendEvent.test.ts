@@ -246,6 +246,34 @@ describe("sendEvents", () => {
       ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(0);
     });
+
+    it.only("applies constructor default values when `init` is not called", () => {
+      const customAppId = "overrideTestId";
+      const customApiKey = "overrideTestKey";
+
+      analyticsInstance = setupInstance({ init: false });
+      analyticsInstance.sendEvents(
+        [
+          {
+            eventType: "click",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"]
+          }
+        ],
+        {
+          headers: {
+            "X-Algolia-Application-Id": customAppId,
+            "X-Algolia-API-Key": customApiKey
+          }
+        }
+      );
+
+      expect(analyticsInstance._endpointOrigin).toBe(
+        "https://insights.algolia.io"
+      );
+      expect(analyticsInstance._userHasOptedOut).toBe(false);
+    });
   });
 
   describe("objectIDs and positions", () => {
