@@ -31,9 +31,6 @@ describe("Library initialisation", () => {
         appId: "ABCD"
       });
     }).not.toThrow();
-
-    // @ts-ignore private prop
-    expect(analyticsInstance._hasCredentials).toBe(true);
   });
 
   it("Should create UUID", () => {

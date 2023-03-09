@@ -65,8 +65,6 @@ class AlgoliaAnalytics {
 
   version: string = version;
 
-  protected _hasCredentials: boolean = false;
-
   // Public methods
   public init: typeof init;
   public getVersion: typeof getVersion;

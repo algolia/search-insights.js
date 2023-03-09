@@ -61,10 +61,6 @@ You can visit https://algolia.com/events/debugger instead.`);
     ? `https://insights.${options.region}.algolia.io`
     : "https://insights.algolia.io";
 
-  // Set hasCredentials
-  this._hasCredentials =
-    !isUndefined(this._apiKey) && !isUndefined(this._appId);
-
   // user agent
   this._ua = [...DEFAULT_ALGOLIA_AGENTS];
 
