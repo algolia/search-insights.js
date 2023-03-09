@@ -591,7 +591,7 @@ describe("sendEvents", () => {
         }
       ]);
     }).toThrowErrorMatchingInlineSnapshot(
-      `"Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters or have custom credentials in additional parameters."`
+      `"Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters or provide custom credentials in additional parameters."`
     );
   });
 });
