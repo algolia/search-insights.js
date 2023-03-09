@@ -247,7 +247,7 @@ describe("sendEvents", () => {
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(0);
     });
 
-    it.only("applies constructor default values when `init` is not called", () => {
+    it("applies constructor default values when `init` is not called", () => {
       const customAppId = "overrideTestId";
       const customApiKey = "overrideTestKey";
 
