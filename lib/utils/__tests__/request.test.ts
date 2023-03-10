@@ -27,7 +27,7 @@ describe("request", () => {
 
   beforeAll(() => {
     navigator.sendBeacon = sendBeacon;
-    window.XMLHttpRequest = function() {
+    window.XMLHttpRequest = function () {
       this.open = open;
       this.send = send;
       this.setRequestHeader = setRequestHeader;

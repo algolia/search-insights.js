@@ -105,9 +105,8 @@ class AlgoliaAnalytics {
     this.clickedObjectIDs = clickedObjectIDs.bind(this);
     this.clickedFilters = clickedFilters.bind(this);
 
-    this.convertedObjectIDsAfterSearch = convertedObjectIDsAfterSearch.bind(
-      this
-    );
+    this.convertedObjectIDsAfterSearch =
+      convertedObjectIDsAfterSearch.bind(this);
     this.convertedObjectIDs = convertedObjectIDs.bind(this);
     this.convertedFilters = convertedFilters.bind(this);
 
