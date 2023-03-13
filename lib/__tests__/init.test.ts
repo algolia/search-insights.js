@@ -64,7 +64,7 @@ describe("init", () => {
   });
   it.each(["not a string", 0.002, NaN])(
     "should throw if cookieDuration passed but is not an integer (eg. %s)",
-    (cookieDuration) => {
+    cookieDuration => {
       expect(() => {
         (analyticsInstance as any).init({
           cookieDuration,
@@ -88,7 +88,7 @@ describe("init", () => {
     expect(analyticsInstance._useCookie).toBe(false);
     expect(analyticsInstance._cookieDuration).toBe(6 * MONTH);
 
-    analyticsInstance.init({ useCookie: true, cookieDuration: MONTH })
+    analyticsInstance.init({ useCookie: true, cookieDuration: MONTH });
 
     expect(analyticsInstance._useCookie).toBe(true);
     expect(analyticsInstance._cookieDuration).toBe(MONTH);
@@ -427,7 +427,7 @@ describe("init", () => {
       expect(setAnonymousUserToken).not.toHaveBeenCalled();
     });
 
-    it("can set userToken manually afterwards", (done) => {
+    it("can set userToken manually afterwards", done => {
       analyticsInstance.init({ apiKey: "***", appId: "XXX", userToken: "abc" });
       analyticsInstance.setUserToken("def");
       expect(setUserToken).toHaveBeenCalledTimes(2);
