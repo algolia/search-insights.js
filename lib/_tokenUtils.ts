@@ -2,6 +2,7 @@ import { createUUID } from "./utils/uuid";
 import { isFunction, supportsCookies } from "./utils";
 
 const COOKIE_KEY = "_ALGOLIA";
+export const MONTH = 30 * 24 * 60 * 60 * 1000;
 
 const setCookie = (name: string, value: number | string, duration: number) => {
   const d = new Date();

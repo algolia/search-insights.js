@@ -1,12 +1,12 @@
 import { isUndefined, isNumber } from "./utils";
 import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
 import objectAssignPolyfill from "./polyfills/objectAssign";
+import { MONTH } from "./_tokenUtils";
 
 objectAssignPolyfill();
 
 type InsightRegion = "de" | "us";
 const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
-const MONTH = 30 * 24 * 60 * 60 * 1000;
 
 export interface InitParams {
   apiKey?: string;

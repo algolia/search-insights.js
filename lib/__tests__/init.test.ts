@@ -1,6 +1,6 @@
 import AlgoliaAnalytics from "../insights";
 import * as utils from "../utils";
-import { getCookie } from "../_tokenUtils";
+import { getCookie, MONTH } from "../_tokenUtils";
 
 describe("init", () => {
   let analyticsInstance: AlgoliaAnalytics;
@@ -60,12 +60,11 @@ describe("init", () => {
   });
   it("should use 6 months cookieDuration by default", () => {
     analyticsInstance.init({ apiKey: "***", appId: "XXX" });
-    const month = 30 * 24 * 60 * 60 * 1000;
-    expect(analyticsInstance._cookieDuration).toBe(6 * month);
+    expect(analyticsInstance._cookieDuration).toBe(6 * MONTH);
   });
   it.each(["not a string", 0.002, NaN])(
     "should throw if cookieDuration passed but is not an integer (eg. %s)",
-    cookieDuration => {
+    (cookieDuration) => {
       expect(() => {
         (analyticsInstance as any).init({
           cookieDuration,
@@ -84,6 +83,15 @@ describe("init", () => {
       cookieDuration: 42
     });
     expect(analyticsInstance._cookieDuration).toBe(42);
+  });
+  it("should set cookie parameters if defined in `init`", () => {
+    expect(analyticsInstance._useCookie).toBe(false);
+    expect(analyticsInstance._cookieDuration).toBe(6 * MONTH);
+
+    analyticsInstance.init({ useCookie: true, cookieDuration: MONTH })
+
+    expect(analyticsInstance._useCookie).toBe(true);
+    expect(analyticsInstance._cookieDuration).toBe(MONTH);
   });
   it("should set _endpointOrigin on instance to https://insights.algolia.io", () => {
     analyticsInstance.init({ apiKey: "***", appId: "XXX" });
@@ -419,7 +427,7 @@ describe("init", () => {
       expect(setAnonymousUserToken).not.toHaveBeenCalled();
     });
 
-    it("can set userToken manually afterwards", done => {
+    it("can set userToken manually afterwards", (done) => {
       analyticsInstance.init({ apiKey: "***", appId: "XXX", userToken: "abc" });
       analyticsInstance.setUserToken("def");
       expect(setUserToken).toHaveBeenCalledTimes(2);
