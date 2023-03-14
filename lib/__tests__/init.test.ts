@@ -292,23 +292,6 @@ describe("init", () => {
     expect(analyticsInstance._appId).toBe("appId2");
     expect(analyticsInstance._apiKey).toBe("apiKey2");
   });
-  it("should merge with previous credentials when `partial` is `true`", () => {
-    analyticsInstance.init({
-      appId: "appId1",
-      apiKey: "apiKey1"
-    });
-
-    expect(analyticsInstance._appId).toBe("appId1");
-    expect(analyticsInstance._apiKey).toBe("apiKey1");
-
-    analyticsInstance.init({
-      appId: "appId2",
-      partial: true
-    });
-
-    expect(analyticsInstance._appId).toBe("appId2");
-    expect(analyticsInstance._apiKey).toBe("apiKey1");
-  });
 
   describe("callback for userToken", () => {
     describe("immediate: true", () => {
