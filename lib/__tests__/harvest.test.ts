@@ -18,31 +18,10 @@ describe("Library initialisation", () => {
     analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
   });
 
-  it("Should throw if there is no apiKey and appId", () => {
+  it("Should not throw if there is no apiKey and appId", () => {
     expect(() => {
-      // @ts-ignore
       analyticsInstance.init();
-    }).toThrowError(
-      "Init function should be called with an object argument containing your apiKey and appId"
-    );
-  });
-
-  it("Should throw if there is only apiKey param", () => {
-    expect(() => {
-      // @ts-ignore
-      analyticsInstance.init({ apiKey: "1234" });
-    }).toThrow(
-      "appId is missing, please provide it, so we can properly attribute data to your application"
-    );
-  });
-
-  it("Should throw if there is only applicatioID param", () => {
-    expect(() => {
-      // @ts-ignore
-      analyticsInstance.init({ appId: "1234" });
-    }).toThrow(
-      "apiKey is missing, please provide it so we can authenticate the application"
-    );
+    }).not.toThrowError();
   });
 
   it("Should not throw if all params are set", () => {
@@ -52,9 +31,6 @@ describe("Library initialisation", () => {
         appId: "ABCD"
       });
     }).not.toThrow();
-
-    // @ts-ignore private prop
-    expect(analyticsInstance._hasCredentials).toBe(true);
   });
 
   it("Should create UUID", () => {

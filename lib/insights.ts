@@ -27,7 +27,8 @@ import {
   getUserToken,
   setUserToken,
   setAnonymousUserToken,
-  onUserTokenChange
+  onUserTokenChange,
+  MONTH
 } from "./_tokenUtils";
 import { version } from "../package.json";
 
@@ -54,18 +55,16 @@ class AlgoliaAnalytics {
   _apiKey: string;
   _appId: string;
   _region: string;
-  _endpointOrigin: string;
+  _endpointOrigin = "https://insights.algolia.io";
   _userToken: string;
-  _userHasOptedOut: boolean;
-  _useCookie: boolean;
-  _cookieDuration: number;
+  _userHasOptedOut = false;
+  _useCookie = false;
+  _cookieDuration = 6 * MONTH;
 
   // user agent
   _ua: string[] = [];
 
   version: string = version;
-
-  protected _hasCredentials: boolean = false;
 
   // Public methods
   public init: typeof init;

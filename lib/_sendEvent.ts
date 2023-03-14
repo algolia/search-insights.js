@@ -10,9 +10,13 @@ export function makeSendEvents(requestFn: RequestFnType) {
     if (this._userHasOptedOut) {
       return;
     }
-    if (!this._hasCredentials) {
+    const hasCredentials =
+      (!isUndefined(this._apiKey) && !isUndefined(this._appId)) ||
+      (additionalParams?.headers["X-Algolia-Application-Id"] &&
+        additionalParams?.headers["X-Algolia-API-Key"]);
+    if (!hasCredentials) {
       throw new Error(
-        "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
+        "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters or provide custom credentials in additional parameters."
       );
     }
 
