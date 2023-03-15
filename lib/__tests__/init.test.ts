@@ -1,6 +1,6 @@
 import AlgoliaAnalytics from "../insights";
 import * as utils from "../utils";
-import { getCookie } from "../_tokenUtils";
+import { getCookie, MONTH } from "../_tokenUtils";
 
 describe("init", () => {
   let analyticsInstance;
@@ -9,26 +9,10 @@ describe("init", () => {
     document.cookie = `_ALGOLIA=;${new Date().toUTCString()};path=/`;
   });
 
-  it("should throw if no parameters is passed", () => {
+  it("should not throw if no parameters are passed", () => {
     expect(() => {
       (analyticsInstance as any).init();
-    }).toThrowErrorMatchingInlineSnapshot(
-      `"Init function should be called with an object argument containing your apiKey and appId"`
-    );
-  });
-  it("should throw if apiKey is not sent", () => {
-    expect(() => {
-      (analyticsInstance as any).init({ appId: "***" });
-    }).toThrowErrorMatchingInlineSnapshot(
-      `"apiKey is missing, please provide it so we can authenticate the application"`
-    );
-  });
-  it("should throw if appId is not sent", () => {
-    expect(() => {
-      (analyticsInstance as any).init({ apiKey: "***" });
-    }).toThrowErrorMatchingInlineSnapshot(
-      `"appId is missing, please provide it, so we can properly attribute data to your application"`
-    );
+    }).not.toThrowError();
   });
   it("should throw if region is other than `de` | `us`", () => {
     expect(() => {
@@ -76,8 +60,7 @@ describe("init", () => {
   });
   it("should use 6 months cookieDuration by default", () => {
     analyticsInstance.init({ apiKey: "***", appId: "XXX" });
-    const month = 30 * 24 * 60 * 60 * 1000;
-    expect(analyticsInstance._cookieDuration).toBe(6 * month);
+    expect(analyticsInstance._cookieDuration).toBe(6 * MONTH);
   });
   it.each(["not a string", 0.002, NaN])(
     "should throw if cookieDuration passed but is not an integer (eg. %s)",
@@ -100,6 +83,15 @@ describe("init", () => {
       cookieDuration: 42
     });
     expect(analyticsInstance._cookieDuration).toBe(42);
+  });
+  it("should set cookie parameters if defined in `init`", () => {
+    expect(analyticsInstance._useCookie).toBe(false);
+    expect(analyticsInstance._cookieDuration).toBe(6 * MONTH);
+
+    analyticsInstance.init({ useCookie: true, cookieDuration: MONTH });
+
+    expect(analyticsInstance._useCookie).toBe(true);
+    expect(analyticsInstance._cookieDuration).toBe(MONTH);
   });
   it("should set _endpointOrigin on instance to https://insights.algolia.io", () => {
     analyticsInstance.init({ apiKey: "***", appId: "XXX" });
@@ -288,6 +280,14 @@ describe("init", () => {
     expect(analyticsInstance._useCookie).toBe(false);
     expect(analyticsInstance._cookieDuration).toBe(100);
     expect(analyticsInstance._userToken).toBe("myUserToken");
+
+    analyticsInstance.init({
+      appId: "appId2",
+      partial: true
+    });
+
+    expect(analyticsInstance._appId).toBe("appId2");
+    expect(analyticsInstance._apiKey).toBe("apiKey2");
   });
 
   describe("callback for userToken", () => {

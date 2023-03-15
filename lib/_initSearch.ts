@@ -1,3 +1,5 @@
+import { isUndefined } from "./utils";
+
 export interface InitSearchParams {
   getQueryID: () => string | number;
   hitsContainer: string | string[];
@@ -8,7 +10,7 @@ export interface InitSearchParams {
  * @param initParams: InitSearchParams
  */
 export function initSearch(initParams: InitSearchParams) {
-  if (!this._hasCredentials) {
+  if ((isUndefined(this._apiKey) || isUndefined(this._appId))) {
     throw new Error(
       "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
     );
