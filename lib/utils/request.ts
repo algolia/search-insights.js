@@ -30,7 +30,7 @@ export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
     url.indexOf("https://") === 0 ? require("https") : require("http");
   const req = nodeRequest(options);
 
-  req.on("error", error => {
+  req.on("error", (error) => {
     console.error(error);
   });
 
