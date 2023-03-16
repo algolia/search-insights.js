@@ -54,7 +54,6 @@ Initializing the library is optional, as you can specify the [credentials for ea
 ```js
 // Optional: configure default Algolia credentials for events
 aa('init', {
-  // `appId` and `apiKey` are optional
   appId: 'APP_ID',
   apiKey: 'SEARCH_API_KEY',
 });
@@ -97,7 +96,6 @@ const aa = require('search-insights');
 
 // Optional: configure default Algolia credentials for events
 aa('init', {
-  // `appId` and `apiKey` are optional
   appId: 'APPLICATION_ID',
   apiKey: 'SEARCH_API_KEY'
 });
