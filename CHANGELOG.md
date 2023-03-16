@@ -3,9 +3,9 @@
 
 ### Features
 
-* allow to `init` without credentials (v2) ([#415](https://github.com/algolia/search-insights.js/issues/415)) ([c774652](https://github.com/algolia/search-insights.js/commit/c774652e1a0d47583c74ec4505d0083907ee4fff))
+* make `init` optional ([#415](https://github.com/algolia/search-insights.js/issues/415)) ([c774652](https://github.com/algolia/search-insights.js/commit/c774652e1a0d47583c74ec4505d0083907ee4fff))
 * expose version string from functional interface ([#413](https://github.com/algolia/search-insights.js/issues/413)) ([8a3f8f9](https://github.com/algolia/search-insights.js/commit/8a3f8f98165c19c9e700f559a9d144a12ccc0e00))
-* **v2:** allow to `init` again while preserving passed options ([#401](https://github.com/algolia/search-insights.js/issues/401)) ([0e66c34](https://github.com/algolia/search-insights.js/commit/0e66c3438fc442bbff22120231b038d451085447))
+* allow to `init` again while preserving passed options ([#401](https://github.com/algolia/search-insights.js/issues/401)) ([0e66c34](https://github.com/algolia/search-insights.js/commit/0e66c3438fc442bbff22120231b038d451085447))
 * pass custom credentials as additional arguments of insights methods ([#399](https://github.com/algolia/search-insights.js/issues/399)) ([3f66ff4](https://github.com/algolia/search-insights.js/commit/3f66ff47d0c529d390cb77444e0c24de52b043f2))
 
 
