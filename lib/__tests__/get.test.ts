@@ -24,9 +24,5 @@ describe("get", () => {
     analyticsInstance._get("_region", callback);
     expect(callback).toHaveBeenCalledTimes(3);
     expect(callback).toHaveBeenCalledWith("us");
-
-    analyticsInstance._get("_hasCredentials", callback);
-    expect(callback).toHaveBeenCalledTimes(4);
-    expect(callback).toHaveBeenCalledWith(true);
   });
 });

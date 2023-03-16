@@ -49,7 +49,10 @@ i.async=1,i.src=n,c.parentNode.insertBefore(i,c)
 
 #### 2. Initialize the library
 
+Initializing the library is optional, as you can specify the [credentials for each event](#sending-events-to-multiple-algolia-applications) when sending them. This gives you the flexibility to manage your Algolia credentials on a per-event basis, without having to configure them upfront.
+
 ```js
+// Optional: configure default Algolia credentials for events
 aa('init', {
   appId: 'APP_ID',
   apiKey: 'SEARCH_API_KEY',
@@ -61,13 +64,14 @@ aa('setUserToken', 'USER_ID');
 
 | Option            | Type           | Default                  | Description                                    |
 | ----------------- | -------------- | ------------------------ | ---------------------------------------------- |
-| **`appId`**       | `string`       | None (required)          | The identifier of your Algolia application     |
-| **`apiKey`**      | `string`       | None (required)          | The search API key of your Algolia application |
+| `appId`           | `string`       | None                     | The identifier of your Algolia application     |
+| `apiKey`          | `string`       | None                     | The search API key of your Algolia application |
 | `userHasOptedOut` | `boolean`      | `false`                  | Whether to exclude users from analytics        |
 | `region`          | `'de' \| 'us'` | Automatic                | The DNS server to target                       |
 | `useCookie`       | `boolean`      | `true`                   | Whether to use cookie in browser environment. The anonymous user token will not be set if `false`. When `useCookie` is `false` and `setUserToken` is not called yet, sending events will throw errors because there is no user token to attach to the events. |
 | `cookieDuration`  | `number`       | `15552000000` (6 months) | The cookie duration in milliseconds            |
 | `userToken`       | `string`       | `undefined` (optional)   | Initial userToken. When given, anonymous userToken will not be set. |
+| `partial`         | `boolean`      | `false`                  | Whether to preserve previously passed options without redeclaring them. |
 
 ### Node.js
 
@@ -85,9 +89,12 @@ yarn add search-insights
 
 #### 2. Initialize the library
 
+Initializing the library is optional, as you can specify the [credentials for each event](#sending-events-to-multiple-algolia-applications) when sending them. This gives you the flexibility to manage your Algolia credentials on a per-event basis, without having to configure them upfront.
+
 ```js
 const aa = require('search-insights');
 
+// Optional: configure default Algolia credentials for events
 aa('init', {
   appId: 'APPLICATION_ID',
   apiKey: 'SEARCH_API_KEY'
@@ -96,7 +103,7 @@ aa('init', {
 
 To update the client with new options, you can call `init` again.
 
-By default, all previously passed options that you don't redefine are reset to their default setting, except for the `userToken`. To preserve previously passed options without redeclaring them, use the `patch` option.
+By default, all previously passed options that you don't redefine are reset to their default setting, except for the `userToken`. To preserve previously passed options without redeclaring them, use the `partial` option.
 
 ```js
 aa("init", {
@@ -392,7 +399,7 @@ aa('viewedFilters', {
 
 The Search Insights library sends all events to the Algolia application it has been initialized with, by default. In some cases, you might have data coming from more than one Algolia application which all need events.
 
-You can use a single instance of the Search Insights library while still customizing the Algolia credentials on a per-event basis. All click, view and conversion methods support an additional argument where you can specify credentials that will override those set during initialization.
+You can use a single instance of the Search Insights library while still customizing the Algolia credentials on a per-event basis. All click, view and conversion methods support an additional argument where you can specify credentials that will override those set during initialization (which is optional).
 
 ```js
 aa('clickedObjectIDsAfterSearch', {

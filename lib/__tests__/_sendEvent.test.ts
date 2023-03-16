@@ -12,9 +12,12 @@ const credentials = {
   appId: "testId"
 };
 
-function setupInstance(requestFn = getRequesterForBrowser()) {
+function setupInstance({
+  requestFn = getRequesterForBrowser(),
+  init = true
+} = {}) {
   const instance = new AlgoliaAnalytics({ requestFn });
-  instance.init(credentials);
+  if (init) instance.init(credentials);
   instance.setUserToken("mock-user-id");
   return instance;
 }
@@ -39,6 +42,7 @@ describe("sendEvent", () => {
     let sendBeaconBackup;
     beforeEach(() => {
       sendBeaconBackup = window.navigator.sendBeacon;
+      // @ts-expect-error
       window.navigator.sendBeacon = undefined; // force usage of XMLHttpRequest
       analyticsInstance = setupInstance();
     });
@@ -158,7 +162,7 @@ describe("sendEvent", () => {
 
     beforeEach(() => {
       fakeRequestFn.mockClear();
-      analyticsInstance = setupInstance(fakeRequestFn);
+      analyticsInstance = setupInstance({ requestFn: fakeRequestFn });
     });
     it("should call the requestFn with expected arguments", () => {
       (analyticsInstance as any).sendEvent("click", {
@@ -203,14 +207,6 @@ describe("sendEvent", () => {
       analyticsInstance = setupInstance();
     });
 
-    it("should throw if init was not called", () => {
-      expect(() => {
-        (analyticsInstance as any)._hasCredentials = false;
-        (analyticsInstance as any).sendEvent();
-      }).toThrowError(
-        "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters"
-      );
-    });
     it("should do nothing is _userHasOptedOut === true", () => {
       analyticsInstance._userHasOptedOut = true;
       (analyticsInstance as any).sendEvent("click", {
@@ -275,6 +271,32 @@ describe("sendEvent", () => {
       }).toThrowErrorMatchingInlineSnapshot(
         `"expected required parameter \`index\` to be a string"`
       );
+    });
+
+    it("applies constructor default values when `init` is not called", () => {
+      const customAppId = "overrideTestId";
+      const customApiKey = "overrideTestKey";
+
+      analyticsInstance = setupInstance({ init: false });
+      analyticsInstance.sendEvent(
+        "click",
+        {
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        },
+        {
+          headers: {
+            "X-Algolia-Application-Id": customAppId,
+            "X-Algolia-API-Key": customApiKey
+          }
+        }
+      );
+
+      expect(analyticsInstance._endpointOrigin).toBe(
+        "https://insights.algolia.io"
+      );
+      expect(analyticsInstance._userHasOptedOut).toBe(false);
     });
   });
 
@@ -449,6 +471,28 @@ describe("sendEvent", () => {
     });
   });
 
+  it("applies default credentials when no custom ones are provided", () => {
+    const analyticsInstance = setupInstance();
+
+    (analyticsInstance as any).sendEvent("click", {
+      eventName: "my-event",
+      index: "my-index",
+      objectIDs: ["1"],
+      userToken: "mock-user-id"
+    });
+
+    {
+      const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
+      const { query } = url.parse(requestUrl);
+      expect(querystring.parse(query!)).toMatchObject(
+        expect.objectContaining({
+          "X-Algolia-Application-Id": credentials.appId,
+          "X-Algolia-API-Key": credentials.apiKey
+        })
+      );
+    }
+  });
+
   it("applies custom credentials when provided", () => {
     const analyticsInstance = setupInstance();
 
@@ -498,5 +542,21 @@ describe("sendEvent", () => {
         })
       );
     }
+  });
+
+  it("should throw if no default or custom credentials are provided", () => {
+    const analyticsInstance = setupInstance({ init: false });
+
+    expect(() => {
+      (analyticsInstance as any).sendEvent("click", [
+        {
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
+    }).toThrowErrorMatchingInlineSnapshot(
+      `"Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters or provide custom credentials in additional parameters."`
+    );
   });
 });
