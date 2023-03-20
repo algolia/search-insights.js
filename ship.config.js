@@ -4,6 +4,8 @@ const path = require("path");
 module.exports = {
   buildCommand: () => "yarn build && /bin/bash ./pre-deploy.sh",
   pullRequestTeamReviewers: ["frontend-experiences-web"],
+  publishCommand: ({ defaultCommand }) =>
+    defaultCommand.replace(/latest/, "latest-1.x"),
   versionUpdated: ({ version, releaseType, dir }) => {
     if (
       releaseType === "major" ||
@@ -12,7 +14,8 @@ module.exports = {
     ) {
       const readmePath = path.resolve(dir, "README.md");
       let content = fs.readFileSync(readmePath).toString();
-      const regex = /cdn\.jsdelivr\.net\/npm\/search-insights@(\d+?\.\d+?\.\d+?)/;
+      const regex =
+        /cdn\.jsdelivr\.net\/npm\/search-insights@(\d+?\.\d+?\.\d+?)/;
       const newUrl = `cdn.jsdelivr.net/npm/search-insights@${version}`;
       content = content.replace(regex, newUrl);
       fs.writeFileSync(readmePath, content);
