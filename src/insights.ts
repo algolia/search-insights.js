@@ -1,3 +1,5 @@
+import type { AaQueue } from './aaShim';
+import { AaShim } from './aaShim';
 import type { EventEmitterCallback } from './eventEmitter';
 import { EventEmitter } from './eventEmitter';
 import type {
@@ -10,7 +12,7 @@ import type { Expand } from './types/utils';
 import type { UserTokenOptions } from './userToken';
 import { UserToken } from './userToken';
 
-type BufferedMethodCall = [string, unknown, unknown, unknown?];
+type BufferedMethodCall = [string, unknown, unknown?, unknown?];
 
 type SnippetAlgoliaInsights = BufferedMethodCall[];
 
@@ -47,31 +49,45 @@ export class AlgoliaInsights {
   private emitter = new EventEmitter();
   private userToken: UserToken;
 
-  constructor(i: AlgoliaInsights | SnippetAlgoliaInsights) {
+  constructor(i: AlgoliaInsights | SnippetAlgoliaInsights, aa?: AaQueue) {
     if ('initialized' in i && i.initialized) {
       // eslint-disable-next-line no-constructor-return
       return i;
     }
 
+    if (aa && !aa.processed) {
+      // eslint-disable-next-line no-new
+      new AaShim(this, aa);
+    }
+
     const insights = i as SnippetAlgoliaInsights;
 
-    const flushedActions = flush(insights);
-    if (flushedActions.length > 0 && flushedActions[0].methodName !== 'init') {
-      throw new Error('init must be called first');
-    }
+    const flushed = flush(insights);
 
-    const initAction = flushedActions.shift();
-    const initArgs = initAction?.args;
-    if (!initArgs || initArgs.length < 2) {
-      throw new Error(
-        'Not enough arguments provided to the init call. Expected at least `applicationId` and `apiKey` to be provided.'
+    if (!this.initialized) {
+      if (flushed.length > 0 && flushed[0].methodName !== 'init') {
+        throw new Error('init must be called first');
+      }
+
+      const initAction = flushed.shift();
+      const initArgs = initAction?.args;
+      if (!initArgs || initArgs.length < 2) {
+        throw new Error(
+          'Not enough arguments provided to the init call. Expected at least `applicationId` and `apiKey` to be provided.'
+        );
+      }
+
+      this.init(
+        initArgs[0] as string,
+        initArgs[1] as string,
+        initArgs[2] ?? {}
       );
+    } else if (flushed.length > 0 && flushed[0].methodName === 'init') {
+      // remove init, as initialization has already occurred
+      flushed.shift();
     }
 
-    this.init(initArgs[0] as string, initArgs[1] as string, initArgs[2] ?? {});
-    this.initialized = true;
-
-    flushedActions.forEach(({ methodName, args }) => {
+    flushed.forEach(({ methodName, args }) => {
       this[methodName](...args);
     });
   }
@@ -96,6 +112,8 @@ export class AlgoliaInsights {
 
     // Flush and purge any existing events sitting in localStorage.
     this.beacon.flushAndPurgeEvents();
+
+    this.initialized = true;
   }
 
   addAlgoliaAgent(agent: string) {
@@ -105,6 +123,14 @@ export class AlgoliaInsights {
   setUserToken(userToken: string) {
     this.userToken.setUserToken(userToken);
     this.emitter.emit('userToken:changed', userToken);
+  }
+
+  getUserToken(callback?: (err: any, userToken: string) => void) {
+    const userToken = this.userToken.getUserToken();
+    if (userToken && typeof callback === 'function') {
+      callback(null, userToken);
+    }
+    return userToken;
   }
 
   on(type: string, handler: EventEmitterCallback) {

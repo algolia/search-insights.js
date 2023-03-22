@@ -1,11 +1,11 @@
 <script>
-  (function () {
-    var insights = (window.insights = window.insights || []);
-    if (insights.initalized) {
+  (function (window, document, scriptEl) {
+    const insights = (window.insights = window.insights ?? []);
+    if (insights.initialized) {
       return;
     }
     if (insights.invoked) {
-      if (window.console && console.error) {
+      if (console && console.error) {
         console.error('Algolia insights snippet included twice.');
       }
       return;
@@ -37,40 +37,40 @@
     // for methods in insights.js so that you never have to wait
     // for it to load to actually record data. The `method` is
     // stored as the first argument, so we can replay the data.
-    insights.factory = function (method) {
-      return function () {
-        var args = Array.prototype.slice.call(arguments);
-        args.unshift(method);
-        insights.push(args);
-        return insights;
-      };
+    insights.factory = (method) => (...args) => {
+      insights.push([method, ...args]);
     };
     // For each of our methods, generate a queueing stub.
-    for (var i = 0; i < insights.methods.length; i++) {
-      var key = insights.methods[i];
+    insights.methods.forEach((key) => {
       insights[key] = insights.factory(key);
-    }
+    });
 
     insights.load = function (version) {
-      var script = document.createElement('script');
+      const script = document.createElement(scriptEl);
       script.type = 'text/javascript';
       script.async = true;
-      var cdnPath = 'https://cdn.jsdelivr.net/npm/search-insights';
+      let cdnPath = 'https://cdn.jsdelivr.net/npm/search-insights';
       if (version) {
-        cdnPath += '@' + version;
+        cdnPath += `@${version}`;
       }
       script.src = cdnPath;
 
       // Insert our script next to the first script element.
-      var first = document.getElementsByTagName('script')[0];
+      const first = document.getElementsByTagName(scriptEl)[0];
       first.parentNode.insertBefore(script, first);
     };
     insights.load();
 
     insights.init('YourApplicationID', 'YourSearchOnlyAPIKey', {
-      // region: "us",
+      // region: 'us',
       // anonmoyousId: { enabled: true, lease: 60 },
       // userToken: { cookie: true, lease: 1440 }
     });
-  })();
+
+    const pointer = window.AlgoliaAnalyticsObject = 'aa';
+    window[pointer] = window[pointer] ?? ((...args) => {
+      window[pointer].queue = window[pointer].queue ?? [];
+      window[pointer].queue.push(args);
+    });
+  })(window, document, 'script');
 </script>

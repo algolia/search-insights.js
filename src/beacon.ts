@@ -38,7 +38,7 @@ export class Beacon<Event, OptionalParams> {
     this.flushEvents().then(() => this.purgeExpiredEvents());
   }
 
-  protected emit(_e: Event, _o: OptionalParams): Promise<unknown> {
+  protected emit(_e: Event, _o?: OptionalParams): Promise<unknown> {
     return new Promise((_, reject) => {
       reject(new Error('emit method not implemented'));
     });
