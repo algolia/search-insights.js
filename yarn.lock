@@ -1411,6 +1411,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/dom-speech-recognition@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@types/dom-speech-recognition@npm:0.0.1"
+  checksum: 8b34af73c311580fa17842d72025a6d9d3eb0768f03e8eac91d2699566800efb6e99cba8138c0b44f16a00822ba8a6da00f830aff504cbf996bc86bbe4834fc2
+  languageName: node
+  linkType: hard
+
 "@types/estree@npm:*":
   version: 1.0.0
   resolution: "@types/estree@npm:1.0.0"
@@ -2185,7 +2192,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"algoliasearch-helper@npm:^3.11.1, algoliasearch-helper@npm:^3.11.2":
+"algoliasearch-helper@npm:^3.11.1":
   version: 3.11.3
   resolution: "algoliasearch-helper@npm:3.11.3"
   dependencies:
@@ -2193,6 +2200,17 @@ __metadata:
   peerDependencies:
     algoliasearch: ">= 3.1 < 6"
   checksum: 07947f566337e2cbcb0b4020e7c02140827808b5ef66141703cdde989ba79f1e924a3ed0d9f1cb84916eabcab8279e573b15f7004ac0bf852677832563b52bd5
+  languageName: node
+  linkType: hard
+
+"algoliasearch-helper@npm:^3.11.3":
+  version: 3.12.0
+  resolution: "algoliasearch-helper@npm:3.12.0"
+  dependencies:
+    "@algolia/events": ^4.0.1
+  peerDependencies:
+    algoliasearch: ">= 3.1 < 6"
+  checksum: 177ead2a04c60f1005a9ccac4096714cd992f0f158b91791deb719765f9a94ea67efc782f29cf5182e9a8ce75bcf7461bb8bf8bab9846b5fa1b9ed1f8a2b902f
   languageName: node
   linkType: hard
 
@@ -7537,16 +7555,17 @@ __metadata:
   linkType: hard
 
 "instantsearch.js@npm:^4.49.1":
-  version: 4.49.4
-  resolution: "instantsearch.js@npm:4.49.4"
+  version: 4.53.0
+  resolution: "instantsearch.js@npm:4.53.0"
   dependencies:
     "@algolia/events": ^4.0.1
     "@algolia/ui-components-highlight-vdom": ^1.2.1
     "@algolia/ui-components-shared": ^1.2.1
+    "@types/dom-speech-recognition": ^0.0.1
     "@types/google.maps": ^3.45.3
     "@types/hogan.js": ^3.0.0
     "@types/qs": ^6.5.3
-    algoliasearch-helper: ^3.11.2
+    algoliasearch-helper: ^3.11.3
     hogan.js: ^3.0.2
     htm: ^3.0.0
     preact: ^10.10.0
@@ -7554,7 +7573,7 @@ __metadata:
     search-insights: ^2.1.0
   peerDependencies:
     algoliasearch: ">= 3.1 < 6"
-  checksum: b177b49fc52e7995d1f0e03462c62a8703534f36b2a1ffcedc1fefe707534fb2f38627e13efa70b1bcdfffaa1bacd9b1f6cfc7f5db3fd5a265f4c903a88f8174
+  checksum: b27699ce6f3750118e18c814c3276b4216c3c984c6265aa7a8c6f02d59fc774cf9401dbea65b708339eb3edc7f3a5a5e0b1ac32e2642a388269a19661f549594
   languageName: node
   linkType: hard
 
