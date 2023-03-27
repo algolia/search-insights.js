@@ -1,5 +1,6 @@
 import type { FetchMock } from 'jest-fetch-mock';
 
+import type { AaQueue } from './aaShim';
 import { AlgoliaInsights } from './insights';
 import type { InsightsAdditionalEventParams } from './insightsAPIBeaconClient';
 
@@ -184,6 +185,63 @@ describe('insights', () => {
         expect.any(String),
         expect.objectContaining({
           headers: expect.objectContaining(additionalParams.headers),
+        })
+      );
+    });
+  });
+
+  describe('using legacy aa', () => {
+    beforeEach(() => {
+      (fetch as FetchMock).mockClear();
+    });
+
+    it('initalizes using an init found in aa.queue', () => {
+      const aa: AaQueue = {
+        queue: [
+          [
+            'init',
+            { appId: 'app123', apiKey: 'key123', userToken: 'usertoken123' },
+          ],
+        ],
+      };
+      const insights = new AlgoliaInsights([], aa);
+      expect(insights.initialized).toEqual(true);
+      expect(insights.getUserToken()).toEqual('usertoken123');
+    });
+
+    it('processes events for aa then insights', () => {
+      const aa: AaQueue = {
+        queue: [
+          [
+            'init',
+            { appId: 'app123', apiKey: 'key123', userToken: 'usertoken123' },
+          ],
+        ],
+      };
+      const ua = 'custom user agent';
+      const insights = new AlgoliaInsights([], aa);
+
+      aa.queue.push(['addAlgoliaAgent', ua]);
+
+      insights.sendEvents(
+        [
+          {
+            eventName: 'Hit Clicked',
+            eventType: 'click',
+            index: 'index1',
+            objectIDs: ['12345'],
+            positions: [1],
+          },
+        ],
+        {}
+      );
+
+      expect(fetch).toHaveBeenLastCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            'X-Algolia-Agent': expect.stringContaining(ua),
+          }),
         })
       );
     });
