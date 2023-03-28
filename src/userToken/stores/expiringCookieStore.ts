@@ -2,7 +2,9 @@ import Cookies from 'js-cookie';
 
 import { tld } from '../../tld';
 
-export class ExpiringCookieStore {
+import type { Store } from '.';
+
+export class ExpiringCookieStore implements Store {
   constructor(private lease: number = 60) {}
 
   read(key: string) {

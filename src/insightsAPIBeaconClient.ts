@@ -6,7 +6,7 @@ export type InsightsAdditionalEventParams = {
 
 export type InsightsApiEvent = {
   timestamp: ReturnType<typeof Date.now>;
-  userToken: string;
+  userToken?: string;
 
   eventType: 'click' | 'conversion' | 'view';
   eventName: string;

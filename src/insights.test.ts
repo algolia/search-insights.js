@@ -38,6 +38,31 @@ describe('insights', () => {
         expect.any(String),
         expect.objectContaining({
           headers: expect.objectContaining(additionalParams.headers),
+          body: expect.stringContaining('"userToken":"usertoken123"'),
+        })
+      );
+    });
+
+    it('when userToken is removed', () => {
+      insights.removeUserToken();
+      insights.sendEvents(
+        [
+          {
+            eventName: 'Hit Clicked',
+            eventType: 'click',
+            index: 'index1',
+            objectIDs: ['12345'],
+            positions: [1],
+          },
+        ],
+        additionalParams
+      );
+
+      expect(fetch).toHaveBeenLastCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          headers: expect.objectContaining(additionalParams.headers),
+          body: expect.not.stringContaining('"userToken"'),
         })
       );
     });

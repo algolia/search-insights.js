@@ -5,10 +5,9 @@ import type {
   InsightsAdditionalEventParams,
 } from './insightsAPIBeaconClient';
 import { InsightsApiBeaconClient } from './insightsAPIBeaconClient';
+import { Storage } from './storage';
 
-const getItemMock = jest.spyOn(Object.getPrototypeOf(localStorage), 'getItem');
-const setItemMock = jest.spyOn(Object.getPrototypeOf(localStorage), 'setItem');
-const consoleErrorSpy = jest.spyOn(console, 'error');
+jest.mock('./storage');
 
 const clientOpts = { applicationId: 'app123', apiKey: 'key123' };
 
@@ -26,9 +25,11 @@ const testEvent: InsightsApiEvent = {
 describe('InsightsApiBeaconClient', () => {
   afterEach(() => {
     jest.clearAllMocks();
+    (fetch as FetchMock).mockClear();
   });
   afterAll(() => {
     jest.restoreAllMocks();
+    (fetch as FetchMock).mockRestore();
   });
 
   test('it works', () => {
@@ -36,19 +37,60 @@ describe('InsightsApiBeaconClient', () => {
 
     beacon.send(testEvent);
 
-    expect(getItemMock).toHaveBeenCalledWith('alg:beacon:events');
-    expect(setItemMock).toHaveBeenCalled();
+    expect(Storage.get).toHaveBeenCalledWith('alg:beacon:events');
+    expect(Storage.set).toHaveBeenLastCalledWith(
+      'alg:beacon:events',
+      expect.any(String)
+    );
 
-    const lastSetItemCall =
-      setItemMock.mock.calls[setItemMock.mock.calls.length - 1];
-    expect(lastSetItemCall[0]).toEqual('alg:beacon:events');
+    const lastSetItemCall = (
+      Storage.set as jest.MockedFunction<typeof Storage.set>
+    ).mock.lastCall!;
 
-    const lastSetItemCallData = JSON.parse(lastSetItemCall[1] as any)[0];
+    const lastSetItemCallData = JSON.parse(lastSetItemCall[1])[0];
 
     expect(lastSetItemCallData.sent).toBeDefined();
     expect(lastSetItemCallData.event).toMatchObject(testEvent);
 
-    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        body: expect.stringContaining(JSON.stringify({ events: [testEvent] })),
+      })
+    );
+  });
+
+  test('it works without a userToken', () => {
+    const beacon = new InsightsApiBeaconClient(clientOpts);
+    const testEventWithoutUserToken = {
+      ...testEvent,
+    };
+    delete testEventWithoutUserToken.userToken;
+    beacon.send(testEventWithoutUserToken);
+
+    expect(Storage.get).toHaveBeenCalledWith('alg:beacon:events');
+    expect(Storage.set).toHaveBeenLastCalledWith(
+      'alg:beacon:events',
+      expect.any(String)
+    );
+
+    const lastSetItemCall = (
+      Storage.set as jest.MockedFunction<typeof Storage.set>
+    ).mock.lastCall!;
+
+    const lastSetItemCallData = JSON.parse(lastSetItemCall[1])[0];
+
+    expect(lastSetItemCallData.sent).toBeDefined();
+    expect(lastSetItemCallData.event).toMatchObject(testEventWithoutUserToken);
+
+    expect(fetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        body: expect.stringContaining(
+          JSON.stringify({ events: [testEventWithoutUserToken] })
+        ),
+      })
+    );
   });
 
   test('it uses credentials from the constructor by default', () => {
@@ -84,9 +126,11 @@ describe('InsightsApiBeaconClient', () => {
     );
 
     // Custom credentials are removed from the event payload
-    const lastSetItemCall =
-      setItemMock.mock.calls[setItemMock.mock.calls.length - 1];
-    const lastSetItemCallData = JSON.parse(lastSetItemCall[1] as any)[0];
+    const lastSetItemCall = (
+      Storage.set as jest.MockedFunction<typeof Storage.set>
+    ).mock.lastCall!;
+    const lastSetItemCallData = JSON.parse(lastSetItemCall[1])[0];
+
     expect(lastSetItemCallData.event.appId).toBeUndefined();
     expect(lastSetItemCallData.event.apiKey).toBeUndefined();
 
@@ -105,17 +149,6 @@ describe('InsightsApiBeaconClient', () => {
 
   test('captures fetch error', () => {
     (fetch as FetchMock).mockReject(new Error('failure'));
-
-    const beacon = new InsightsApiBeaconClient(clientOpts);
-
-    beacon.send(testEvent);
-  });
-
-  test('captures localStorage.setItem error', () => {
-    consoleErrorSpy.mockImplementation();
-    setItemMock.mockImplementationOnce(() => {
-      throw new Error('pretend QuotaExceededError');
-    });
 
     const beacon = new InsightsApiBeaconClient(clientOpts);
 

@@ -1,11 +1,7 @@
 import { createUUID } from '../utils/uuid';
 
+import type { Store } from './stores';
 import { ExpiringCookieStore, InMemoryStore } from './stores';
-
-interface Store {
-  read: (key: string) => string | undefined;
-  write: (key: string, value: string) => string;
-}
 
 export type UserTokenOptions = Partial<{
   anonmyousId: { enabled: boolean; lease: number };
@@ -13,7 +9,7 @@ export type UserTokenOptions = Partial<{
 }>;
 
 const DefaultUserTokenOptions = {
-  anonmyousId: { enabled: true, lease: 60 },
+  anonmyousId: { enabled: false, lease: 60 },
   userToken: { cookie: true, lease: 1440 },
 };
 
@@ -33,8 +29,11 @@ export const ANONYMOUS_ID_KEY = 'alg:anonymousId';
 export class UserToken {
   private anonmyousIdStore?: ExpiringCookieStore;
   private userTokenStore: Store;
+  private opts: UserTokenOptions;
 
   constructor(opts: UserTokenOptions = DefaultUserTokenOptions) {
+    this.opts = opts;
+
     if (opts.anonmyousId?.enabled) {
       this.anonmyousIdStore = new ExpiringCookieStore(opts.anonmyousId.lease);
     }
@@ -46,9 +45,27 @@ export class UserToken {
     }
   }
 
-  setUserToken(userToken: string) {
-    this.userTokenStore.write(USER_TOKEN_KEY, userToken);
+  setUserToken(userToken?: string) {
+    if (!userToken) {
+      this.userTokenStore.delete(USER_TOKEN_KEY);
+
+      if (!this.anonmyousIdStore) {
+        this.anonmyousIdStore = new ExpiringCookieStore(
+          this.opts.anonmyousId?.lease
+        );
+      }
+    } else {
+      this.userTokenStore.write(USER_TOKEN_KEY, userToken);
+      this.anonmyousIdStore?.delete(ANONYMOUS_ID_KEY);
+    }
+  }
+
+  removeUserToken() {
+    this.userTokenStore.delete(USER_TOKEN_KEY);
     this.anonmyousIdStore?.delete(ANONYMOUS_ID_KEY);
+    if (!this.opts.anonmyousId?.enabled) {
+      delete this.anonmyousIdStore;
+    }
   }
 
   getUserToken() {
