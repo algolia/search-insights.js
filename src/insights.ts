@@ -100,7 +100,7 @@ export class AlgoliaInsights {
     }
   ) {
     this.userToken = new UserToken({
-      anonmyousId: opts?.anonmyousId,
+      anonymousId: opts?.anonymousId,
       userToken: opts?.userToken,
     });
 
@@ -120,9 +120,14 @@ export class AlgoliaInsights {
     this.beacon?.addAlgoliaAgent(agent);
   }
 
-  setUserToken(userToken: string) {
+  setUserToken(userToken?: string) {
     this.userToken.setUserToken(userToken);
-    this.emitter.emit('userToken:changed', userToken);
+    this.emitter.emit('userToken:changed', this.getUserToken());
+  }
+
+  removeUserToken() {
+    this.userToken.removeUserToken();
+    this.emitter.emit('userToken:changed', undefined);
   }
 
   getUserToken(callback?: (err: any, userToken: string) => void) {
@@ -252,17 +257,13 @@ export class AlgoliaInsights {
     event: Omit<InsightsApiEvent, 'timestamp' | 'userToken'>,
     additionalParams: InsightsAdditionalEventParams = {}
   ) {
-    if (!this.beacon || !this.userToken) {
+    if (!this.beacon) {
       throw new Error(
         "Before calling any other method, you need to initialize the library by calling the 'init' function with applicationId and apiKey parameters"
       );
     }
 
     const userToken = this.userToken.getUserToken();
-    if (!userToken) {
-      // TODO(bhinchley): Introduce a debug mode, and only throw this error in debug mode.
-      throw new Error('userToken required to send event');
-    }
 
     this.beacon.send(
       {

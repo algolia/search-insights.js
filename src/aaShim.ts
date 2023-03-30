@@ -89,7 +89,7 @@ export class AaShim {
     const defaultCookieDuration = 6 * MONTH;
     this.insights.init(appId, apiKey, {
       region,
-      anonmyousId: {
+      anonymousId: {
         enabled: !(userHasOptedOut ?? false),
         lease: (cookieDuration ?? defaultCookieDuration) / 60 / 1000,
       },
@@ -110,8 +110,6 @@ export class AaShim {
   setUserToken(userToken: number | string) {
     this.insights.setUserToken(String(userToken));
   }
-
-  // setAnonymousUserToken() {}
 
   getUserToken(
     options?: any,
