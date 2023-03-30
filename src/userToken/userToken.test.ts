@@ -76,7 +76,7 @@ describe('UserToken', () => {
 
   describe('anonymousId enabled and userToken cookie disabled', () => {
     const userTokenCookieDisabled = new UserToken({
-      anonmyousId: { enabled: true, lease: 60 },
+      anonymousId: { enabled: true, lease: 60 },
       userToken: { cookie: false, lease: 1440 },
     });
 
@@ -117,7 +117,7 @@ describe('UserToken', () => {
 
   describe('anonymousId enabled and userToken cookie enabled', () => {
     const userTokenAllEnabled = new UserToken({
-      anonmyousId: { enabled: true, lease: 60 },
+      anonymousId: { enabled: true, lease: 60 },
       userToken: { cookie: true, lease: 1440 },
     });
 
@@ -165,7 +165,7 @@ describe('UserToken', () => {
 
   describe('both anonymousId and userToken cookie disabled', () => {
     const userTokenAllDisabled = new UserToken({
-      anonmyousId: { enabled: false, lease: 60 },
+      anonymousId: { enabled: false, lease: 60 },
       userToken: { cookie: false, lease: 1440 },
     });
 
