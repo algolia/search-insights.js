@@ -1,6 +1,7 @@
 import { version } from '../package.json';
 
 import type { AlgoliaInsights } from './insights';
+import { DefaultUserTokenOptions } from './userToken';
 
 const MONTH = 30 * 24 * 60 * 60 * 1000;
 
@@ -90,11 +91,14 @@ export class AaShim {
     this.insights.init(appId, apiKey, {
       region,
       anonymousId: {
-        enabled: !(userHasOptedOut ?? false),
+        enabled:
+          userHasOptedOut !== undefined
+            ? !userHasOptedOut
+            : DefaultUserTokenOptions.anonymousId.enabled,
         lease: (cookieDuration ?? defaultCookieDuration) / 60 / 1000,
       },
       userToken: {
-        cookie: useCookie ?? false,
+        cookie: useCookie ?? DefaultUserTokenOptions.userToken.cookie,
         lease: (cookieDuration ?? defaultCookieDuration) / 60 / 1000,
       },
     });

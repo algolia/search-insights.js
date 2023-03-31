@@ -8,7 +8,7 @@ export type UserTokenOptions = Partial<{
   userToken: { cookie: boolean; lease: number };
 }>;
 
-const DefaultUserTokenOptions = {
+export const DefaultUserTokenOptions = {
   anonymousId: { enabled: false, lease: 60 },
   userToken: { cookie: true, lease: 1440 },
 };
