@@ -60,11 +60,10 @@ type InsightsSearchViewFiltersEvent = InsightsClickFiltersEvent;
 
 export class AaShim {
   constructor(private insights: AlgoliaInsights, aa: AaQueue) {
-    aa.queue
-      .splice(0, aa.queue.length)
-      .forEach(([methodName, ...methodArgs]) => {
-        this.processAaQueue(methodName, ...methodArgs);
-      });
+    aa.queue.splice(0, aa.queue.length).forEach((args) => {
+      const [methodName, ...methodArgs] = Array.from(args);
+      this.processAaQueue(methodName, ...methodArgs);
+    });
 
     const prevPush = aa.queue.push.bind(aa.queue);
     // eslint-disable-next-line no-param-reassign
