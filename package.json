@@ -3,34 +3,39 @@
   "description": "Library for reporting click, conversion and view metrics using the Algolia Insights API",
   "version": "2.2.3",
   "type": "module",
-  "jsdelivr": "dist/search-insights.min.js",
-  "main": "index-node.cjs.js",
-  "types": "index-node.cjs.d.ts",
-  "browser": "index-browser.cjs.js",
+  "jsdelivr": "./dist/search-insights.min.js",
+  "main": "./dist/search-insights-node.cjs",
+  "types": "./dist/src/insights.d.ts",
+  "browser": "./dist/search-insights.min.js",
+  "exports": {
+    "node": {
+      "import": "./dist/search-insights-node.mjs",
+      "require": "./dist/search-insights-node.cjs"
+    },
+    "default": "./dist/search-insights.min.mjs"
+  },
   "react-native": {
     "http": "./empty-module.cjs.js",
     "https": "./empty-module.cjs.js"
   },
   "engines": {
-    "node": ">=8.16.0"
+    "node": ">=16.0.0"
   },
   "files": [
     "dist",
-    "lib",
+    "src",
     "!**/__tests__/**",
     "empty-module.cjs.js",
-    "empty-module.cjs.d.ts",
-    "index-browser.cjs.d.ts",
-    "index-node.cjs.d.ts"
+    "empty-module.cjs.d.ts"
   ],
   "scripts": {
     "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js && tsc --build tsconfig.declaration.json",
     "build:dev": "rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
     "build:examples": "NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=development webpack --config config/webpack.config.js --color --progress",
-    "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
+    "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server.cjs",
     "lint": "eslint --ext .js,.ts,.tsx .",
     "lint:fix": "yarn run lint --fix",
-    "prettier": "prettier lib/**/*.ts examples/**/* src/** --write",
+    "prettier": "prettier examples/**/* src/** --write",
     "test": "NODE_ENV=development yarn build:examples && yarn build && jest",
     "test:watch": "yarn test --watch",
     "test:size": "filesize",
@@ -52,10 +57,8 @@
     "@ampproject/filesize": "^4.3.0",
     "@babel/eslint-parser": "^7.19.1",
     "@rollup/plugin-buble": "^1.0.2",
-    "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
-    "@rollup/plugin-replace": "^5.0.2",
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/jest": "^29.2.4",
     "@types/js-cookie": "^3.0.2",
@@ -87,7 +90,6 @@
     "jest-environment-jsdom": "^29.3.1",
     "jest-fetch-mock": "^3.0.3",
     "jest-watch-typeahead": "^2.2.1",
-    "lunr": "^2.3.9",
     "markdown-toc": "^1.2.0",
     "mini-css-extract-plugin": "^1.6.2",
     "node-sass": "^8.0.0",
@@ -113,10 +115,7 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "transformIgnorePatterns": [
-      "<rootDir>/lib/polyfills/*.js"
-    ],
-    "testRegex": "(/lib/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": "((\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -127,11 +126,7 @@
     "watchPlugins": [
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
-    ],
-    "globals": {
-      "__DEV__": true,
-      "__FLAVOR__": "node-cjs"
-    }
+    ]
   },
   "filesize": {
     "./dist/search-insights.min.js": {
@@ -141,6 +136,7 @@
   },
   "packageManager": "yarn@3.3.1",
   "dependencies": {
-    "js-cookie": "^3.0.1"
+    "js-cookie": "^3.0.1",
+    "node-fetch": "^3.3.1"
   }
 }

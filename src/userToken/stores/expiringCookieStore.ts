@@ -2,10 +2,17 @@ import Cookies from 'js-cookie';
 
 import { tld } from '../../tld';
 
+import { InMemoryStore } from './inMemoryStore';
+
 import type { Store } from '.';
 
 export class ExpiringCookieStore implements Store {
-  constructor(private lease: number = 60) {}
+  constructor(private lease: number = 60) {
+    if (typeof document === 'undefined') {
+      // eslint-disable-next-line no-constructor-return
+      return new InMemoryStore() as any;
+    }
+  }
 
   read(key: string) {
     const value = Cookies.get(key);
