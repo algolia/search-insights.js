@@ -1,39 +1,63 @@
+import algoliasearch from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
 import {
+  configure,
   searchBox,
   stats,
   hits,
   pagination,
   hierarchicalMenu,
   refinementList,
-  starRating,
-  clearAll,
-} from 'instantsearch.js/es/widgets';
+  ratingMenu,
+  clearRefinements,
+} from 'instantsearch.js/es/widgets/index.js';
 
-require('./instantsearchExample.scss');
+import './instantsearchExample.scss';
 
 const search = instantsearch({
-  appId: process.env.APP_ID,
-  apiKey: process.env.API_KEY,
+  searchClient: algoliasearch(process.env.APP_ID, process.env.API_KEY),
   indexName: process.env.INDEX_NAME,
-  searchParameters: {
-    clickAnalytics: true,
-  },
 });
+search.addWidgets([
+  configure({
+    clickAnalytics: true,
+  }),
+]);
 
-const hitTemplate = (hit) => `
-  <article>
-    <div class="product-picture-wrapper">
-      <div class="product-picture"><img src="https://image.tmdb.org/t/p/w45${hit.image_path}" /></div>
+const hitTemplate = (hit, { html, components }) => html`<article>
+  <div class="product-picture-wrapper">
+    <div class="product-picture">
+      <img src="https://image.tmdb.org/t/p/w45${hit.image_path}" />
     </div>
-    <div class="product-desc-wrapper">
-      <div class="product-name">${hit._highlightResult.name.value}</div>
+  </div>
+  <div class="product-desc-wrapper">
+    <div class="product-name">
+      ${components.Highlight({ attribute: 'name', hit })}
     </div>
-    <button data-query-id="${hit._queryID}" data-object-id="${hit.objectID}" data-position="${hit._hitPosition}" class="button-click" style="background: blue;padding: 10px 12px; color: white;">click</button>
-    <button data-query-id="${hit._queryID}" data-object-id="${hit.objectID}" class="button-convert" style="background: blue;padding: 10px 12px; color: white;">add to cart</button>
-  </article>`;
+  </div>
+  <button
+    data-query-id="${hit._queryID}"
+    data-object-id="${hit.objectID}"
+    data-position="${hit._hitPosition}"
+    class="button-click"
+    style="background: blue;padding: 10px 12px; color: white;"
+  >
+    click
+  </button>
+  <button
+    data-query-id="${hit._queryID}"
+    data-object-id="${hit.objectID}"
+    class="button-convert"
+    style="background: blue;padding: 10px 12px; color: white;"
+  >
+    add to cart
+  </button>
+</article>`;
 
-const noResultsTemplate = `<div class="text-center">No results found matching <strong>{{query}}</strong>.</div>`;
+const noResultsTemplate = (results, { html }) =>
+  html`<div class="text-center">
+    No results found matching <strong>${results.query}</strong>.
+  </div>`;
 
 const menuTemplate = (menu) => `
   <div class="facet-item ${menu.isRefined ? 'active' : ''}">
@@ -43,13 +67,13 @@ const menuTemplate = (menu) => `
     </span class="facet-name">
   </div>`;
 
-const facetTemplateCheckbox =
-  '<a href="javascript:void(0);" class="facet-item">' +
-  '<input type="checkbox" class="{{cssClasses.checkbox}}" value="{{name}}" {{#isRefined}}checked{{/isRefined}} />{{name}}' +
-  '<span class="facet-count">({{count}})</span>' +
-  '</a>';
+const facetTemplateCheckbox = () =>
+  `<a href="javascript:void(0);" class="facet-item">
+    <input type="checkbox" class="{{cssClasses.checkbox}}" value="{{name}}" {{#isRefined}}checked{{/isRefined}} />{{name}}
+    <span class="facet-count">({{count}})</span>
+  </a>`;
 
-const facetTemplateColors =
+const facetTemplateColors = () =>
   '<a href="javascript:void(0);" data-facet-value="{{name}}" class="facet-color {{#isRefined}}checked{{/isRefined}}"></a>';
 
 const searchWidgets = [
@@ -67,19 +91,21 @@ const searchWidgets = [
       empty: noResultsTemplate,
       item: hitTemplate,
     },
-    transformData(hit) {
-      const result = search.helper.lastResults;
-      const offset = result.hitsPerPage * result.page;
+    /* transformItems(hits) {
+      return hits.map((hit) => {
+        const result = search.helper.lastResults;
+        const offset = result.hitsPerPage * result.page;
 
-      hit._queryID = result.queryID;
-      hit._hitPosition = offset + hit.__hitIndex + 1;
+        hit._queryID = result.queryID;
+        hit._hitPosition = offset + hit.__hitIndex + 1;
 
-      hit.stars = [];
-      for (let i = 1; i <= 5; ++i) {
-        hit.stars.push(i <= hit.rating);
-      }
-      return hit;
-    },
+        hit.stars = [];
+        for (let i = 1; i <= 5; ++i) {
+          hit.stars.push(i <= hit.rating);
+        }
+        return hit;
+      });
+    }, */
   }),
   pagination({
     container: '#pagination',
@@ -102,7 +128,7 @@ const searchWidgets = [
   }),
   refinementList({
     container: '#materials',
-    attributeName: 'alternative_name',
+    attribute: 'alternative_name',
     operator: 'or',
     limit: 10,
     templates: {
@@ -112,7 +138,7 @@ const searchWidgets = [
   }),
   refinementList({
     container: '#colors',
-    attributeName: 'colors',
+    attribute: 'colors',
     operator: 'or',
     limit: 10,
     templates: {
@@ -120,14 +146,14 @@ const searchWidgets = [
       header: '<div class="facet-title">Colors</div class="facet-title">',
     },
   }),
-  starRating({
+  ratingMenu({
     container: '#rating',
-    attributeName: 'rating',
+    attribute: 'rating',
     templates: {
       header: '<div class="facet-title">Ratings</div class="facet-title">',
     },
   }),
-  clearAll({
+  clearRefinements({
     container: '#clear-all',
     templates: {
       link: '<i class="fa fa-eraser"></i> Clear all filters',
