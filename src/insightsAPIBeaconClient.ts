@@ -1,3 +1,5 @@
+import { version } from '../package.json';
+
 import { Beacon } from './beacon';
 
 export type InsightsAdditionalEventParams = {
@@ -36,8 +38,7 @@ export class InsightsApiBeaconClient extends Beacon<
   region?: InsightsRegion;
 
   private algoliaAgents = {
-    [`search-insights.js (${process.env.__VERSION__ || process.env.NODE_ENV})`]:
-      null,
+    [`search-insights.js (${version})`]: null,
   };
 
   constructor(opts: InsightsApiBeaconClientOptions) {
