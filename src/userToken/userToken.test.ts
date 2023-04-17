@@ -13,7 +13,7 @@ describe('UserToken', () => {
     clearCookies();
   });
 
-  describe('anonymousId disabled and userToken cookie enabled (default)', () => {
+  describe('anonymousUserToken disabled and userToken cookie enabled (default)', () => {
     const userTokenDefault = new UserToken();
 
     test('calling getUserToken before setUserToken returns undefined', () => {
@@ -74,9 +74,9 @@ describe('UserToken', () => {
     });
   });
 
-  describe('anonymousId enabled and userToken cookie disabled', () => {
+  describe('anonymousUserToken enabled and userToken cookie disabled', () => {
     const userTokenCookieDisabled = new UserToken({
-      anonymousId: { enabled: true, lease: 60 },
+      anonymousUserToken: { enabled: true, lease: 60 },
       userToken: { cookie: false, lease: 1440 },
     });
 
@@ -115,9 +115,9 @@ describe('UserToken', () => {
     });
   });
 
-  describe('anonymousId enabled and userToken cookie enabled', () => {
+  describe('anonymousUserToken enabled and userToken cookie enabled', () => {
     const userTokenAllEnabled = new UserToken({
-      anonymousId: { enabled: true, lease: 60 },
+      anonymousUserToken: { enabled: true, lease: 60 },
       userToken: { cookie: true, lease: 1440 },
     });
 
@@ -163,9 +163,9 @@ describe('UserToken', () => {
     });
   });
 
-  describe('both anonymousId and userToken cookie disabled', () => {
+  describe('both anonymousUserToken and userToken cookie disabled', () => {
     const userTokenAllDisabled = new UserToken({
-      anonymousId: { enabled: false, lease: 60 },
+      anonymousUserToken: { enabled: false, lease: 60 },
       userToken: { cookie: false, lease: 1440 },
     });
 

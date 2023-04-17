@@ -100,7 +100,7 @@ export class AlgoliaInsights {
     }
   ) {
     this.userToken = new UserToken({
-      anonymousId: opts?.anonymousId,
+      anonymousUserToken: opts?.anonymousUserToken,
       userToken: opts?.userToken,
     });
 
