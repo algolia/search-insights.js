@@ -24,6 +24,7 @@
   "files": [
     "dist",
     "src",
+    "!src/**/*.test.*",
     "!**/__tests__/**",
     "empty-module.cjs.js",
     "empty-module.cjs.d.ts"
