@@ -82,7 +82,7 @@ export function init(options: InitParams) {
 You can visit https://algolia.com/events/debugger instead.`);
   }
 
-  assignInitialParams(options);
+  assignInitialParams.call(this, options);
 
   // user agent
   this._ua = [...DEFAULT_ALGOLIA_AGENTS];
