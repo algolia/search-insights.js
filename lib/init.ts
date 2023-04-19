@@ -13,6 +13,25 @@ export interface InitParams {
   cookieDuration?: number;
   region?: InsightRegion;
   userToken?: string;
+  host?: string;
+}
+
+function assignInitialParams(options: InitParams) {
+  this._apiKey = options.apiKey;
+  this._appId = options.appId;
+  this._userHasOptedOut = Boolean(options.userHasOptedOut);
+  this._region = options.region;
+  this._endpointOrigin =
+    options.host ||
+    (options.region
+      ? `https://insights.${options.region}.algolia.io`
+      : 'https://insights.algolia.io');
+  this._useCookie = options.useCookie ?? false;
+  this._cookieDuration = options.cookieDuration
+    ? options.cookieDuration
+    : 6 * MONTH;
+  // Set hasCredentials
+  this._hasCredentials = true;
 }
 
 /**
@@ -63,19 +82,7 @@ export function init(options: InitParams) {
 You can visit https://algolia.com/events/debugger instead.`);
   }
 
-  this._apiKey = options.apiKey;
-  this._appId = options.appId;
-  this._userHasOptedOut = Boolean(options.userHasOptedOut);
-  this._region = options.region;
-  this._endpointOrigin = options.region
-    ? `https://insights.${options.region}.algolia.io`
-    : 'https://insights.algolia.io';
-  this._useCookie = options.useCookie ?? false;
-  this._cookieDuration = options.cookieDuration
-    ? options.cookieDuration
-    : 6 * MONTH;
-  // Set hasCredentials
-  this._hasCredentials = true;
+  assignInitialParams.call(this, options);
 
   // user agent
   this._ua = [...DEFAULT_ALGOLIA_AGENTS];
