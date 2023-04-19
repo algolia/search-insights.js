@@ -124,6 +124,15 @@ describe('init', () => {
       'https://insights.de.algolia.io'
     );
   });
+  it('should set _endpointOrigin on instance to https://example.com if host is provided, overriding any region passed', () => {
+    analyticsInstance.init({
+      apiKey: '***',
+      appId: 'XXX',
+      region: 'de',
+      host: 'https://example.com',
+    });
+    expect(analyticsInstance._endpointOrigin).toBe('https://example.com');
+  });
   it('should set anonymous userToken if environment supports cookies', () => {
     const supportsCookies = jest
       .spyOn(utils, 'supportsCookies')
