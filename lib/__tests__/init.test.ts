@@ -214,6 +214,9 @@ describe("init", () => {
     expect(analyticsInstance._useCookie).toBe(true);
     expect(analyticsInstance._cookieDuration).toBe(100);
     expect(analyticsInstance._userToken).toBe("myUserToken");
+    expect(analyticsInstance._endpointOrigin).toBe(
+      "https://insights.de.algolia.io"
+    );
 
     analyticsInstance.init({ apiKey: "apiKey2", appId: "appId2" });
 
@@ -225,6 +228,9 @@ describe("init", () => {
     expect(analyticsInstance._cookieDuration).toBe(15552000000);
     // Custom user token isn't reset on `init` if not provided
     expect(analyticsInstance._userToken).toBe("myUserToken");
+    expect(analyticsInstance._endpointOrigin).toBe(
+      "https://insights.algolia.io"
+    );
   });
   it("should not merge with previous options when `partial` is `false`", () => {
     analyticsInstance.init({
@@ -244,6 +250,9 @@ describe("init", () => {
     expect(analyticsInstance._useCookie).toBe(true);
     expect(analyticsInstance._cookieDuration).toBe(100);
     expect(analyticsInstance._userToken).toBe("myUserToken");
+    expect(analyticsInstance._endpointOrigin).toBe(
+      "https://insights.de.algolia.io"
+    );
 
     analyticsInstance.init({
       apiKey: "apiKey2",
@@ -259,6 +268,9 @@ describe("init", () => {
     expect(analyticsInstance._cookieDuration).toBe(15552000000);
     // The user token isn't reset on `init` when not provided
     expect(analyticsInstance._userToken).toBe("myUserToken");
+    expect(analyticsInstance._endpointOrigin).toBe(
+      "https://insights.algolia.io"
+    );
   });
   it("should merge with previous options when `partial` is `true`", () => {
     analyticsInstance.init({
@@ -278,6 +290,9 @@ describe("init", () => {
     expect(analyticsInstance._useCookie).toBe(true);
     expect(analyticsInstance._cookieDuration).toBe(100);
     expect(analyticsInstance._userToken).toBe("myUserToken");
+    expect(analyticsInstance._endpointOrigin).toBe(
+      "https://insights.de.algolia.io"
+    );
 
     analyticsInstance.init({
       apiKey: "apiKey2",
@@ -292,6 +307,9 @@ describe("init", () => {
     expect(analyticsInstance._useCookie).toBe(true);
     expect(analyticsInstance._cookieDuration).toBe(100);
     expect(analyticsInstance._userToken).toBe("myUserToken");
+    expect(analyticsInstance._endpointOrigin).toBe(
+      "https://insights.de.algolia.io"
+    );
 
     analyticsInstance.init({
       appId: "appId2",

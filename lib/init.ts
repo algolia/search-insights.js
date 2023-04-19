@@ -60,8 +60,8 @@ You can visit https://algolia.com/events/debugger instead.`);
 
   this._endpointOrigin =
     options.host ||
-    (options.region
-      ? `https://insights.${options.region}.algolia.io`
+    (this._region
+      ? `https://insights.${this._region}.algolia.io`
       : "https://insights.algolia.io");
 
   // user agent
