@@ -1,3 +1,12 @@
+# [2.5.0](https://github.com/algolia/search-insights.js/compare/v2.4.0...v2.5.0) (2023-04-19)
+
+
+### Features
+
+* add host option ([#442](https://github.com/algolia/search-insights.js/issues/442)) ([68233bc](https://github.com/algolia/search-insights.js/commit/68233bc2ee505c30eb40d96fb3ab33c1701090bb))
+
+
+
 # [2.4.0](https://github.com/algolia/search-insights.js/compare/v2.3.0...v2.4.0) (2023-03-16)
 
 
