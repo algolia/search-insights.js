@@ -37,6 +37,14 @@ describe("init", () => {
     analyticsInstance.init({ apiKey: "***", appId: "XXX", region: "us" });
     expect(analyticsInstance._region).toBe("us");
   });
+  it("should set _host on instance", () => {
+    analyticsInstance.init({
+      apiKey: "***",
+      appId: "XXX",
+      host: "https://example.com"
+    });
+    expect(analyticsInstance._host).toBe("https://example.com");
+  });
   it("should set _userHasOptedOut on instance to false by default", () => {
     analyticsInstance.init({ apiKey: "***", appId: "XXX" });
     expect(analyticsInstance._userHasOptedOut).toBe(false);
@@ -318,6 +326,13 @@ describe("init", () => {
 
     expect(analyticsInstance._appId).toBe("appId2");
     expect(analyticsInstance._apiKey).toBe("apiKey2");
+
+    analyticsInstance.init({
+      host: "https://example.com",
+      partial: true
+    });
+
+    expect(analyticsInstance._endpointOrigin).toBe("https://example.com");
   });
 
   describe("callback for userToken", () => {

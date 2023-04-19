@@ -2,6 +2,7 @@ import { isUndefined, isNumber } from "./utils";
 import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
 import objectAssignPolyfill from "./polyfills/objectAssign";
 import { MONTH } from "./_tokenUtils";
+import AlgoliaAnalytics from "./insights";
 
 objectAssignPolyfill();
 
@@ -24,7 +25,7 @@ export interface InitParams {
  * Binds credentials and settings to class
  * @param options: initParams
  */
-export function init(options: InitParams = {}) {
+export function init(this: AlgoliaAnalytics, options: InitParams = {}) {
   if (
     !isUndefined(options.region) &&
     SUPPORTED_REGIONS.indexOf(options.region) === -1
@@ -54,12 +55,13 @@ You can visit https://algolia.com/events/debugger instead.`);
   setOptions(this, options, {
     _userHasOptedOut: !!options.userHasOptedOut,
     _region: options.region,
+    _host: options.host,
     _useCookie: options.useCookie ?? false,
     _cookieDuration: options.cookieDuration || 6 * MONTH
   });
 
   this._endpointOrigin =
-    options.host ||
+    this._host ||
     (this._region
       ? `https://insights.${this._region}.algolia.io`
       : "https://insights.algolia.io");
@@ -74,15 +76,13 @@ You can visit https://algolia.com/events/debugger instead.`);
   }
 }
 
-type ThisParams = {
-  _userHasOptedOut: InitParams["userHasOptedOut"];
-  _useCookie: InitParams["useCookie"];
-  _cookieDuration: InitParams["cookieDuration"];
-  _region: InitParams["region"];
-};
+type ThisParams = Pick<
+  AlgoliaAnalytics,
+  "_userHasOptedOut" | "_useCookie" | "_cookieDuration" | "_region" | "_host"
+>;
 
 function setOptions(
-  target: ThisParams,
+  target: AlgoliaAnalytics,
   { partial: partial, ...options }: InitParams,
   defaultValues: ThisParams
 ) {
