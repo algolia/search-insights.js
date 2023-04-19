@@ -57,6 +57,7 @@ class AlgoliaAnalytics {
   _region: string;
   _host: string;
   _endpointOrigin = "https://insights.algolia.io";
+  _anonymousUserToken = true;
   _userToken: string;
   _userHasOptedOut = false;
   _useCookie = false;

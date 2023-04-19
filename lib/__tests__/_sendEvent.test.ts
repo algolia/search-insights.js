@@ -346,14 +346,14 @@ describe("sendEvents", () => {
     });
   });
 
-  describe("userToken", () => {
-    let analyticsInstance;
+  describe("customer-defined userToken", () => {
+    let analyticsInstance: AlgoliaAnalytics;
     beforeEach(() => {
       analyticsInstance = setupInstance();
     });
 
     it("should add a userToken if not provided", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -372,7 +372,7 @@ describe("sendEvents", () => {
       });
     });
     it("should pass over provided userToken", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -387,6 +387,106 @@ describe("sendEvents", () => {
         events: [
           expect.objectContaining({
             userToken: "007"
+          })
+        ]
+      });
+    });
+  });
+
+  describe("in-memory userToken", () => {
+    let analyticsInstance: AlgoliaAnalytics;
+    beforeEach(() => {
+      analyticsInstance = new AlgoliaAnalytics({
+        requestFn: getRequesterForBrowser()
+      });
+    });
+
+    it("should be added by default", () => {
+      expect(analyticsInstance._anonymousUserToken).toBe(true);
+
+      analyticsInstance.sendEvents(
+        [
+          {
+            eventType: "click",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"]
+          }
+        ],
+        {
+          headers: {
+            "X-Algolia-Application-Id": "algoliaAppId",
+            "X-Algolia-API-Key": "algoliaApiKey"
+          }
+        }
+      );
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            userToken: expect.stringMatching(/^anon-/)
+          })
+        ]
+      });
+    });
+
+    it("should not be added if anonymousUserToken: false", () => {
+      analyticsInstance.init({ anonymousUserToken: false });
+      expect(analyticsInstance._anonymousUserToken).toBe(false);
+
+      analyticsInstance.sendEvents(
+        [
+          {
+            eventType: "click",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"]
+          }
+        ],
+        {
+          headers: {
+            "X-Algolia-Application-Id": "algoliaAppId",
+            "X-Algolia-API-Key": "algoliaApiKey"
+          }
+        }
+      );
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.not.objectContaining({
+            userToken: expect.any(String)
+          })
+        ]
+      });
+    });
+
+    it("should not be added if a token is already set", () => {
+      analyticsInstance.setUserToken("my-user-token");
+
+      analyticsInstance.sendEvents(
+        [
+          {
+            eventType: "click",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"]
+          }
+        ],
+        {
+          headers: {
+            "X-Algolia-Application-Id": "algoliaAppId",
+            "X-Algolia-API-Key": "algoliaApiKey"
+          }
+        }
+      );
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            userToken: "my-user-token"
           })
         ]
       });

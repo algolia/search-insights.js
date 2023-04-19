@@ -26,7 +26,12 @@ export const getCookie = (name: string): string => {
   return "";
 };
 
-export function setAnonymousUserToken(): void {
+export function setAnonymousUserToken(inMemory = false): void {
+  if (inMemory) {
+    this.setUserToken(`anon-${createUUID()}`);
+    return;
+  }
+
   if (!supportsCookies()) {
     return;
   }

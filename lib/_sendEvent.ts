@@ -20,6 +20,10 @@ export function makeSendEvents(requestFn: RequestFnType) {
       );
     }
 
+    if (!this._userToken && this._anonymousUserToken) {
+      this.setAnonymousUserToken(true);
+    }
+
     const events: InsightsEvent[] = eventData.map((data) => {
       const { filters, ...rest } = data;
 
