@@ -17,6 +17,7 @@ export interface InitParams {
   region?: InsightRegion;
   userToken?: string;
   partial?: boolean;
+  host?: string;
 }
 
 /**
@@ -57,9 +58,11 @@ You can visit https://algolia.com/events/debugger instead.`);
     _cookieDuration: options.cookieDuration || 6 * MONTH
   });
 
-  this._endpointOrigin = options.region
-    ? `https://insights.${options.region}.algolia.io`
-    : "https://insights.algolia.io";
+  this._endpointOrigin =
+    options.host ||
+    (options.region
+      ? `https://insights.${options.region}.algolia.io`
+      : "https://insights.algolia.io");
 
   // user agent
   this._ua = [...DEFAULT_ALGOLIA_AGENTS];
