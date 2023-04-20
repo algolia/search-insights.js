@@ -28,13 +28,14 @@ export const getCookie = (name: string): string => {
 
 export function setAnonymousUserToken(inMemory = false): void {
   if (inMemory) {
-    this.setUserToken(`anon-${createUUID()}`);
+    this.setUserToken(`anonymous-${createUUID()}`);
     return;
   }
 
   if (!supportsCookies()) {
     return;
   }
+
   const foundToken = getCookie(COOKIE_KEY);
   if (
     !foundToken ||

@@ -425,7 +425,7 @@ describe("sendEvents", () => {
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            userToken: expect.stringMatching(/^anon-/)
+            userToken: expect.stringMatching(/^anonymous-/)
           })
         ]
       });
