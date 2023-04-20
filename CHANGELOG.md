@@ -1,3 +1,17 @@
+# [2.6.0](https://github.com/algolia/search-insights.js/compare/v2.5.0...v2.6.0) (2023-04-20)
+
+
+### Bug Fixes
+
+* **readme:** update code snippet to reflect version ([#445](https://github.com/algolia/search-insights.js/issues/445)) ([edd2b3a](https://github.com/algolia/search-insights.js/commit/edd2b3a5f388201c0acee06a85f8f316f5ef7416))
+
+
+### Features
+
+* **userToken:** generate in-memory anonymous user tokens by default ([#441](https://github.com/algolia/search-insights.js/issues/441)) ([161c933](https://github.com/algolia/search-insights.js/commit/161c933253a4a1cb88d61fe9d907cb93005db2e4))
+
+
+
 # [2.5.0](https://github.com/algolia/search-insights.js/compare/v2.4.0...v2.5.0) (2023-04-19)
 
 
