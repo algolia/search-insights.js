@@ -3,7 +3,7 @@
 
 ### Bug Fixes
 
-* **v2:** update code snippet to reflect version ([#445](https://github.com/algolia/search-insights.js/issues/445)) ([edd2b3a](https://github.com/algolia/search-insights.js/commit/edd2b3a5f388201c0acee06a85f8f316f5ef7416))
+* **readme:** update code snippet to reflect version ([#445](https://github.com/algolia/search-insights.js/issues/445)) ([edd2b3a](https://github.com/algolia/search-insights.js/commit/edd2b3a5f388201c0acee06a85f8f316f5ef7416))
 
 
 ### Features
