@@ -13,6 +13,7 @@ export interface InitParams {
   apiKey?: string;
   appId?: string;
   userHasOptedOut?: boolean;
+  anonymousUserToken?: boolean;
   useCookie?: boolean;
   cookieDuration?: number;
   region?: InsightRegion;
@@ -56,6 +57,7 @@ You can visit https://algolia.com/events/debugger instead.`);
     _userHasOptedOut: !!options.userHasOptedOut,
     _region: options.region,
     _host: options.host,
+    _anonymousUserToken: options.anonymousUserToken ?? true,
     _useCookie: options.useCookie ?? false,
     _cookieDuration: options.cookieDuration || 6 * MONTH
   });
@@ -78,7 +80,12 @@ You can visit https://algolia.com/events/debugger instead.`);
 
 type ThisParams = Pick<
   AlgoliaAnalytics,
-  "_userHasOptedOut" | "_useCookie" | "_cookieDuration" | "_region" | "_host"
+  | "_userHasOptedOut"
+  | "_anonymousUserToken"
+  | "_useCookie"
+  | "_cookieDuration"
+  | "_region"
+  | "_host"
 >;
 
 function setOptions(

@@ -2,15 +2,8 @@
  * @jest-environment node
  */
 import AlgoliaAnalytics from "../insights";
-import { getRequesterForNode } from "../utils/getRequesterForNode";
 import { getFunctionalInterface } from "../_getFunctionalInterface";
-import { setUserToken } from "../_tokenUtils";
 import { version } from "../../package.json";
-
-const credentials = {
-  apiKey: "testKey",
-  appId: "testId"
-};
 
 const defaultPayload = {
   eventName: "my-event",
@@ -27,7 +20,11 @@ describe("_sendEvent in node env", () => {
     requestFn = jest.fn((url, data) => {});
     const instance = new AlgoliaAnalytics({ requestFn });
     aa = getFunctionalInterface(instance);
-    aa("init", credentials);
+    aa("init", {
+      apiKey: "testKey",
+      appId: "testId",
+      anonymousUserToken: false
+    });
   });
 
   it("does not throw when user token is not set", () => {
