@@ -8,7 +8,7 @@
     "target": "ES2017",
     "strict": true,
     "noImplicitThis": false,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "noImplicitAny": false,
     "allowJs": true,
     "esModuleInterop": true
