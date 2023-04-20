@@ -9,7 +9,12 @@ import { Storage } from './storage';
 
 jest.mock('./storage');
 
-const clientOpts = { applicationId: 'app123', apiKey: 'key123' };
+type ClientOptions = ConstructorParameters<typeof InsightsApiBeaconClient>[0];
+
+const clientOpts: ClientOptions = {
+  applicationId: 'app123',
+  apiKey: 'key123',
+};
 
 const testEvent: InsightsApiEvent = {
   timestamp: 1674450900226,
@@ -153,5 +158,53 @@ describe('InsightsApiBeaconClient', () => {
     const beacon = new InsightsApiBeaconClient(clientOpts);
 
     beacon.send(testEvent);
+  });
+
+  describe('endpoint', () => {
+    test('non-region specific by default', () => {
+      const beacon = new InsightsApiBeaconClient(clientOpts);
+      beacon.send(testEvent);
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringMatching('https://insights.algolia.io'),
+        expect.any(Object)
+      );
+    });
+
+    test('de region specific', () => {
+      const beacon = new InsightsApiBeaconClient({
+        ...clientOpts,
+        region: 'de',
+      });
+      beacon.send(testEvent);
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringMatching('https://insights.de.algolia.io'),
+        expect.any(Object)
+      );
+    });
+
+    test('us region specific', () => {
+      const beacon = new InsightsApiBeaconClient({
+        ...clientOpts,
+        region: 'us',
+      });
+      beacon.send(testEvent);
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringMatching('https://insights.us.algolia.io'),
+        expect.any(Object)
+      );
+    });
+
+    test('custom host overrides region', () => {
+      const beacon = new InsightsApiBeaconClient({
+        ...clientOpts,
+        region: 'us',
+        host: 'https://example.com',
+      });
+      beacon.send(testEvent);
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringMatching('https://example.com'),
+        expect.any(Object)
+      );
+    });
   });
 });

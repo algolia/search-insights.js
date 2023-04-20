@@ -18,6 +18,7 @@ interface InitParams {
   useCookie?: boolean;
   cookieDuration?: number;
   region?: InsightRegion;
+  host?: string;
   userToken?: string;
 }
 
@@ -81,6 +82,7 @@ export class AaShim {
     appId,
     apiKey,
     region,
+    host,
     userToken,
     cookieDuration,
     useCookie,
@@ -89,6 +91,7 @@ export class AaShim {
     const defaultCookieDuration = 6 * MONTH;
     this.insights.init(appId, apiKey, {
       region,
+      host,
       anonymousUserToken: {
         enabled:
           userHasOptedOut !== undefined

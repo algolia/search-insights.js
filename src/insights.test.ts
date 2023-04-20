@@ -16,7 +16,9 @@ describe('insights', () => {
 
     beforeEach(() => {
       (fetch as FetchMock).mockClear();
-      insights = new AlgoliaInsights([['init', 'app123', 'key123']]);
+      insights = new AlgoliaInsights([
+        ['init', 'app123', 'key123', { host: 'https://example.com' }],
+      ]);
       insights.setUserToken('usertoken123');
     });
 
@@ -35,7 +37,7 @@ describe('insights', () => {
       );
 
       expect(fetch).toHaveBeenLastCalledWith(
-        expect.any(String),
+        expect.stringMatching('https://example.com'),
         expect.objectContaining({
           headers: expect.objectContaining(additionalParams.headers),
           body: expect.stringContaining('"userToken":"usertoken123"'),
@@ -239,7 +241,12 @@ describe('insights', () => {
         queue: [
           [
             'init',
-            { appId: 'app123', apiKey: 'key123', userToken: 'usertoken123' },
+            {
+              appId: 'app123',
+              apiKey: 'key123',
+              userToken: 'usertoken123',
+              region: 'de',
+            },
           ],
         ],
       };
@@ -262,7 +269,7 @@ describe('insights', () => {
       );
 
       expect(fetch).toHaveBeenLastCalledWith(
-        expect.any(String),
+        expect.stringMatching('https://insights.de.algolia.io'),
         expect.objectContaining({
           headers: expect.objectContaining({
             'X-Algolia-Agent': expect.stringContaining(ua),

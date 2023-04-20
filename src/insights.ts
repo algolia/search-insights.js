@@ -97,6 +97,7 @@ export class AlgoliaInsights {
     apiKey: string,
     opts?: UserTokenOptions & {
       region?: InsightsRegion;
+      host?: string;
     }
   ) {
     this.userToken = new UserToken({
@@ -108,6 +109,7 @@ export class AlgoliaInsights {
       applicationId,
       apiKey,
       region: opts?.region,
+      host: opts?.host,
     });
 
     // Flush and purge any existing events sitting in localStorage.
