@@ -1,3 +1,5 @@
+import { version } from '../package.json';
+
 import { Beacon } from './beacon';
 
 export type InsightsAdditionalEventParams = {
@@ -25,6 +27,7 @@ type InsightsApiBeaconClientOptions = {
   applicationId: string;
   apiKey: string;
   region?: InsightsRegion;
+  host?: string;
 };
 
 export class InsightsApiBeaconClient extends Beacon<
@@ -34,10 +37,10 @@ export class InsightsApiBeaconClient extends Beacon<
   applicationId: string;
   apiKey: string;
   region?: InsightsRegion;
+  host?: string;
 
   private algoliaAgents = {
-    [`search-insights.js (${process.env.__VERSION__ || process.env.NODE_ENV})`]:
-      null,
+    [`search-insights.js (${version})`]: null,
   };
 
   constructor(opts: InsightsApiBeaconClientOptions) {
@@ -46,6 +49,7 @@ export class InsightsApiBeaconClient extends Beacon<
     this.applicationId = opts.applicationId;
     this.apiKey = opts.apiKey;
     this.region = opts.region;
+    this.host = opts.host;
   }
 
   addAlgoliaAgent(agent: string) {
@@ -64,6 +68,9 @@ export class InsightsApiBeaconClient extends Beacon<
   }
 
   private endpoint() {
+    if (this.host) {
+      return this.host;
+    }
     if (this.region) {
       return `https://insights.${this.region}.algolia.io`;
     }

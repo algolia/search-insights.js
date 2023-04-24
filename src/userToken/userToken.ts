@@ -4,21 +4,21 @@ import type { Store } from './stores';
 import { ExpiringCookieStore, InMemoryStore } from './stores';
 
 export type UserTokenOptions = Partial<{
-  anonymousId: { enabled: boolean; lease: number };
+  anonymousUserToken: { enabled: boolean; lease: number };
   userToken: { cookie: boolean; lease: number };
 }>;
 
 export const DefaultUserTokenOptions = {
-  anonymousId: { enabled: false, lease: 60 },
+  anonymousUserToken: { enabled: false, lease: 60 },
   userToken: { cookie: true, lease: 1440 },
-};
+} satisfies UserTokenOptions;
 
 /*
 
-By default we want an anonymousId with a configurabale lease.
+By default we want an anonymousUserToken with a configurable lease.
 This id should be read each time we send an event, to renew its lease.
 
-If a builder explicitly sets a userToken, we want to clear this anonymousId and use the explicit one,
+If a builder explicitly sets a userToken, we want to clear this anonymousUserToken and use the explicit one,
 and if the configuration has cookie storage enabled, store the userToken in a cookie.
 
 */
@@ -27,15 +27,17 @@ export const USER_TOKEN_KEY = 'alg:userToken';
 export const ANONYMOUS_ID_KEY = 'alg:anonymousId';
 
 export class UserToken {
-  private anonymousIdStore?: ExpiringCookieStore;
+  private anonymousUserTokenStore?: ExpiringCookieStore;
   private userTokenStore: Store;
   private opts: UserTokenOptions;
 
   constructor(opts: UserTokenOptions = DefaultUserTokenOptions) {
     this.opts = opts;
 
-    if (opts.anonymousId?.enabled) {
-      this.anonymousIdStore = new ExpiringCookieStore(opts.anonymousId.lease);
+    if (opts.anonymousUserToken?.enabled) {
+      this.anonymousUserTokenStore = new ExpiringCookieStore(
+        opts.anonymousUserToken.lease
+      );
     }
 
     if (opts.userToken?.cookie) {
@@ -49,22 +51,22 @@ export class UserToken {
     if (!userToken) {
       this.userTokenStore.delete(USER_TOKEN_KEY);
 
-      if (!this.anonymousIdStore) {
-        this.anonymousIdStore = new ExpiringCookieStore(
-          this.opts.anonymousId?.lease
+      if (!this.anonymousUserTokenStore) {
+        this.anonymousUserTokenStore = new ExpiringCookieStore(
+          this.opts.anonymousUserToken?.lease
         );
       }
     } else {
       this.userTokenStore.write(USER_TOKEN_KEY, userToken);
-      this.anonymousIdStore?.delete(ANONYMOUS_ID_KEY);
+      this.anonymousUserTokenStore?.delete(ANONYMOUS_ID_KEY);
     }
   }
 
   removeUserToken() {
     this.userTokenStore.delete(USER_TOKEN_KEY);
-    this.anonymousIdStore?.delete(ANONYMOUS_ID_KEY);
-    if (!this.opts.anonymousId?.enabled) {
-      delete this.anonymousIdStore;
+    this.anonymousUserTokenStore?.delete(ANONYMOUS_ID_KEY);
+    if (!this.opts.anonymousUserToken?.enabled) {
+      delete this.anonymousUserTokenStore;
     }
   }
 
@@ -78,18 +80,18 @@ export class UserToken {
   }
 
   private anonId() {
-    if (!this.anonymousIdStore) {
+    if (!this.anonymousUserTokenStore) {
       return undefined;
     }
 
-    const id = this.anonymousIdStore?.read(ANONYMOUS_ID_KEY);
+    const id = this.anonymousUserTokenStore?.read(ANONYMOUS_ID_KEY);
     if (id) {
       return id;
     }
 
-    return this.anonymousIdStore?.write(
+    return this.anonymousUserTokenStore?.write(
       ANONYMOUS_ID_KEY,
-      `anon-${createUUID()}`
+      `anonymous-${createUUID()}`
     );
   }
 }

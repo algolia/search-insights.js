@@ -1,24 +1,17 @@
 {
   "compilerOptions": {
-    "resolveJsonModule": false,
+    "resolveJsonModule": true,
     "moduleResolution": "node",
     "noEmit": true,
     "noUnusedLocals": true,
-    "outDir": "./dist",
-    "rootDir": "./lib",
     "module": "es6",
-    "target": "es6",
+    "target": "ES2017",
     "strict": true,
     "noImplicitThis": false,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "noImplicitAny": false,
     "allowJs": true,
     "esModuleInterop": true
   },
-  "files": [
-    "./lib/typings.d.ts",
-    "./lib/entry-umd.ts",
-    "./lib/entry-node-cjs.ts",
-    "./lib/entry-browser-cjs.ts"
-  ]
+  "files": ["./src/browser.ts", "./src/node.ts"]
 }

@@ -47,7 +47,7 @@ export class AlgoliaInsights {
 
   private beacon?: InsightsApiBeaconClient;
   private emitter = new EventEmitter();
-  private userToken: UserToken;
+  private userToken?: UserToken;
 
   constructor(i: AlgoliaInsights | SnippetAlgoliaInsights, aa?: AaQueue) {
     if ('initialized' in i && i.initialized) {
@@ -97,10 +97,11 @@ export class AlgoliaInsights {
     apiKey: string,
     opts?: UserTokenOptions & {
       region?: InsightsRegion;
+      host?: string;
     }
   ) {
     this.userToken = new UserToken({
-      anonymousId: opts?.anonymousId,
+      anonymousUserToken: opts?.anonymousUserToken,
       userToken: opts?.userToken,
     });
 
@@ -108,6 +109,7 @@ export class AlgoliaInsights {
       applicationId,
       apiKey,
       region: opts?.region,
+      host: opts?.host,
     });
 
     // Flush and purge any existing events sitting in localStorage.
@@ -121,17 +123,17 @@ export class AlgoliaInsights {
   }
 
   setUserToken(userToken?: string) {
-    this.userToken.setUserToken(userToken);
+    this.userToken?.setUserToken(userToken);
     this.emitter.emit('userToken:changed', this.getUserToken());
   }
 
   removeUserToken() {
-    this.userToken.removeUserToken();
+    this.userToken?.removeUserToken();
     this.emitter.emit('userToken:changed', undefined);
   }
 
   getUserToken(callback?: (err: any, userToken: string) => void) {
-    const userToken = this.userToken.getUserToken();
+    const userToken = this.userToken?.getUserToken();
     if (userToken && typeof callback === 'function') {
       callback(null, userToken);
     }
@@ -263,7 +265,7 @@ export class AlgoliaInsights {
       );
     }
 
-    const userToken = this.userToken.getUserToken();
+    const userToken = this.userToken?.getUserToken();
 
     this.beacon.send(
       {

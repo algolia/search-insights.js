@@ -1,36 +1,42 @@
 {
   "name": "search-insights",
   "description": "Library for reporting click, conversion and view metrics using the Algolia Insights API",
-  "version": "2.2.3",
+  "version": "3.0.0-rc.2",
   "type": "module",
-  "jsdelivr": "dist/search-insights.min.js",
-  "main": "index-node.cjs.js",
-  "types": "index-node.cjs.d.ts",
-  "browser": "index-browser.cjs.js",
+  "jsdelivr": "./dist/search-insights.min.js",
+  "main": "./dist/search-insights-node.cjs",
+  "types": "./dist/src/insights.d.ts",
+  "browser": "./dist/search-insights.min.js",
+  "exports": {
+    "node": {
+      "import": "./dist/search-insights-node.mjs",
+      "require": "./dist/search-insights-node.cjs"
+    },
+    "default": "./dist/search-insights.min.mjs"
+  },
   "react-native": {
     "http": "./empty-module.cjs.js",
     "https": "./empty-module.cjs.js"
   },
   "engines": {
-    "node": ">=8.16.0"
+    "node": ">=16.0.0"
   },
   "files": [
     "dist",
-    "lib",
+    "src",
+    "!src/**/*.test.*",
     "!**/__tests__/**",
     "empty-module.cjs.js",
-    "empty-module.cjs.d.ts",
-    "index-browser.cjs.d.ts",
-    "index-node.cjs.d.ts"
+    "empty-module.cjs.d.ts"
   ],
   "scripts": {
     "build": "rollup --environment NODE_ENV:'production' -c rollup.config.js && tsc --build tsconfig.declaration.json",
     "build:dev": "rollup --watch --environment NODE_ENV:'development' -c rollup.config.js",
     "build:examples": "NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=development webpack --config config/webpack.config.js --color --progress",
-    "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server",
+    "dev": "NODE_ENV=development webpack --config config/webpack.config.js --color --progress --watch & node server/server.cjs",
     "lint": "eslint --ext .js,.ts,.tsx .",
     "lint:fix": "yarn run lint --fix",
-    "prettier": "prettier lib/**/*.ts examples/**/* src/** --write",
+    "prettier": "prettier examples/**/* src/** --write",
     "test": "NODE_ENV=development yarn build:examples && yarn build && jest",
     "test:watch": "yarn test --watch",
     "test:size": "filesize",
@@ -50,20 +56,26 @@
   "license": "MIT",
   "devDependencies": {
     "@ampproject/filesize": "^4.3.0",
+    "@babel/core": "^7.21.4",
     "@babel/eslint-parser": "^7.19.1",
+    "@babel/preset-env": "^7.21.4",
+    "@rollup/plugin-buble": "^1.0.2",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-typescript": "^11.0.0",
     "@types/jest": "^29.2.4",
     "@types/js-cookie": "^3.0.2",
     "@types/jsdom": "^21.1.0",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
-    "algoliasearch": "^4.14.2",
+    "algoliasearch": "^4.17.0",
     "algoliasearch-helper": "^3.11.1",
     "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
+    "babel-loader": "^9.1.2",
     "babel-preset-env": "^1.7.0",
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
-    "css-loader": "^5.2.7",
+    "css-loader": "^6.7.3",
     "dotenv": "^16.0.3",
     "eslint": "^8.32.0",
     "eslint-config-algolia": "^20.1.0",
@@ -73,37 +85,30 @@
     "eslint-plugin-jsdoc": "^40.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "express": "^4.18.2",
-    "html-loader": "^0.5.5",
+    "html-loader": "^4.2.0",
     "html-replace-webpack-plugin": "^2.6.0",
-    "html-webpack-plugin": "^4.5.2",
+    "html-webpack-plugin": "^5.5.0",
     "instantsearch.js": "^4.49.1",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
     "jest-fetch-mock": "^3.0.3",
     "jest-watch-typeahead": "^2.2.1",
-    "lunr": "^2.3.9",
     "markdown-toc": "^1.2.0",
     "mini-css-extract-plugin": "^1.6.2",
-    "node-sass": "^8.0.0",
     "prettier": "^2.8.3",
     "puppeteer": "^19.2.2",
     "rollup": "^3.3.0",
-    "rollup-plugin-buble": "^0.19.8",
-    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-filesize": "^9.1.2",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-replace": "^2.2.0",
-    "rollup-plugin-typescript": "^1.0.1",
     "rollup-plugin-uglify": "^6.0.4",
-    "sass-loader": "^6.0.7",
+    "sass": "^1.61.0",
+    "sass-loader": "^13.2.2",
     "shipjs": "^0.25.1",
     "style-loader": "^3.3.1",
     "ts-jest": "^29.0.3",
     "ts-loader": "^9.4.1",
     "typescript": "^4.9.4",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^4.10.0"
+    "webpack": "^5.78.0",
+    "webpack-cli": "^5.0.1"
   },
   "jest": {
     "testEnvironment": "jsdom",
@@ -113,10 +118,7 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "transformIgnorePatterns": [
-      "<rootDir>/lib/polyfills/*.js"
-    ],
-    "testRegex": "(/lib/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": "((\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -127,20 +129,17 @@
     "watchPlugins": [
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
-    ],
-    "globals": {
-      "__DEV__": true,
-      "__FLAVOR__": "node-cjs"
-    }
+    ]
   },
   "filesize": {
     "./dist/search-insights.min.js": {
-      "brotli": "2.75 kB",
-      "gzip": "2.75 kB"
+      "brotli": "3.3 kB",
+      "gzip": "3.8 kB"
     }
   },
   "packageManager": "yarn@3.3.1",
   "dependencies": {
-    "js-cookie": "^3.0.1"
+    "js-cookie": "^3.0.1",
+    "node-fetch": "^3.3.1"
   }
 }

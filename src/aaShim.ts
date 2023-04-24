@@ -18,6 +18,7 @@ interface InitParams {
   useCookie?: boolean;
   cookieDuration?: number;
   region?: InsightRegion;
+  host?: string;
   userToken?: string;
 }
 
@@ -60,11 +61,10 @@ type InsightsSearchViewFiltersEvent = InsightsClickFiltersEvent;
 
 export class AaShim {
   constructor(private insights: AlgoliaInsights, aa: AaQueue) {
-    aa.queue
-      .splice(0, aa.queue.length)
-      .forEach(([methodName, ...methodArgs]) => {
-        this.processAaQueue(methodName, ...methodArgs);
-      });
+    aa.queue.splice(0, aa.queue.length).forEach((args) => {
+      const [methodName, ...methodArgs] = Array.from(args);
+      this.processAaQueue(methodName, ...methodArgs);
+    });
 
     const prevPush = aa.queue.push.bind(aa.queue);
     // eslint-disable-next-line no-param-reassign
@@ -82,6 +82,7 @@ export class AaShim {
     appId,
     apiKey,
     region,
+    host,
     userToken,
     cookieDuration,
     useCookie,
@@ -90,11 +91,12 @@ export class AaShim {
     const defaultCookieDuration = 6 * MONTH;
     this.insights.init(appId, apiKey, {
       region,
-      anonymousId: {
+      host,
+      anonymousUserToken: {
         enabled:
           userHasOptedOut !== undefined
             ? !userHasOptedOut
-            : DefaultUserTokenOptions.anonymousId.enabled,
+            : DefaultUserTokenOptions.anonymousUserToken.enabled,
         lease: (cookieDuration ?? defaultCookieDuration) / 60 / 1000,
       },
       userToken: {

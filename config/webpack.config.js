@@ -45,9 +45,6 @@ const replaceHTMLPlugin = new HtmlReplaceWebpackPlugin([
 ]);
 
 const PLUGINS = [
-  new MiniCssExtractPlugin({
-    filename: `[name].[hash].css`,
-  }),
   replaceHTMLPlugin,
   new webpack.DefinePlugin({
     'process.env': {
@@ -80,11 +77,12 @@ const exampleEntries = {
 };
 
 export default {
+  mode: NODE_ENV ?? 'production',
   entry: exampleEntries,
   output: {
     path: path.resolve(process.cwd(), 'tests/production'),
     publicPath: '/',
-    filename: isProd ? '[name].js' : '[name].js',
+    filename: '[name].js',
     chunkFilename: isProd ? '[name].[chunkhash].chunk.js' : '[name].chunk.js',
   },
 
@@ -97,9 +95,11 @@ export default {
       {
         test: /\.(js)$/,
         exclude: [/node_modules/],
-        loader: 'babel-loader',
-        query: {
-          presets: ['env'],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
         },
       },
       {
@@ -138,10 +138,7 @@ export default {
       },
       {
         test: /\.html$/,
-        loader: 'html-loader',
-        options: {
-          interpolate: true,
-        },
+        use: 'html-loader',
       },
       {
         test: /\.json$/,
@@ -155,7 +152,6 @@ export default {
 
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
-    modules: ['.', 'node_modules', 'styles/'],
   },
 
   plugins: PLUGINS,

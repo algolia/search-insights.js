@@ -13,7 +13,7 @@ describe('UserToken', () => {
     clearCookies();
   });
 
-  describe('anonymousId disabled and userToken cookie enabled (default)', () => {
+  describe('anonymousUserToken disabled and userToken cookie enabled (default)', () => {
     const userTokenDefault = new UserToken();
 
     test('calling getUserToken before setUserToken returns undefined', () => {
@@ -24,7 +24,7 @@ describe('UserToken', () => {
     test('calling setUserToken without any arguments generates an anon id', () => {
       userTokenDefault.setUserToken();
       const userToken = userTokenDefault.getUserToken();
-      expect(userToken).toContain('anon-');
+      expect(userToken).toContain('anonymous-');
       expect(Cookies.get(ANONYMOUS_ID_KEY)).toBe(userToken);
     });
 
@@ -53,7 +53,7 @@ describe('UserToken', () => {
       userTokenDefault.setUserToken();
 
       const got = userTokenDefault.getUserToken();
-      expect(got).toContain('anon-');
+      expect(got).toContain('anonymous-');
       expect(Cookies.get(ANONYMOUS_ID_KEY)).toBe(got);
       expect(Cookies.get(USER_TOKEN_KEY)).toBeUndefined();
     });
@@ -74,15 +74,15 @@ describe('UserToken', () => {
     });
   });
 
-  describe('anonymousId enabled and userToken cookie disabled', () => {
+  describe('anonymousUserToken enabled and userToken cookie disabled', () => {
     const userTokenCookieDisabled = new UserToken({
-      anonymousId: { enabled: true, lease: 60 },
+      anonymousUserToken: { enabled: true, lease: 60 },
       userToken: { cookie: false, lease: 1440 },
     });
 
     test('calling getUserToken before setUserToken returns anon id', () => {
       const anonToken = userTokenCookieDisabled.getUserToken();
-      expect(anonToken).toContain('anon-');
+      expect(anonToken).toContain('anonymous-');
       expect(Cookies.get(ANONYMOUS_ID_KEY)).toBe(anonToken);
     });
 
@@ -103,7 +103,7 @@ describe('UserToken', () => {
       userTokenCookieDisabled.removeUserToken();
       expect(Cookies.get(ANONYMOUS_ID_KEY)).toBeUndefined();
       const anonToken = userTokenCookieDisabled.getUserToken();
-      expect(anonToken).toContain('anon-');
+      expect(anonToken).toContain('anonymous-');
       expect(Cookies.get(ANONYMOUS_ID_KEY)).toBe(anonToken);
     });
 
@@ -115,22 +115,22 @@ describe('UserToken', () => {
     });
   });
 
-  describe('anonymousId enabled and userToken cookie enabled', () => {
+  describe('anonymousUserToken enabled and userToken cookie enabled', () => {
     const userTokenAllEnabled = new UserToken({
-      anonymousId: { enabled: true, lease: 60 },
+      anonymousUserToken: { enabled: true, lease: 60 },
       userToken: { cookie: true, lease: 1440 },
     });
 
     test('calling getUserToken before setUserToken returns undefined', () => {
       const token = userTokenAllEnabled.getUserToken();
-      expect(token).toContain('anon-');
+      expect(token).toContain('anonymous-');
       expect(Cookies.get(ANONYMOUS_ID_KEY)).toBe(token);
     });
 
     test('calling setUserToken without any arguments generates an anon id', () => {
       userTokenAllEnabled.setUserToken();
       const userToken = userTokenAllEnabled.getUserToken();
-      expect(userToken).toContain('anon-');
+      expect(userToken).toContain('anonymous-');
       expect(Cookies.get(ANONYMOUS_ID_KEY)).toBe(userToken);
     });
 
@@ -151,7 +151,7 @@ describe('UserToken', () => {
       userTokenAllEnabled.removeUserToken();
       expect(Cookies.get(ANONYMOUS_ID_KEY)).toBeUndefined();
       const anonToken = userTokenAllEnabled.getUserToken();
-      expect(anonToken).toContain('anon-');
+      expect(anonToken).toContain('anonymous-');
       expect(Cookies.get(ANONYMOUS_ID_KEY)).toBe(anonToken);
     });
 
@@ -163,9 +163,9 @@ describe('UserToken', () => {
     });
   });
 
-  describe('both anonymousId and userToken cookie disabled', () => {
+  describe('both anonymousUserToken and userToken cookie disabled', () => {
     const userTokenAllDisabled = new UserToken({
-      anonymousId: { enabled: false, lease: 60 },
+      anonymousUserToken: { enabled: false, lease: 60 },
       userToken: { cookie: false, lease: 1440 },
     });
 
@@ -177,7 +177,7 @@ describe('UserToken', () => {
     test('calling setUserToken without any arguments generates an anon id', () => {
       userTokenAllDisabled.setUserToken();
       const userToken = userTokenAllDisabled.getUserToken();
-      expect(userToken).toContain('anon-');
+      expect(userToken).toContain('anonymous-');
       expect(Cookies.get(ANONYMOUS_ID_KEY)).toBe(userToken);
     });
 
