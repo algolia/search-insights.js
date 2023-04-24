@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 import algoliasearch from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
 import {
