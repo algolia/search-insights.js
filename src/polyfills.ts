@@ -9,9 +9,10 @@ if (!globalThis.fetch) {
 
 if (!globalThis.localStorage) {
   const store = {};
-  (globalThis.localStorage as any) = {};
-  globalThis.localStorage.getItem = (key) => store[key] ?? null;
-  globalThis.localStorage.setItem = (key, value) => {
-    store[key] = value;
+  (globalThis.localStorage as any) = {
+    getItem: (key) => store[key] ?? null,
+    setItem: (key, value) => {
+      store[key] = value;
+    },
   };
 }
