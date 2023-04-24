@@ -133,8 +133,8 @@
   },
   "filesize": {
     "./dist/search-insights.min.js": {
-      "brotli": "2.75 kB",
-      "gzip": "2.75 kB"
+      "brotli": "3.3 kB",
+      "gzip": "3.8 kB"
     }
   },
   "packageManager": "yarn@3.3.1",
