@@ -11853,7 +11853,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"search-insights@^2.1.0, search-insights@workspace:.":
+"search-insights@npm:^2.1.0":
+  version: 2.5.0
+  resolution: "search-insights@npm:2.5.0"
+  checksum: 01c5f8933dd44a6d2538aa9ed408eb0b3cbcff3f41a8b53a1fd700cbcce7f2d78a6c14c2fdd0568e84a80dd4ce413982c2bc7d13f69c9dc5e108952c0b7fef7a
+  languageName: node
+  linkType: hard
+
+"search-insights@workspace:.":
   version: 0.0.0-use.local
   resolution: "search-insights@workspace:."
   dependencies:
