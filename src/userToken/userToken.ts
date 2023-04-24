@@ -91,7 +91,7 @@ export class UserToken {
 
     return this.anonymousUserTokenStore?.write(
       ANONYMOUS_ID_KEY,
-      `anon-${createUUID()}`
+      `anonymous-${createUUID()}`
     );
   }
 }
