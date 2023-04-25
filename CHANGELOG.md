@@ -1,3 +1,12 @@
+# [3.0.0-rc.3](https://github.com/algolia/search-insights.js/compare/v2.2.3...v3.0.0-rc.3) (2023-04-25)
+
+
+### Features
+
+* **api:** add host to the initial params ([#418](https://github.com/algolia/search-insights.js/issues/418)) ([886fc61](https://github.com/algolia/search-insights.js/commit/886fc6191bef4fafeb8097f8ac5f37164137c5bc))
+
+
+
 ## [2.2.3](https://github.com/algolia/search-insights.js/compare/v2.2.1...v2.2.3) (2022-11-16)
 
 
