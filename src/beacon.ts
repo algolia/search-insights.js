@@ -34,21 +34,20 @@ export class Beacon<Event, OptionalParams> {
     this.flushEvents();
   }
 
-  flushAndPurgeEvents() {
-    this.flushEvents().then(() => this.purgeExpiredEvents());
+  async flushAndPurgeEvents() {
+    await this.flushEvents();
+    return this.purgeExpiredEvents();
   }
 
-  protected emit(_e: Event, _o?: OptionalParams): Promise<unknown> {
-    return new Promise((_, reject) => {
-      reject(new Error('emit method not implemented'));
-    });
+  protected emit(_e: Event, _o?: OptionalParams): Promise<boolean> {
+    return Promise.reject(new Error('emit method not implemented'));
   }
 
   private persistEvents() {
     Storage.set(this.STORAGE_KEY, JSON.stringify(this.events));
   }
 
-  private async flushEvents() {
+  private flushEvents() {
     const eventsToEmit: Array<Promise<void>> = [];
     this.events.forEach(({ event, optionalParams, sent }, idx) => {
       if (sent) {
@@ -56,17 +55,17 @@ export class Beacon<Event, OptionalParams> {
       }
 
       eventsToEmit.push(
-        this.emit(event, optionalParams).then(() => {
+        this.emit(event, optionalParams).then((sent) => {
+          if (!sent) {
+            return;
+          }
           this.events[idx].sent = true;
           this.persistEvents();
         })
       );
     });
 
-    try {
-      return await Promise.all(eventsToEmit);
-      // eslint-disable-next-line no-empty
-    } catch {}
+    return Promise.all(eventsToEmit);
   }
 
   private purgeExpiredEvents() {

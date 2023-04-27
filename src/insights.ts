@@ -16,6 +16,13 @@ type BufferedMethodCall = [string, unknown, unknown?, unknown?];
 
 type SnippetAlgoliaInsights = BufferedMethodCall[];
 
+type InitOptions = {
+  appId?: string;
+  apiKey?: string;
+  region?: InsightsRegion;
+  host?: string;
+};
+
 type BaseEvent<T> = Expand<
   T & {
     eventName: string;
@@ -45,7 +52,7 @@ function flush(insights: SnippetAlgoliaInsights) {
 export class AlgoliaInsights {
   initialized: boolean = false;
 
-  private beacon?: InsightsApiBeaconClient;
+  private beacon = new InsightsApiBeaconClient();
   private emitter = new EventEmitter();
   private userToken?: UserToken;
 
@@ -71,17 +78,13 @@ export class AlgoliaInsights {
 
       const initAction = flushed.shift();
       const initArgs = initAction?.args;
-      if (!initArgs || initArgs.length < 2) {
+      if (!initArgs || initArgs.length < 1) {
         throw new Error(
-          'Not enough arguments provided to the init call. Expected at least `applicationId` and `apiKey` to be provided.'
+          'Not enough arguments provided to the init call. Expected at least `appId` and `apiKey` to be provided.'
         );
       }
 
-      this.init(
-        initArgs[0] as string,
-        initArgs[1] as string,
-        initArgs[2] ?? {}
-      );
+      this.init(initArgs[0] ?? {});
     } else if (flushed.length > 0 && flushed[0].methodName === 'init') {
       // remove init, as initialization has already occurred
       flushed.shift();
@@ -92,25 +95,17 @@ export class AlgoliaInsights {
     });
   }
 
-  init(
-    applicationId: string,
-    apiKey: string,
-    opts?: UserTokenOptions & {
-      region?: InsightsRegion;
-      host?: string;
-    }
-  ) {
+  init(opts: InitOptions & UserTokenOptions = {}) {
     this.userToken = new UserToken({
       anonymousUserToken: opts?.anonymousUserToken,
       userToken: opts?.userToken,
     });
 
-    this.beacon = new InsightsApiBeaconClient({
-      applicationId,
-      apiKey,
-      region: opts?.region,
-      host: opts?.host,
-    });
+    this.beacon.setOptions(
+      Object.keys(opts)
+        .filter((opt) => ['appId', 'apiKey', 'region', 'host'].includes(opt))
+        .reduce((acc, opt) => ({ ...acc, [opt]: opts[opt] }), {})
+    );
 
     // Flush and purge any existing events sitting in localStorage.
     this.beacon.flushAndPurgeEvents();
@@ -259,12 +254,6 @@ export class AlgoliaInsights {
     event: Omit<InsightsApiEvent, 'timestamp' | 'userToken'>,
     additionalParams: InsightsAdditionalEventParams = {}
   ) {
-    if (!this.beacon) {
-      throw new Error(
-        "Before calling any other method, you need to initialize the library by calling the 'init' function with applicationId and apiKey parameters"
-      );
-    }
-
     const userToken = this.userToken?.getUserToken();
 
     this.beacon.send(

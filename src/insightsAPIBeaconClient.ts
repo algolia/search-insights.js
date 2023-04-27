@@ -2,6 +2,11 @@ import { version } from '../package.json';
 
 import { Beacon } from './beacon';
 
+const HEADER = {
+  APP_ID: 'X-Algolia-Application-Id',
+  API_KEY: 'X-Algolia-API-Key',
+};
+
 export type InsightsAdditionalEventParams = {
   headers?: Record<string, string>;
 };
@@ -24,8 +29,8 @@ export type InsightsApiEvent = {
 export type InsightsRegion = 'de' | 'us';
 
 type InsightsApiBeaconClientOptions = {
-  applicationId: string;
-  apiKey: string;
+  appId?: string;
+  apiKey?: string;
   region?: InsightsRegion;
   host?: string;
 };
@@ -34,8 +39,8 @@ export class InsightsApiBeaconClient extends Beacon<
   InsightsApiEvent,
   InsightsAdditionalEventParams
 > {
-  applicationId: string;
-  apiKey: string;
+  appId?: string;
+  apiKey?: string;
   region?: InsightsRegion;
   host?: string;
 
@@ -43,13 +48,16 @@ export class InsightsApiBeaconClient extends Beacon<
     [`search-insights.js (${version})`]: null,
   };
 
-  constructor(opts: InsightsApiBeaconClientOptions) {
+  constructor(opts: InsightsApiBeaconClientOptions = {}) {
     super();
 
-    this.applicationId = opts.applicationId;
-    this.apiKey = opts.apiKey;
-    this.region = opts.region;
-    this.host = opts.host;
+    this.setOptions(opts);
+  }
+
+  setOptions(opts: InsightsApiBeaconClientOptions) {
+    Object.keys(opts).forEach((opt) => {
+      this[opt] = opts[opt];
+    });
   }
 
   addAlgoliaAgent(agent: string) {
@@ -64,7 +72,7 @@ export class InsightsApiBeaconClient extends Beacon<
       method: 'POST',
       headers: this.headers(additionalParams?.headers),
       body: JSON.stringify({ events: [event] }),
-    });
+    }).then(({ ok }) => ok);
   }
 
   private endpoint() {
@@ -80,9 +88,18 @@ export class InsightsApiBeaconClient extends Beacon<
   private headers(
     additionalHeaders: InsightsAdditionalEventParams['headers'] = {}
   ) {
+    const appId = additionalHeaders[HEADER.APP_ID] ?? this.appId;
+    const apiKey = additionalHeaders[HEADER.API_KEY] ?? this.apiKey;
+
+    if (!appId || !apiKey) {
+      throw new Error(
+        "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters or provide custom credentials in additional parameters."
+      );
+    }
+
     return {
-      'X-Algolia-Application-Id': this.applicationId,
-      'X-Algolia-API-Key': this.apiKey,
+      [HEADER.APP_ID]: appId,
+      [HEADER.API_KEY]: apiKey,
       'X-Algolia-Agent': Object.keys(this.algoliaAgents).join(' '),
       ...additionalHeaders,
     };

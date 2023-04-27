@@ -12,8 +12,8 @@ export type AaQueue = {
 
 type InsightRegion = 'de' | 'us';
 interface InitParams {
-  apiKey: string;
-  appId: string;
+  apiKey?: string;
+  appId?: string;
   userHasOptedOut?: boolean;
   useCookie?: boolean;
   cookieDuration?: number;
@@ -89,7 +89,9 @@ export class AaShim {
     userHasOptedOut,
   }: InitParams) {
     const defaultCookieDuration = 6 * MONTH;
-    this.insights.init(appId, apiKey, {
+    this.insights.init({
+      appId,
+      apiKey,
       region,
       host,
       anonymousUserToken: {

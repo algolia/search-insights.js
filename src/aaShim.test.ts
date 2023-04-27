@@ -23,9 +23,7 @@ describe('aaShim', () => {
       ],
     });
     expect(insights.init).toHaveBeenCalledWith(
-      'app123',
-      'key123',
-      expect.anything()
+      expect.objectContaining({ appId: 'app123', apiKey: 'key123' })
     );
     expect(insights.setUserToken).toHaveBeenCalledWith('usertoken123');
   });

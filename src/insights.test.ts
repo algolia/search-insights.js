@@ -17,7 +17,10 @@ describe('insights', () => {
     beforeEach(() => {
       (fetch as FetchMock).mockClear();
       insights = new AlgoliaInsights([
-        ['init', 'app123', 'key123', { host: 'https://example.com' }],
+        [
+          'init',
+          { appId: 'app123', apiKey: 'key123', host: 'https://example.com' },
+        ],
       ]);
       insights.setUserToken('usertoken123');
     });
