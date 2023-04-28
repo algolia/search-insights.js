@@ -1,4 +1,4 @@
-import type { FetchMock } from 'jest-fetch-mock';
+import 'jest-fetch-mock';
 
 import type { AaQueue } from './aaShim';
 import { AlgoliaInsights } from './insights';
@@ -15,7 +15,7 @@ describe('insights', () => {
     };
 
     beforeEach(() => {
-      (fetch as FetchMock).mockClear();
+      fetchMock.mockClear();
       insights = new AlgoliaInsights([
         [
           'init',
@@ -222,7 +222,7 @@ describe('insights', () => {
 
   describe('using legacy aa', () => {
     beforeEach(() => {
-      (fetch as FetchMock).mockClear();
+      fetchMock.mockClear();
     });
 
     it('initalizes using an init found in aa.queue', () => {

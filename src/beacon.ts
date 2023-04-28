@@ -65,7 +65,8 @@ export class Beacon<Event, OptionalParams> {
       );
     });
 
-    return Promise.all(eventsToEmit);
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    return Promise.all(eventsToEmit).catch(() => {});
   }
 
   private purgeExpiredEvents() {

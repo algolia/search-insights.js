@@ -1,4 +1,4 @@
-import type { FetchMock } from 'jest-fetch-mock';
+import 'jest-fetch-mock';
 
 import type {
   InsightsApiEvent,
@@ -37,11 +37,11 @@ const testEvent: InsightsApiEvent = {
 describe('InsightsApiBeaconClient', () => {
   afterEach(() => {
     jest.clearAllMocks();
-    (fetch as FetchMock).mockClear();
+    fetchMock.mockClear();
   });
   afterAll(() => {
     jest.restoreAllMocks();
-    (fetch as FetchMock).mockRestore();
+    fetchMock.mockRestore();
   });
 
   test('it works', () => {
@@ -166,6 +166,14 @@ describe('InsightsApiBeaconClient', () => {
     );
   });
 
+  test('captures fetch error', () => {
+    fetchMock.mockReject(new Error('failure'));
+
+    const beacon = new InsightsApiBeaconClient(clientOpts);
+
+    expect(() => beacon.send(testEvent)).not.toThrow();
+  });
+
   test('errors if credentials are missing from constructor and additionalParams', () => {
     const beacon = new InsightsApiBeaconClient();
 
@@ -173,7 +181,7 @@ describe('InsightsApiBeaconClient', () => {
   });
 
   test('repeatedly tries to send events if they were unsuccessfully sent previously', async () => {
-    (fetch as FetchMock).mockResponses(
+    fetchMock.mockResponses(
       [
         'Internal Server Error',
         {
@@ -205,7 +213,7 @@ describe('InsightsApiBeaconClient', () => {
 
     await beacon.flushAndPurgeEvents();
 
-    expect(fetch as FetchMock).toHaveBeenCalledTimes(3);
+    expect(fetchMock).toHaveBeenCalledTimes(3);
     expect(getLastSetItemData().sent).toEqual(true);
   });
 
