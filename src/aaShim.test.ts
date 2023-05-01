@@ -7,7 +7,7 @@ import { AlgoliaInsights } from './insights';
 jest.mock('./insights');
 
 describe('aaShim', () => {
-  const insights = new AlgoliaInsights([]);
+  const insights = new AlgoliaInsights();
 
   beforeEach(() => {
     jest.clearAllMocks();

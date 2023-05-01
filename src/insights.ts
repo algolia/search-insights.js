@@ -43,21 +43,13 @@ type FiltersEvent = BaseEvent<{
   filters: string[];
 }>;
 
-function flush(insights: SnippetAlgoliaInsights) {
-  if (!Array.isArray(insights)) return [];
-  const buffered = insights.splice(0, insights.length);
-  return buffered.map(([methodName, ...args]) => ({ methodName, args }));
-}
-
 export class AlgoliaInsights {
-  initialized: boolean = false;
-
   private beacon = new InsightsApiBeaconClient();
   private emitter = new EventEmitter();
   private userToken?: UserToken;
 
-  constructor(i: AlgoliaInsights | SnippetAlgoliaInsights, aa?: AaQueue) {
-    if ('initialized' in i && i.initialized) {
+  constructor(i?: AlgoliaInsights | SnippetAlgoliaInsights, aa?: AaQueue) {
+    if (i && !Array.isArray(i)) {
       // eslint-disable-next-line no-constructor-return
       return i;
     }
@@ -67,32 +59,7 @@ export class AlgoliaInsights {
       new AaShim(this, aa);
     }
 
-    const insights = i as SnippetAlgoliaInsights;
-
-    const flushed = flush(insights);
-
-    if (!this.initialized) {
-      if (flushed.length > 0 && flushed[0].methodName !== 'init') {
-        throw new Error('init must be called first');
-      }
-
-      const initAction = flushed.shift();
-      const initArgs = initAction?.args;
-      if (!initArgs || initArgs.length < 1) {
-        throw new Error(
-          'Not enough arguments provided to the init call. Expected at least `appId` and `apiKey` to be provided.'
-        );
-      }
-
-      this.init(initArgs[0] ?? {});
-    } else if (flushed.length > 0 && flushed[0].methodName === 'init') {
-      // remove init, as initialization has already occurred
-      flushed.shift();
-    }
-
-    flushed.forEach(({ methodName, args }) => {
-      this[methodName](...args);
-    });
+    (i ?? []).forEach(([methodName, ...args]) => this[methodName](...args));
   }
 
   init(opts: InitOptions & UserTokenOptions = {}) {
@@ -109,8 +76,6 @@ export class AlgoliaInsights {
 
     // Flush and purge any existing events sitting in localStorage.
     this.beacon.flushAndPurgeEvents();
-
-    this.initialized = true;
   }
 
   addAlgoliaAgent(agent: string) {

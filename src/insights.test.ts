@@ -5,6 +5,17 @@ import { AlgoliaInsights } from './insights';
 import type { InsightsAdditionalEventParams } from './insightsAPIBeaconClient';
 
 describe('insights', () => {
+  beforeEach(() => {
+    fetchMock.mockClear();
+  });
+
+  it('returns the existing insights instance if another is created and passed the first', () => {
+    const insights = new AlgoliaInsights();
+    const insights2 = new AlgoliaInsights(insights);
+
+    expect(insights2).toBe(insights);
+  });
+
   describe('applies custom credentials', () => {
     let insights: AlgoliaInsights;
     const additionalParams: InsightsAdditionalEventParams = {
@@ -15,17 +26,14 @@ describe('insights', () => {
     };
 
     beforeEach(() => {
-      fetchMock.mockClear();
-      insights = new AlgoliaInsights([
-        [
-          'init',
-          { appId: 'app123', apiKey: 'key123', host: 'https://example.com' },
-        ],
-      ]);
-      insights.setUserToken('usertoken123');
+      insights = new AlgoliaInsights();
     });
 
     it('when passed to `sendEvents`', () => {
+      insights = new AlgoliaInsights([
+        ['init', { host: 'https://example.com' }],
+      ]);
+      insights.setUserToken('usertoken123');
       insights.sendEvents(
         [
           {
@@ -221,10 +229,6 @@ describe('insights', () => {
   });
 
   describe('using legacy aa', () => {
-    beforeEach(() => {
-      fetchMock.mockClear();
-    });
-
     it('initalizes using an init found in aa.queue', () => {
       const aa: AaQueue = {
         queue: [
@@ -235,7 +239,6 @@ describe('insights', () => {
         ],
       };
       const insights = new AlgoliaInsights([], aa);
-      expect(insights.initialized).toEqual(true);
       expect(insights.getUserToken()).toEqual('usertoken123');
     });
 
