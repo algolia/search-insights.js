@@ -7932,8 +7932,8 @@ __metadata:
   linkType: hard
 
 "instantsearch.js@npm:^4.49.1":
-  version: 4.53.0
-  resolution: "instantsearch.js@npm:4.53.0"
+  version: 4.55.0
+  resolution: "instantsearch.js@npm:4.55.0"
   dependencies:
     "@algolia/events": ^4.0.1
     "@algolia/ui-components-highlight-vdom": ^1.2.1
@@ -7947,10 +7947,10 @@ __metadata:
     htm: ^3.0.0
     preact: ^10.10.0
     qs: ^6.5.1 < 6.10
-    search-insights: ^2.1.0
+    search-insights: ^2.6.0
   peerDependencies:
     algoliasearch: ">= 3.1 < 6"
-  checksum: b27699ce6f3750118e18c814c3276b4216c3c984c6265aa7a8c6f02d59fc774cf9401dbea65b708339eb3edc7f3a5a5e0b1ac32e2642a388269a19661f549594
+  checksum: 0b535b95d77755ba1f6fd6a91bc539313efef2e571113bfd0af61e9ae3083f0e7322c2ea3bb81e097182a5005104640fc07c45b92bbe0d913b5e6bc9852ca682
   languageName: node
   linkType: hard
 
@@ -11856,10 +11856,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"search-insights@npm:^2.1.0":
-  version: 2.5.0
-  resolution: "search-insights@npm:2.5.0"
-  checksum: 01c5f8933dd44a6d2538aa9ed408eb0b3cbcff3f41a8b53a1fd700cbcce7f2d78a6c14c2fdd0568e84a80dd4ce413982c2bc7d13f69c9dc5e108952c0b7fef7a
+"search-insights@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "search-insights@npm:2.6.0"
+  checksum: cb1d34b1b2485bc676c9f6a4b54749669a625417a891ce6409b5fb48967f55ee1a0483775e895e030993113d182ccafc1e08f3404df1e9e6760f346eeac2b801
   languageName: node
   linkType: hard
 
