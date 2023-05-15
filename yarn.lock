@@ -9826,7 +9826,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime-types@npm:^2.1.12, mime-types@npm:^2.1.25, mime-types@npm:^2.1.27, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24, mime-types@npm:~2.1.34":
+"mime-types@npm:^2.1.12, mime-types@npm:^2.1.27, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24, mime-types@npm:~2.1.34":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
@@ -12044,7 +12044,7 @@ __metadata:
     rollup-plugin-uglify: ^6.0.4
     sass: ^1.61.0
     sass-loader: ^13.2.2
-    shipjs: ^0.25.1
+    shipjs: ^0.26.3
     style-loader: ^3.3.1
     ts-jest: ^29.0.3
     ts-loader: ^9.4.1
@@ -12236,22 +12236,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shipjs-lib@npm:0.25.1":
-  version: 0.25.1
-  resolution: "shipjs-lib@npm:0.25.1"
+"shipjs-lib@npm:0.26.3":
+  version: 0.26.3
+  resolution: "shipjs-lib@npm:0.26.3"
   dependencies:
     deepmerge: ^4.2.2
     dotenv: ^8.1.0
     parse-github-url: 1.0.2
     semver: 6.3.0
     shelljs: 0.8.5
-  checksum: 8308ac5dbd68af24a3a828d57c1868b4cdce5c6a4ef4e91381bf8c6f54f8baa9a4d14657500f3c16c66d2527a5b86730a0dc35cd3838e2630ae2306758758621
+  checksum: 8699ab6281a9c41819ad7ce2e040b2244f88e020e6a59415c8d995f8863129adbe9ce0f7da9d647462e767b5ba4766af4dffd30fc8f8962e771187e4f255e3a9
   languageName: node
   linkType: hard
 
-"shipjs@npm:^0.25.1":
-  version: 0.25.1
-  resolution: "shipjs@npm:0.25.1"
+"shipjs@npm:^0.26.3":
+  version: 0.26.3
+  resolution: "shipjs@npm:0.26.3"
   dependencies:
     "@babel/runtime": ^7.6.3
     "@octokit/rest": ^17.11.0
@@ -12269,18 +12269,17 @@ __metadata:
     esm: 3.2.25
     globby: ^10.0.1
     inquirer: 7.1.0
-    mime-types: ^2.1.25
     mkdirp: ^1.0.0
     open: ^7.0.0
     prettier: ^2.0.0
     serialize-javascript: ^3.0.0
     shell-quote: ^1.7.2
-    shipjs-lib: 0.25.1
+    shipjs-lib: 0.26.3
     temp-write: 4.0.0
     tempfile: ^3.0.0
   bin:
     shipjs: bin/shipjs
-  checksum: a23b254a86b04114f306bff76536e09133a59043f9198e14c786c64177d227b8bc2fa53eee526f13e4457731a7318b854209945bae59bbf04009fce43736cb3b
+  checksum: 1ec584b23aa905f084c2c1953a9f9896b2f85351797a242b1c1e5689bcc8e663403b7508e7cb216d029f9100c5ca4d838f43f9a2f180f7b7bd4fbf4965bb71ff
   languageName: node
   linkType: hard
 
