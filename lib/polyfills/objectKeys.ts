@@ -17,7 +17,7 @@ export default function objectKeysPolyfill() {
         ],
         dontEnumsLength = dontEnums.length;
 
-      return function (obj) {
+      return function (obj: any) {
         if (
           typeof obj !== "function" &&
           (typeof obj !== "object" || obj === null)
