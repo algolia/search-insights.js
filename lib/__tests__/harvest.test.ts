@@ -51,10 +51,10 @@ describe("Library initialisation", () => {
 });
 
 describe("Integration tests", () => {
-  let handle = null;
+  let handle: any = null;
 
   const startServer = () =>
-    new Promise((resolve, reject) => {
+    new Promise<void>((resolve, reject) => {
       handle = testServer.listen(8080, (err) => {
         if (err) {
           reject(err);
@@ -65,7 +65,7 @@ describe("Integration tests", () => {
     });
 
   const stopServer = () =>
-    new Promise((resolve, reject) => {
+    new Promise<void>((resolve, reject) => {
       handle.close((err) => {
         if (err) {
           reject(err);
@@ -113,7 +113,7 @@ describe("Integration tests", () => {
         const userToken = await page.evaluate(
           () =>
             new Promise((resolve, reject) =>
-              window.aa("getUserToken", null, (err, res) => {
+              (window as any).aa("getUserToken", null, (err, res) => {
                 if (err) return reject(err);
                 resolve(res);
               })
@@ -133,8 +133,8 @@ describe("Integration tests", () => {
         const userToken = await page.evaluate(
           () =>
             new Promise((resolve, reject) => {
-              window.aa("setUserToken", "user-id-1");
-              window.aa("getUserToken", null, (err, res) => {
+              (window as any).aa("setUserToken", "user-id-1");
+              (window as any).aa("getUserToken", null, (err, res) => {
                 if (err) return reject(err);
                 resolve(res);
               });
@@ -147,7 +147,7 @@ describe("Integration tests", () => {
         const version = await page.evaluate(
           () =>
             new Promise((resolve) => {
-              window.aa("getVersion", (version) => resolve(version));
+              (window as any).aa("getVersion", (version) => resolve(version));
             })
         );
         expect(version).toEqual(expect.stringMatching(/\d+\.\d+\.\d+/));
@@ -160,7 +160,7 @@ describe("Integration tests", () => {
       let objectIDs;
       beforeAll(async () => {
         await page.evaluate(() => {
-          window.AlgoliaAnalytics.default._endpointOrigin =
+          (window as any).AlgoliaAnalytics.default._endpointOrigin =
             "http://localhost:8080";
         });
         const event = await captureNetworkWhile(async () => {

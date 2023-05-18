@@ -12,9 +12,9 @@ export function createInsightsClient(requestFn: RequestFnType) {
       let pointer: string;
       do {
         pointer = createUUID();
-      } while (window[pointer] !== undefined);
+      } while (window[pointer as any] !== undefined);
       window.AlgoliaAnalyticsObject = pointer;
-      window[window.AlgoliaAnalyticsObject] = aa;
+      (window as any)[window.AlgoliaAnalyticsObject] = aa;
     }
   }
 

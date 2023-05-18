@@ -1,5 +1,6 @@
 import { createUUID } from "./utils/uuid";
 import { isFunction, supportsCookies } from "./utils";
+import AlgoliaAnalytics from "./insights";
 
 const COOKIE_KEY = "_ALGOLIA";
 export const MONTH = 30 * 24 * 60 * 60 * 1000;
@@ -26,7 +27,10 @@ export const getCookie = (name: string): string => {
   return "";
 };
 
-export function setAnonymousUserToken(inMemory = false): void {
+export function setAnonymousUserToken(
+  this: AlgoliaAnalytics,
+  inMemory = false
+): void {
   if (inMemory) {
     this.setUserToken(`anonymous-${createUUID()}`);
     return;
@@ -42,24 +46,29 @@ export function setAnonymousUserToken(inMemory = false): void {
     foundToken === "" ||
     foundToken.indexOf("anonymous-") !== 0
   ) {
-    this.setUserToken(`anonymous-${createUUID()}`);
-    setCookie(COOKIE_KEY, this._userToken, this._cookieDuration);
+    const savedUserToken = this.setUserToken(`anonymous-${createUUID()}`);
+    setCookie(COOKIE_KEY, savedUserToken, this._cookieDuration);
   } else {
     this.setUserToken(foundToken);
   }
 }
 
-export function setUserToken(userToken: string | number): void {
+export function setUserToken(
+  this: AlgoliaAnalytics,
+  userToken: string | number
+): string | number {
   this._userToken = userToken;
   if (isFunction(this._onUserTokenChangeCallback)) {
     this._onUserTokenChangeCallback(this._userToken);
   }
+  return this._userToken;
 }
 
 export function getUserToken(
+  this: AlgoliaAnalytics,
   options?: any,
-  callback?: (err: any, userToken: string) => void
-): string {
+  callback?: (err: any, userToken?: string | number) => void
+): string | number | undefined {
   if (isFunction(callback)) {
     callback(null, this._userToken);
   }
@@ -67,7 +76,8 @@ export function getUserToken(
 }
 
 export function onUserTokenChange(
-  callback?: (userToken: string) => void,
+  this: AlgoliaAnalytics,
+  callback?: (userToken?: string | number) => void,
   options?: { immediate: boolean }
 ): void {
   this._onUserTokenChangeCallback = callback;

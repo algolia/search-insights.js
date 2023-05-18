@@ -1,6 +1,10 @@
+import AlgoliaAnalytics from "./insights";
 import { isFunction } from "./utils";
 
-export function getVersion(callback: (version: string) => void) {
+export function getVersion(
+  this: AlgoliaAnalytics,
+  callback: (version: string) => void
+) {
   if (isFunction(callback)) {
     callback(this.version);
   }

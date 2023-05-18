@@ -9,9 +9,6 @@
     "module": "es6",
     "target": "es6",
     "strict": true,
-    "noImplicitThis": false,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
     "allowJs": true
   },
   "files": [
