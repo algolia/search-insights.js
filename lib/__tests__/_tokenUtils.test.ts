@@ -24,8 +24,8 @@ describe("tokenUtils", () => {
       requestFn: () => {}
     });
     analyticsInstance.init(credentials);
-    createUUID.mockReset();
-    createUUID
+    (createUUID as jest.MockedFunction<typeof createUUID>).mockReset();
+    (createUUID as jest.MockedFunction<typeof createUUID>)
       .mockReturnValueOnce("mock-uuid-1")
       .mockReturnValueOnce("mock-uuid-2")
       .mockReturnValue("mock-uuid-2+");

@@ -5,8 +5,9 @@
  * instead of putting them to the queue
  */
 import { getFunctionalInterface } from "./_getFunctionalInterface";
+import AlgoliaAnalytics from "./insights";
 
-export function processQueue(globalObject) {
+export function processQueue(this: AlgoliaAnalytics, globalObject: any) {
   // Set pointer which allows renaming of the script
   const pointer = globalObject["AlgoliaAnalyticsObject"] as string;
 
@@ -24,7 +25,7 @@ export function processQueue(globalObject) {
     // Loop queue and execute functions in the queue
     queue.forEach((args: IArguments) => {
       const [functionName, ...functionArguments] = [].slice.call(args);
-      _aa(functionName, ...functionArguments);
+      _aa(functionName as any, ...(functionArguments as any));
     });
 
     // FIXME: Reassigning the pointer is a bad idea (cf: https://github.com/algolia/search-insights.js/issues/127)
@@ -33,7 +34,7 @@ export function processQueue(globalObject) {
     // @ts-ignore (otherwise typescript won't let you change the signature)
     queue.push = (args: IArguments) => {
       const [functionName, ...functionArguments] = [].slice.call(args);
-      _aa(functionName, ...functionArguments);
+      _aa(functionName as any, ...(functionArguments as any));
     };
   }
 }

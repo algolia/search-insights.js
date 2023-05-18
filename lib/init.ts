@@ -99,7 +99,7 @@ function setOptions(
 
   Object.assign(
     target,
-    Object.keys(options).reduce(
+    (Object.keys(options) as Array<keyof typeof options>).reduce(
       (acc, key) => ({ ...acc, [`_${key}`]: options[key] }),
       {}
     )

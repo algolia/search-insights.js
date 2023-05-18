@@ -52,19 +52,21 @@ declare global {
  *  AlgoliaAnalytics class
  */
 class AlgoliaAnalytics {
-  _apiKey: string;
-  _appId: string;
-  _region: string;
-  _host: string;
+  _apiKey?: string;
+  _appId?: string;
+  _region?: string;
+  _host?: string;
   _endpointOrigin = "https://insights.algolia.io";
   _anonymousUserToken = true;
-  _userToken: string;
+  _userToken?: string | number;
   _userHasOptedOut = false;
   _useCookie = false;
   _cookieDuration = 6 * MONTH;
 
   // user agent
   _ua: string[] = [];
+
+  _onUserTokenChangeCallback?: (userToken?: string | number) => void;
 
   version: string = version;
 

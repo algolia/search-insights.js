@@ -1,9 +1,11 @@
 import { RequestFnType } from "./utils/request";
 import { InsightsAdditionalEventParams, InsightsEvent } from "./types";
 import { isUndefined } from "./utils";
+import AlgoliaAnalytics from "./insights";
 
 export function makeSendEvents(requestFn: RequestFnType) {
   return function sendEvents(
+    this: AlgoliaAnalytics,
     eventData: InsightsEvent[],
     additionalParams?: InsightsAdditionalEventParams
   ) {
@@ -12,8 +14,8 @@ export function makeSendEvents(requestFn: RequestFnType) {
     }
     const hasCredentials =
       (!isUndefined(this._apiKey) && !isUndefined(this._appId)) ||
-      (additionalParams?.headers["X-Algolia-Application-Id"] &&
-        additionalParams?.headers["X-Algolia-API-Key"]);
+      (additionalParams?.headers?.["X-Algolia-Application-Id"] &&
+        additionalParams?.headers?.["X-Algolia-API-Key"]);
     if (!hasCredentials) {
       throw new Error(
         "Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters or provide custom credentials in additional parameters."
@@ -39,11 +41,11 @@ export function makeSendEvents(requestFn: RequestFnType) {
 
     return sendRequest(
       requestFn,
-      this._appId,
-      this._apiKey,
       this._ua,
       this._endpointOrigin,
       events,
+      this._appId,
+      this._apiKey,
       additionalParams?.headers
     );
   };
@@ -51,19 +53,24 @@ export function makeSendEvents(requestFn: RequestFnType) {
 
 function sendRequest(
   requestFn: RequestFnType,
-  appId: string,
-  apiKey: string,
   userAgents: string[],
   endpointOrigin: string,
   events: InsightsEvent[],
+  appId?: string,
+  apiKey?: string,
   additionalHeaders: InsightsAdditionalEventParams["headers"] = {}
 ) {
+  const {
+    ["X-Algolia-Application-Id"]: providedAppId,
+    ["X-Algolia-API-Key"]: providedApiKey,
+    ...restHeaders
+  } = additionalHeaders;
   // Auth query
-  const headers = {
-    "X-Algolia-Application-Id": appId,
-    "X-Algolia-API-Key": apiKey,
+  const headers: Record<string, string> = {
+    "X-Algolia-Application-Id": providedAppId ?? appId,
+    "X-Algolia-API-Key": providedApiKey ?? apiKey,
     "X-Algolia-Agent": encodeURIComponent(userAgents.join("; ")),
-    ...additionalHeaders
+    ...restHeaders
   };
 
   const queryParameters = Object.keys(headers)

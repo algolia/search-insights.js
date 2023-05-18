@@ -83,7 +83,7 @@ export type InsightsEvent = {
   eventType: InsightsEventType;
 
   eventName: string;
-  userToken?: string;
+  userToken?: string | number;
   timestamp?: number;
   index: string;
 
