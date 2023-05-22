@@ -94,7 +94,7 @@
     "jest-fetch-mock": "^3.0.3",
     "jest-watch-typeahead": "^2.2.1",
     "markdown-toc": "^1.2.0",
-    "mini-css-extract-plugin": "^1.6.2",
+    "mini-css-extract-plugin": "^2.7.6",
     "prettier": "^2.8.3",
     "puppeteer": "^19.2.2",
     "rollup": "^3.3.0",
