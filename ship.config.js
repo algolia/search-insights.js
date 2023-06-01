@@ -4,7 +4,7 @@ const path = require("path");
 module.exports = {
   shouldPrepare: ({ releaseType, commitNumbersPerType }) => {
     const { fix = 0 } = commitNumbersPerType;
-    if (releaseType === 'patch' && fix === 0) {
+    if (releaseType === "patch" && fix === 0) {
       return false;
     }
     return true;
@@ -19,7 +19,8 @@ module.exports = {
     ) {
       const readmePath = path.resolve(dir, "README.md");
       let content = fs.readFileSync(readmePath).toString();
-      const regex = /cdn\.jsdelivr\.net\/npm\/search-insights@(\d+?\.\d+?\.\d+?)/;
+      const regex =
+        /cdn\.jsdelivr\.net\/npm\/search-insights@(\d+?\.\d+?\.\d+?)/g;
       const newUrl = `cdn.jsdelivr.net/npm/search-insights@${version}`;
       content = content.replace(regex, newUrl);
       fs.writeFileSync(readmePath, content);
