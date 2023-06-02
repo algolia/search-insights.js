@@ -10,7 +10,8 @@ jest.mock("../utils/uuid", () => ({
 const credentials = {
   apiKey: "test",
   appId: "test",
-  cookieDuration: 10 * 24 * 3600 * 1000 // 10 days
+  cookieDuration: 10 * 24 * 3600 * 1000, // 10 days
+  useCookie: true
 };
 
 const DAY = 86400000; /* 1 day in ms*/
@@ -68,6 +69,22 @@ describe("tokenUtils", () => {
         analyticsInstance.setAnonymousUserToken();
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
         analyticsInstance.setUserToken("007");
+        expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
+      });
+      it("should reset the user token to the previous uuid when userToken is reset", () => {
+        analyticsInstance.setAnonymousUserToken();
+        expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
+        expect(analyticsInstance.getUserToken()).toBe("anonymous-mock-uuid-1");
+        analyticsInstance.setUserToken("007");
+        expect(analyticsInstance.getUserToken()).toBe("007");
+        analyticsInstance.setUserToken(undefined);
+        expect(analyticsInstance.getUserToken()).toBe("anonymous-mock-uuid-1");
+      });
+      it("should reset the user token to a new uuid when userToken is reset and not in the cookie", () => {
+        expect(document.cookie).toBe("");
+        expect(analyticsInstance.getUserToken()).toBe("anonymous-mock-uuid-1");
+        analyticsInstance.setUserToken(undefined);
+        expect(analyticsInstance.getUserToken()).toBe("anonymous-mock-uuid-1");
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-1");
       });
     });
