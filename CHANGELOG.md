@@ -1,3 +1,7 @@
+# [3.0.0](https://github.com/algolia/search-insights.js/compare/v2.6.0...v3.0.0) (2023-06-06)
+
+
+
 # [2.6.0](https://github.com/algolia/search-insights.js/compare/v2.5.0...v2.6.0) (2023-04-20)
 
 
