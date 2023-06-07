@@ -27,12 +27,16 @@ export const getCookie = (name: string): string => {
   return "";
 };
 
+function generateAnonymousUserToken() {
+  return `anonymous-${createUUID()}`;
+}
+
 export function setAnonymousUserToken(
   this: AlgoliaAnalytics,
   inMemory = false
 ): void {
   if (inMemory) {
-    this.setUserToken(`anonymous-${createUUID()}`);
+    this.setUserToken(generateAnonymousUserToken());
     return;
   }
 
@@ -46,7 +50,7 @@ export function setAnonymousUserToken(
     foundToken === "" ||
     foundToken.indexOf("anonymous-") !== 0
   ) {
-    const savedUserToken = this.setUserToken(`anonymous-${createUUID()}`);
+    const savedUserToken = this.setUserToken(generateAnonymousUserToken());
     setCookie(COOKIE_KEY, savedUserToken!, this._cookieDuration);
   } else {
     this.setUserToken(foundToken);
@@ -57,16 +61,17 @@ export function setUserToken(
   this: AlgoliaAnalytics,
   userToken: string | number
 ): string | number | undefined {
-  // Calling with `undefined` should reset the user token to the anonymous
-  // user token that was previously assigned to the user.
+  // An `undefined` user token should try to restore the anonymous user token.
   if (isUndefined(userToken)) {
     if (this._anonymousUserToken && !this._userHasOptedOut) {
       if (this._useCookie && supportsCookies()) {
-        this._userToken = getCookie(COOKIE_KEY) || `anonymous-${createUUID()}`;
+        this._userToken = getCookie(COOKIE_KEY) || generateAnonymousUserToken();
         setCookie(COOKIE_KEY, this._userToken, this._cookieDuration);
       } else {
-        this._userToken = `anonymous-${createUUID()}`;
+        this._userToken = generateAnonymousUserToken();
       }
+    } else {
+      this._userToken = undefined;
     }
   } else {
     this._userToken = userToken;
