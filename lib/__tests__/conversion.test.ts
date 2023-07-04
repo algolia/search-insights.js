@@ -15,7 +15,9 @@ const additionalParameters = {
 let analyticsInstance: AlgoliaAnalytics;
 
 beforeEach(() => {
-  analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
+  analyticsInstance = new AlgoliaAnalytics({
+    requestFn: jest.fn().mockResolvedValue(true)
+  });
   (analyticsInstance as any).sendEvents = jest.fn();
   analyticsInstance.init(credentials);
 });

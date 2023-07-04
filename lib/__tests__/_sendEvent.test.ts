@@ -179,7 +179,7 @@ describe("sendEvents", () => {
 
   describe("with custom requestFn", () => {
     let analyticsInstance;
-    const fakeRequestFn = jest.fn();
+    const fakeRequestFn = jest.fn().mockResolvedValue(true);
 
     beforeEach(() => {
       fakeRequestFn.mockClear();
@@ -542,7 +542,7 @@ describe("sendEvents", () => {
 
   describe("multiple events", () => {
     let analyticsInstance: AlgoliaAnalytics;
-    const fakeRequestFn = jest.fn();
+    const fakeRequestFn = jest.fn().mockResolvedValue(true);
 
     beforeEach(() => {
       fakeRequestFn.mockClear();

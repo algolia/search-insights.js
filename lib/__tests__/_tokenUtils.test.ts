@@ -21,7 +21,7 @@ describe("tokenUtils", () => {
   let analyticsInstance;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({
-      requestFn: () => {}
+      requestFn: jest.fn().mockResolvedValue(true)
     });
     analyticsInstance.init(credentials);
     (createUUID as jest.MockedFunction<typeof createUUID>).mockReset();

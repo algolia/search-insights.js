@@ -50,6 +50,7 @@
   "devDependencies": {
     "@types/jest": "24.0.25",
     "@types/jsdom": "12.2.4",
+    "@types/node": "^20.3.3",
     "@types/puppeteer": "1.20.3",
     "algoliasearch": "3.35.1",
     "algoliasearch-helper": "3.8.1",
@@ -128,7 +129,7 @@
   "bundlesize": [
     {
       "path": "./dist/search-insights.min.js",
-      "maxSize": "2.90 kB"
+      "maxSize": "2.95 kB"
     }
   ]
 }
