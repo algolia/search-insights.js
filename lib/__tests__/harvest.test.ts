@@ -15,7 +15,9 @@ const windowHeight = 1080;
 describe("Library initialisation", () => {
   let analyticsInstance;
   beforeEach(() => {
-    analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
+    analyticsInstance = new AlgoliaAnalytics({
+      requestFn: jest.fn().mockResolvedValue(true)
+    });
   });
 
   it("Should not throw if there is no apiKey and appId", () => {

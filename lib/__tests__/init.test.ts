@@ -5,7 +5,9 @@ import { getCookie, MONTH } from "../_tokenUtils";
 describe("init", () => {
   let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
-    analyticsInstance = new AlgoliaAnalytics({ requestFn: () => {} });
+    analyticsInstance = new AlgoliaAnalytics({
+      requestFn: jest.fn().mockResolvedValue(true)
+    });
     document.cookie = `_ALGOLIA=;${new Date().toUTCString()};path=/`;
   });
 
@@ -350,7 +352,9 @@ describe("init", () => {
         });
         // Because cookie is enabled, anonymous token must be generated already.
         expect(analyticsInstance._userToken).toBeTruthy();
-        expect(analyticsInstance._userToken.length).toBeGreaterThan(0);
+        expect(analyticsInstance._userToken?.toString().length).toBeGreaterThan(
+          0
+        );
         const callback = jest.fn();
         analyticsInstance.onUserTokenChange(callback, { immediate: true });
         expect(callback).toHaveBeenCalledWith(analyticsInstance._userToken); // anonymous user token
