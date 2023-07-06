@@ -1,6 +1,6 @@
 # Search Insights
 
-[![Build Status](https://travis-ci.org/algolia/search-insights.js.svg?branch=main)](https://travis-ci.org/algolia/search-insights.js)
+[![Build Status](https://circleci.com/gh/algolia/search-insights.js.svg?style=shield)](https://github.com/algolia/search-insights.js)
 [![npm version](https://badge.fury.io/js/search-insights.svg)](https://badge.fury.io/js/search-insights)
 
 Search Insights lets you report click, conversion and view metrics using the [Algolia Insights API](https://www.algolia.com/doc/rest-api/insights/#overview).
