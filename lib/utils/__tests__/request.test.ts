@@ -20,6 +20,7 @@ describe("request", () => {
   const send = jest.fn();
   const setRequestHeader = jest.fn();
   const write = jest.fn();
+  const addEventListener = jest.fn((_, listener) => listener());
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -27,25 +28,24 @@ describe("request", () => {
 
   beforeAll(() => {
     navigator.sendBeacon = sendBeacon;
-    window.XMLHttpRequest = function () {
-      this.open = open;
-      this.send = send;
-      this.setRequestHeader = setRequestHeader;
-    };
-    nodeHttpRequest.mockImplementation(() => {
-      return {
-        on: jest.fn(),
-        write,
-        end: jest.fn()
-      };
-    });
-    nodeHttpsRequest.mockImplementation(() => {
-      return {
-        on: jest.fn(),
-        write,
-        end: jest.fn()
-      };
-    });
+    window.XMLHttpRequest = jest.fn(() => ({
+      open: open,
+      send: send,
+      setRequestHeader: setRequestHeader,
+      addEventListener: addEventListener,
+      readyState: 4,
+      status: 200
+    }));
+    nodeHttpRequest.mockImplementation((_, cb) => ({
+      on: jest.fn(),
+      write,
+      end: () => cb({ statusCode: 200 })
+    }));
+    nodeHttpsRequest.mockImplementation((_, cb) => ({
+      on: jest.fn(),
+      write,
+      end: () => cb({ statusCode: 200 })
+    }));
   });
 
   afterAll(() => {
@@ -53,14 +53,15 @@ describe("request", () => {
     window.XMLHttpRequest = XMLHttpRequestBackup;
   });
 
-  it("should pick sendBeacon first if available", () => {
+  it("should pick sendBeacon first if available", async () => {
     supportsSendBeacon.mockImplementation(() => true);
     supportsXMLHttpRequest.mockImplementation(() => true);
     supportsNodeHttpModule.mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForBrowser();
-    request(url, data);
+    const sent = await request(url, data);
+    expect(sent).toBe(true);
     expect(navigator.sendBeacon).toHaveBeenCalledTimes(1);
     expect(navigator.sendBeacon).toHaveBeenLastCalledWith(
       url,
@@ -73,14 +74,15 @@ describe("request", () => {
     expect(nodeHttpsRequest).not.toHaveBeenCalled();
   });
 
-  it("should send with XMLHttpRequest if sendBeacon is not available", () => {
+  it("should send with XMLHttpRequest if sendBeacon is not available", async () => {
     supportsSendBeacon.mockImplementation(() => false);
     supportsXMLHttpRequest.mockImplementation(() => true);
     supportsNodeHttpModule.mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForBrowser();
-    request(url, data);
+    const sent = await request(url, data);
+    expect(sent).toBe(true);
     expect(navigator.sendBeacon).not.toHaveBeenCalled();
     expect(open).toHaveBeenCalledTimes(1);
     expect(setRequestHeader).toHaveBeenCalledTimes(2);
@@ -91,7 +93,7 @@ describe("request", () => {
     expect(nodeHttpsRequest).not.toHaveBeenCalled();
   });
 
-  it("should fall back to XMLHttpRequest if sendBeacon returns false", () => {
+  it("should fall back to XMLHttpRequest if sendBeacon returns false", async () => {
     navigator.sendBeacon = jest.fn(() => false);
     supportsSendBeacon.mockImplementation(() => true);
     supportsXMLHttpRequest.mockImplementation(() => true);
@@ -99,7 +101,8 @@ describe("request", () => {
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForBrowser();
-    request(url, data);
+    const sent = await request(url, data);
+    expect(sent).toBe(true);
     expect(navigator.sendBeacon).toHaveBeenCalledTimes(1);
 
     expect(open).toHaveBeenCalledTimes(1);
@@ -111,59 +114,105 @@ describe("request", () => {
     expect(nodeHttpsRequest).not.toHaveBeenCalled();
   });
 
-  it("should send with nodeHttpRequest if url does not start with https://", () => {
+  it("should send with nodeHttpRequest if url does not start with https://", async () => {
     supportsSendBeacon.mockImplementation(() => false);
     supportsXMLHttpRequest.mockImplementation(() => false);
     supportsNodeHttpModule.mockImplementation(() => true);
     const url = "http://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForNode();
-    request(url, data);
+    const sent = await request(url, data);
+    expect(sent).toBe(true);
     expect(navigator.sendBeacon).not.toHaveBeenCalled();
     expect(open).not.toHaveBeenCalled();
     expect(send).not.toHaveBeenCalled();
     expect(setRequestHeader).not.toHaveBeenCalled();
     expect(nodeHttpsRequest).not.toHaveBeenCalled();
-    expect(nodeHttpRequest).toHaveBeenLastCalledWith({
-      protocol: "http:",
-      host: "random.url",
-      path: "/",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Content-Length": JSON.stringify(data).length
-      }
-    });
+    expect(nodeHttpRequest).toHaveBeenLastCalledWith(
+      {
+        protocol: "http:",
+        host: "random.url",
+        path: "/",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Content-Length": JSON.stringify(data).length
+        }
+      },
+      expect.any(Function)
+    );
     expect(nodeHttpRequest).toHaveBeenCalledTimes(1);
     expect(write).toHaveBeenLastCalledWith(JSON.stringify(data));
     expect(write).toHaveBeenCalledTimes(1);
   });
 
-  it("should send with nodeHttpsRequest if url starts with https://", () => {
+  it("should send with nodeHttpsRequest if url starts with https://", async () => {
     supportsSendBeacon.mockImplementation(() => false);
     supportsXMLHttpRequest.mockImplementation(() => false);
     supportsNodeHttpModule.mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForNode();
-    request(url, data);
+    const sent = await request(url, data);
+    expect(sent).toBe(true);
     expect(navigator.sendBeacon).not.toHaveBeenCalled();
     expect(open).not.toHaveBeenCalled();
     expect(setRequestHeader).not.toHaveBeenCalled();
     expect(send).not.toHaveBeenCalled();
     expect(nodeHttpRequest).not.toHaveBeenCalled();
-    expect(nodeHttpsRequest).toHaveBeenLastCalledWith({
-      protocol: "https:",
-      host: "random.url",
-      path: "/",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Content-Length": JSON.stringify(data).length
-      }
-    });
+    expect(nodeHttpsRequest).toHaveBeenLastCalledWith(
+      {
+        protocol: "https:",
+        host: "random.url",
+        path: "/",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Content-Length": JSON.stringify(data).length
+        }
+      },
+      expect.any(Function)
+    );
     expect(nodeHttpsRequest).toHaveBeenCalledTimes(1);
     expect(write).toHaveBeenLastCalledWith(JSON.stringify(data));
     expect(write).toHaveBeenCalledTimes(1);
   });
+
+  it.each([
+    { browser: true, beacon: true, url: "http://random.url" },
+    { browser: true, beacon: false, url: "http://random.url" },
+    { browser: false, beacon: false, url: "http://random.url" },
+    { browser: false, beacon: false, url: "https://random.url" }
+  ])(
+    "should return false on non-200 response for %o",
+    async ({ browser, beacon, url }) => {
+      window.XMLHttpRequest.mockImplementation(() => ({
+        open: open,
+        send: send,
+        setRequestHeader: setRequestHeader,
+        addEventListener: addEventListener,
+        readyState: 4,
+        status: 400
+      }));
+      nodeHttpRequest.mockImplementation((_, cb) => ({
+        on: jest.fn(),
+        write,
+        end: () => cb({ statusCode: 400 })
+      }));
+      nodeHttpsRequest.mockImplementation((_, cb) => ({
+        on: jest.fn(),
+        write,
+        end: () => cb({ statusCode: 400 })
+      }));
+      supportsSendBeacon.mockImplementation(() => beacon);
+      supportsXMLHttpRequest.mockImplementation(() => true);
+      supportsNodeHttpModule.mockImplementation(() => true);
+      const data = { foo: "bar" };
+      const request = browser
+        ? getRequesterForBrowser()
+        : getRequesterForNode();
+      const sent = await request(url, data);
+      expect(sent).toBe(false);
+    }
+  );
 });
