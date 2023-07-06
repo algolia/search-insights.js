@@ -1,6 +1,6 @@
 # Search Insights
 
-[![Build Status](https://travis-ci.org/algolia/search-insights.js.svg?branch=master)](https://travis-ci.org/algolia/search-insights.js)
+[![Build Status](https://travis-ci.org/algolia/search-insights.js.svg?branch=main)](https://travis-ci.org/algolia/search-insights.js)
 [![npm version](https://badge.fury.io/js/search-insights.svg)](https://badge.fury.io/js/search-insights)
 
 Search Insights lets you report click, conversion and view metrics using the [Algolia Insights API](https://www.algolia.com/doc/rest-api/insights/#overview).
@@ -493,8 +493,8 @@ aa('sendEvents', [
 
 The following examples assume that the Search Insights library is loaded.
 
-- [InstantSearch.js](https://github.com/algolia/search-insights.js/blob/master/examples/INSTANTSEARCH.md)
-- [AlgoliaSearch Helper](https://github.com/algolia/search-insights.js/blob/master/examples/HELPER.md)
+- [InstantSearch.js](https://github.com/algolia/search-insights.js/blob/main/examples/INSTANTSEARCH.md)
+- [AlgoliaSearch Helper](https://github.com/algolia/search-insights.js/blob/main/examples/HELPER.md)
 
 ## Contributing
 
@@ -503,7 +503,7 @@ To run the examples and the code, you need to run two separate commands:
 - `yarn dev` runs webpack and the Node.js server
 - `yarn build:dev` runs Rollup in watch mode
 
-To release, go on `master` (`git checkout master`) and use:
+To release, go on `main` (`git checkout main`) and use:
 
 ```sh
 yarn run release
