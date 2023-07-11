@@ -1,3 +1,12 @@
+# [2.7.0](https://github.com/algolia/search-insights.js/compare/v2.6.0...v2.7.0) (2023-07-11)
+
+
+### Features
+
+* **request:** enable requests to be awaited upon ([#483](https://github.com/algolia/search-insights.js/issues/483)) ([e69f7c9](https://github.com/algolia/search-insights.js/commit/e69f7c9c1f1180e556489d1e58947cfa6daab7b5))
+
+
+
 # [2.6.0](https://github.com/algolia/search-insights.js/compare/v2.5.0...v2.6.0) (2023-04-20)
 
 
