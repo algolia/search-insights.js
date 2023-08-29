@@ -5,4 +5,3 @@ tests/production
 tests/data.txt
 .env
 .idea
-.yarn
