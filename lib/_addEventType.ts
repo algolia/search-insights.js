@@ -1,4 +1,8 @@
-import { InsightsEvent, InsightsEventType } from "./types";
+import {
+  InsightsEvent,
+  InsightsEventConversionSubType,
+  InsightsEventType
+} from "./types";
 
 export function addEventType(
   eventType: InsightsEventType,
@@ -6,6 +10,18 @@ export function addEventType(
 ): InsightsEvent[] {
   return params.map((event) => ({
     eventType,
+    ...event
+  }));
+}
+
+export function addEventTypeAndSubtype(
+  eventType: InsightsEventType,
+  eventSubtype: InsightsEventConversionSubType,
+  params: Array<Omit<InsightsEvent, "eventType" | "eventSubtype">>
+): InsightsEvent[] {
+  return params.map((event) => ({
+    eventType,
+    eventSubtype,
     ...event
   }));
 }
