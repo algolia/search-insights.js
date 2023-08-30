@@ -1,11 +1,11 @@
-import buble from "rollup-plugin-buble";
+import buble from "@rollup/plugin-buble";
 import filesize from "rollup-plugin-filesize";
-import resolve from "rollup-plugin-node-resolve";
-import commonjs from "rollup-plugin-commonjs";
-import uglify from "rollup-plugin-uglify";
-import json from "rollup-plugin-json";
-import typescript from "rollup-plugin-typescript";
-import replace from "rollup-plugin-replace";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import { uglify } from "rollup-plugin-uglify";
+import json from "@rollup/plugin-json";
+import typescript from "@rollup/plugin-typescript";
+import replace from "@rollup/plugin-replace";
 
 const MODULE_NAME = "AlgoliaAnalytics",
   LIBRARY_OUTPUT_NAME = "search-insights";
@@ -20,6 +20,8 @@ const createPlugins = ({ format, flavor }) => [
     compact: true
   }),
   replace({
+    preventAssignment: true,
+
     __DEV__:
       format === "umd" || format === "iife"
         ? false
@@ -38,6 +40,7 @@ export default [
     input: "lib/entry-umd.ts",
     output: {
       format: "umd",
+      exports: "named",
       name: MODULE_NAME,
       file: `./dist/${LIBRARY_OUTPUT_NAME}.min.js`,
       globals: {}
@@ -48,6 +51,7 @@ export default [
     input: "lib/entry-node-cjs.ts",
     output: {
       format: "cjs",
+      exports: "named",
       name: MODULE_NAME,
       file: `./dist/${LIBRARY_OUTPUT_NAME}-node.cjs.min.js`
     },
@@ -58,6 +62,7 @@ export default [
     input: "lib/entry-browser-cjs.ts",
     output: {
       format: "cjs",
+      exports: "named",
       name: MODULE_NAME,
       file: `./dist/${LIBRARY_OUTPUT_NAME}-browser.cjs.min.js`
     },
@@ -68,6 +73,7 @@ export default [
     input: "lib/entry-umd.ts",
     output: {
       format: "iife",
+      exports: "named",
       name: MODULE_NAME,
       file: `./dist/${LIBRARY_OUTPUT_NAME}.iife.min.js`
     },
