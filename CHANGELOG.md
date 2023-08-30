@@ -1,3 +1,12 @@
+# [2.8.0](https://github.com/algolia/search-insights.js/compare/v2.7.0...v2.8.0) (2023-08-30)
+
+
+### Features
+
+* add support for conversion subtypes ([#486](https://github.com/algolia/search-insights.js/issues/486)) ([beb9ef2](https://github.com/algolia/search-insights.js/commit/beb9ef255eaa1e130e34b69b957a266f5606337b))
+
+
+
 # [2.7.0](https://github.com/algolia/search-insights.js/compare/v2.6.0...v2.7.0) (2023-07-11)
 
 
