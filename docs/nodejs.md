@@ -17,12 +17,12 @@ yarn add search-insights
 Initializing the library is optional, as you can specify the [credentials for each event](#sending-events-to-multiple-algolia-applications) when sending them. This gives you the flexibility to manage your Algolia credentials on a per-event basis, without having to configure them upfront.
 
 ```js
-const aa = require('search-insights');
+const aa = require("search-insights");
 
 // Optional: configure default Algolia credentials for events
-aa('init', {
-  appId: 'APPLICATION_ID',
-  apiKey: 'SEARCH_API_KEY'
+aa("init", {
+  appId: "APPLICATION_ID",
+  apiKey: "SEARCH_API_KEY"
 });
 ```
 
@@ -31,8 +31,8 @@ aa('init', {
 On the Node.js environment, unlike the browser environment, `userToken` must be specified when sending any event.
 
 ```js
-aa('clickedObjectIDs', {
-  userToken: 'USER_ID',
+aa("clickedObjectIDs", {
+  userToken: "USER_ID"
   // ...
 });
 ```
@@ -67,13 +67,13 @@ function requestFn(url, data) {
     url.indexOf("https://") === 0 ? require("https") : require("http");
   const req = nodeRequest(options);
 
-  req.on("error", error => {
+  req.on("error", (error) => {
     console.error(error);
   });
 
   req.write(serializedData);
   req.end();
-};
+}
 
 const aa = createInsightsClient(requestFn);
 ```

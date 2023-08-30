@@ -1,10 +1,10 @@
 # Note for Require.js users
 
-When using [Require.js](https://requirejs.org/), the default UMD build might conflict and throw with a 
-"Mismatched anonymous define() modules" message. 
+When using [Require.js](https://requirejs.org/), the default UMD build might conflict and throw with a
+"Mismatched anonymous define() modules" message.
 This is a [known Require.js issue](https://requirejs.org/docs/errors.html#mismatch).
 
-To work around this problem and ensure you capture all interactions occurring before the library is done loading, 
+To work around this problem and ensure you capture all interactions occurring before the library is done loading,
 change `ALGOLIA_INSIGHTS_SRC` to point to the IIFE build, and load it via a `<script>` tag.
 
 <!-- prettier-ignore-start -->
