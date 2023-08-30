@@ -34,171 +34,20 @@ You can visit https://algolia.com/events/debugger instead.
 
 ## Getting started
 
+>
 > Are you using Google Tag Manager in your app? We provide a [custom template](https://github.com/algolia/search-insights-gtm) to ease the integration.
 
 ### Browser
 
-#### 1. Load the library
 
-The Search Insights library can be either loaded via [jsDelivr CDN](https://www.jsdelivr.com/) or directly bundled with your application.
-We recommend loading the library by adding the snippet below to all pages where you wish to track search analytics.
+insights-js-docs: https://www.algolia.com/doc/api-client/methods/insights/#install-the-insights-client
+instant-search-guide: https://www.algolia.com/doc/guides/building-search-ui/events/js/
+autocomplete-guide: https://www.algolia.com/doc/ui-libraries/autocomplete/guides/sending-algolia-insights-events/
 
-<!-- prettier-ignore-start -->
-```html
-<script>
-var ALGOLIA_INSIGHTS_SRC = "https://cdn.jsdelivr.net/npm/search-insights@2.7.0";
 
-!function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e[s]=e[s]||function(){
-(e[s].queue=e[s].queue||[]).push(arguments)},e[s].version=(n.match(/@([^\/]+)\/?/) || [])[1],i=a.createElement(t),c=a.getElementsByTagName(t)[0],
-i.async=1,i.src=n,c.parentNode.insertBefore(i,c)
-}(window,document,"script",ALGOLIA_INSIGHTS_SRC,"aa");
-</script>
-```
-<!-- prettier-ignore-end -->
 
-#### 2. Initialize the library
 
-Initializing the library is optional, as you can specify the [credentials for each event](#sending-events-to-multiple-algolia-applications) when sending them. This gives you the flexibility to manage your Algolia credentials on a per-event basis, without having to configure them upfront.
 
-```js
-// Optional: configure default Algolia credentials for events
-aa('init', {
-  appId: 'APP_ID',
-  apiKey: 'SEARCH_API_KEY',
-});
-
-// Optional: set the analytics user ID
-aa('setUserToken', 'USER_ID');
-```
-
-| Option            | Type           | Default                  | Description                                     |
-| ----------------- | -------------- | ------------------------ | ----------------------------------------------- |
-| `appId`           | `string`       | None                     | The identifier of your Algolia application.     |
-| `apiKey`          | `string`       | None                     | The search API key of your Algolia application. |
-| `userHasOptedOut` | `boolean`      | `false`                  | Whether to exclude users from analytics.        |
-| `region`          | `'de' \| 'us'` | Automatic                | The DNS server to target.                       |
-| `host`            | `string`       | None                     | The URL to route requests through before they're forwarded to Algolia. |
-| `useCookie`       | `boolean`      | `false`                  | Whether to use cookie in browser environment. The anonymous user token will not be set if `false`. When `useCookie` is `false` and `setUserToken` is not called yet, sending events will throw errors because there is no user token to attach to the events. |
-| `cookieDuration`  | `number`       | `15552000000` (6 months) | The cookie duration in milliseconds.            |
-| `userToken`       | `string`       | `undefined` (optional)   | Initial userToken. When given, anonymous userToken will not be set. |
-| `partial`         | `boolean`      | `false`                  | Whether to preserve previously passed options without redeclaring them. |
-
-To update the client with new options, you can call `init` again.
-
-By default, all previously passed options that you don't redefine are reset to their default setting, except for the `userToken`. To preserve previously passed options without redeclaring them, use the `partial` option.
-
-```js
-aa("init", {
-  appId: "APP_ID",
-  apiKey: "SEARCH_API_KEY",
-  region: "de",
-});
-
-aa("init", {
-  appId: "APP_ID",
-  apiKey: "SEARCH_API_KEY",
-  partial: true,
-}); // `region` is still `"de"`
-```
-
-##### Note for Require.js users
-
-When using [Require.js](https://requirejs.org/), the default UMD build might conflict and throw with a "Mismatched anonymous define() modules" message. This is a [known Require.js issue](https://requirejs.org/docs/errors.html#mismatch).
-
-To work around this problem and ensure you capture all interactions occurring before the library is done loading, change `ALGOLIA_INSIGHTS_SRC` to point to the IIFE build, and load it via a `<script>` tag.
-
-<!-- prettier-ignore-start -->
-```html
-<script>
-var ALGOLIA_INSIGHTS_SRC = "https://cdn.jsdelivr.net/npm/search-insights@2.7.0/dist/search-insights.iife.min.js";
-
-!function(e,a,t,n,s,i,c){e.AlgoliaAnalyticsObject=s,e[s]=e[s]||function(){
-(e[s].queue=e[s].queue||[]).push(arguments)},e[s].version=(n.match(/@([^\/]+)\/?/) || [])[1],i=a.createElement(t),c=a.getElementsByTagName(t)[0],
-i.async=1,i.src=n,c.parentNode.insertBefore(i,c)
-}(window,document,"script",ALGOLIA_INSIGHTS_SRC,"aa");
-</script>
-```
-<!-- prettier-ignore-end -->
-
-### Node.js
-
-_(Node.js `>= 8.16.0` required)_
-
-#### 1. Install the library
-
-Insights library can be used on the backend as a Node.js module.
-
-```bash
-npm install search-insights
-# or
-yarn add search-insights
-```
-
-#### 2. Initialize the library
-
-Initializing the library is optional, as you can specify the [credentials for each event](#sending-events-to-multiple-algolia-applications) when sending them. This gives you the flexibility to manage your Algolia credentials on a per-event basis, without having to configure them upfront.
-
-```js
-const aa = require('search-insights');
-
-// Optional: configure default Algolia credentials for events
-aa('init', {
-  appId: 'APPLICATION_ID',
-  apiKey: 'SEARCH_API_KEY'
-});
-```
-
-#### Add `userToken`
-
-On the Node.js environment, unlike the browser environment, `userToken` must be specified when sending any event.
-
-```js
-aa('clickedObjectIDs', {
-  userToken: 'USER_ID',
-  // ...
-});
-```
-
-#### Customize the client
-
-If you want to customize the way to send events, you can create a custom Insights client.
-
-```js
-// via ESM
-import { createInsightsClient } from "search-insights";
-// OR in commonJS
-const { createInsightsClient } = require("search-insights");
-// OR via the UMD
-const createInsightsClient = window.AlgoliaAnalytics.createInsightsClient;
-
-function requestFn(url, data) {
-  const serializedData = JSON.stringify(data);
-  const { protocol, host, path } = require("url").parse(url);
-  const options = {
-    protocol,
-    host,
-    path,
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Content-Length": serializedData.length
-    }
-  };
-
-  const { request: nodeRequest } =
-    url.indexOf("https://") === 0 ? require("https") : require("http");
-  const req = nodeRequest(options);
-
-  req.on("error", error => {
-    console.error(error);
-  });
-
-  req.write(serializedData);
-  req.end();
-};
-
-const aa = createInsightsClient(requestFn);
-```
 
 ## Use cases
 
@@ -489,12 +338,6 @@ aa('sendEvents', [
 | --------- | ------------------------ | ------------------------------------------------------------ |
 | `headers` | `Record<string, string>` | A dictionary of headers that will override those set by default. You can check out a list of headers for authentication in the [Algolia API reference](https://www.algolia.com/doc/rest-api/insights/#authentication). |
 
-## Examples
-
-The following examples assume that the Search Insights library is loaded.
-
-- [InstantSearch.js](https://github.com/algolia/search-insights.js/blob/main/examples/INSTANTSEARCH.md)
-- [AlgoliaSearch Helper](https://github.com/algolia/search-insights.js/blob/main/examples/HELPER.md)
 
 ## Contributing
 
