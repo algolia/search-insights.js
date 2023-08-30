@@ -78,9 +78,17 @@ export type InsightsClient = (<MethodName extends keyof InsightsMethodMap>(
 ) => void) & { version?: string };
 
 export type InsightsEventType = "click" | "conversion" | "view";
+export type InsightsEventConversionSubType = "addToCart" | "purchase";
+
+export type InsightsEventObjectData = {
+  price?: number;
+  discount?: number;
+  quantity?: number;
+};
 
 export type InsightsEvent = {
   eventType: InsightsEventType;
+  eventSubtype?: InsightsEventConversionSubType;
 
   eventName: string;
   userToken?: string | number;
@@ -90,6 +98,7 @@ export type InsightsEvent = {
   queryID?: string;
   objectIDs?: string[];
   positions?: number[];
+  objectData?: InsightsEventObjectData[];
 
   filters?: string[];
 };

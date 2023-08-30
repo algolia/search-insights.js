@@ -19,7 +19,11 @@ import {
 } from "./click";
 import {
   convertedObjectIDsAfterSearch,
+  addedToCartObjectIDsAfterSearch,
+  purchasedObjectIDsAfterSearch,
   convertedObjectIDs,
+  addedToCartObjectIDs,
+  purchasedObjectIDs,
   convertedFilters
 } from "./conversion";
 import { viewedObjectIDs, viewedFilters } from "./view";
@@ -87,7 +91,11 @@ class AlgoliaAnalytics {
   public clickedFilters: typeof clickedFilters;
 
   public convertedObjectIDsAfterSearch: typeof convertedObjectIDsAfterSearch;
+  public purchasedObjectIDsAfterSearch: typeof purchasedObjectIDsAfterSearch;
+  public addedToCartObjectIDsAfterSearch: typeof addedToCartObjectIDsAfterSearch;
   public convertedObjectIDs: typeof convertedObjectIDs;
+  public addedToCartObjectIDs: typeof addedToCartObjectIDs;
+  public purchasedObjectIDs: typeof purchasedObjectIDs;
   public convertedFilters: typeof convertedFilters;
 
   public viewedObjectIDs: typeof viewedObjectIDs;
@@ -111,7 +119,13 @@ class AlgoliaAnalytics {
 
     this.convertedObjectIDsAfterSearch =
       convertedObjectIDsAfterSearch.bind(this);
+    this.purchasedObjectIDsAfterSearch =
+      purchasedObjectIDsAfterSearch.bind(this);
+    this.addedToCartObjectIDsAfterSearch =
+      addedToCartObjectIDsAfterSearch.bind(this);
     this.convertedObjectIDs = convertedObjectIDs.bind(this);
+    this.addedToCartObjectIDs = addedToCartObjectIDs.bind(this);
+    this.purchasedObjectIDs = purchasedObjectIDs.bind(this);
     this.convertedFilters = convertedFilters.bind(this);
 
     this.viewedObjectIDs = viewedObjectIDs.bind(this);
