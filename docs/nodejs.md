@@ -14,7 +14,8 @@ yarn add search-insights
 
 ## 2. Initialize the library
 
-Initializing the library is optional, as you can specify the [credentials for each event](#sending-events-to-multiple-algolia-applications) when sending them. This gives you the flexibility to manage your Algolia credentials on a per-event basis, without having to configure them upfront.
+Initializing the library is optional, as you can specify the [credentials for each event](https://www.algolia.com/doc/api-reference/api-methods/send-events/#method-param-additionalparams) when sending them. 
+This gives you the flexibility to manage your Algolia credentials on a per-event basis, without having to configure them upfront.
 
 ```js
 const aa = require("search-insights");
