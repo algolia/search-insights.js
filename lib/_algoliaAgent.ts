@@ -1,6 +1,6 @@
-import { version } from '../package.json';
+import { version } from "../package.json";
 
-import type AlgoliaAnalytics from './insights';
+import type AlgoliaAnalytics from "./insights";
 
 export const DEFAULT_ALGOLIA_AGENTS = [
   `insights-js (${version})`,

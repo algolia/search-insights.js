@@ -1,20 +1,20 @@
-import { version } from '../package.json';
+import { version } from "../package.json";
 
-import { addAlgoliaAgent } from './_algoliaAgent';
-import { getVersion } from './_getVersion';
-import { makeSendEvents } from './_sendEvent';
+import { addAlgoliaAgent } from "./_algoliaAgent";
+import { getVersion } from "./_getVersion";
+import { makeSendEvents } from "./_sendEvent";
 import {
   getUserToken,
   setUserToken,
   setAnonymousUserToken,
   onUserTokenChange,
   MONTH,
-} from './_tokenUtils';
+} from "./_tokenUtils";
 import {
   clickedObjectIDsAfterSearch,
   clickedObjectIDs,
   clickedFilters,
-} from './click';
+} from "./click";
 import {
   convertedObjectIDsAfterSearch,
   addedToCartObjectIDsAfterSearch,
@@ -23,12 +23,12 @@ import {
   addedToCartObjectIDs,
   purchasedObjectIDs,
   convertedFilters,
-} from './conversion';
-import { init } from './init';
-import objectAssignPolyfill from './polyfills/objectAssign';
-import objectKeysPolyfill from './polyfills/objectKeys';
-import type { RequestFnType } from './utils/request';
-import { viewedObjectIDs, viewedFilters } from './view';
+} from "./conversion";
+import { init } from "./init";
+import objectAssignPolyfill from "./polyfills/objectAssign";
+import objectKeysPolyfill from "./polyfills/objectKeys";
+import type { RequestFnType } from "./utils/request";
+import { viewedObjectIDs, viewedFilters } from "./view";
 
 objectKeysPolyfill();
 objectAssignPolyfill();
@@ -57,7 +57,7 @@ class AlgoliaAnalytics {
   _appId?: string;
   _region?: string;
   _host?: string;
-  _endpointOrigin = 'https://insights.algolia.io';
+  _endpointOrigin = "https://insights.algolia.io";
   _anonymousUserToken = true;
   _userToken?: number | string;
   _userHasOptedOut = false;

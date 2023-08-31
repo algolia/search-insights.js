@@ -5,57 +5,68 @@ module.exports = {
     node: true,
   },
   extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'algolia',
-    'algolia/typescript',
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "algolia",
+    "algolia/typescript",
   ],
   overrides: [
     {
       env: {
         node: true,
       },
-      files: ['.eslintrc.{js,cjs}'],
+      files: [".eslintrc.{js,cjs}"],
       parserOptions: {
-        sourceType: 'script',
+        sourceType: "script",
       },
     },
     {
-      files: '*.test.*',
+      files: "*.test.*",
       rules: {
-        '@typescript-eslint/explicit-function-return-type': 'off',
+        "@typescript-eslint/explicit-function-return-type": "off",
       },
     },
   ],
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: 'tsconfig.json',
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: "tsconfig.json",
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ["@typescript-eslint"],
   rules: {
-    'jsdoc/check-tag-names': [
-      'error',
+    "prettier/prettier": [
+      "error",
+      {},
       {
-        definedTags: ['jest-environment'],
+        "usePrettierrc": true
+      }
+    ],
+    "jsdoc/check-tag-names": [
+      "error",
+      {
+        definedTags: ["jest-environment"],
       },
     ],
-    '@typescript-eslint/naming-convention': [
-      'error',
+    "@typescript-eslint/naming-convention": [
+      "error",
       {
-        selector: 'typeAlias',
-        format: ['PascalCase'],
+        selector: "typeAlias",
+        format: ["PascalCase"],
       },
       {
-        selector: 'typeParameter',
-        format: ['PascalCase'],
+        selector: "typeParameter",
+        format: ["PascalCase"],
       },
       {
-        selector: 'interface',
-        format: ['PascalCase'],
+        selector: "interface",
+        format: ["PascalCase"],
       },
     ],
+    "@typescript-eslint/comma-spacing": "off",
+    "@typescript-eslint/func-call-spacing": "off",
+    "@typescript-eslint/type-annotation-spacing": "off",
+
   },
 };
 

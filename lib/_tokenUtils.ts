@@ -1,8 +1,8 @@
-import type AlgoliaAnalytics from './insights';
-import { isFunction, supportsCookies } from './utils';
-import { createUUID } from './utils/uuid';
+import type AlgoliaAnalytics from "./insights";
+import { isFunction, supportsCookies } from "./utils";
+import { createUUID } from "./utils/uuid";
 
-const COOKIE_KEY = '_ALGOLIA';
+const COOKIE_KEY = "_ALGOLIA";
 export const MONTH = 30 * 24 * 60 * 60 * 1000;
 
 const setCookie = (
@@ -18,17 +18,17 @@ const setCookie = (
 
 export const getCookie = (name: string): string => {
   const prefix = `${name}=`;
-  const ca = document.cookie.split(';');
+  const ca = document.cookie.split(";");
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
-    while (c.charAt(0) === ' ') {
+    while (c.charAt(0) === " ") {
       c = c.substring(1);
     }
     if (c.indexOf(prefix) === 0) {
       return c.substring(prefix.length, c.length);
     }
   }
-  return '';
+  return "";
 };
 
 export function setAnonymousUserToken(
@@ -47,8 +47,8 @@ export function setAnonymousUserToken(
   const foundToken = getCookie(COOKIE_KEY);
   if (
     !foundToken ||
-    foundToken === '' ||
-    foundToken.indexOf('anonymous-') !== 0
+    foundToken === "" ||
+    foundToken.indexOf("anonymous-") !== 0
   ) {
     const savedUserToken = this.setUserToken(`anonymous-${createUUID()}`);
     setCookie(COOKIE_KEY, savedUserToken, this._cookieDuration);

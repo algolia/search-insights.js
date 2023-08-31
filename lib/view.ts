@@ -1,7 +1,7 @@
-import { addEventType } from './_addEventType';
-import type AlgoliaAnalytics from './insights';
-import type { WithAdditionalParams } from './utils';
-import { extractAdditionalParams } from './utils';
+import { addEventType } from "./_addEventType";
+import type AlgoliaAnalytics from "./insights";
+import type { WithAdditionalParams } from "./utils";
+import { extractAdditionalParams } from "./utils";
 
 export interface InsightsSearchViewObjectIDsEvent {
   eventName: string;
@@ -15,11 +15,11 @@ export interface InsightsSearchViewObjectIDsEvent {
 export function viewedObjectIDs(
   this: AlgoliaAnalytics,
   ...params: Array<WithAdditionalParams<InsightsSearchViewObjectIDsEvent>>
-): ReturnType<AlgoliaAnalytics['sendEvents']> {
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
     extractAdditionalParams<InsightsSearchViewObjectIDsEvent>(params);
 
-  return this.sendEvents(addEventType('view', events), additionalParams);
+  return this.sendEvents(addEventType("view", events), additionalParams);
 }
 
 export interface InsightsSearchViewFiltersEvent {
@@ -34,9 +34,9 @@ export interface InsightsSearchViewFiltersEvent {
 export function viewedFilters(
   this: AlgoliaAnalytics,
   ...params: Array<WithAdditionalParams<InsightsSearchViewFiltersEvent>>
-): ReturnType<AlgoliaAnalytics['sendEvents']> {
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
     extractAdditionalParams<InsightsSearchViewFiltersEvent>(params);
 
-  return this.sendEvents(addEventType('view', events), additionalParams);
+  return this.sendEvents(addEventType("view", events), additionalParams);
 }

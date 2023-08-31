@@ -1,7 +1,7 @@
-import { addEventType } from './_addEventType';
-import type AlgoliaAnalytics from './insights';
-import type { WithAdditionalParams } from './utils';
-import { extractAdditionalParams } from './utils';
+import { addEventType } from "./_addEventType";
+import type AlgoliaAnalytics from "./insights";
+import type { WithAdditionalParams } from "./utils";
+import { extractAdditionalParams } from "./utils";
 
 export interface InsightsSearchClickEvent {
   eventName: string;
@@ -17,11 +17,11 @@ export interface InsightsSearchClickEvent {
 export function clickedObjectIDsAfterSearch(
   this: AlgoliaAnalytics,
   ...params: Array<WithAdditionalParams<InsightsSearchClickEvent>>
-): ReturnType<AlgoliaAnalytics['sendEvents']> {
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
     extractAdditionalParams<InsightsSearchClickEvent>(params);
 
-  return this.sendEvents(addEventType('click', events), additionalParams);
+  return this.sendEvents(addEventType("click", events), additionalParams);
 }
 
 export interface InsightsClickObjectIDsEvent {
@@ -36,11 +36,11 @@ export interface InsightsClickObjectIDsEvent {
 export function clickedObjectIDs(
   this: AlgoliaAnalytics,
   ...params: Array<WithAdditionalParams<InsightsClickObjectIDsEvent>>
-): ReturnType<AlgoliaAnalytics['sendEvents']> {
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
     extractAdditionalParams<InsightsClickObjectIDsEvent>(params);
 
-  return this.sendEvents(addEventType('click', events), additionalParams);
+  return this.sendEvents(addEventType("click", events), additionalParams);
 }
 
 export interface InsightsClickFiltersEvent {
@@ -55,9 +55,9 @@ export interface InsightsClickFiltersEvent {
 export function clickedFilters(
   this: AlgoliaAnalytics,
   ...params: Array<WithAdditionalParams<InsightsClickFiltersEvent>>
-): ReturnType<AlgoliaAnalytics['sendEvents']> {
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
     extractAdditionalParams<InsightsClickFiltersEvent>(params);
 
-  return this.sendEvents(addEventType('click', events), additionalParams);
+  return this.sendEvents(addEventType("click", events), additionalParams);
 }

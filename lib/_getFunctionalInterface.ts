@@ -1,6 +1,6 @@
-import type AlgoliaAnalytics from './insights';
-import type { InsightsClient } from './types';
-import { isFunction } from './utils';
+import type AlgoliaAnalytics from "./insights";
+import type { InsightsClient } from "./types";
+import { isFunction } from "./utils";
 
 export function getFunctionalInterface(
   instance: AlgoliaAnalytics

@@ -1,28 +1,28 @@
-import type { InsightsAdditionalEventParams } from '../../types';
-import type { WithAdditionalParams } from '../extractAdditionalParams';
-import { extractAdditionalParams } from '../extractAdditionalParams';
+import type { InsightsAdditionalEventParams } from "../../types";
+import type { WithAdditionalParams } from "../extractAdditionalParams";
+import { extractAdditionalParams } from "../extractAdditionalParams";
 
 type TestEvent = {
   index: string;
 };
 
-describe('extractAdditionalParams', () => {
+describe("extractAdditionalParams", () => {
   const events: TestEvent[] = [
-    { index: 'index1' },
-    { index: 'index2' },
-    { index: 'index3' },
+    { index: "index1" },
+    { index: "index2" },
+    { index: "index3" },
   ];
-  it('returns whole list as events when there are no additional params', () => {
+  it("returns whole list as events when there are no additional params", () => {
     const extracted = extractAdditionalParams<TestEvent>(events);
 
     expect(extracted.events).toEqual(events);
     expect(extracted.additionalParams).toBeUndefined();
   });
 
-  it('separates events from additional params if detected', () => {
+  it("separates events from additional params if detected", () => {
     const additionalParams: InsightsAdditionalEventParams = {
       headers: {
-        'X-Custom-Header': 'customHeader123',
+        "X-Custom-Header": "customHeader123",
       },
     };
 

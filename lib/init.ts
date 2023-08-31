@@ -1,13 +1,13 @@
-import { DEFAULT_ALGOLIA_AGENTS } from './_algoliaAgent';
-import { MONTH } from './_tokenUtils';
-import type AlgoliaAnalytics from './insights';
-import objectAssignPolyfill from './polyfills/objectAssign';
-import { isUndefined, isNumber } from './utils';
+import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
+import { MONTH } from "./_tokenUtils";
+import type AlgoliaAnalytics from "./insights";
+import objectAssignPolyfill from "./polyfills/objectAssign";
+import { isUndefined, isNumber } from "./utils";
 
 objectAssignPolyfill();
 
-type InsightRegion = 'de' | 'us';
-const SUPPORTED_REGIONS: InsightRegion[] = ['de', 'us'];
+type InsightRegion = "de" | "us";
+const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
 
 export interface InitParams {
   apiKey?: string;
@@ -34,7 +34,7 @@ export function init(this: AlgoliaAnalytics, options: InitParams = {}): void {
   ) {
     throw new Error(
       `optional region is incorrect, please provide either one of: ${SUPPORTED_REGIONS.join(
-        ', '
+        ", "
       )}.`
     );
   }
@@ -69,7 +69,7 @@ You can visit https://algolia.com/events/debugger instead.`);
     this._host ||
     (this._region
       ? `https://insights.${this._region}.algolia.io`
-      : 'https://insights.algolia.io');
+      : "https://insights.algolia.io");
 
   // user agent
   this._ua = [...DEFAULT_ALGOLIA_AGENTS];
@@ -83,12 +83,12 @@ You can visit https://algolia.com/events/debugger instead.`);
 
 type ThisParams = Pick<
   AlgoliaAnalytics,
-  | '_anonymousUserToken'
-  | '_cookieDuration'
-  | '_host'
-  | '_region'
-  | '_useCookie'
-  | '_userHasOptedOut'
+  | "_anonymousUserToken"
+  | "_cookieDuration"
+  | "_host"
+  | "_region"
+  | "_useCookie"
+  | "_userHasOptedOut"
 >;
 
 function setOptions(

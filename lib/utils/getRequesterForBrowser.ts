@@ -1,6 +1,6 @@
-import { supportsSendBeacon, supportsXMLHttpRequest } from './featureDetection';
-import type { RequestFnType } from './request';
-import { requestWithSendBeacon, requestWithXMLHttpRequest } from './request';
+import { supportsSendBeacon, supportsXMLHttpRequest } from "./featureDetection";
+import type { RequestFnType } from "./request";
+import { requestWithSendBeacon, requestWithXMLHttpRequest } from "./request";
 
 export function getRequesterForBrowser(): RequestFnType {
   if (supportsSendBeacon()) {
@@ -12,6 +12,6 @@ export function getRequesterForBrowser(): RequestFnType {
   }
 
   throw new Error(
-    'Could not find a supported HTTP request client in this environment.'
+    "Could not find a supported HTTP request client in this environment."
   );
 }

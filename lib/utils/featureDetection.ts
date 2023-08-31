@@ -25,8 +25,8 @@ export const supportsXMLHttpRequest = (): boolean => {
 export const supportsNodeHttpModule = (): boolean => {
   try {
     /* eslint-disable @typescript-eslint/no-var-requires */
-    const { request: nodeHttpRequest } = require('http');
-    const { request: nodeHttpsRequest } = require('https');
+    const { request: nodeHttpRequest } = require("http");
+    const { request: nodeHttpsRequest } = require("https");
     /* eslint-enable */
     return Boolean(nodeHttpRequest) && Boolean(nodeHttpsRequest);
   } catch (e) {

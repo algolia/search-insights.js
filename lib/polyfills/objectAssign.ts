@@ -7,7 +7,7 @@
  */
 
 export default function objectAssignPolyfill(): void {
-  if (typeof Object.assign !== 'function') {
+  if (typeof Object.assign !== "function") {
     Object.assign = function <T extends Record<string, unknown>, U>(
       target: T,
       _: U
@@ -17,7 +17,7 @@ export default function objectAssignPolyfill(): void {
       /* eslint-disable eqeqeq, no-eq-null */
       if (target == null) {
         // TypeError if undefined or null
-        throw new TypeError('Cannot convert undefined or null to object');
+        throw new TypeError("Cannot convert undefined or null to object");
       }
       /* eslint-enable */
 

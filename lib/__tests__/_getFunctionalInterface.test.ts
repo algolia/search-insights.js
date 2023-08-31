@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 
-import { getFunctionalInterface } from '../_getFunctionalInterface';
-import AlgoliaAnalytics from '../insights';
-import type { InsightsClient } from '../types';
+import { getFunctionalInterface } from "../_getFunctionalInterface";
+import AlgoliaAnalytics from "../insights";
+import type { InsightsClient } from "../types";
 
-describe('_getFunctionalInterface', () => {
+describe("_getFunctionalInterface", () => {
   let aa: InsightsClient;
 
   beforeEach(() => {
@@ -14,10 +14,10 @@ describe('_getFunctionalInterface', () => {
     aa = getFunctionalInterface(analyticsInstance);
   });
 
-  it('warn about unknown function name', () => {
+  it("warn about unknown function name", () => {
     console.warn = jest.fn();
     // @ts-expect-error
-    aa('unknown-function');
+    aa("unknown-function");
     expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.warn).toHaveBeenCalledWith(
       "The method `unknown-function` doesn't exist."

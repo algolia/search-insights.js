@@ -4,8 +4,8 @@
  * class over globalObject variable to execute commands
  * instead of putting them to the queue.
  */
-import { getFunctionalInterface } from './_getFunctionalInterface';
-import type AlgoliaAnalytics from './insights';
+import { getFunctionalInterface } from "./_getFunctionalInterface";
+import type AlgoliaAnalytics from "./insights";
 
 export function processQueue(this: AlgoliaAnalytics, globalObject: any): void {
   // Set pointer which allows renaming of the script

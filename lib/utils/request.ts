@@ -1,5 +1,5 @@
-import type { request as nodeRequest } from 'http';
-import type { UrlWithStringQuery } from 'url';
+import type { request as nodeRequest } from "http";
+import type { UrlWithStringQuery } from "url";
 
 export type RequestFnType = (
   url: string,
@@ -10,7 +10,7 @@ export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
   return new Promise((resolve, reject) => {
     const serializedData = JSON.stringify(data);
     const req = new XMLHttpRequest();
-    req.addEventListener('readystatechange', () => {
+    req.addEventListener("readystatechange", () => {
       if (req.readyState === 4 && req.status === 200) {
         resolve(true);
       } else if (req.readyState === 4) {
@@ -19,12 +19,12 @@ export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
     });
 
     /* eslint-disable prefer-promise-reject-errors */
-    req.addEventListener('error', () => reject());
+    req.addEventListener("error", () => reject());
     /* eslint-enable */
-    req.addEventListener('timeout', () => resolve(false));
-    req.open('POST', url);
-    req.setRequestHeader('Content-Type', 'application/json');
-    req.setRequestHeader('Content-Length', `${serializedData.length}`);
+    req.addEventListener("timeout", () => resolve(false));
+    req.open("POST", url);
+    req.setRequestHeader("Content-Type", "application/json");
+    req.setRequestHeader("Content-Length", `${serializedData.length}`);
     req.send(serializedData);
   });
 };
@@ -40,24 +40,24 @@ export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
     const serializedData = JSON.stringify(data);
     /* eslint-disable @typescript-eslint/no-var-requires */
     const { protocol, host, path }: UrlWithStringQuery =
-      require('url').parse(url);
+      require("url").parse(url);
     /* eslint-enable */
     const options = {
       protocol,
       host,
       path,
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': serializedData.length,
+        "Content-Type": "application/json",
+        "Content-Length": serializedData.length,
       },
     };
 
     const { request }: { request: typeof nodeRequest } = url.startsWith(
-      'https://'
+      "https://"
     )
-      ? require('https')
-      : require('http');
+      ? require("https")
+      : require("http");
     const req = request(options, ({ statusCode }) => {
       if (statusCode === 200) {
         resolve(true);
@@ -66,13 +66,13 @@ export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
       }
     });
 
-    req.on('error', (error: any) => {
+    req.on("error", (error: any) => {
       /* eslint-disable no-console */
       console.error(error);
       /* eslint-enable */
       reject(error);
     });
-    req.on('timeout', () => resolve(false));
+    req.on("timeout", () => resolve(false));
 
     req.write(serializedData);
     req.end();

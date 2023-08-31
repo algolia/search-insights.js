@@ -1,6 +1,6 @@
-import { supportsNodeHttpModule } from './featureDetection';
-import type { RequestFnType } from './request';
-import { requestWithNodeHttpModule } from './request';
+import { supportsNodeHttpModule } from "./featureDetection";
+import type { RequestFnType } from "./request";
+import { requestWithNodeHttpModule } from "./request";
 
 export function getRequesterForNode(): RequestFnType {
   if (supportsNodeHttpModule()) {
@@ -8,6 +8,6 @@ export function getRequesterForNode(): RequestFnType {
   }
 
   throw new Error(
-    'Could not find a supported HTTP request client in this environment.'
+    "Could not find a supported HTTP request client in this environment."
   );
 }

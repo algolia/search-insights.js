@@ -1,4 +1,4 @@
-import type { InsightsAdditionalEventParams } from '../types';
+import type { InsightsAdditionalEventParams } from "../types";
 
 export type WithAdditionalParams<TEventType> =
   | InsightsAdditionalEventParams
@@ -11,7 +11,7 @@ export function extractAdditionalParams<TEventType extends { index: string }>(
     ({ events, additionalParams }, param) => {
       // Real events all have `index` as a mandatory parameter, which we
       // can rely on to distinguish them from additional parameters
-      if ('index' in param) {
+      if ("index" in param) {
         return { additionalParams, events: [...events, param] };
       }
 

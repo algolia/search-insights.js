@@ -5,25 +5,25 @@ export default function objectKeysPolyfill(): void {
     Object.keys = (function (): (obj: any) => any[] {
       const hasOwnProperty = Object.prototype.hasOwnProperty;
       const hasDontEnumBug = !{ toString: null }.propertyIsEnumerable(
-        'toString'
+        "toString"
       );
       const dontEnums = [
-        'toString',
-        'toLocaleString',
-        'valueOf',
-        'hasOwnProperty',
-        'isPrototypeOf',
-        'propertyIsEnumerable',
-        'constructor',
+        "toString",
+        "toLocaleString",
+        "valueOf",
+        "hasOwnProperty",
+        "isPrototypeOf",
+        "propertyIsEnumerable",
+        "constructor",
       ];
       const dontEnumsLength = dontEnums.length;
 
       return function (obj: any): any[] {
         if (
-          typeof obj !== 'function' &&
-          (typeof obj !== 'object' || obj === null)
+          typeof obj !== "function" &&
+          (typeof obj !== "object" || obj === null)
         ) {
-          throw new TypeError('Object.keys called on non-object');
+          throw new TypeError("Object.keys called on non-object");
         }
 
         const result = [];
