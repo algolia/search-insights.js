@@ -1,7 +1,11 @@
-import {request as nodeHttpRequest} from 'http';
-import {request as nodeHttpsRequest} from 'https';
+import { request as nodeHttpRequest } from 'http';
+import { request as nodeHttpsRequest } from 'https';
 
-import {supportsSendBeacon, supportsXMLHttpRequest, supportsNodeHttpModule} from '../featureDetection';
+import {
+  supportsSendBeacon,
+  supportsXMLHttpRequest,
+  supportsNodeHttpModule,
+} from '../featureDetection';
 import { getRequesterForBrowser } from '../getRequesterForBrowser';
 import { getRequesterForNode } from '../getRequesterForNode';
 
