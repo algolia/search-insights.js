@@ -2,6 +2,11 @@ import AlgoliaAnalytics from "../insights";
 import * as utils from "../utils";
 import { getCookie, MONTH } from "../_tokenUtils";
 
+jest.mock("../utils", () => ({
+  __esModule: true,
+  ...jest.requireActual("../utils")
+}));
+
 describe("init", () => {
   let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
@@ -439,8 +444,14 @@ describe("init", () => {
   });
 
   describe("userToken param", () => {
-    let setUserToken;
-    let setAnonymousUserToken;
+    let setUserToken: jest.SpyInstance<
+      string | number,
+      [userToken: string | number]
+    >;
+    let setAnonymousUserToken: jest.SpyInstance<
+      void,
+      [inMemory?: boolean | undefined]
+    >;
     beforeEach(() => {
       setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
       setAnonymousUserToken = jest.spyOn(
