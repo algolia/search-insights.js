@@ -9,7 +9,7 @@ describe("_getFunctionalInterface", () => {
 
   beforeEach(() => {
     const analyticsInstance = new AlgoliaAnalytics({
-      requestFn: jest.fn().mockResolvedValue(true),
+      requestFn: jest.fn().mockResolvedValue(true)
     });
     aa = getFunctionalInterface(analyticsInstance);
   });

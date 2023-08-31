@@ -8,7 +8,7 @@ export {
   getRequesterForBrowser,
   AlgoliaAnalytics,
   getFunctionalInterface,
-  processQueue,
+  processQueue
 };
 export * from "./types";
 

@@ -10,7 +10,7 @@ describe("extractAdditionalParams", () => {
   const events: TestEvent[] = [
     { index: "index1" },
     { index: "index2" },
-    { index: "index3" },
+    { index: "index3" }
   ];
   it("returns whole list as events when there are no additional params", () => {
     const extracted = extractAdditionalParams<TestEvent>(events);
@@ -22,13 +22,13 @@ describe("extractAdditionalParams", () => {
   it("separates events from additional params if detected", () => {
     const additionalParams: InsightsAdditionalEventParams = {
       headers: {
-        "X-Custom-Header": "customHeader123",
-      },
+        "X-Custom-Header": "customHeader123"
+      }
     };
 
     const params: Array<WithAdditionalParams<TestEvent>> = [
       ...events,
-      additionalParams,
+      additionalParams
     ];
 
     const extracted = extractAdditionalParams<TestEvent>(params);

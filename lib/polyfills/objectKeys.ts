@@ -14,7 +14,7 @@ export default function objectKeysPolyfill(): void {
         "hasOwnProperty",
         "isPrototypeOf",
         "propertyIsEnumerable",
-        "constructor",
+        "constructor"
       ];
       const dontEnumsLength = dontEnums.length;
 

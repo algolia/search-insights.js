@@ -4,14 +4,14 @@ import * as utils from "../utils";
 
 jest.mock("../utils", () => ({
   __esModule: true,
-  ...jest.requireActual("../utils"),
+  ...jest.requireActual("../utils")
 }));
 
 describe("init", () => {
   let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({
-      requestFn: jest.fn().mockResolvedValue(true),
+      requestFn: jest.fn().mockResolvedValue(true)
     });
     document.cookie = `_ALGOLIA=;${new Date().toUTCString()};path=/`;
   });
@@ -27,7 +27,7 @@ describe("init", () => {
         appId: "xxx",
         apiKey: "***",
         // @ts-expect-error
-        region: "emea",
+        region: "emea"
       });
     }).toThrowErrorMatchingInlineSnapshot(
       `"optional region is incorrect, please provide either one of: de, us."`
@@ -49,7 +49,7 @@ describe("init", () => {
     analyticsInstance.init({
       apiKey: "***",
       appId: "XXX",
-      host: "https://example.com",
+      host: "https://example.com"
     });
     expect(analyticsInstance._host).toBe("https://example.com");
   });
@@ -61,7 +61,7 @@ describe("init", () => {
     analyticsInstance.init({
       apiKey: "***",
       appId: "XXX",
-      userHasOptedOut: true,
+      userHasOptedOut: true
     });
     expect(analyticsInstance._userHasOptedOut).toBe(true);
   });
@@ -69,7 +69,7 @@ describe("init", () => {
     analyticsInstance.init({
       apiKey: "***",
       appId: "XXX",
-      userHasOptedOut: true,
+      userHasOptedOut: true
     });
     expect(analyticsInstance._userToken).toBeUndefined();
     expect(getCookie("_ALGOLIA")).toBe("");
@@ -86,7 +86,7 @@ describe("init", () => {
           // @ts-expect-error
           cookieDuration,
           apiKey: "***",
-          appId: "XXX",
+          appId: "XXX"
         });
       }).toThrowErrorMatchingInlineSnapshot(
         `"optional cookieDuration is incorrect, expected an integer."`
@@ -97,7 +97,7 @@ describe("init", () => {
     analyticsInstance.init({
       apiKey: "***",
       appId: "XXX",
-      cookieDuration: 42,
+      cookieDuration: 42
     });
     expect(analyticsInstance._cookieDuration).toBe(42);
   });
@@ -133,7 +133,7 @@ describe("init", () => {
       apiKey: "***",
       appId: "XXX",
       region: "de",
-      host: "https://example.com",
+      host: "https://example.com"
     });
     expect(analyticsInstance._endpointOrigin).toBe("https://example.com");
   });
@@ -150,7 +150,7 @@ describe("init", () => {
       apiKey: "***",
       appId: "XXX",
       region: "de",
-      useCookie: true,
+      useCookie: true
     });
     expect(setAnonymousUserToken).toHaveBeenCalledTimes(1);
 
@@ -182,7 +182,7 @@ describe("init", () => {
       apiKey: "***",
       appId: "XXX",
       region: "de",
-      useCookie: false,
+      useCookie: false
     });
     expect(setAnonymousUserToken).not.toHaveBeenCalled();
 
@@ -194,7 +194,7 @@ describe("init", () => {
     analyticsInstance.init({
       apiKey: "***",
       appId: "XXX",
-      useCookie: true,
+      useCookie: true
     });
     expect(setUserToken).toHaveBeenCalledTimes(1);
     expect(setUserToken).toHaveBeenCalledWith(
@@ -207,7 +207,7 @@ describe("init", () => {
 
     analyticsInstance.init({
       apiKey: "***",
-      appId: "XXX",
+      appId: "XXX"
     });
     expect(setUserToken).toHaveBeenCalledTimes(2);
 
@@ -221,7 +221,7 @@ describe("init", () => {
       userHasOptedOut: true,
       useCookie: true,
       cookieDuration: 100,
-      userToken: "myUserToken",
+      userToken: "myUserToken"
     });
 
     expect(analyticsInstance._appId).toBe("appId1");
@@ -257,7 +257,7 @@ describe("init", () => {
       userHasOptedOut: true,
       useCookie: true,
       cookieDuration: 100,
-      userToken: "myUserToken",
+      userToken: "myUserToken"
     });
 
     expect(analyticsInstance._appId).toBe("appId1");
@@ -274,7 +274,7 @@ describe("init", () => {
     analyticsInstance.init({
       apiKey: "apiKey2",
       appId: "appId2",
-      partial: false,
+      partial: false
     });
 
     expect(analyticsInstance._appId).toBe("appId2");
@@ -297,7 +297,7 @@ describe("init", () => {
       userHasOptedOut: true,
       useCookie: true,
       cookieDuration: 100,
-      userToken: "myUserToken",
+      userToken: "myUserToken"
     });
 
     expect(analyticsInstance._appId).toBe("appId1");
@@ -314,7 +314,7 @@ describe("init", () => {
     analyticsInstance.init({
       apiKey: "apiKey2",
       appId: "appId2",
-      partial: true,
+      partial: true
     });
 
     expect(analyticsInstance._appId).toBe("appId2");
@@ -330,7 +330,7 @@ describe("init", () => {
 
     analyticsInstance.init({
       appId: "appId2",
-      partial: true,
+      partial: true
     });
 
     expect(analyticsInstance._appId).toBe("appId2");
@@ -338,7 +338,7 @@ describe("init", () => {
 
     analyticsInstance.init({
       host: "https://example.com",
-      partial: true,
+      partial: true
     });
 
     expect(analyticsInstance._endpointOrigin).toBe("https://example.com");
@@ -355,7 +355,7 @@ describe("init", () => {
           apiKey: "***",
           appId: "XXX",
           region: "de",
-          useCookie: true,
+          useCookie: true
         });
         // Because cookie is enabled, anonymous token must be generated already.
         expect(analyticsInstance._userToken).toBeTruthy();
@@ -478,7 +478,7 @@ describe("init", () => {
         apiKey: "***",
         appId: "XXX",
         userToken: "abc",
-        useCookie: true,
+        useCookie: true
       });
       expect(setUserToken).toHaveBeenCalledTimes(1);
       expect(setUserToken).toHaveBeenCalledWith("abc");

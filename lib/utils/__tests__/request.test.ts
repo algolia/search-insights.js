@@ -4,14 +4,14 @@ import { request as nodeHttpsRequest } from "https";
 import {
   supportsSendBeacon,
   supportsXMLHttpRequest,
-  supportsNodeHttpModule,
+  supportsNodeHttpModule
 } from "../featureDetection";
 import { getRequesterForBrowser } from "../getRequesterForBrowser";
 import { getRequesterForNode } from "../getRequesterForNode";
 
 jest.mock("../featureDetection", () => ({
   __esModule: true,
-  ...jest.requireActual("../featureDetection"),
+  ...jest.requireActual("../featureDetection")
 }));
 jest.mock("http");
 jest.mock("https");
@@ -41,19 +41,19 @@ describe("request", () => {
       setRequestHeader,
       addEventListener,
       readyState: 4,
-      status: 200,
+      status: 200
     }));
 
     nodeHttpRequest.mockImplementation((_: any, cb: any) => ({
       on: jest.fn(),
       write,
-      end: () => cb({ statusCode: 200 }),
+      end: () => cb({ statusCode: 200 })
     }));
 
     nodeHttpsRequest.mockImplementation((_: any, cb: any) => ({
       on: jest.fn(),
       write,
-      end: () => cb({ statusCode: 200 }),
+      end: () => cb({ statusCode: 200 })
     }));
   });
 
@@ -145,8 +145,8 @@ describe("request", () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Content-Length": JSON.stringify(data).length,
-        },
+          "Content-Length": JSON.stringify(data).length
+        }
       },
       expect.any(Function)
     );
@@ -177,8 +177,8 @@ describe("request", () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Content-Length": JSON.stringify(data).length,
-        },
+          "Content-Length": JSON.stringify(data).length
+        }
       },
       expect.any(Function)
     );
@@ -191,7 +191,7 @@ describe("request", () => {
     { browser: true, beacon: true, url: "http://random.url" },
     { browser: true, beacon: false, url: "http://random.url" },
     { browser: false, beacon: false, url: "http://random.url" },
-    { browser: false, beacon: false, url: "https://random.url" },
+    { browser: false, beacon: false, url: "https://random.url" }
   ])(
     "should return false on non-200 response for %o",
     async ({ browser, beacon, url }) => {
@@ -202,17 +202,17 @@ describe("request", () => {
         setRequestHeader,
         addEventListener,
         readyState: 4,
-        status: 400,
+        status: 400
       }));
       (nodeHttpRequest as jest.Mock).mockImplementation((_, cb) => ({
         on: jest.fn(),
         write,
-        end: () => cb({ statusCode: 400 }),
+        end: () => cb({ statusCode: 400 })
       }));
       (nodeHttpsRequest as jest.Mock).mockImplementation((_, cb) => ({
         on: jest.fn(),
         write,
-        end: () => cb({ statusCode: 400 }),
+        end: () => cb({ statusCode: 400 })
       }));
 
       supportsSendBeacon.mockImplementation(() => beacon);

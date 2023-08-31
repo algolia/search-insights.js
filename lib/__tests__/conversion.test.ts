@@ -2,21 +2,21 @@ import AlgoliaAnalytics from "../insights";
 
 const credentials = {
   apiKey: "test",
-  appId: "test",
+  appId: "test"
 };
 
 const additionalParameters = {
   headers: {
     "X-Algolia-Application-Id": "overrideApp123",
-    "X-Algolia-API-Key": "overrideKey123",
-  },
+    "X-Algolia-API-Key": "overrideKey123"
+  }
 };
 
 let analyticsInstance: AlgoliaAnalytics;
 
 beforeEach(() => {
   analyticsInstance = new AlgoliaAnalytics({
-    requestFn: jest.fn().mockResolvedValue(true),
+    requestFn: jest.fn().mockResolvedValue(true)
   });
   analyticsInstance.sendEvents = jest.fn();
   analyticsInstance.init(credentials);
@@ -27,7 +27,7 @@ describe("convertedObjectIDsAfterSearch", () => {
     index: "index1",
     eventName: "hit converted",
     objectIDs: ["12345"],
-    queryID: "test",
+    queryID: "test"
   };
 
   it("should call sendEvents with proper params", () => {
@@ -36,8 +36,8 @@ describe("convertedObjectIDsAfterSearch", () => {
       [
         {
           eventType: "conversion",
-          ...convertParams,
-        },
+          ...convertParams
+        }
       ],
       undefined
     );
@@ -61,7 +61,7 @@ describe("addedToCartObjectIDsAfterSearch", () => {
     index: "index1",
     eventName: "Product added to cart",
     objectIDs: ["12345"],
-    queryID: "test",
+    queryID: "test"
   };
 
   it("should call sendEvents with proper params", () => {
@@ -71,8 +71,8 @@ describe("addedToCartObjectIDsAfterSearch", () => {
         {
           eventType: "conversion",
           eventSubtype: "addToCart",
-          ...convertParams,
-        },
+          ...convertParams
+        }
       ],
       undefined
     );
@@ -96,7 +96,7 @@ describe("purchasedObjectIDsAfterSearch", () => {
     index: "index1",
     eventName: "Product added to cart",
     objectIDs: ["12345"],
-    queryID: "test",
+    queryID: "test"
   };
 
   it("should call sendEvents with proper params", () => {
@@ -106,8 +106,8 @@ describe("purchasedObjectIDsAfterSearch", () => {
         {
           eventType: "conversion",
           eventSubtype: "purchase",
-          ...convertParams,
-        },
+          ...convertParams
+        }
       ],
       undefined
     );
@@ -130,7 +130,7 @@ describe("convertedObjectIDs", () => {
   const convertParams = {
     index: "index1",
     eventName: "hit converted",
-    objectIDs: ["12345"],
+    objectIDs: ["12345"]
   };
 
   it("should call sendEvents with proper params", () => {
@@ -139,8 +139,8 @@ describe("convertedObjectIDs", () => {
       [
         {
           eventType: "conversion",
-          ...convertParams,
-        },
+          ...convertParams
+        }
       ],
       undefined
     );
@@ -160,7 +160,7 @@ describe("addedToCartObjectIDs", () => {
   const convertParams = {
     index: "index1",
     eventName: "hit converted",
-    objectIDs: ["12345"],
+    objectIDs: ["12345"]
   };
 
   it("should call sendEvents with proper params", () => {
@@ -170,8 +170,8 @@ describe("addedToCartObjectIDs", () => {
         {
           eventType: "conversion",
           eventSubtype: "addToCart",
-          ...convertParams,
-        },
+          ...convertParams
+        }
       ],
       undefined
     );
@@ -191,7 +191,7 @@ describe("purchasedObjectIDs", () => {
   const convertParams = {
     index: "index1",
     eventName: "hit converted",
-    objectIDs: ["12345"],
+    objectIDs: ["12345"]
   };
 
   it("should call sendEvents with proper params", () => {
@@ -201,8 +201,8 @@ describe("purchasedObjectIDs", () => {
         {
           eventType: "conversion",
           eventSubtype: "purchase",
-          ...convertParams,
-        },
+          ...convertParams
+        }
       ],
       undefined
     );
@@ -222,7 +222,7 @@ describe("convertedFilters", () => {
   const convertParams = {
     index: "index1",
     eventName: "filter converted",
-    filters: ["brands:apple"],
+    filters: ["brands:apple"]
   };
 
   it("should call sendEvents with proper params", () => {
@@ -231,8 +231,8 @@ describe("convertedFilters", () => {
       [
         {
           eventType: "conversion",
-          ...convertParams,
-        },
+          ...convertParams
+        }
       ],
       undefined
     );

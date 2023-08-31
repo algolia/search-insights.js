@@ -19,7 +19,7 @@ export function extractAdditionalParams<TEventType extends { index: string }>(
     },
     {
       events: [] as TEventType[],
-      additionalParams: undefined as InsightsAdditionalEventParams | undefined,
+      additionalParams: undefined as InsightsAdditionalEventParams | undefined
     }
   );
 }

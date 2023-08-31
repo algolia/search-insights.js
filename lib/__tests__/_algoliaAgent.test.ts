@@ -15,7 +15,7 @@ describe("algoliaAgent", () => {
   it("should initialize the client with a default algoliaAgent string", () => {
     expect(analyticsInstance._ua).toEqual([
       "insights-js (1.0.1)",
-      "insights-js-node-cjs (1.0.1)",
+      "insights-js-node-cjs (1.0.1)"
     ]);
   });
 
@@ -24,7 +24,7 @@ describe("algoliaAgent", () => {
     expect(analyticsInstance._ua).toEqual([
       "insights-js (1.0.1)",
       "insights-js-node-cjs (1.0.1)",
-      "other string",
+      "other string"
     ]);
   });
 
@@ -35,7 +35,7 @@ describe("algoliaAgent", () => {
     expect(analyticsInstance._ua).toEqual([
       "insights-js (1.0.1)",
       "insights-js-node-cjs (1.0.1)",
-      "duplicated string",
+      "duplicated string"
     ]);
   });
 
@@ -46,8 +46,8 @@ describe("algoliaAgent", () => {
         eventType: "click",
         eventName: "my-event",
         index: "my-index",
-        objectIDs: ["1"],
-      },
+        objectIDs: ["1"]
+      }
     ]);
 
     expect(requestFn.mock.calls[0][0]).toEqual(

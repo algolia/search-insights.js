@@ -3,13 +3,13 @@ import AlgoliaAnalytics from "../insights";
 import { createUUID } from "../utils/uuid";
 
 jest.mock("../utils/uuid", () => ({
-  createUUID: jest.fn(),
+  createUUID: jest.fn()
 }));
 
 const credentials = {
   apiKey: "test",
   appId: "test",
-  cookieDuration: 10 * 24 * 3600 * 1000, // 10 days
+  cookieDuration: 10 * 24 * 3600 * 1000 // 10 days
 };
 
 const DAY = 86400000; /* 1 day in ms*/
@@ -20,7 +20,7 @@ describe("tokenUtils", () => {
   let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({
-      requestFn: jest.fn().mockResolvedValue(true),
+      requestFn: jest.fn().mockResolvedValue(true)
     });
     analyticsInstance.init(credentials);
     (createUUID as jest.MockedFunction<typeof createUUID>).mockReset();

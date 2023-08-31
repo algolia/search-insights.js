@@ -62,7 +62,7 @@ You can visit https://algolia.com/events/debugger instead.`);
     _host: options.host,
     _anonymousUserToken: options.anonymousUserToken ?? true,
     _useCookie: options.useCookie ?? false,
-    _cookieDuration: options.cookieDuration || 6 * MONTH,
+    _cookieDuration: options.cookieDuration || 6 * MONTH
   });
 
   this._endpointOrigin =

@@ -2,21 +2,21 @@ import AlgoliaAnalytics from "../insights";
 
 const credentials = {
   apiKey: "test",
-  appId: "test",
+  appId: "test"
 };
 
 const additionalParameters = {
   headers: {
     "X-Algolia-Application-Id": "overrideApp123",
-    "X-Algolia-API-Key": "overrideKey123",
-  },
+    "X-Algolia-API-Key": "overrideKey123"
+  }
 };
 
 let analyticsInstance: AlgoliaAnalytics;
 
 beforeEach(() => {
   analyticsInstance = new AlgoliaAnalytics({
-    requestFn: jest.fn().mockResolvedValue(true),
+    requestFn: jest.fn().mockResolvedValue(true)
   });
   analyticsInstance.init(credentials);
   analyticsInstance.sendEvents = jest.fn();
@@ -28,7 +28,7 @@ describe("clickedObjectIDsAfterSearch", () => {
     eventName: "hit clicked",
     positions: [1],
     objectIDs: ["2"],
-    queryID: "testing",
+    queryID: "testing"
   };
 
   it("should call sendEvents with proper params", () => {
@@ -37,8 +37,8 @@ describe("clickedObjectIDsAfterSearch", () => {
       [
         {
           eventType: "click",
-          ...clickParams,
-        },
+          ...clickParams
+        }
       ],
       undefined
     );
@@ -60,7 +60,7 @@ describe("clickedObjectIDs", () => {
   const clickParams = {
     index: "index1",
     eventName: "hit clicked",
-    objectIDs: ["2"],
+    objectIDs: ["2"]
   };
 
   it("should call sendEvents with proper params", () => {
@@ -69,8 +69,8 @@ describe("clickedObjectIDs", () => {
       [
         {
           eventType: "click",
-          ...clickParams,
-        },
+          ...clickParams
+        }
       ],
       undefined
     );
@@ -89,7 +89,7 @@ describe("clickedFilters", () => {
   const clickParams = {
     index: "index1",
     eventName: "filters clicked",
-    filters: ["brands:apple"],
+    filters: ["brands:apple"]
   };
 
   it("should call sendEvents with proper params", () => {
@@ -98,8 +98,8 @@ describe("clickedFilters", () => {
       [
         {
           eventType: "click",
-          ...clickParams,
-        },
+          ...clickParams
+        }
       ],
       undefined
     );

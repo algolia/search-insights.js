@@ -2,20 +2,20 @@ import AlgoliaAnalytics from "../insights";
 
 const credentials = {
   apiKey: "test",
-  appId: "test",
+  appId: "test"
 };
 
 const additionalParameters = {
   headers: {
     "X-Algolia-Application-Id": "overrideApp123",
-    "X-Algolia-API-Key": "overrideKey123",
-  },
+    "X-Algolia-API-Key": "overrideKey123"
+  }
 };
 
 let analyticsInstance: AlgoliaAnalytics;
 beforeEach(() => {
   analyticsInstance = new AlgoliaAnalytics({
-    requestFn: jest.fn().mockResolvedValue(true),
+    requestFn: jest.fn().mockResolvedValue(true)
   });
   analyticsInstance.sendEvents = jest.fn();
   analyticsInstance.init(credentials);
@@ -25,7 +25,7 @@ describe("viewedObjectIDs", () => {
   const viewParams = {
     index: "index1",
     eventName: "hits viewed",
-    objectIDs: ["12345"],
+    objectIDs: ["12345"]
   };
 
   it("should call sendEvents with proper params", () => {
@@ -34,8 +34,8 @@ describe("viewedObjectIDs", () => {
       [
         {
           eventType: "view",
-          ...viewParams,
-        },
+          ...viewParams
+        }
       ],
       undefined
     );
@@ -55,7 +55,7 @@ describe("viewedFilters", () => {
   const viewParams = {
     index: "index1",
     eventName: "filters viewed",
-    filters: ["brands:apple"],
+    filters: ["brands:apple"]
   };
   it("should call sendEvents with proper params", () => {
     analyticsInstance.viewedFilters(viewParams);
@@ -64,8 +64,8 @@ describe("viewedFilters", () => {
       [
         {
           eventType: "view",
-          ...viewParams,
-        },
+          ...viewParams
+        }
       ],
       undefined
     );

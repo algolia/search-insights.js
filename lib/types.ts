@@ -4,17 +4,17 @@ import type { makeSendEvents } from "./_sendEvent";
 import type {
   getUserToken,
   setUserToken,
-  onUserTokenChange,
+  onUserTokenChange
 } from "./_tokenUtils";
 import type {
   clickedObjectIDsAfterSearch,
   clickedObjectIDs,
-  clickedFilters,
+  clickedFilters
 } from "./click";
 import type {
   convertedObjectIDsAfterSearch,
   convertedObjectIDs,
-  convertedFilters,
+  convertedFilters
 } from "./conversion";
 import type { init } from "./init";
 import type { viewedObjectIDs, viewedFilters } from "./view";

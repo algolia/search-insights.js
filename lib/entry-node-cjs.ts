@@ -8,7 +8,7 @@ export {
   getRequesterForNode,
   AlgoliaAnalytics,
   getFunctionalInterface,
-  processQueue,
+  processQueue
 };
 export * from "./types";
 

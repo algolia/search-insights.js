@@ -5,17 +5,17 @@ import AlgoliaAnalytics from "../insights";
 import { getRequesterForBrowser } from "../utils/getRequesterForBrowser";
 
 jest.mock("../../package.json", () => ({
-  version: "1.0.1",
+  version: "1.0.1"
 }));
 
 const credentials = {
   apiKey: "testKey",
-  appId: "testId",
+  appId: "testId"
 };
 
 function setupInstance({
   requestFn = getRequesterForBrowser(),
-  init = true,
+  init = true
 } = {}): AlgoliaAnalytics {
   const instance = new AlgoliaAnalytics({ requestFn });
   if (init) instance.init(credentials);
@@ -29,7 +29,7 @@ describe("sendEvents", () => {
   beforeEach(() => {
     XMLHttpRequest = {
       open: jest.spyOn((window as any).XMLHttpRequest.prototype, "open"),
-      send: jest.spyOn((window as any).XMLHttpRequest.prototype, "send"),
+      send: jest.spyOn((window as any).XMLHttpRequest.prototype, "send")
     };
   });
 
@@ -56,8 +56,8 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
       expect(XMLHttpRequest.open).toHaveBeenCalledTimes(1);
       const [verb, requestUrl] = XMLHttpRequest.open.mock.calls[0];
@@ -70,17 +70,17 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            eventType: "click",
-          }),
-        ],
+            eventType: "click"
+          })
+        ]
       });
     });
     it("should include X-Algolia-* query parameters", () => {
@@ -89,15 +89,15 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
       const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
       const { query } = url.parse(requestUrl);
       expect(querystring.parse(query!)).toEqual({
         "X-Algolia-API-Key": "testKey",
         "X-Algolia-Agent": "insights-js (1.0.1); insights-js-node-cjs (1.0.1)",
-        "X-Algolia-Application-Id": "testId",
+        "X-Algolia-Application-Id": "testId"
       });
     });
   });
@@ -121,8 +121,8 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
       expect(sendBeacon).toHaveBeenCalledTimes(1);
       expect(XMLHttpRequest.open).not.toHaveBeenCalled();
@@ -134,8 +134,8 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
       const [requestURL] = sendBeacon.mock.calls[0];
 
@@ -147,17 +147,17 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
       const payload = JSON.parse(sendBeacon.mock.calls[0][1]);
 
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            eventType: "click",
-          }),
-        ],
+            eventType: "click"
+          })
+        ]
       });
     });
     it("should include X-Algolia-* query parameters", () => {
@@ -166,15 +166,15 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
       const requestUrl = sendBeacon.mock.calls[0][0];
       const { query } = url.parse(requestUrl);
       expect(querystring.parse(query!)).toEqual({
         "X-Algolia-API-Key": "testKey",
         "X-Algolia-Agent": "insights-js (1.0.1); insights-js-node-cjs (1.0.1)",
-        "X-Algolia-Application-Id": "testId",
+        "X-Algolia-Application-Id": "testId"
       });
     });
   });
@@ -193,8 +193,8 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
 
       expect(fakeRequestFn).toHaveBeenCalledWith(
@@ -206,9 +206,9 @@ describe("sendEvents", () => {
               eventType: "click",
               index: "my-index",
               objectIDs: ["1"],
-              userToken: "mock-user-id",
-            },
-          ],
+              userToken: "mock-user-id"
+            }
+          ]
         }
       );
     });
@@ -221,8 +221,8 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
 
       expect(result instanceof Promise).toBe(true);
@@ -243,8 +243,8 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(0);
     });
@@ -260,14 +260,14 @@ describe("sendEvents", () => {
             eventType: "click",
             eventName: "my-event",
             index: "my-index",
-            objectIDs: ["1"],
-          },
+            objectIDs: ["1"]
+          }
         ],
         {
           headers: {
             "X-Algolia-Application-Id": customAppId,
-            "X-Algolia-API-Key": customApiKey,
-          },
+            "X-Algolia-API-Key": customApiKey
+          }
         }
       );
 
@@ -291,8 +291,8 @@ describe("sendEvents", () => {
           eventName: "my-event",
           index: "my-index",
           objectIDs: ["1", "2"],
-          positions: [3, 5],
-        },
+          positions: [3, 5]
+        }
       ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
@@ -300,9 +300,9 @@ describe("sendEvents", () => {
         events: [
           expect.objectContaining({
             objectIDs: ["1", "2"],
-            positions: [3, 5],
-          }),
-        ],
+            positions: [3, 5]
+          })
+        ]
       });
     });
   });
@@ -319,8 +319,8 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
@@ -333,17 +333,17 @@ describe("sendEvents", () => {
           eventName: "my-event",
           index: "my-index",
           objectIDs: ["1"],
-          timestamp: 1984,
-        },
+          timestamp: 1984
+        }
       ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            timestamp: 1984,
-          }),
-        ],
+            timestamp: 1984
+          })
+        ]
       });
     });
   });
@@ -360,17 +360,17 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            userToken: "mock-user-id",
-          }),
-        ],
+            userToken: "mock-user-id"
+          })
+        ]
       });
     });
     it("should pass over provided userToken", () => {
@@ -380,17 +380,17 @@ describe("sendEvents", () => {
           eventName: "my-event",
           index: "my-index",
           objectIDs: ["1"],
-          userToken: "007",
-        },
+          userToken: "007"
+        }
       ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            userToken: "007",
-          }),
-        ],
+            userToken: "007"
+          })
+        ]
       });
     });
   });
@@ -399,7 +399,7 @@ describe("sendEvents", () => {
     let analyticsInstance: AlgoliaAnalytics;
     beforeEach(() => {
       analyticsInstance = new AlgoliaAnalytics({
-        requestFn: getRequesterForBrowser(),
+        requestFn: getRequesterForBrowser()
       });
     });
 
@@ -412,14 +412,14 @@ describe("sendEvents", () => {
             eventType: "click",
             eventName: "my-event",
             index: "my-index",
-            objectIDs: ["1"],
-          },
+            objectIDs: ["1"]
+          }
         ],
         {
           headers: {
             "X-Algolia-Application-Id": "algoliaAppId",
-            "X-Algolia-API-Key": "algoliaApiKey",
-          },
+            "X-Algolia-API-Key": "algoliaApiKey"
+          }
         }
       );
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
@@ -427,9 +427,9 @@ describe("sendEvents", () => {
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            userToken: expect.stringMatching(/^anonymous-/),
-          }),
-        ],
+            userToken: expect.stringMatching(/^anonymous-/)
+          })
+        ]
       });
     });
 
@@ -443,14 +443,14 @@ describe("sendEvents", () => {
             eventType: "click",
             eventName: "my-event",
             index: "my-index",
-            objectIDs: ["1"],
-          },
+            objectIDs: ["1"]
+          }
         ],
         {
           headers: {
             "X-Algolia-Application-Id": "algoliaAppId",
-            "X-Algolia-API-Key": "algoliaApiKey",
-          },
+            "X-Algolia-API-Key": "algoliaApiKey"
+          }
         }
       );
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
@@ -458,9 +458,9 @@ describe("sendEvents", () => {
       expect(payload).toEqual({
         events: [
           expect.not.objectContaining({
-            userToken: expect.any(String),
-          }),
-        ],
+            userToken: expect.any(String)
+          })
+        ]
       });
     });
 
@@ -473,14 +473,14 @@ describe("sendEvents", () => {
             eventType: "click",
             eventName: "my-event",
             index: "my-index",
-            objectIDs: ["1"],
-          },
+            objectIDs: ["1"]
+          }
         ],
         {
           headers: {
             "X-Algolia-Application-Id": "algoliaAppId",
-            "X-Algolia-API-Key": "algoliaApiKey",
-          },
+            "X-Algolia-API-Key": "algoliaApiKey"
+          }
         }
       );
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
@@ -488,9 +488,9 @@ describe("sendEvents", () => {
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            userToken: "my-user-token",
-          }),
-        ],
+            userToken: "my-user-token"
+          })
+        ]
       });
     });
   });
@@ -507,17 +507,17 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          filters: ["brand:Apple"],
-        },
+          filters: ["brand:Apple"]
+        }
       ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            filters: ["brand%3AApple"],
-          }),
-        ],
+            filters: ["brand%3AApple"]
+          })
+        ]
       });
     });
 
@@ -527,17 +527,17 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          filters: ["brand:Cool Brand"],
-        },
+          filters: ["brand:Cool Brand"]
+        }
       ]);
       expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
       const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
       expect(payload).toEqual({
         events: [
           expect.objectContaining({
-            filters: ["brand%3ACool%20Brand"],
-          }),
-        ],
+            filters: ["brand%3ACool%20Brand"]
+          })
+        ]
       });
     });
   });
@@ -556,12 +556,12 @@ describe("sendEvents", () => {
         {
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
+          objectIDs: ["1"]
         },
         {
           eventName: "my-event-2",
           index: "my-index-2",
-          objectIDs: ["2"],
+          objectIDs: ["2"]
         }
       );
 
@@ -574,16 +574,16 @@ describe("sendEvents", () => {
               eventType: "click",
               index: "my-index",
               objectIDs: ["1"],
-              userToken: "mock-user-id",
+              userToken: "mock-user-id"
             },
             {
               eventName: "my-event-2",
               eventType: "click",
               index: "my-index-2",
               objectIDs: ["2"],
-              userToken: "mock-user-id",
-            },
-          ],
+              userToken: "mock-user-id"
+            }
+          ]
         }
       );
     });
@@ -594,14 +594,14 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
+          objectIDs: ["1"]
         },
         {
           eventType: "click",
           eventName: "my-event-2",
           index: "my-index-2",
-          objectIDs: ["2"],
-        },
+          objectIDs: ["2"]
+        }
       ]);
 
       expect(fakeRequestFn).toHaveBeenCalledWith(
@@ -613,16 +613,16 @@ describe("sendEvents", () => {
               eventType: "click",
               index: "my-index",
               objectIDs: ["1"],
-              userToken: "mock-user-id",
+              userToken: "mock-user-id"
             },
             {
               eventName: "my-event-2",
               eventType: "click",
               index: "my-index-2",
               objectIDs: ["2"],
-              userToken: "mock-user-id",
-            },
-          ],
+              userToken: "mock-user-id"
+            }
+          ]
         }
       );
     });
@@ -636,8 +636,8 @@ describe("sendEvents", () => {
         eventType: "click",
         eventName: "my-event",
         index: "my-index",
-        objectIDs: ["1"],
-      },
+        objectIDs: ["1"]
+      }
     ]);
 
     {
@@ -646,7 +646,7 @@ describe("sendEvents", () => {
       expect(querystring.parse(query!)).toMatchObject(
         expect.objectContaining({
           "X-Algolia-Application-Id": credentials.appId,
-          "X-Algolia-API-Key": credentials.apiKey,
+          "X-Algolia-API-Key": credentials.apiKey
         })
       );
     }
@@ -664,14 +664,14 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ],
       {
         headers: {
           "X-Algolia-Application-Id": customAppId,
-          "X-Algolia-API-Key": customApiKey,
-        },
+          "X-Algolia-API-Key": customApiKey
+        }
       }
     );
 
@@ -681,7 +681,7 @@ describe("sendEvents", () => {
       expect(querystring.parse(query!)).toMatchObject(
         expect.objectContaining({
           "X-Algolia-Application-Id": customAppId,
-          "X-Algolia-API-Key": customApiKey,
+          "X-Algolia-API-Key": customApiKey
         })
       );
     }
@@ -692,8 +692,8 @@ describe("sendEvents", () => {
         eventType: "click",
         eventName: "my-event",
         index: "my-index",
-        objectIDs: ["1"],
-      },
+        objectIDs: ["1"]
+      }
     ]);
 
     {
@@ -702,7 +702,7 @@ describe("sendEvents", () => {
       expect(querystring.parse(query!)).toMatchObject(
         expect.objectContaining({
           "X-Algolia-Application-Id": credentials.appId,
-          "X-Algolia-API-Key": credentials.apiKey,
+          "X-Algolia-API-Key": credentials.apiKey
         })
       );
     }
@@ -717,8 +717,8 @@ describe("sendEvents", () => {
           eventType: "click",
           eventName: "my-event",
           index: "my-index",
-          objectIDs: ["1"],
-        },
+          objectIDs: ["1"]
+        }
       ]);
     }).toThrowErrorMatchingInlineSnapshot(
       `"Before calling any methods on the analytics, you first need to call the 'init' function with appId and apiKey parameters or provide custom credentials in additional parameters."`

@@ -4,7 +4,7 @@ import type AlgoliaAnalytics from "./insights";
 
 export const DEFAULT_ALGOLIA_AGENTS = [
   `insights-js (${version})`,
-  `insights-js-${__FLAVOR__} (${version})`,
+  `insights-js-${__FLAVOR__} (${version})`
 ];
 
 export function addAlgoliaAgent(

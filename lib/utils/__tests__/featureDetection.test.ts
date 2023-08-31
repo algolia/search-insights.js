@@ -1,7 +1,7 @@
 import {
   supportsCookies,
   supportsSendBeacon,
-  supportsXMLHttpRequest,
+  supportsXMLHttpRequest
 } from "../featureDetection";
 
 describe("featureDetection in jsdom env", () => {

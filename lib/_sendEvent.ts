@@ -31,7 +31,7 @@ export function makeSendEvents(requestFn: RequestFnType) {
 
       const payload: InsightsEvent = {
         ...rest,
-        userToken: data?.userToken ?? this._userToken,
+        userToken: data?.userToken ?? this._userToken
       };
       if (!isUndefined(filters)) {
         payload.filters = filters.map(encodeURIComponent);
@@ -71,7 +71,7 @@ function sendRequest(
     "X-Algolia-Application-Id": providedAppId ?? appId,
     "X-Algolia-API-Key": providedApiKey ?? apiKey,
     "X-Algolia-Agent": encodeURIComponent(userAgents.join("; ")),
-    ...restHeaders,
+    ...restHeaders
   };
 
   const queryParameters = Object.keys(headers)

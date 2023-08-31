@@ -23,7 +23,7 @@ const aa = require("search-insights");
 // Optional: configure default Algolia credentials for events
 aa("init", {
   appId: "APPLICATION_ID",
-  apiKey: "SEARCH_API_KEY",
+  apiKey: "SEARCH_API_KEY"
 });
 ```
 
@@ -33,7 +33,7 @@ On the Node.js environment, unlike the browser environment, `userToken` must be 
 
 ```js
 aa("clickedObjectIDs", {
-  userToken: "USER_ID",
+  userToken: "USER_ID"
   // ...
 });
 ```
@@ -60,8 +60,8 @@ function requestFn(url, data) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Content-Length": serializedData.length,
-    },
+      "Content-Length": serializedData.length
+    }
   };
 
   const { request: nodeRequest } =

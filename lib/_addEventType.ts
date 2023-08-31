@@ -1,7 +1,7 @@
 import type {
   InsightsEvent,
   InsightsEventConversionSubType,
-  InsightsEventType,
+  InsightsEventType
 } from "./types";
 
 export function addEventType(
@@ -10,7 +10,7 @@ export function addEventType(
 ): InsightsEvent[] {
   return params.map((event) => ({
     eventType,
-    ...event,
+    ...event
   }));
 }
 
@@ -22,6 +22,6 @@ export function addEventTypeAndSubtype(
   return params.map((event) => ({
     eventType,
     eventSubtype,
-    ...event,
+    ...event
   }));
 }

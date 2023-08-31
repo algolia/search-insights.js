@@ -8,12 +8,12 @@ import {
   setUserToken,
   setAnonymousUserToken,
   onUserTokenChange,
-  MONTH,
+  MONTH
 } from "./_tokenUtils";
 import {
   clickedObjectIDsAfterSearch,
   clickedObjectIDs,
-  clickedFilters,
+  clickedFilters
 } from "./click";
 import {
   convertedObjectIDsAfterSearch,
@@ -22,7 +22,7 @@ import {
   convertedObjectIDs,
   addedToCartObjectIDs,
   purchasedObjectIDs,
-  convertedFilters,
+  convertedFilters
 } from "./conversion";
 import { init } from "./init";
 import objectAssignPolyfill from "./polyfills/objectAssign";

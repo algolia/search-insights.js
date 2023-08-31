@@ -9,7 +9,7 @@ import type { InsightsClient } from "../types";
 const defaultPayload = {
   eventName: "my-event",
   index: "my-index",
-  objectIDs: ["1"],
+  objectIDs: ["1"]
 };
 
 const defaultRequestUrl = `https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(${version})%3B%20insights-js-node-cjs%20(${version})`;
@@ -24,7 +24,7 @@ describe("_sendEvent in node env", () => {
     aa("init", {
       apiKey: "testKey",
       appId: "testId",
-      anonymousUserToken: false,
+      anonymousUserToken: false
     });
   });
 
@@ -33,8 +33,8 @@ describe("_sendEvent in node env", () => {
       aa("sendEvents", [
         {
           eventType: "click",
-          ...defaultPayload,
-        },
+          ...defaultPayload
+        }
       ]);
     }).not.toThrowError();
 
@@ -45,9 +45,9 @@ describe("_sendEvent in node env", () => {
           eventType: "click",
           index: "my-index",
           objectIDs: ["1"],
-          userToken: undefined,
-        },
-      ],
+          userToken: undefined
+        }
+      ]
     });
   });
 
@@ -57,8 +57,8 @@ describe("_sendEvent in node env", () => {
         {
           eventType: "click",
           ...defaultPayload,
-          userToken: "aaa",
-        },
+          userToken: "aaa"
+        }
       ]);
     }).not.toThrowError();
 
@@ -69,9 +69,9 @@ describe("_sendEvent in node env", () => {
           eventType: "click",
           index: "my-index",
           objectIDs: ["1"],
-          userToken: "aaa",
-        },
-      ],
+          userToken: "aaa"
+        }
+      ]
     });
   });
 });

@@ -6,7 +6,7 @@ import {
   supportsCookies,
   supportsSendBeacon,
   supportsXMLHttpRequest,
-  supportsNodeHttpModule,
+  supportsNodeHttpModule
 } from "../featureDetection";
 
 describe("featureDetection in node env", () => {

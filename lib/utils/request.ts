@@ -49,8 +49,8 @@ export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Content-Length": serializedData.length,
-      },
+        "Content-Length": serializedData.length
+      }
     };
 
     const { request }: { request: typeof nodeRequest } = url.startsWith(
