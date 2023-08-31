@@ -1,47 +1,47 @@
-import AlgoliaAnalytics from "../insights";
+import AlgoliaAnalytics from '../insights';
 
 const credentials = {
-  apiKey: "test",
-  appId: "test"
+  apiKey: 'test',
+  appId: 'test',
 };
 
 const additionalParameters = {
   headers: {
-    "X-Algolia-Application-Id": "overrideApp123",
-    "X-Algolia-API-Key": "overrideKey123"
-  }
+    'X-Algolia-Application-Id': 'overrideApp123',
+    'X-Algolia-API-Key': 'overrideKey123',
+  },
 };
 
 let analyticsInstance: AlgoliaAnalytics;
 beforeEach(() => {
   analyticsInstance = new AlgoliaAnalytics({
-    requestFn: jest.fn().mockResolvedValue(true)
+    requestFn: jest.fn().mockResolvedValue(true),
   });
-  (analyticsInstance as any).sendEvents = jest.fn();
+  analyticsInstance.sendEvents = jest.fn();
   analyticsInstance.init(credentials);
 });
 
-describe("viewedObjectIDs", () => {
+describe('viewedObjectIDs', () => {
   const viewParams = {
-    index: "index1",
-    eventName: "hits viewed",
-    objectIDs: ["12345"]
+    index: 'index1',
+    eventName: 'hits viewed',
+    objectIDs: ['12345'],
   };
 
-  it("should call sendEvents with proper params", () => {
+  it('should call sendEvents with proper params', () => {
     analyticsInstance.viewedObjectIDs(viewParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
-          eventType: "view",
-          ...viewParams
-        }
+          eventType: 'view',
+          ...viewParams,
+        },
       ],
       undefined
     );
   });
 
-  it("should call sendEvents with additional params if provided", () => {
+  it('should call sendEvents with additional params if provided', () => {
     analyticsInstance.viewedObjectIDs(viewParams, additionalParameters);
 
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
@@ -51,27 +51,27 @@ describe("viewedObjectIDs", () => {
   });
 });
 
-describe("viewedFilters", () => {
+describe('viewedFilters', () => {
   const viewParams = {
-    index: "index1",
-    eventName: "filters viewed",
-    filters: ["brands:apple"]
+    index: 'index1',
+    eventName: 'filters viewed',
+    filters: ['brands:apple'],
   };
-  it("should call sendEvents with proper params", () => {
+  it('should call sendEvents with proper params', () => {
     analyticsInstance.viewedFilters(viewParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalled();
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
-          eventType: "view",
-          ...viewParams
-        }
+          eventType: 'view',
+          ...viewParams,
+        },
       ],
       undefined
     );
   });
 
-  it("should call sendEvents with additional params if provided", () => {
+  it('should call sendEvents with additional params if provided', () => {
     analyticsInstance.viewedFilters(viewParams, additionalParameters);
 
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(

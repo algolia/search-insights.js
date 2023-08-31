@@ -1,19 +1,23 @@
-import AlgoliaAnalytics from "../insights";
-import { getFunctionalInterface } from "../_getFunctionalInterface";
+/* eslint-disable no-console */
 
-describe("_getFunctionalInterface", () => {
-  let aa;
+import { getFunctionalInterface } from '../_getFunctionalInterface';
+import AlgoliaAnalytics from '../insights';
+import type { InsightsClient } from '../types';
+
+describe('_getFunctionalInterface', () => {
+  let aa: InsightsClient;
 
   beforeEach(() => {
     const analyticsInstance = new AlgoliaAnalytics({
-      requestFn: jest.fn().mockResolvedValue(true)
+      requestFn: jest.fn().mockResolvedValue(true),
     });
     aa = getFunctionalInterface(analyticsInstance);
   });
 
-  it("warn about unknown function name", () => {
+  it('warn about unknown function name', () => {
     console.warn = jest.fn();
-    aa("unknown-function");
+    // @ts-expect-error
+    aa('unknown-function');
     expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.warn).toHaveBeenCalledWith(
       "The method `unknown-function` doesn't exist."

@@ -1,49 +1,49 @@
-import AlgoliaAnalytics from "../insights";
+import AlgoliaAnalytics from '../insights';
 
 const credentials = {
-  apiKey: "test",
-  appId: "test"
+  apiKey: 'test',
+  appId: 'test',
 };
 
 const additionalParameters = {
   headers: {
-    "X-Algolia-Application-Id": "overrideApp123",
-    "X-Algolia-API-Key": "overrideKey123"
-  }
+    'X-Algolia-Application-Id': 'overrideApp123',
+    'X-Algolia-API-Key': 'overrideKey123',
+  },
 };
 
 let analyticsInstance: AlgoliaAnalytics;
 
 beforeEach(() => {
   analyticsInstance = new AlgoliaAnalytics({
-    requestFn: jest.fn().mockResolvedValue(true)
+    requestFn: jest.fn().mockResolvedValue(true),
   });
-  (analyticsInstance as any).sendEvents = jest.fn();
+  analyticsInstance.sendEvents = jest.fn();
   analyticsInstance.init(credentials);
 });
 
-describe("convertedObjectIDsAfterSearch", () => {
+describe('convertedObjectIDsAfterSearch', () => {
   const convertParams = {
-    index: "index1",
-    eventName: "hit converted",
-    objectIDs: ["12345"],
-    queryID: "test"
+    index: 'index1',
+    eventName: 'hit converted',
+    objectIDs: ['12345'],
+    queryID: 'test',
   };
 
-  it("should call sendEvents with proper params", () => {
+  it('should call sendEvents with proper params', () => {
     analyticsInstance.convertedObjectIDsAfterSearch(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
-          eventType: "conversion",
-          ...convertParams
-        }
+          eventType: 'conversion',
+          ...convertParams,
+        },
       ],
       undefined
     );
   });
 
-  it("should call sendEvents with additional params if provided", () => {
+  it('should call sendEvents with additional params if provided', () => {
     analyticsInstance.convertedObjectIDsAfterSearch(
       convertParams,
       additionalParameters
@@ -56,29 +56,29 @@ describe("convertedObjectIDsAfterSearch", () => {
   });
 });
 
-describe("addedToCartObjectIDsAfterSearch", () => {
+describe('addedToCartObjectIDsAfterSearch', () => {
   const convertParams = {
-    index: "index1",
-    eventName: "Product added to cart",
-    objectIDs: ["12345"],
-    queryID: "test"
+    index: 'index1',
+    eventName: 'Product added to cart',
+    objectIDs: ['12345'],
+    queryID: 'test',
   };
 
-  it("should call sendEvents with proper params", () => {
+  it('should call sendEvents with proper params', () => {
     analyticsInstance.addedToCartObjectIDsAfterSearch(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
-          eventType: "conversion",
-          eventSubtype: "addToCart",
-          ...convertParams
-        }
+          eventType: 'conversion',
+          eventSubtype: 'addToCart',
+          ...convertParams,
+        },
       ],
       undefined
     );
   });
 
-  it("should call sendEvents with additional params if provided", () => {
+  it('should call sendEvents with additional params if provided', () => {
     analyticsInstance.addedToCartObjectIDsAfterSearch(
       convertParams,
       additionalParameters
@@ -91,29 +91,29 @@ describe("addedToCartObjectIDsAfterSearch", () => {
   });
 });
 
-describe("purchasedObjectIDsAfterSearch", () => {
+describe('purchasedObjectIDsAfterSearch', () => {
   const convertParams = {
-    index: "index1",
-    eventName: "Product added to cart",
-    objectIDs: ["12345"],
-    queryID: "test"
+    index: 'index1',
+    eventName: 'Product added to cart',
+    objectIDs: ['12345'],
+    queryID: 'test',
   };
 
-  it("should call sendEvents with proper params", () => {
+  it('should call sendEvents with proper params', () => {
     analyticsInstance.purchasedObjectIDsAfterSearch(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
-          eventType: "conversion",
-          eventSubtype: "purchase",
-          ...convertParams
-        }
+          eventType: 'conversion',
+          eventSubtype: 'purchase',
+          ...convertParams,
+        },
       ],
       undefined
     );
   });
 
-  it("should call sendEvents with additional params if provided", () => {
+  it('should call sendEvents with additional params if provided', () => {
     analyticsInstance.purchasedObjectIDsAfterSearch(
       convertParams,
       additionalParameters
@@ -126,27 +126,27 @@ describe("purchasedObjectIDsAfterSearch", () => {
   });
 });
 
-describe("convertedObjectIDs", () => {
+describe('convertedObjectIDs', () => {
   const convertParams = {
-    index: "index1",
-    eventName: "hit converted",
-    objectIDs: ["12345"]
+    index: 'index1',
+    eventName: 'hit converted',
+    objectIDs: ['12345'],
   };
 
-  it("should call sendEvents with proper params", () => {
+  it('should call sendEvents with proper params', () => {
     analyticsInstance.convertedObjectIDs(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
-          eventType: "conversion",
-          ...convertParams
-        }
+          eventType: 'conversion',
+          ...convertParams,
+        },
       ],
       undefined
     );
   });
 
-  it("should call sendEvents with additional params if provided", () => {
+  it('should call sendEvents with additional params if provided', () => {
     analyticsInstance.convertedObjectIDs(convertParams, additionalParameters);
 
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
@@ -156,28 +156,28 @@ describe("convertedObjectIDs", () => {
   });
 });
 
-describe("addedToCartObjectIDs", () => {
+describe('addedToCartObjectIDs', () => {
   const convertParams = {
-    index: "index1",
-    eventName: "hit converted",
-    objectIDs: ["12345"]
+    index: 'index1',
+    eventName: 'hit converted',
+    objectIDs: ['12345'],
   };
 
-  it("should call sendEvents with proper params", () => {
+  it('should call sendEvents with proper params', () => {
     analyticsInstance.addedToCartObjectIDs(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
-          eventType: "conversion",
-          eventSubtype: "addToCart",
-          ...convertParams
-        }
+          eventType: 'conversion',
+          eventSubtype: 'addToCart',
+          ...convertParams,
+        },
       ],
       undefined
     );
   });
 
-  it("should call sendEvents with additional params if provided", () => {
+  it('should call sendEvents with additional params if provided', () => {
     analyticsInstance.addedToCartObjectIDs(convertParams, additionalParameters);
 
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
@@ -187,28 +187,28 @@ describe("addedToCartObjectIDs", () => {
   });
 });
 
-describe("purchasedObjectIDs", () => {
+describe('purchasedObjectIDs', () => {
   const convertParams = {
-    index: "index1",
-    eventName: "hit converted",
-    objectIDs: ["12345"]
+    index: 'index1',
+    eventName: 'hit converted',
+    objectIDs: ['12345'],
   };
 
-  it("should call sendEvents with proper params", () => {
+  it('should call sendEvents with proper params', () => {
     analyticsInstance.purchasedObjectIDs(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
-          eventType: "conversion",
-          eventSubtype: "purchase",
-          ...convertParams
-        }
+          eventType: 'conversion',
+          eventSubtype: 'purchase',
+          ...convertParams,
+        },
       ],
       undefined
     );
   });
 
-  it("should call sendEvents with additional params if provided", () => {
+  it('should call sendEvents with additional params if provided', () => {
     analyticsInstance.purchasedObjectIDs(convertParams, additionalParameters);
 
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
@@ -218,27 +218,27 @@ describe("purchasedObjectIDs", () => {
   });
 });
 
-describe("convertedFilters", () => {
+describe('convertedFilters', () => {
   const convertParams = {
-    index: "index1",
-    eventName: "filter converted",
-    filters: ["brands:apple"]
+    index: 'index1',
+    eventName: 'filter converted',
+    filters: ['brands:apple'],
   };
 
-  it("should call sendEvents with proper params", () => {
+  it('should call sendEvents with proper params', () => {
     analyticsInstance.convertedFilters(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
-          eventType: "conversion",
-          ...convertParams
-        }
+          eventType: 'conversion',
+          ...convertParams,
+        },
       ],
       undefined
     );
   });
 
-  it("should call sendEvents with additional params if provided", () => {
+  it('should call sendEvents with additional params if provided', () => {
     analyticsInstance.convertedFilters(convertParams, additionalParameters);
 
     expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(

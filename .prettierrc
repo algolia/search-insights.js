@@ -1,5 +1,4 @@
 {
-  "singleQuote": false,
-  "semi": true,
-  "trailingComma": "none"
+  "singleQuote": true,
+  "trailingComma": "es5"
 }

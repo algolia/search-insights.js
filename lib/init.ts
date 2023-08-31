@@ -1,13 +1,13 @@
-import { isUndefined, isNumber } from "./utils";
-import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
-import objectAssignPolyfill from "./polyfills/objectAssign";
-import { MONTH } from "./_tokenUtils";
-import AlgoliaAnalytics from "./insights";
+import { DEFAULT_ALGOLIA_AGENTS } from './_algoliaAgent';
+import { MONTH } from './_tokenUtils';
+import type AlgoliaAnalytics from './insights';
+import objectAssignPolyfill from './polyfills/objectAssign';
+import { isUndefined, isNumber } from './utils';
 
 objectAssignPolyfill();
 
-type InsightRegion = "de" | "us";
-const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
+type InsightRegion = 'de' | 'us';
+const SUPPORTED_REGIONS: InsightRegion[] = ['de', 'us'];
 
 export interface InitParams {
   apiKey?: string;
@@ -23,17 +23,18 @@ export interface InitParams {
 }
 
 /**
- * Binds credentials and settings to class
- * @param options: initParams
+ * Binds credentials and settings to class.
+ *
+ * @param options - InitParams.
  */
-export function init(this: AlgoliaAnalytics, options: InitParams = {}) {
+export function init(this: AlgoliaAnalytics, options: InitParams = {}): void {
   if (
     !isUndefined(options.region) &&
     SUPPORTED_REGIONS.indexOf(options.region) === -1
   ) {
     throw new Error(
       `optional region is incorrect, please provide either one of: ${SUPPORTED_REGIONS.join(
-        ", "
+        ', '
       )}.`
     );
   }
@@ -48,25 +49,27 @@ export function init(this: AlgoliaAnalytics, options: InitParams = {}) {
     );
   }
 
+  /* eslint-disable no-console */
   if (__DEV__) {
     console.info(`Since v2.0.4, search-insights no longer validates event payloads.
 You can visit https://algolia.com/events/debugger instead.`);
   }
+  /* eslint-enable */
 
   setOptions(this, options, {
-    _userHasOptedOut: !!options.userHasOptedOut,
+    _userHasOptedOut: Boolean(options.userHasOptedOut),
     _region: options.region,
     _host: options.host,
     _anonymousUserToken: options.anonymousUserToken ?? true,
     _useCookie: options.useCookie ?? false,
-    _cookieDuration: options.cookieDuration || 6 * MONTH
+    _cookieDuration: options.cookieDuration || 6 * MONTH,
   });
 
   this._endpointOrigin =
     this._host ||
     (this._region
       ? `https://insights.${this._region}.algolia.io`
-      : "https://insights.algolia.io");
+      : 'https://insights.algolia.io');
 
   // user agent
   this._ua = [...DEFAULT_ALGOLIA_AGENTS];
@@ -80,19 +83,19 @@ You can visit https://algolia.com/events/debugger instead.`);
 
 type ThisParams = Pick<
   AlgoliaAnalytics,
-  | "_userHasOptedOut"
-  | "_anonymousUserToken"
-  | "_useCookie"
-  | "_cookieDuration"
-  | "_region"
-  | "_host"
+  | '_anonymousUserToken'
+  | '_cookieDuration'
+  | '_host'
+  | '_region'
+  | '_useCookie'
+  | '_userHasOptedOut'
 >;
 
 function setOptions(
   target: AlgoliaAnalytics,
-  { partial: partial, ...options }: InitParams,
+  { partial, ...options }: InitParams,
   defaultValues: ThisParams
-) {
+): void {
   if (!partial) {
     Object.assign(target, defaultValues);
   }

@@ -1,33 +1,34 @@
 /* tslint:disable */
 
-export default function objectKeysPolyfill() {
+export default function objectKeysPolyfill(): void {
   if (!Object.keys) {
-    Object.keys = (function () {
-      "use strict";
-      var hasOwnProperty = Object.prototype.hasOwnProperty,
-        hasDontEnumBug = !{ toString: null }.propertyIsEnumerable("toString"),
-        dontEnums = [
-          "toString",
-          "toLocaleString",
-          "valueOf",
-          "hasOwnProperty",
-          "isPrototypeOf",
-          "propertyIsEnumerable",
-          "constructor"
-        ],
-        dontEnumsLength = dontEnums.length;
+    Object.keys = (function (): (obj: any) => any[] {
+      const hasOwnProperty = Object.prototype.hasOwnProperty;
+      const hasDontEnumBug = !{ toString: null }.propertyIsEnumerable(
+        'toString'
+      );
+      const dontEnums = [
+        'toString',
+        'toLocaleString',
+        'valueOf',
+        'hasOwnProperty',
+        'isPrototypeOf',
+        'propertyIsEnumerable',
+        'constructor',
+      ];
+      const dontEnumsLength = dontEnums.length;
 
-      return function (obj: any) {
+      return function (obj: any): any[] {
         if (
-          typeof obj !== "function" &&
-          (typeof obj !== "object" || obj === null)
+          typeof obj !== 'function' &&
+          (typeof obj !== 'object' || obj === null)
         ) {
-          throw new TypeError("Object.keys called on non-object");
+          throw new TypeError('Object.keys called on non-object');
         }
 
-        var result = [],
-          prop,
-          i;
+        const result = [];
+        let prop;
+        let i;
 
         for (prop in obj) {
           if (hasOwnProperty.call(obj, prop)) {

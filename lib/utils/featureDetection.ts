@@ -1,4 +1,4 @@
-export const supportsCookies = () => {
+export const supportsCookies = (): boolean => {
   try {
     return Boolean(navigator.cookieEnabled);
   } catch (e) {
@@ -6,7 +6,7 @@ export const supportsCookies = () => {
   }
 };
 
-export const supportsSendBeacon = () => {
+export const supportsSendBeacon = (): boolean => {
   try {
     return Boolean(navigator.sendBeacon);
   } catch (e) {
@@ -14,7 +14,7 @@ export const supportsSendBeacon = () => {
   }
 };
 
-export const supportsXMLHttpRequest = () => {
+export const supportsXMLHttpRequest = (): boolean => {
   try {
     return Boolean(XMLHttpRequest);
   } catch (e) {
@@ -22,10 +22,12 @@ export const supportsXMLHttpRequest = () => {
   }
 };
 
-export const supportsNodeHttpModule = () => {
+export const supportsNodeHttpModule = (): boolean => {
   try {
-    const { request: nodeHttpRequest } = require("http");
-    const { request: nodeHttpsRequest } = require("https");
+    /* eslint-disable @typescript-eslint/no-var-requires */
+    const { request: nodeHttpRequest } = require('http');
+    const { request: nodeHttpsRequest } = require('https');
+    /* eslint-enable */
     return Boolean(nodeHttpRequest) && Boolean(nodeHttpsRequest);
   } catch (e) {
     return false;

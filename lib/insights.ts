@@ -1,22 +1,20 @@
-import objectAssignPolyfill from "./polyfills/objectAssign";
-import objectKeysPolyfill from "./polyfills/objectKeys";
+import { version } from '../package.json';
 
-objectKeysPolyfill();
-objectAssignPolyfill();
-
-import { makeSendEvents } from "./_sendEvent";
-
-import { init } from "./init";
-import { addAlgoliaAgent } from "./_algoliaAgent";
-import { getVersion } from "./_getVersion";
-
-import { RequestFnType } from "./utils/request";
-
+import { addAlgoliaAgent } from './_algoliaAgent';
+import { getVersion } from './_getVersion';
+import { makeSendEvents } from './_sendEvent';
+import {
+  getUserToken,
+  setUserToken,
+  setAnonymousUserToken,
+  onUserTokenChange,
+  MONTH,
+} from './_tokenUtils';
 import {
   clickedObjectIDsAfterSearch,
   clickedObjectIDs,
-  clickedFilters
-} from "./click";
+  clickedFilters,
+} from './click';
 import {
   convertedObjectIDsAfterSearch,
   addedToCartObjectIDsAfterSearch,
@@ -24,17 +22,16 @@ import {
   convertedObjectIDs,
   addedToCartObjectIDs,
   purchasedObjectIDs,
-  convertedFilters
-} from "./conversion";
-import { viewedObjectIDs, viewedFilters } from "./view";
-import {
-  getUserToken,
-  setUserToken,
-  setAnonymousUserToken,
-  onUserTokenChange,
-  MONTH
-} from "./_tokenUtils";
-import { version } from "../package.json";
+  convertedFilters,
+} from './conversion';
+import { init } from './init';
+import objectAssignPolyfill from './polyfills/objectAssign';
+import objectKeysPolyfill from './polyfills/objectKeys';
+import type { RequestFnType } from './utils/request';
+import { viewedObjectIDs, viewedFilters } from './view';
+
+objectKeysPolyfill();
+objectAssignPolyfill();
 
 type Queue = {
   queue: string[][];
@@ -44,7 +41,7 @@ type AnalyticsFunction = {
   [key: string]: (fnName: string, fnArgs: any[]) => void;
 };
 
-export type AlgoliaAnalyticsObject = Queue | AnalyticsFunction;
+export type AlgoliaAnalyticsObject = AnalyticsFunction | Queue;
 
 declare global {
   interface Window {
@@ -53,16 +50,16 @@ declare global {
 }
 
 /**
- *  AlgoliaAnalytics class
+ *  AlgoliaAnalytics class.
  */
 class AlgoliaAnalytics {
   _apiKey?: string;
   _appId?: string;
   _region?: string;
   _host?: string;
-  _endpointOrigin = "https://insights.algolia.io";
+  _endpointOrigin = 'https://insights.algolia.io';
   _anonymousUserToken = true;
-  _userToken?: string | number;
+  _userToken?: number | string;
   _userHasOptedOut = false;
   _useCookie = false;
   _cookieDuration = 6 * MONTH;
@@ -70,36 +67,36 @@ class AlgoliaAnalytics {
   // user agent
   _ua: string[] = [];
 
-  _onUserTokenChangeCallback?: (userToken?: string | number) => void;
+  _onUserTokenChangeCallback?: (userToken?: number | string) => void;
 
   version: string = version;
 
   // Public methods
-  public init: typeof init;
-  public getVersion: typeof getVersion;
-  public addAlgoliaAgent: typeof addAlgoliaAgent;
+  init: typeof init;
+  getVersion: typeof getVersion;
+  addAlgoliaAgent: typeof addAlgoliaAgent;
 
-  public setUserToken: typeof setUserToken;
-  public setAnonymousUserToken: typeof setAnonymousUserToken;
-  public getUserToken: typeof getUserToken;
-  public onUserTokenChange: typeof onUserTokenChange;
+  setUserToken: typeof setUserToken;
+  setAnonymousUserToken: typeof setAnonymousUserToken;
+  getUserToken: typeof getUserToken;
+  onUserTokenChange: typeof onUserTokenChange;
 
-  public sendEvents: ReturnType<typeof makeSendEvents>;
+  sendEvents: ReturnType<typeof makeSendEvents>;
 
-  public clickedObjectIDsAfterSearch: typeof clickedObjectIDsAfterSearch;
-  public clickedObjectIDs: typeof clickedObjectIDs;
-  public clickedFilters: typeof clickedFilters;
+  clickedObjectIDsAfterSearch: typeof clickedObjectIDsAfterSearch;
+  clickedObjectIDs: typeof clickedObjectIDs;
+  clickedFilters: typeof clickedFilters;
 
-  public convertedObjectIDsAfterSearch: typeof convertedObjectIDsAfterSearch;
-  public purchasedObjectIDsAfterSearch: typeof purchasedObjectIDsAfterSearch;
-  public addedToCartObjectIDsAfterSearch: typeof addedToCartObjectIDsAfterSearch;
-  public convertedObjectIDs: typeof convertedObjectIDs;
-  public addedToCartObjectIDs: typeof addedToCartObjectIDs;
-  public purchasedObjectIDs: typeof purchasedObjectIDs;
-  public convertedFilters: typeof convertedFilters;
+  convertedObjectIDsAfterSearch: typeof convertedObjectIDsAfterSearch;
+  purchasedObjectIDsAfterSearch: typeof purchasedObjectIDsAfterSearch;
+  addedToCartObjectIDsAfterSearch: typeof addedToCartObjectIDsAfterSearch;
+  convertedObjectIDs: typeof convertedObjectIDs;
+  addedToCartObjectIDs: typeof addedToCartObjectIDs;
+  purchasedObjectIDs: typeof purchasedObjectIDs;
+  convertedFilters: typeof convertedFilters;
 
-  public viewedObjectIDs: typeof viewedObjectIDs;
-  public viewedFilters: typeof viewedFilters;
+  viewedObjectIDs: typeof viewedObjectIDs;
+  viewedFilters: typeof viewedFilters;
 
   constructor({ requestFn }: { requestFn: RequestFnType }) {
     this.sendEvents = makeSendEvents(requestFn).bind(this);
