@@ -10,20 +10,5 @@ module.exports = {
     return true;
   },
   buildCommand: () => "yarn build && /bin/bash ./pre-deploy.sh",
-  pullRequestTeamReviewers: ["frontend-experiences-web"],
-  versionUpdated: ({ version, releaseType, dir }) => {
-    if (
-      releaseType === "major" ||
-      releaseType === "minor" ||
-      releaseType === "patch"
-    ) {
-      const readmePath = path.resolve(dir, "README.md");
-      let content = fs.readFileSync(readmePath).toString();
-      const regex =
-        /cdn\.jsdelivr\.net\/npm\/search-insights@(\d+?\.\d+?\.\d+?)/g;
-      const newUrl = `cdn.jsdelivr.net/npm/search-insights@${version}`;
-      content = content.replace(regex, newUrl);
-      fs.writeFileSync(readmePath, content);
-    }
-  }
+  pullRequestTeamReviewers: ["event-experiences"]
 };
