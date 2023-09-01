@@ -1,5 +1,8 @@
-import { request as nodeHttpRequest } from "http";
-import { request as nodeHttpsRequest } from "https";
+import type { RequestOptions as httpRequestOptions } from "http";
+import { ClientRequest, request as httpRequest, IncomingMessage } from "http";
+import type { RequestOptions as httpsRequestOptions } from "https";
+import { request as httpsRequest } from "https";
+import { Socket } from "net";
 
 import {
   supportsSendBeacon,
@@ -9,10 +12,19 @@ import {
 import { getRequesterForBrowser } from "../getRequesterForBrowser";
 import { getRequesterForNode } from "../getRequesterForNode";
 
-jest.mock("../featureDetection", () => ({
-  __esModule: true,
-  ...jest.requireActual("../featureDetection")
-}));
+// In the tests, we want to mock a specific overload of request so we need to
+// cast it to the correct type.
+type HttpRequestOverload = (
+  options: httpRequestOptions | URL | string,
+  callback?: (res: IncomingMessage) => void
+) => ClientRequest;
+
+type HttpsRequestOverload = (
+  options: httpsRequestOptions | URL | string,
+  callback?: (res: IncomingMessage) => void
+) => ClientRequest;
+
+jest.mock("../featureDetection");
 jest.mock("http");
 jest.mock("https");
 
@@ -44,17 +56,49 @@ describe("request", () => {
       status: 200
     }));
 
-    nodeHttpRequest.mockImplementation((_: any, cb: any) => ({
-      on: jest.fn(),
-      write,
-      end: () => cb({ statusCode: 200 })
-    }));
+    jest
+      .mocked(httpRequest as unknown as jest.Mocked<HttpRequestOverload>)
+      .mockImplementation(
+        (
+          _: httpRequestOptions | URL | string,
+          cb?: (res: IncomingMessage) => void
+        ) => {
+          const req = new ClientRequest("/dummy");
+          req.on = jest.fn();
+          req.write = write;
+          req.end = () => {
+            if (cb) {
+              const res = new IncomingMessage(new Socket());
+              res.statusCode = 200;
+              cb(res);
+            }
+            return req;
+          };
+          return req;
+        }
+      );
 
-    nodeHttpsRequest.mockImplementation((_: any, cb: any) => ({
-      on: jest.fn(),
-      write,
-      end: () => cb({ statusCode: 200 })
-    }));
+    jest
+      .mocked(httpsRequest as unknown as jest.Mocked<HttpsRequestOverload>)
+      .mockImplementation(
+        (
+          _: httpsRequestOptions | URL | string,
+          cb?: (res: IncomingMessage) => void
+        ) => {
+          const req = new ClientRequest("/dummy");
+          req.on = jest.fn();
+          req.write = write;
+          req.end = () => {
+            if (cb) {
+              const res = new IncomingMessage(new Socket());
+              res.statusCode = 200;
+              cb(res);
+            }
+            return req;
+          };
+          return req;
+        }
+      );
   });
 
   afterAll(() => {
@@ -63,9 +107,9 @@ describe("request", () => {
   });
 
   it("should pick sendBeacon first if available", async () => {
-    supportsSendBeacon.mockImplementation(() => true);
-    supportsXMLHttpRequest.mockImplementation(() => true);
-    supportsNodeHttpModule.mockImplementation(() => true);
+    jest.mocked(supportsSendBeacon).mockImplementation(() => true);
+    jest.mocked(supportsXMLHttpRequest).mockImplementation(() => true);
+    jest.mocked(supportsNodeHttpModule).mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForBrowser();
@@ -79,14 +123,14 @@ describe("request", () => {
     expect(open).not.toHaveBeenCalled();
     expect(send).not.toHaveBeenCalled();
     expect(setRequestHeader).not.toHaveBeenCalled();
-    expect(nodeHttpRequest).not.toHaveBeenCalled();
-    expect(nodeHttpsRequest).not.toHaveBeenCalled();
+    expect(httpRequest).not.toHaveBeenCalled();
+    expect(httpsRequest).not.toHaveBeenCalled();
   });
 
   it("should send with XMLHttpRequest if sendBeacon is not available", async () => {
-    supportsSendBeacon.mockImplementation(() => false);
-    supportsXMLHttpRequest.mockImplementation(() => true);
-    supportsNodeHttpModule.mockImplementation(() => true);
+    jest.mocked(supportsSendBeacon).mockImplementation(() => false);
+    jest.mocked(supportsXMLHttpRequest).mockImplementation(() => true);
+    jest.mocked(supportsNodeHttpModule).mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForBrowser();
@@ -98,15 +142,15 @@ describe("request", () => {
     expect(open).toHaveBeenLastCalledWith("POST", url);
     expect(send).toHaveBeenCalledTimes(1);
     expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
-    expect(nodeHttpRequest).not.toHaveBeenCalled();
-    expect(nodeHttpsRequest).not.toHaveBeenCalled();
+    expect(httpRequest).not.toHaveBeenCalled();
+    expect(httpsRequest).not.toHaveBeenCalled();
   });
 
   it("should fall back to XMLHttpRequest if sendBeacon returns false", async () => {
     navigator.sendBeacon = jest.fn(() => false);
-    supportsSendBeacon.mockImplementation(() => true);
-    supportsXMLHttpRequest.mockImplementation(() => true);
-    supportsNodeHttpModule.mockImplementation(() => false);
+    jest.mocked(supportsSendBeacon).mockImplementation(() => true);
+    jest.mocked(supportsXMLHttpRequest).mockImplementation(() => true);
+    jest.mocked(supportsNodeHttpModule).mockImplementation(() => false);
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForBrowser();
@@ -119,14 +163,14 @@ describe("request", () => {
     expect(open).toHaveBeenLastCalledWith("POST", url);
     expect(send).toHaveBeenCalledTimes(1);
     expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
-    expect(nodeHttpRequest).not.toHaveBeenCalled();
-    expect(nodeHttpsRequest).not.toHaveBeenCalled();
+    expect(httpRequest).not.toHaveBeenCalled();
+    expect(httpsRequest).not.toHaveBeenCalled();
   });
 
   it("should send with nodeHttpRequest if url does not start with https://", async () => {
-    supportsSendBeacon.mockImplementation(() => false);
-    supportsXMLHttpRequest.mockImplementation(() => false);
-    supportsNodeHttpModule.mockImplementation(() => true);
+    jest.mocked(supportsSendBeacon).mockImplementation(() => false);
+    jest.mocked(supportsXMLHttpRequest).mockImplementation(() => false);
+    jest.mocked(supportsNodeHttpModule).mockImplementation(() => true);
     const url = "http://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForNode();
@@ -136,8 +180,8 @@ describe("request", () => {
     expect(open).not.toHaveBeenCalled();
     expect(send).not.toHaveBeenCalled();
     expect(setRequestHeader).not.toHaveBeenCalled();
-    expect(nodeHttpsRequest).not.toHaveBeenCalled();
-    expect(nodeHttpRequest).toHaveBeenLastCalledWith(
+    expect(httpsRequest).not.toHaveBeenCalled();
+    expect(httpRequest).toHaveBeenLastCalledWith(
       {
         protocol: "http:",
         host: "random.url",
@@ -150,15 +194,15 @@ describe("request", () => {
       },
       expect.any(Function)
     );
-    expect(nodeHttpRequest).toHaveBeenCalledTimes(1);
+    expect(httpRequest).toHaveBeenCalledTimes(1);
     expect(write).toHaveBeenLastCalledWith(JSON.stringify(data));
     expect(write).toHaveBeenCalledTimes(1);
   });
 
   it("should send with nodeHttpsRequest if url starts with https://", async () => {
-    supportsSendBeacon.mockImplementation(() => false);
-    supportsXMLHttpRequest.mockImplementation(() => false);
-    supportsNodeHttpModule.mockImplementation(() => true);
+    jest.mocked(supportsSendBeacon).mockImplementation(() => false);
+    jest.mocked(supportsXMLHttpRequest).mockImplementation(() => false);
+    jest.mocked(supportsNodeHttpModule).mockImplementation(() => true);
     const url = "https://random.url";
     const data = { foo: "bar" };
     const request = getRequesterForNode();
@@ -168,8 +212,8 @@ describe("request", () => {
     expect(open).not.toHaveBeenCalled();
     expect(setRequestHeader).not.toHaveBeenCalled();
     expect(send).not.toHaveBeenCalled();
-    expect(nodeHttpRequest).not.toHaveBeenCalled();
-    expect(nodeHttpsRequest).toHaveBeenLastCalledWith(
+    expect(httpRequest).not.toHaveBeenCalled();
+    expect(httpsRequest).toHaveBeenLastCalledWith(
       {
         protocol: "https:",
         host: "random.url",
@@ -182,7 +226,7 @@ describe("request", () => {
       },
       expect.any(Function)
     );
-    expect(nodeHttpsRequest).toHaveBeenCalledTimes(1);
+    expect(httpsRequest).toHaveBeenCalledTimes(1);
     expect(write).toHaveBeenLastCalledWith(JSON.stringify(data));
     expect(write).toHaveBeenCalledTimes(1);
   });
@@ -204,20 +248,54 @@ describe("request", () => {
         readyState: 4,
         status: 400
       }));
-      (nodeHttpRequest as jest.Mock).mockImplementation((_, cb) => ({
-        on: jest.fn(),
-        write,
-        end: () => cb({ statusCode: 400 })
-      }));
-      (nodeHttpsRequest as jest.Mock).mockImplementation((_, cb) => ({
-        on: jest.fn(),
-        write,
-        end: () => cb({ statusCode: 400 })
-      }));
 
-      supportsSendBeacon.mockImplementation(() => beacon);
-      supportsXMLHttpRequest.mockImplementation(() => true);
-      supportsNodeHttpModule.mockImplementation(() => true);
+      jest
+        .mocked(httpRequest as unknown as jest.Mocked<HttpRequestOverload>)
+        .mockImplementation(
+          (
+            _: httpRequestOptions | URL | string,
+            cb?: (res: IncomingMessage) => void
+          ) => {
+            const req = new ClientRequest("/dummy");
+            req.on = jest.fn();
+            req.write = write;
+            req.end = () => {
+              if (cb) {
+                const res = new IncomingMessage(new Socket());
+                res.statusCode = 400;
+                cb(res);
+              }
+              return req;
+            };
+            return req;
+          }
+        );
+
+      jest
+        .mocked(httpsRequest as unknown as jest.Mocked<HttpsRequestOverload>)
+        .mockImplementation(
+          (
+            _: httpsRequestOptions | URL | string,
+            cb?: (res: IncomingMessage) => void
+          ) => {
+            const req = new ClientRequest("/dummy");
+            req.on = jest.fn();
+            req.write = write;
+            req.end = () => {
+              if (cb) {
+                const res = new IncomingMessage(new Socket());
+                res.statusCode = 400;
+                cb(res);
+              }
+              return req;
+            };
+            return req;
+          }
+        );
+
+      jest.mocked(supportsSendBeacon).mockImplementation(() => beacon);
+      jest.mocked(supportsXMLHttpRequest).mockImplementation(() => true);
+      jest.mocked(supportsNodeHttpModule).mockImplementation(() => true);
 
       const data = { foo: "bar" };
       const request = browser
