@@ -10,9 +10,6 @@
     "http": "./empty-module.cjs.js",
     "https": "./empty-module.cjs.js"
   },
-  "engines": {
-    "node": ">=16.0.0"
-  },
   "files": [
     "dist",
     "lib",
