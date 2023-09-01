@@ -1,3 +1,12 @@
+## [2.8.1](https://github.com/algolia/search-insights.js/compare/v2.8.0...v2.8.1) (2023-09-01)
+
+
+### Bug Fixes
+
+* remove engines config from package.json ([#496](https://github.com/algolia/search-insights.js/issues/496)) ([0bef4a5](https://github.com/algolia/search-insights.js/commit/0bef4a5b320cf21935b2b508e74b55765c010070))
+
+
+
 # [2.8.0](https://github.com/algolia/search-insights.js/compare/v2.7.0...v2.8.0) (2023-08-30)
 
 
