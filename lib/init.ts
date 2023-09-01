@@ -1,10 +1,7 @@
 import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
 import { MONTH } from "./_tokenUtils";
 import type AlgoliaAnalytics from "./insights";
-import objectAssignPolyfill from "./polyfills/objectAssign";
 import { isUndefined, isNumber } from "./utils";
-
-objectAssignPolyfill();
 
 type InsightRegion = "de" | "us";
 const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];

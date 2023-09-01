@@ -4,7 +4,6 @@ module.exports = {
   testEnvironment: "jsdom",
   setupFiles: ["./jest.setup.js"],
   modulePathIgnorePatterns: ["<rootDir>/dist/"],
-  transformIgnorePatterns: ["<rootDir>/lib/polyfills/*.js"],
   watchPlugins: [
     "jest-watch-typeahead/filename",
     "jest-watch-typeahead/testname"

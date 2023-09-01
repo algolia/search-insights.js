@@ -25,13 +25,8 @@ import {
   convertedFilters
 } from "./conversion";
 import { init } from "./init";
-import objectAssignPolyfill from "./polyfills/objectAssign";
-import objectKeysPolyfill from "./polyfills/objectKeys";
 import type { RequestFnType } from "./utils/request";
 import { viewedObjectIDs, viewedFilters } from "./view";
-
-objectKeysPolyfill();
-objectAssignPolyfill();
 
 type Queue = {
   queue: string[][];
