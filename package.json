@@ -28,7 +28,7 @@
     "lint": "eslint --ext .js,.ts,.tsx lib",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "prettier 'lib/**/*.ts' 'docs/**/*.md' --write",
-    "test": "jest",
+    "test": "jest --verbose",
     "test:watch": "yarn test --watch",
     "test:size": "bundlesize",
     "toc": "markdown-toc -i --maxdepth=3 --bullets=\"-\" README.md",
