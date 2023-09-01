@@ -18,7 +18,7 @@ beforeEach(() => {
   analyticsInstance = new AlgoliaAnalytics({
     requestFn: jest.fn().mockResolvedValue(true)
   });
-  (analyticsInstance as any).sendEvents = jest.fn();
+  analyticsInstance.sendEvents = jest.fn();
   analyticsInstance.init(credentials);
 });
 
@@ -32,7 +32,7 @@ describe("convertedObjectIDsAfterSearch", () => {
 
   it("should call sendEvents with proper params", () => {
     analyticsInstance.convertedObjectIDsAfterSearch(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
           eventType: "conversion",
@@ -66,7 +66,7 @@ describe("addedToCartObjectIDsAfterSearch", () => {
 
   it("should call sendEvents with proper params", () => {
     analyticsInstance.addedToCartObjectIDsAfterSearch(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
           eventType: "conversion",
@@ -101,7 +101,7 @@ describe("purchasedObjectIDsAfterSearch", () => {
 
   it("should call sendEvents with proper params", () => {
     analyticsInstance.purchasedObjectIDsAfterSearch(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
           eventType: "conversion",
@@ -135,7 +135,7 @@ describe("convertedObjectIDs", () => {
 
   it("should call sendEvents with proper params", () => {
     analyticsInstance.convertedObjectIDs(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
           eventType: "conversion",
@@ -165,7 +165,7 @@ describe("addedToCartObjectIDs", () => {
 
   it("should call sendEvents with proper params", () => {
     analyticsInstance.addedToCartObjectIDs(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
           eventType: "conversion",
@@ -196,7 +196,7 @@ describe("purchasedObjectIDs", () => {
 
   it("should call sendEvents with proper params", () => {
     analyticsInstance.purchasedObjectIDs(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
           eventType: "conversion",
@@ -227,7 +227,7 @@ describe("convertedFilters", () => {
 
   it("should call sendEvents with proper params", () => {
     analyticsInstance.convertedFilters(convertParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
           eventType: "conversion",

@@ -1,4 +1,4 @@
-import {
+import type {
   InsightsEvent,
   InsightsEventConversionSubType,
   InsightsEventType
@@ -17,7 +17,7 @@ export function addEventType(
 export function addEventTypeAndSubtype(
   eventType: InsightsEventType,
   eventSubtype: InsightsEventConversionSubType,
-  params: Array<Omit<InsightsEvent, "eventType" | "eventSubtype">>
+  params: Array<Omit<InsightsEvent, "eventSubtype" | "eventType">>
 ): InsightsEvent[] {
   return params.map((event) => ({
     eventType,

@@ -17,7 +17,7 @@ beforeEach(() => {
   analyticsInstance = new AlgoliaAnalytics({
     requestFn: jest.fn().mockResolvedValue(true)
   });
-  (analyticsInstance as any).sendEvents = jest.fn();
+  analyticsInstance.sendEvents = jest.fn();
   analyticsInstance.init(credentials);
 });
 
@@ -30,7 +30,7 @@ describe("viewedObjectIDs", () => {
 
   it("should call sendEvents with proper params", () => {
     analyticsInstance.viewedObjectIDs(viewParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
           eventType: "view",
@@ -59,8 +59,8 @@ describe("viewedFilters", () => {
   };
   it("should call sendEvents with proper params", () => {
     analyticsInstance.viewedFilters(viewParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalled();
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalled();
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
           eventType: "view",

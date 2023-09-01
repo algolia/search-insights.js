@@ -1,7 +1,8 @@
 import { addEventType, addEventTypeAndSubtype } from "./_addEventType";
-import AlgoliaAnalytics from "./insights";
-import { extractAdditionalParams, WithAdditionalParams } from "./utils";
-import { InsightsEvent } from "./types";
+import type AlgoliaAnalytics from "./insights";
+import type { InsightsEvent } from "./types";
+import type { WithAdditionalParams } from "./utils";
+import { extractAdditionalParams } from "./utils";
 
 export interface InsightsSearchConversionEvent {
   eventName: string;
@@ -16,8 +17,8 @@ export interface InsightsSearchConversionEvent {
 
 export function convertedObjectIDsAfterSearch(
   this: AlgoliaAnalytics,
-  ...params: WithAdditionalParams<InsightsSearchConversionEvent>[]
-) {
+  ...params: Array<WithAdditionalParams<InsightsSearchConversionEvent>>
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
     extractAdditionalParams<InsightsSearchConversionEvent>(params);
 
@@ -26,8 +27,8 @@ export function convertedObjectIDsAfterSearch(
 
 export function addedToCartObjectIDsAfterSearch(
   this: AlgoliaAnalytics,
-  ...params: WithAdditionalParams<InsightsSearchConversionEvent>[]
-) {
+  ...params: Array<WithAdditionalParams<InsightsSearchConversionEvent>>
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
     extractAdditionalParams<InsightsSearchConversionEvent>(params);
 
@@ -39,8 +40,8 @@ export function addedToCartObjectIDsAfterSearch(
 
 export function purchasedObjectIDsAfterSearch(
   this: AlgoliaAnalytics,
-  ...params: WithAdditionalParams<InsightsSearchConversionEvent>[]
-) {
+  ...params: Array<WithAdditionalParams<InsightsSearchConversionEvent>>
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
     extractAdditionalParams<InsightsSearchConversionEvent>(params);
 
@@ -62,8 +63,8 @@ export interface InsightsSearchConversionObjectIDsEvent {
 
 export function convertedObjectIDs(
   this: AlgoliaAnalytics,
-  ...params: WithAdditionalParams<InsightsSearchConversionObjectIDsEvent>[]
-) {
+  ...params: Array<WithAdditionalParams<InsightsSearchConversionObjectIDsEvent>>
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
     extractAdditionalParams<InsightsSearchConversionObjectIDsEvent>(params);
 
@@ -72,8 +73,8 @@ export function convertedObjectIDs(
 
 export function addedToCartObjectIDs(
   this: AlgoliaAnalytics,
-  ...params: WithAdditionalParams<InsightsSearchConversionObjectIDsEvent>[]
-) {
+  ...params: Array<WithAdditionalParams<InsightsSearchConversionObjectIDsEvent>>
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
     extractAdditionalParams<InsightsSearchConversionObjectIDsEvent>(params);
 
@@ -85,8 +86,8 @@ export function addedToCartObjectIDs(
 
 export function purchasedObjectIDs(
   this: AlgoliaAnalytics,
-  ...params: WithAdditionalParams<InsightsSearchConversionObjectIDsEvent>[]
-) {
+  ...params: Array<WithAdditionalParams<InsightsSearchConversionObjectIDsEvent>>
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
     extractAdditionalParams<InsightsSearchConversionObjectIDsEvent>(params);
 
@@ -107,8 +108,8 @@ export interface InsightsSearchConversionFiltersEvent {
 
 export function convertedFilters(
   this: AlgoliaAnalytics,
-  ...params: WithAdditionalParams<InsightsSearchConversionFiltersEvent>[]
-) {
+  ...params: Array<WithAdditionalParams<InsightsSearchConversionFiltersEvent>>
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
     extractAdditionalParams<InsightsSearchConversionFiltersEvent>(params);
 

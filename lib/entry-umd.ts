@@ -1,10 +1,13 @@
-import AlgoliaAnalytics from "./insights";
-import { getRequesterForBrowser } from "./utils/getRequesterForBrowser";
-import { processQueue } from "./_processQueue";
-import { RequestFnType } from "./utils/request";
 import { version } from "../package.json";
 
-export function createInsightsClient(requestFn: RequestFnType) {
+import { processQueue } from "./_processQueue";
+import AlgoliaAnalytics from "./insights";
+import { getRequesterForBrowser } from "./utils/getRequesterForBrowser";
+import type { RequestFnType } from "./utils/request";
+
+export function createInsightsClient(
+  requestFn: RequestFnType
+): AlgoliaAnalytics {
   const instance = new AlgoliaAnalytics({ requestFn });
   if (typeof window === "object") {
     // Process queue upon script execution

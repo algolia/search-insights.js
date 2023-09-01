@@ -1,8 +1,8 @@
 import { supportsNodeHttpModule } from "./featureDetection";
-
+import type { RequestFnType } from "./request";
 import { requestWithNodeHttpModule } from "./request";
 
-export function getRequesterForNode() {
+export function getRequesterForNode(): RequestFnType {
   if (supportsNodeHttpModule()) {
     return requestWithNodeHttpModule;
   }

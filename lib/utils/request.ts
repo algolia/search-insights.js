@@ -1,13 +1,10 @@
-import { request as nodeRequest } from "http";
-import { UrlWithStringQuery } from "url";
+import type { request as nodeRequest } from "http";
+import type { UrlWithStringQuery } from "url";
 
-export type RequestFnType = (url: string, data: object) => Promise<boolean>;
-
-export const requestWithSendBeacon: RequestFnType = (url, data) => {
-  const serializedData = JSON.stringify(data);
-  const beacon = navigator.sendBeacon(url, serializedData);
-  return Promise.resolve(beacon ? true : requestWithXMLHttpRequest(url, data));
-};
+export type RequestFnType = (
+  url: string,
+  data: Record<string, unknown>
+) => Promise<boolean>;
 
 export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
   return new Promise((resolve, reject) => {
@@ -20,7 +17,10 @@ export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
         resolve(false);
       }
     });
+
+    /* eslint-disable prefer-promise-reject-errors */
     req.addEventListener("error", () => reject());
+    /* eslint-enable */
     req.addEventListener("timeout", () => resolve(false));
     req.open("POST", url);
     req.setRequestHeader("Content-Type", "application/json");
@@ -29,11 +29,19 @@ export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
   });
 };
 
+export const requestWithSendBeacon: RequestFnType = (url, data) => {
+  const serializedData = JSON.stringify(data);
+  const beacon = navigator.sendBeacon(url, serializedData);
+  return Promise.resolve(beacon ? true : requestWithXMLHttpRequest(url, data));
+};
+
 export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
   return new Promise((resolve, reject) => {
     const serializedData = JSON.stringify(data);
+    /* eslint-disable @typescript-eslint/no-var-requires */
     const { protocol, host, path }: UrlWithStringQuery =
       require("url").parse(url);
+    /* eslint-enable */
     const options = {
       protocol,
       host,
@@ -59,7 +67,9 @@ export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
     });
 
     req.on("error", (error: any) => {
+      /* eslint-disable no-console */
       console.error(error);
+      /* eslint-enable */
       reject(error);
     });
     req.on("timeout", () => resolve(false));

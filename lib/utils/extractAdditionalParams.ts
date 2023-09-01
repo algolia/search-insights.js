@@ -1,12 +1,12 @@
-import { InsightsAdditionalEventParams } from "../types";
+import type { InsightsAdditionalEventParams } from "../types";
 
 export type WithAdditionalParams<TEventType> =
-  | TEventType
-  | InsightsAdditionalEventParams;
+  | InsightsAdditionalEventParams
+  | TEventType;
 
 export function extractAdditionalParams<TEventType extends { index: string }>(
-  params: (TEventType | InsightsAdditionalEventParams)[]
-) {
+  params: Array<InsightsAdditionalEventParams | TEventType>
+): { events: TEventType[]; additionalParams?: InsightsAdditionalEventParams } {
   return params.reduce(
     ({ events, additionalParams }, param) => {
       // Real events all have `index` as a mandatory parameter, which we

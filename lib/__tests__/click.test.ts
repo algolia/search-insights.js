@@ -19,7 +19,7 @@ beforeEach(() => {
     requestFn: jest.fn().mockResolvedValue(true)
   });
   analyticsInstance.init(credentials);
-  (analyticsInstance as any).sendEvents = jest.fn();
+  analyticsInstance.sendEvents = jest.fn();
 });
 
 describe("clickedObjectIDsAfterSearch", () => {
@@ -65,7 +65,7 @@ describe("clickedObjectIDs", () => {
 
   it("should call sendEvents with proper params", () => {
     analyticsInstance.clickedObjectIDs(clickParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
           eventType: "click",
@@ -94,7 +94,7 @@ describe("clickedFilters", () => {
 
   it("should call sendEvents with proper params", () => {
     analyticsInstance.clickedFilters(clickParams);
-    expect((analyticsInstance as any).sendEvents).toHaveBeenCalledWith(
+    expect(analyticsInstance.sendEvents).toHaveBeenCalledWith(
       [
         {
           eventType: "click",

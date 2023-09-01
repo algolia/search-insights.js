@@ -1,7 +1,8 @@
+import * as querystring from "querystring";
+import * as url from "url";
+
 import AlgoliaAnalytics from "../insights";
 import { getRequesterForBrowser } from "../utils/getRequesterForBrowser";
-import * as url from "url";
-import * as querystring from "querystring";
 
 jest.mock("../../package.json", () => ({
   version: "1.0.1"
@@ -15,7 +16,7 @@ const credentials = {
 function setupInstance({
   requestFn = getRequesterForBrowser(),
   init = true
-} = {}) {
+} = {}): AlgoliaAnalytics {
   const instance = new AlgoliaAnalytics({ requestFn });
   if (init) instance.init(credentials);
   instance.setUserToken("mock-user-id");
@@ -23,7 +24,7 @@ function setupInstance({
 }
 
 describe("sendEvents", () => {
-  let XMLHttpRequest;
+  let XMLHttpRequest: { open: any; send: any };
 
   beforeEach(() => {
     XMLHttpRequest = {
@@ -38,8 +39,8 @@ describe("sendEvents", () => {
   });
 
   describe("with XMLHttpRequest", () => {
-    let analyticsInstance;
-    let sendBeaconBackup;
+    let analyticsInstance: AlgoliaAnalytics;
+    let sendBeaconBackup: any;
     beforeEach(() => {
       sendBeaconBackup = window.navigator.sendBeacon;
       // @ts-expect-error
@@ -50,7 +51,7 @@ describe("sendEvents", () => {
       window.navigator.sendBeacon = sendBeaconBackup;
     });
     it("should make a post request to /1/events", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -64,7 +65,7 @@ describe("sendEvents", () => {
       expect(url.parse(requestUrl).pathname).toBe("/1/events");
     });
     it("should pass over the payload with multiple events", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -83,7 +84,7 @@ describe("sendEvents", () => {
       });
     });
     it("should include X-Algolia-* query parameters", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -102,11 +103,12 @@ describe("sendEvents", () => {
   });
 
   describe("with sendBeacon", () => {
-    let analyticsInstance;
-    let sendBeacon;
-    let sendBeaconBackup;
+    let analyticsInstance: AlgoliaAnalytics;
+    let sendBeacon: jest.Mock<any, any>;
+    let sendBeaconBackup: any;
     beforeEach(() => {
       sendBeaconBackup = window.navigator.sendBeacon;
+      // eslint-disable-next-line no-multi-assign
       sendBeacon = window.navigator.sendBeacon = jest.fn(() => true);
       analyticsInstance = setupInstance();
     });
@@ -114,7 +116,7 @@ describe("sendEvents", () => {
       window.navigator.sendBeacon = sendBeaconBackup;
     });
     it("should use sendBeacon when available", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -127,7 +129,7 @@ describe("sendEvents", () => {
       expect(XMLHttpRequest.send).not.toHaveBeenCalled();
     });
     it("should call sendBeacon with /1/event", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -140,7 +142,7 @@ describe("sendEvents", () => {
       expect(url.parse(requestURL).pathname).toBe("/1/events");
     });
     it("should send the correct payload", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -159,7 +161,7 @@ describe("sendEvents", () => {
       });
     });
     it("should include X-Algolia-* query parameters", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -178,7 +180,7 @@ describe("sendEvents", () => {
   });
 
   describe("with custom requestFn", () => {
-    let analyticsInstance;
+    let analyticsInstance: AlgoliaAnalytics;
     const fakeRequestFn = jest.fn().mockResolvedValue(true);
 
     beforeEach(() => {
@@ -186,7 +188,7 @@ describe("sendEvents", () => {
       analyticsInstance = setupInstance({ requestFn: fakeRequestFn });
     });
     it("should call the requestFn with expected arguments", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -214,7 +216,7 @@ describe("sendEvents", () => {
     it("should allow a promise to be returned from requestFn", () => {
       fakeRequestFn.mockImplementationOnce(() => Promise.resolve("test"));
 
-      const result = (analyticsInstance as any).sendEvents([
+      const result = analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -229,14 +231,14 @@ describe("sendEvents", () => {
   });
 
   describe("init", () => {
-    let analyticsInstance;
+    let analyticsInstance: AlgoliaAnalytics;
     beforeEach(() => {
       analyticsInstance = setupInstance();
     });
 
     it("should do nothing is _userHasOptedOut === true", () => {
       analyticsInstance._userHasOptedOut = true;
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -277,13 +279,13 @@ describe("sendEvents", () => {
   });
 
   describe("objectIDs and positions", () => {
-    let analyticsInstance;
+    let analyticsInstance: AlgoliaAnalytics;
     beforeEach(() => {
       analyticsInstance = setupInstance();
     });
 
     it("should support multiple objectIDs and positions", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -306,13 +308,13 @@ describe("sendEvents", () => {
   });
 
   describe("timestamp", () => {
-    let analyticsInstance;
+    let analyticsInstance: AlgoliaAnalytics;
     beforeEach(() => {
       analyticsInstance = setupInstance();
     });
 
     it("should not add a timestamp if not provided", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -325,7 +327,7 @@ describe("sendEvents", () => {
       expect(payload.events[0]).not.toHaveProperty("timestamp");
     });
     it("should pass over provided timestamp", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -494,13 +496,13 @@ describe("sendEvents", () => {
   });
 
   describe("filters", () => {
-    let analyticsInstance;
+    let analyticsInstance: AlgoliaAnalytics;
     beforeEach(() => {
       analyticsInstance = setupInstance();
     });
 
     it("should pass over provided filters", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -520,7 +522,7 @@ describe("sendEvents", () => {
     });
 
     it("should uri-encodes filters", () => {
-      (analyticsInstance as any).sendEvents([
+      analyticsInstance.sendEvents([
         {
           eventType: "click",
           eventName: "my-event",
@@ -685,7 +687,7 @@ describe("sendEvents", () => {
     }
 
     // Subsequent calls should use the original credentials
-    (analyticsInstance as any).sendEvents([
+    analyticsInstance.sendEvents([
       {
         eventType: "click",
         eventName: "my-event",

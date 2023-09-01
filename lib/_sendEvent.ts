@@ -1,16 +1,16 @@
-import { RequestFnType } from "./utils/request";
-import { InsightsAdditionalEventParams, InsightsEvent } from "./types";
+import type AlgoliaAnalytics from "./insights";
+import type { InsightsAdditionalEventParams, InsightsEvent } from "./types";
 import { isUndefined } from "./utils";
-import AlgoliaAnalytics from "./insights";
+import type { RequestFnType } from "./utils/request";
 
 export function makeSendEvents(requestFn: RequestFnType) {
   return function sendEvents(
     this: AlgoliaAnalytics,
     eventData: InsightsEvent[],
     additionalParams?: InsightsAdditionalEventParams
-  ) {
+  ): Promise<boolean> | undefined {
     if (this._userHasOptedOut) {
-      return;
+      return undefined;
     }
     const hasCredentials =
       (!isUndefined(this._apiKey) && !isUndefined(this._appId)) ||
@@ -51,6 +51,7 @@ export function makeSendEvents(requestFn: RequestFnType) {
   };
 }
 
+// eslint-disable-next-line max-params
 function sendRequest(
   requestFn: RequestFnType,
   userAgents: string[],
@@ -59,10 +60,10 @@ function sendRequest(
   appId?: string,
   apiKey?: string,
   additionalHeaders: InsightsAdditionalEventParams["headers"] = {}
-) {
+): Promise<boolean> {
   const {
-    ["X-Algolia-Application-Id"]: providedAppId,
-    ["X-Algolia-API-Key"]: providedApiKey,
+    "X-Algolia-Application-Id": providedAppId,
+    "X-Algolia-API-Key": providedApiKey,
     ...restHeaders
   } = additionalHeaders;
   // Auth query

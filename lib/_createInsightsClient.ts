@@ -1,10 +1,12 @@
-import AlgoliaAnalytics from "./insights";
-import { getFunctionalInterface } from "./_getFunctionalInterface";
-import { RequestFnType } from "./utils/request";
-import { createUUID } from "./utils/uuid";
 import { version } from "../package.json";
 
-export function createInsightsClient(requestFn: RequestFnType) {
+import { getFunctionalInterface } from "./_getFunctionalInterface";
+import AlgoliaAnalytics from "./insights";
+import type { InsightsClient } from "./types";
+import type { RequestFnType } from "./utils/request";
+import { createUUID } from "./utils/uuid";
+
+export function createInsightsClient(requestFn: RequestFnType): InsightsClient {
   const aa = getFunctionalInterface(new AlgoliaAnalytics({ requestFn }));
 
   if (typeof window === "object") {

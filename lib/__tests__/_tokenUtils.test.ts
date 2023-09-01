@@ -1,7 +1,6 @@
 import { getCookie } from "../_tokenUtils";
 import AlgoliaAnalytics from "../insights";
 import { createUUID } from "../utils/uuid";
-import * as utils from "../utils";
 
 jest.mock("../utils/uuid", () => ({
   createUUID: jest.fn()
@@ -18,7 +17,7 @@ const DATE_TOMORROW = new Date(Date.now() + DAY).toUTCString();
 const DATE_YESTERDAY = new Date(Date.now() - DAY).toUTCString();
 
 describe("tokenUtils", () => {
-  let analyticsInstance;
+  let analyticsInstance: AlgoliaAnalytics;
   beforeEach(() => {
     analyticsInstance = new AlgoliaAnalytics({
       requestFn: jest.fn().mockResolvedValue(true)

@@ -1,10 +1,7 @@
-import { isUndefined, isNumber } from "./utils";
 import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
-import objectAssignPolyfill from "./polyfills/objectAssign";
 import { MONTH } from "./_tokenUtils";
-import AlgoliaAnalytics from "./insights";
-
-objectAssignPolyfill();
+import type AlgoliaAnalytics from "./insights";
+import { isUndefined, isNumber } from "./utils";
 
 type InsightRegion = "de" | "us";
 const SUPPORTED_REGIONS: InsightRegion[] = ["de", "us"];
@@ -23,10 +20,11 @@ export interface InitParams {
 }
 
 /**
- * Binds credentials and settings to class
- * @param options: initParams
+ * Binds credentials and settings to class.
+ *
+ * @param options - InitParams.
  */
-export function init(this: AlgoliaAnalytics, options: InitParams = {}) {
+export function init(this: AlgoliaAnalytics, options: InitParams = {}): void {
   if (
     !isUndefined(options.region) &&
     SUPPORTED_REGIONS.indexOf(options.region) === -1
@@ -48,13 +46,15 @@ export function init(this: AlgoliaAnalytics, options: InitParams = {}) {
     );
   }
 
+  /* eslint-disable no-console */
   if (__DEV__) {
     console.info(`Since v2.0.4, search-insights no longer validates event payloads.
 You can visit https://algolia.com/events/debugger instead.`);
   }
+  /* eslint-enable */
 
   setOptions(this, options, {
-    _userHasOptedOut: !!options.userHasOptedOut,
+    _userHasOptedOut: Boolean(options.userHasOptedOut),
     _region: options.region,
     _host: options.host,
     _anonymousUserToken: options.anonymousUserToken ?? true,
@@ -80,19 +80,19 @@ You can visit https://algolia.com/events/debugger instead.`);
 
 type ThisParams = Pick<
   AlgoliaAnalytics,
-  | "_userHasOptedOut"
   | "_anonymousUserToken"
-  | "_useCookie"
   | "_cookieDuration"
-  | "_region"
   | "_host"
+  | "_region"
+  | "_useCookie"
+  | "_userHasOptedOut"
 >;
 
 function setOptions(
   target: AlgoliaAnalytics,
-  { partial: partial, ...options }: InitParams,
+  { partial, ...options }: InitParams,
   defaultValues: ThisParams
-) {
+): void {
   if (!partial) {
     Object.assign(target, defaultValues);
   }

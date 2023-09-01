@@ -1,19 +1,23 @@
-import { init } from "./init";
-import { addAlgoliaAgent } from "./_algoliaAgent";
-import { getUserToken, setUserToken, onUserTokenChange } from "./_tokenUtils";
-import {
+import type { addAlgoliaAgent } from "./_algoliaAgent";
+import type { getVersion } from "./_getVersion";
+import type { makeSendEvents } from "./_sendEvent";
+import type {
+  getUserToken,
+  setUserToken,
+  onUserTokenChange
+} from "./_tokenUtils";
+import type {
   clickedObjectIDsAfterSearch,
   clickedObjectIDs,
   clickedFilters
 } from "./click";
-import {
+import type {
   convertedObjectIDsAfterSearch,
   convertedObjectIDs,
   convertedFilters
 } from "./conversion";
-import { viewedObjectIDs, viewedFilters } from "./view";
-import { getVersion } from "./_getVersion";
-import { makeSendEvents } from "./_sendEvent";
+import type { init } from "./init";
+import type { viewedObjectIDs, viewedFilters } from "./view";
 
 export type InsightsMethodMap = {
   init: Parameters<typeof init>;
@@ -91,7 +95,7 @@ export type InsightsEvent = {
   eventSubtype?: InsightsEventConversionSubType;
 
   eventName: string;
-  userToken?: string | number;
+  userToken?: number | string;
   timestamp?: number;
   index: string;
 

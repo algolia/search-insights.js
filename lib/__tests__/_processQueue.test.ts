@@ -1,33 +1,34 @@
 import { processQueue } from "../_processQueue";
 
-const makeGlobalObject = () => {
+function makeGlobalObject(): any {
   // this is a simplified typescript tolerable version of the code we ask our
   // customers to embed when installing the insights client in the browser.
   // cf. https://github.com/algolia/search-insights.js#loading-and-initializing-the-library
   const globalObject: any = {};
   globalObject.AlgoliaAnalyticsObject = "aa";
-  globalObject.aa = function () {
+  globalObject.aa = function (): void {
     globalObject.aa.queue = globalObject.aa.queue || [];
-    globalObject.aa.queue.push(arguments);
+    globalObject.aa.queue.push(arguments); // eslint-disable-line prefer-rest-params
   };
   return globalObject;
-};
+}
 
 class FakeAlgoliaAnalytics {
-  public init: Function;
-  public otherMethod: Function;
-  public processQueue: Function;
+  init: jest.Mock<any, any>;
+  otherMethod: jest.Mock<any, any>;
+  processQueue: jest.Mock<any, any>;
   constructor() {
     this.init = jest.fn();
     this.otherMethod = jest.fn(() => "otherMethodReturnedValue");
 
+    // @ts-expect-error
     this.processQueue = processQueue.bind(this); // the function we'll be testing
   }
 }
 
 describe("processQueue", () => {
-  let insights;
-  let globalObject;
+  let insights: FakeAlgoliaAnalytics;
+  let globalObject: any;
 
   beforeEach(() => {
     globalObject = makeGlobalObject();

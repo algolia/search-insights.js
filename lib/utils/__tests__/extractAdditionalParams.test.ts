@@ -1,8 +1,6 @@
-import { InsightsAdditionalEventParams } from "../../types";
-import {
-  extractAdditionalParams,
-  WithAdditionalParams
-} from "../extractAdditionalParams";
+import type { InsightsAdditionalEventParams } from "../../types";
+import type { WithAdditionalParams } from "../extractAdditionalParams";
+import { extractAdditionalParams } from "../extractAdditionalParams";
 
 type TestEvent = {
   index: string;
@@ -28,7 +26,7 @@ describe("extractAdditionalParams", () => {
       }
     };
 
-    const params: WithAdditionalParams<TestEvent>[] = [
+    const params: Array<WithAdditionalParams<TestEvent>> = [
       ...events,
       additionalParams
     ];

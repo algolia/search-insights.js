@@ -1,6 +1,6 @@
+import { getCookie, MONTH } from "../_tokenUtils";
 import AlgoliaAnalytics from "../insights";
 import * as utils from "../utils";
-import { getCookie, MONTH } from "../_tokenUtils";
 
 jest.mock("../utils", () => ({
   __esModule: true,
@@ -18,14 +18,15 @@ describe("init", () => {
 
   it("should not throw if no parameters are passed", () => {
     expect(() => {
-      (analyticsInstance as any).init();
+      analyticsInstance.init();
     }).not.toThrowError();
   });
   it("should throw if region is other than `de` | `us`", () => {
     expect(() => {
-      (analyticsInstance as any).init({
+      analyticsInstance.init({
         appId: "xxx",
         apiKey: "***",
+        // @ts-expect-error
         region: "emea"
       });
     }).toThrowErrorMatchingInlineSnapshot(
@@ -81,7 +82,8 @@ describe("init", () => {
     "should throw if cookieDuration passed but is not an integer (eg. %s)",
     (cookieDuration) => {
       expect(() => {
-        (analyticsInstance as any).init({
+        analyticsInstance.init({
+          // @ts-expect-error
           cookieDuration,
           apiKey: "***",
           appId: "XXX"
@@ -445,8 +447,8 @@ describe("init", () => {
 
   describe("userToken param", () => {
     let setUserToken: jest.SpyInstance<
-      string | number,
-      [userToken: string | number]
+      number | string,
+      [userToken: number | string]
     >;
     let setAnonymousUserToken: jest.SpyInstance<
       void,

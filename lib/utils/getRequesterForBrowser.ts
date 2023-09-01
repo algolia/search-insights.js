@@ -1,8 +1,8 @@
 import { supportsSendBeacon, supportsXMLHttpRequest } from "./featureDetection";
-
+import type { RequestFnType } from "./request";
 import { requestWithSendBeacon, requestWithXMLHttpRequest } from "./request";
 
-export function getRequesterForBrowser() {
+export function getRequesterForBrowser(): RequestFnType {
   if (supportsSendBeacon()) {
     return requestWithSendBeacon;
   }

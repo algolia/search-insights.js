@@ -1,9 +1,10 @@
 /**
  * @jest-environment node
  */
-import AlgoliaAnalytics from "../insights";
-import { getFunctionalInterface } from "../_getFunctionalInterface";
 import { version } from "../../package.json";
+import { getFunctionalInterface } from "../_getFunctionalInterface";
+import AlgoliaAnalytics from "../insights";
+import type { InsightsClient } from "../types";
 
 const defaultPayload = {
   eventName: "my-event",
@@ -14,10 +15,10 @@ const defaultPayload = {
 const defaultRequestUrl = `https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(${version})%3B%20insights-js-node-cjs%20(${version})`;
 
 describe("_sendEvent in node env", () => {
-  let aa;
-  let requestFn;
+  let aa: InsightsClient;
+  let requestFn: jest.Mock<any, any>;
   beforeEach(() => {
-    requestFn = jest.fn((url, data) => {});
+    requestFn = jest.fn();
     const instance = new AlgoliaAnalytics({ requestFn });
     aa = getFunctionalInterface(instance);
     aa("init", {

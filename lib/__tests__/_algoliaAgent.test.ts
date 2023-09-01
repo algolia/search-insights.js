@@ -3,8 +3,8 @@ import AlgoliaAnalytics from "../insights";
 jest.mock("../../package.json", () => ({ version: "1.0.1" }));
 
 describe("algoliaAgent", () => {
-  let analyticsInstance;
-  let requestFn;
+  let analyticsInstance: AlgoliaAnalytics;
+  let requestFn: jest.Mock<any, any>;
 
   beforeEach(() => {
     requestFn = jest.fn();
