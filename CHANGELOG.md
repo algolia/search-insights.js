@@ -1,3 +1,12 @@
+## [2.8.2](https://github.com/algolia/search-insights.js/compare/v2.8.1...v2.8.2) (2023-09-05)
+
+
+### Bug Fixes
+
+* add missing type defs for conversion subtypes ([#508](https://github.com/algolia/search-insights.js/issues/508)) ([b804bb5](https://github.com/algolia/search-insights.js/commit/b804bb5c0e1caca144fe5d6e4e1a78c73898026a))
+
+
+
 ## [2.8.1](https://github.com/algolia/search-insights.js/compare/v2.8.0...v2.8.1) (2023-09-01)
 
 
