@@ -87,8 +87,8 @@ export type InsightsEventConversionSubType = "addToCart" | "purchase";
 export type InsightsEventObjectData = {
   queryID?: string;
 
-  price?: number;
-  discount?: number;
+  price?: number | string;
+  discount?: number | string;
   quantity?: number;
 };
 
@@ -108,7 +108,7 @@ export type InsightsEvent = {
 
   filters?: string[];
 
-  value?: number;
+  value?: number | string;
   currency?: string;
 };
 
