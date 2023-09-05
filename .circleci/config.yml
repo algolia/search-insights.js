@@ -85,6 +85,8 @@ jobs:
       - run:
           name: Trigger a release if the latest commit is a release commit
           command: |
+            git config --global user.email "algobot@users.noreply.github.com"
+            git config --global user.name "algobot"
             yarn shipjs trigger
   "prepare release":
     <<: *node_v18
