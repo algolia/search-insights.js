@@ -14,7 +14,11 @@ import type {
 import type {
   convertedObjectIDsAfterSearch,
   convertedObjectIDs,
-  convertedFilters
+  convertedFilters,
+  purchasedObjectIDs,
+  purchasedObjectIDsAfterSearch,
+  addedToCartObjectIDsAfterSearch,
+  addedToCartObjectIDs
 } from "./conversion";
 import type { init } from "./init";
 import type { viewedObjectIDs, viewedFilters } from "./view";
@@ -36,6 +40,14 @@ export type InsightsMethodMap = {
   convertedFilters: Parameters<typeof convertedFilters>;
   viewedObjectIDs: Parameters<typeof viewedObjectIDs>;
   viewedFilters: Parameters<typeof viewedFilters>;
+  purchasedObjectIDs: Parameters<typeof purchasedObjectIDs>;
+  purchasedObjectIDsAfterSearch: Parameters<
+    typeof purchasedObjectIDsAfterSearch
+  >;
+  addedToCartObjectIDs: Parameters<typeof addedToCartObjectIDs>;
+  addedToCartObjectIDsAfterSearch: Parameters<
+    typeof addedToCartObjectIDsAfterSearch
+  >;
   sendEvents: Parameters<ReturnType<typeof makeSendEvents>>;
 };
 
