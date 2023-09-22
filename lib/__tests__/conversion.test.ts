@@ -61,7 +61,14 @@ describe("addedToCartObjectIDsAfterSearch", () => {
     index: "index1",
     eventName: "Product added to cart",
     objectIDs: ["12345"],
-    queryID: "test"
+    queryID: "test",
+    objectData: [
+      {
+        price: "39.98",
+        quantity: 2
+      }
+    ],
+    currency: "JPY"
   };
 
   it("should call sendEvents with proper params", () => {
@@ -96,7 +103,14 @@ describe("purchasedObjectIDsAfterSearch", () => {
     index: "index1",
     eventName: "Product added to cart",
     objectIDs: ["12345"],
-    queryID: "test"
+    queryID: "test",
+    objectData: [
+      {
+        price: 12.99,
+        quantity: 2
+      }
+    ],
+    currency: "USD"
   };
 
   it("should call sendEvents with proper params", () => {
@@ -160,7 +174,14 @@ describe("addedToCartObjectIDs", () => {
   const convertParams = {
     index: "index1",
     eventName: "hit converted",
-    objectIDs: ["12345"]
+    objectIDs: ["12345"],
+    objectData: [
+      {
+        price: "1.24",
+        quantity: 17
+      }
+    ],
+    currency: "GBP"
   };
 
   it("should call sendEvents with proper params", () => {
@@ -191,7 +212,14 @@ describe("purchasedObjectIDs", () => {
   const convertParams = {
     index: "index1",
     eventName: "hit converted",
-    objectIDs: ["12345"]
+    objectIDs: ["12345"],
+    objectData: [
+      {
+        price: 100,
+        quantity: 1
+      }
+    ],
+    currency: "AUD"
   };
 
   it("should call sendEvents with proper params", () => {
