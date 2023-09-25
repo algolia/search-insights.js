@@ -13,6 +13,7 @@ export interface InsightsSearchConversionEvent {
   queryID: string;
   objectIDs: string[];
   objectData?: InsightsEvent["objectData"];
+  currency?: InsightsEvent["currency"];
 }
 
 export function convertedObjectIDsAfterSearch(
@@ -59,6 +60,7 @@ export interface InsightsSearchConversionObjectIDsEvent {
 
   objectIDs: string[];
   objectData?: InsightsEvent["objectData"];
+  currency?: InsightsEvent["currency"];
 }
 
 export function convertedObjectIDs(
