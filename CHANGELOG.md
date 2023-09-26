@@ -1,3 +1,12 @@
+## [2.8.3](https://github.com/algolia/search-insights.js/compare/v2.8.2...v2.8.3) (2023-09-25)
+
+
+### Bug Fixes
+
+* expose purchase and addToCart insights client methods ([#511](https://github.com/algolia/search-insights.js/issues/511)) ([6c3a322](https://github.com/algolia/search-insights.js/commit/6c3a322a17c0bcc2a396cb18d30a2d4359b051f6))
+
+
+
 ## [2.8.2](https://github.com/algolia/search-insights.js/compare/v2.8.1...v2.8.2) (2023-09-05)
 
 
