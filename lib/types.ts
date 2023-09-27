@@ -110,6 +110,7 @@ export type InsightsEvent = {
 
   eventName: string;
   userToken?: number | string;
+  authenticatedUserToken?: number | string;
   timestamp?: number;
   index: string;
 
