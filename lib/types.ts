@@ -6,7 +6,8 @@ import type {
   setUserToken,
   onUserTokenChange,
   onAuthenticatedUserTokenChange,
-  setAuthenticatedUserToken
+  setAuthenticatedUserToken,
+  getAuthenticatedUserToken
 } from "./_tokenUtils";
 import type {
   clickedObjectIDsAfterSearch,
@@ -33,6 +34,7 @@ export type InsightsMethodMap = {
   getUserToken: Parameters<typeof getUserToken>;
   onUserTokenChange: Parameters<typeof onUserTokenChange>;
   setAuthenticatedUserToken: Parameters<typeof setAuthenticatedUserToken>;
+  getAuthenticatedUserToken: Parameters<typeof getAuthenticatedUserToken>;
   onAuthenticatedUserTokenChange: Parameters<
     typeof onAuthenticatedUserTokenChange
   >;

@@ -120,4 +120,28 @@ describe("tokenUtils", () => {
       });
     });
   });
+
+  describe("getAuthenticatedUserToken", () => {
+    it("should return undefined if not set", () => {
+      const authenticatedUserToken =
+        analyticsInstance.getAuthenticatedUserToken();
+      expect(authenticatedUserToken).toBeUndefined();
+    });
+    it("should return current authenticatedUserToken", () => {
+      analyticsInstance.setAuthenticatedUserToken("008");
+      const authenticatedUserToken =
+        analyticsInstance.getAuthenticatedUserToken();
+      expect(authenticatedUserToken).toEqual("008");
+    });
+    it("should accept a callback", () => {
+      analyticsInstance.setAuthenticatedUserToken("009");
+      analyticsInstance.getAuthenticatedUserToken(
+        {},
+        (err, authenticatedUserToken) => {
+          expect(err).toEqual(null);
+          expect(authenticatedUserToken).toEqual("009");
+        }
+      );
+    });
+  });
 });

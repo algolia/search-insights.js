@@ -10,7 +10,8 @@ import {
   onUserTokenChange,
   MONTH,
   setAuthenticatedUserToken,
-  onAuthenticatedUserTokenChange
+  onAuthenticatedUserTokenChange,
+  getAuthenticatedUserToken
 } from "./_tokenUtils";
 import {
   clickedObjectIDsAfterSearch,
@@ -82,6 +83,7 @@ class AlgoliaAnalytics {
   getUserToken: typeof getUserToken;
   onUserTokenChange: typeof onUserTokenChange;
   setAuthenticatedUserToken: typeof setAuthenticatedUserToken;
+  getAuthenticatedUserToken: typeof getAuthenticatedUserToken;
   onAuthenticatedUserTokenChange: typeof onAuthenticatedUserTokenChange;
 
   sendEvents: ReturnType<typeof makeSendEvents>;
@@ -113,6 +115,7 @@ class AlgoliaAnalytics {
     this.getUserToken = getUserToken.bind(this);
     this.onUserTokenChange = onUserTokenChange.bind(this);
     this.setAuthenticatedUserToken = setAuthenticatedUserToken.bind(this);
+    this.getAuthenticatedUserToken = getAuthenticatedUserToken.bind(this);
     this.onAuthenticatedUserTokenChange =
       onAuthenticatedUserTokenChange.bind(this);
 
