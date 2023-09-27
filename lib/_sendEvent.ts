@@ -31,7 +31,9 @@ export function makeSendEvents(requestFn: RequestFnType) {
 
       const payload: InsightsEvent = {
         ...rest,
-        userToken: data?.userToken ?? this._userToken
+        userToken: data?.userToken ?? this._userToken,
+        authenticatedUserToken:
+          data?.authenticatedUserToken ?? this._authenticatedUserToken
       };
       if (!isUndefined(filters)) {
         payload.filters = filters.map(encodeURIComponent);

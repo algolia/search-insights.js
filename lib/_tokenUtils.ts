@@ -68,6 +68,17 @@ export function setUserToken(
   return this._userToken;
 }
 
+export function setAuthenticatedUserToken(
+  this: AlgoliaAnalytics,
+  authenticatedUserToken: number | string
+): number | string {
+  this._authenticatedUserToken = authenticatedUserToken;
+  if (isFunction(this._onAuthenticatedUserTokenChangeCallback)) {
+    this._onAuthenticatedUserTokenChangeCallback(this._authenticatedUserToken);
+  }
+  return this._authenticatedUserToken;
+}
+
 export function getUserToken(
   this: AlgoliaAnalytics,
   options?: any,
@@ -91,5 +102,20 @@ export function onUserTokenChange(
     isFunction(this._onUserTokenChangeCallback)
   ) {
     this._onUserTokenChangeCallback(this._userToken);
+  }
+}
+
+export function onAuthenticatedUserTokenChange(
+  this: AlgoliaAnalytics,
+  callback?: (authenticatedUserToken?: number | string) => void,
+  options?: { immediate: boolean }
+): void {
+  this._onAuthenticatedUserTokenChangeCallback = callback;
+  if (
+    options &&
+    options.immediate &&
+    isFunction(this._onAuthenticatedUserTokenChangeCallback)
+  ) {
+    this._onAuthenticatedUserTokenChangeCallback(this._authenticatedUserToken);
   }
 }

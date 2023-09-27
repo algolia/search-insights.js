@@ -31,6 +31,7 @@ describe("tokenUtils", () => {
     // clear cookies
     document.cookie = "_ALGOLIA=;expires=Thu, 01-Jan-1970 00:00:01 GMT;";
   });
+
   describe("setUserToken", () => {
     describe("anonymous userToken", () => {
       it("should create a cookie with a UUID", () => {
@@ -52,6 +53,7 @@ describe("tokenUtils", () => {
         expect(document.cookie).toBe("_ALGOLIA=anonymous-mock-uuid-2");
       });
     });
+
     describe("provided userToken", () => {
       it("should not create a cookie with provided userToken", () => {
         analyticsInstance.setUserToken("007");
@@ -71,6 +73,20 @@ describe("tokenUtils", () => {
       });
     });
   });
+
+  describe("setAuthenticatedUserToken", () => {
+    it("should set authenticatedUserToken", () => {
+      expect(analyticsInstance._authenticatedUserToken).toBeUndefined();
+
+      analyticsInstance.setAuthenticatedUserToken("008");
+      expect(analyticsInstance._authenticatedUserToken).toBe("008");
+    });
+    it("should not create a cookie with provided authenticatedUserToken", () => {
+      analyticsInstance.setAuthenticatedUserToken("008");
+      expect(document.cookie).toBe("");
+    });
+  });
+
   describe("getUserToken", () => {
     beforeEach(() => {
       analyticsInstance.setUserToken("007");
