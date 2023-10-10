@@ -78,7 +78,12 @@ You can visit https://algolia.com/events/debugger instead.`);
 
   if (options.userToken) {
     this.setUserToken(options.userToken);
-  } else if (!this._userToken && !this._userHasOptedOut && this._useCookie) {
+  } else if (
+    !this._userToken &&
+    !this._userHasOptedOut &&
+    this._useCookie &&
+    !this._authenticatedUserToken
+  ) {
     this.setAnonymousUserToken();
   }
 }
