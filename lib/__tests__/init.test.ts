@@ -497,4 +497,60 @@ describe("init", () => {
       });
     });
   });
+
+  describe("authenticatedUserToken param", () => {
+    let setAuthenticatedUserToken: jest.SpyInstance<
+      number | string,
+      [authenticatedUserToken: number | string]
+    >;
+    beforeEach(() => {
+      setAuthenticatedUserToken = jest.spyOn(
+        analyticsInstance,
+        "setAuthenticatedUserToken"
+      );
+    });
+
+    afterEach(() => {
+      setAuthenticatedUserToken.mockRestore();
+    });
+
+    it("should set authenticatedUserToken", () => {
+      analyticsInstance.init({
+        apiKey: "***",
+        appId: "XXX",
+        authenticatedUserToken: "abc"
+      });
+      expect(setAuthenticatedUserToken).toHaveBeenCalledTimes(1);
+      expect(setAuthenticatedUserToken).toHaveBeenCalledWith("abc");
+      analyticsInstance.getAuthenticatedUserToken(null, (_err, value) => {
+        expect(value).toEqual("abc");
+      });
+    });
+
+    it("can set authenticatedUserToken manually afterwards", (done) => {
+      analyticsInstance.init({
+        apiKey: "***",
+        appId: "XXX",
+        authenticatedUserToken: "abc"
+      });
+      analyticsInstance.setAuthenticatedUserToken("def");
+      expect(setAuthenticatedUserToken).toHaveBeenCalledTimes(2);
+      expect(setAuthenticatedUserToken).toHaveBeenLastCalledWith("def");
+      analyticsInstance.getAuthenticatedUserToken(null, (_err, value) => {
+        expect(value).toEqual("def");
+        done();
+      });
+    });
+
+    it("should not set authenticatedUserToken if not passed", () => {
+      analyticsInstance.init({
+        apiKey: "***",
+        appId: "XXX"
+      });
+      expect(setAuthenticatedUserToken).toHaveBeenCalledTimes(0);
+      analyticsInstance.getAuthenticatedUserToken(null, (_err, value) => {
+        expect(value).toBeUndefined();
+      });
+    });
+  });
 });
