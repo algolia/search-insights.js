@@ -509,6 +509,7 @@ describe("init", () => {
     });
 
     it("can set userToken manually afterwards", (done) => {
+      expect.assertions(3);
       analyticsInstance.init({ apiKey: "***", appId: "XXX", userToken: "abc" });
       analyticsInstance.setUserToken("def");
       expect(setUserToken).toHaveBeenCalledTimes(2);
@@ -537,6 +538,7 @@ describe("init", () => {
     });
 
     it("should set authenticatedUserToken", () => {
+      expect.assertions(3);
       analyticsInstance.init({
         apiKey: "***",
         appId: "XXX",
@@ -550,6 +552,7 @@ describe("init", () => {
     });
 
     it("can set authenticatedUserToken manually afterwards", (done) => {
+      expect.assertions(3);
       analyticsInstance.init({
         apiKey: "***",
         appId: "XXX",
@@ -565,6 +568,7 @@ describe("init", () => {
     });
 
     it("should not set authenticatedUserToken if not passed", () => {
+      expect.assertions(2);
       analyticsInstance.init({
         apiKey: "***",
         appId: "XXX"

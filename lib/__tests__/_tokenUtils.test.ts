@@ -96,6 +96,7 @@ describe("tokenUtils", () => {
       expect(userToken).toEqual("007");
     });
     it("should accept a callback", () => {
+      expect.assertions(2);
       analyticsInstance.getUserToken({}, (err, userToken) => {
         expect(err).toEqual(null);
         expect(userToken).toEqual("007");
@@ -134,6 +135,7 @@ describe("tokenUtils", () => {
       expect(authenticatedUserToken).toEqual("008");
     });
     it("should accept a callback", () => {
+      expect.assertions(2);
       analyticsInstance.setAuthenticatedUserToken("009");
       analyticsInstance.getAuthenticatedUserToken(
         {},
