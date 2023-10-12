@@ -22,11 +22,7 @@ export function makeSendEvents(requestFn: RequestFnType) {
       );
     }
 
-    if (
-      !this._userToken &&
-      !this._authenticatedUserToken &&
-      this._anonymousUserToken
-    ) {
+    if (!this._userToken && this._anonymousUserToken) {
       this.setAnonymousUserToken(true);
     }
 

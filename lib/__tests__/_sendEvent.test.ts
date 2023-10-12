@@ -403,7 +403,7 @@ describe("sendEvents", () => {
       });
     });
 
-    it("should be added by default if authenticatedUserToken not provided", () => {
+    it("should be added by default", () => {
       expect(analyticsInstance._anonymousUserToken).toBe(true);
 
       analyticsInstance.sendEvents(
@@ -429,6 +429,41 @@ describe("sendEvents", () => {
           expect.objectContaining({
             userToken: expect.stringMatching(/^anonymous-/)
           })
+        ]
+      });
+    });
+
+    it("should be added by default even if authenticatedUserToken is provided", () => {
+      analyticsInstance.setAuthenticatedUserToken("my-user-token");
+
+      analyticsInstance.sendEvents(
+        [
+          {
+            eventType: "click",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"]
+          }
+        ],
+        {
+          headers: {
+            "X-Algolia-Application-Id": "algoliaAppId",
+            "X-Algolia-API-Key": "algoliaApiKey"
+          }
+        }
+      );
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          {
+            eventType: "click",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"],
+            authenticatedUserToken: "my-user-token",
+            userToken: expect.stringMatching(/^anonymous-/)
+          }
         ]
       });
     });
@@ -490,41 +525,6 @@ describe("sendEvents", () => {
           expect.objectContaining({
             userToken: "my-user-token"
           })
-        ]
-      });
-    });
-
-    it("should not be added if authenticatedUserToken is provided", () => {
-      analyticsInstance.setAuthenticatedUserToken("my-user-token");
-
-      analyticsInstance.sendEvents(
-        [
-          {
-            eventType: "click",
-            eventName: "my-event",
-            index: "my-index",
-            objectIDs: ["1"]
-          }
-        ],
-        {
-          headers: {
-            "X-Algolia-Application-Id": "algoliaAppId",
-            "X-Algolia-API-Key": "algoliaApiKey"
-          }
-        }
-      );
-      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
-      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
-      expect(payload).toEqual({
-        events: [
-          {
-            eventType: "click",
-            eventName: "my-event",
-            index: "my-index",
-            objectIDs: ["1"],
-            authenticatedUserToken: "my-user-token",
-            userToken: undefined
-          }
         ]
       });
     });

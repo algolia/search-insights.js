@@ -157,6 +157,33 @@ describe("init", () => {
     setAnonymousUserToken.mockRestore();
     supportsCookies.mockRestore();
   });
+  it("should set anonymous userToken even if authenticatedUserToken is set", () => {
+    const setAuthenticatedUserToken = jest.spyOn(
+      analyticsInstance,
+      "setAuthenticatedUserToken"
+    );
+    const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+    analyticsInstance.init({
+      apiKey: "***",
+      appId: "XXX",
+      useCookie: true,
+      authenticatedUserToken: "abc"
+    });
+    expect(setAuthenticatedUserToken).toHaveBeenCalledTimes(1);
+    expect(setAuthenticatedUserToken).toHaveBeenCalledWith("abc");
+    expect(setUserToken).toHaveBeenCalledTimes(1);
+    expect(setUserToken).toHaveBeenCalledWith(
+      expect.stringMatching(/^anonymous-/)
+    );
+
+    expect(analyticsInstance._userToken).toEqual(
+      expect.stringMatching(/^anonymous-/)
+    );
+    expect(analyticsInstance._authenticatedUserToken).toBe("abc");
+
+    setAuthenticatedUserToken.mockRestore();
+    setUserToken.mockRestore();
+  });
   it("should not set anonymous userToken if environment does not supports cookies", () => {
     const supportsCookies = jest
       .spyOn(utils, "supportsCookies")
@@ -211,28 +238,6 @@ describe("init", () => {
     });
     expect(setUserToken).toHaveBeenCalledTimes(2);
 
-    setUserToken.mockRestore();
-  });
-  it("should not set anonymous userToken if authenticatedUserToken is set", () => {
-    const setAuthenticatedUserToken = jest.spyOn(
-      analyticsInstance,
-      "setAuthenticatedUserToken"
-    );
-    const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
-    analyticsInstance.init({
-      apiKey: "***",
-      appId: "XXX",
-      useCookie: true,
-      authenticatedUserToken: "abc"
-    });
-    expect(setAuthenticatedUserToken).toHaveBeenCalledTimes(1);
-    expect(setAuthenticatedUserToken).toHaveBeenCalledWith("abc");
-    expect(setUserToken).toHaveBeenCalledTimes(0);
-
-    expect(analyticsInstance._userToken).toBeUndefined();
-    expect(analyticsInstance._authenticatedUserToken).toBe("abc");
-
-    setAuthenticatedUserToken.mockRestore();
     setUserToken.mockRestore();
   });
   it("should replace existing options when called again", () => {
