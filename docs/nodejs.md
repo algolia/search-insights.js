@@ -29,7 +29,7 @@ aa("init", {
 
 ## 3. Add `userToken`
 
-On the Node.js environment, unlike the browser environment, a [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken) (`userToken` and/or `authenticatedUserToken`) must be specified when sending any event.
+On the Node.js environment, unlike the browser environment, a [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken) (required `userToken` and optional `authenticatedUserToken`) must be specified when sending any event.
 
 ```js
 // Anonymous user ID
@@ -40,6 +40,7 @@ aa("clickedObjectIDs", {
 
 // Authenticated user ID
 aa("clickedObjectIDs", {
+  userToken: "ANONYMOUS_ID",
   authenticatedUserToken: "USER_ID"
   // ...
 });
