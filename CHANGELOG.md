@@ -1,3 +1,12 @@
+# [2.9.0](https://github.com/algolia/search-insights.js/compare/v2.8.3...v2.9.0) (2023-10-13)
+
+
+### Features
+
+* add support for authenticatedUserToken ([#513](https://github.com/algolia/search-insights.js/issues/513)) ([0636a2d](https://github.com/algolia/search-insights.js/commit/0636a2df1227b258f17b3de87ed1c622425831a1))
+
+
+
 ## [2.8.3](https://github.com/algolia/search-insights.js/compare/v2.8.2...v2.8.3) (2023-09-25)
 
 
