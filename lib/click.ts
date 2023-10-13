@@ -6,6 +6,7 @@ import { extractAdditionalParams } from "./utils";
 export interface InsightsSearchClickEvent {
   eventName: string;
   userToken?: string;
+  authenticatedUserToken?: string;
   timestamp?: number;
   index: string;
 
@@ -27,6 +28,7 @@ export function clickedObjectIDsAfterSearch(
 export interface InsightsClickObjectIDsEvent {
   eventName: string;
   userToken?: string;
+  authenticatedUserToken?: string;
   timestamp?: number;
   index: string;
 
@@ -46,6 +48,7 @@ export function clickedObjectIDs(
 export interface InsightsClickFiltersEvent {
   eventName: string;
   userToken?: string;
+  authenticatedUserToken?: string;
   timestamp?: number;
   index: string;
 

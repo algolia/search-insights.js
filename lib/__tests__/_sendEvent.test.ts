@@ -433,6 +433,41 @@ describe("sendEvents", () => {
       });
     });
 
+    it("should be added by default even if authenticatedUserToken is provided", () => {
+      analyticsInstance.setAuthenticatedUserToken("my-user-token");
+
+      analyticsInstance.sendEvents(
+        [
+          {
+            eventType: "click",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"]
+          }
+        ],
+        {
+          headers: {
+            "X-Algolia-Application-Id": "algoliaAppId",
+            "X-Algolia-API-Key": "algoliaApiKey"
+          }
+        }
+      );
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          {
+            eventType: "click",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"],
+            authenticatedUserToken: "my-user-token",
+            userToken: expect.stringMatching(/^anonymous-/)
+          }
+        ]
+      });
+    });
+
     it("should not be added if anonymousUserToken: false", () => {
       analyticsInstance.init({ anonymousUserToken: false });
       expect(analyticsInstance._anonymousUserToken).toBe(false);
@@ -489,6 +524,82 @@ describe("sendEvents", () => {
         events: [
           expect.objectContaining({
             userToken: "my-user-token"
+          })
+        ]
+      });
+    });
+  });
+
+  describe("authenticatedUserToken", () => {
+    let analyticsInstance: AlgoliaAnalytics;
+    beforeEach(() => {
+      analyticsInstance = setupInstance();
+    });
+
+    it("should add authenticatedUserToken if initially set and not provided", () => {
+      analyticsInstance.setAuthenticatedUserToken("authed-user-id");
+      analyticsInstance.sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            authenticatedUserToken: "authed-user-id"
+          })
+        ]
+      });
+    });
+
+    it("should not add authenticatedUserToken if not initially set and not provided", () => {
+      analyticsInstance.sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          {
+            eventType: "click",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: "mock-user-id"
+          }
+        ]
+      });
+    });
+
+    it("should pass over provided authenticatedUserToken", () => {
+      analyticsInstance.setAuthenticatedUserToken("authed-user-id");
+      analyticsInstance.sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"],
+          userToken: "007",
+          authenticatedUserToken: "008"
+        }
+      ]);
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(1);
+      const payload = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload).toEqual({
+        events: [
+          expect.objectContaining({
+            userToken: "007",
+            authenticatedUserToken: "008"
           })
         ]
       });

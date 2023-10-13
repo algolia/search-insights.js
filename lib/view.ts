@@ -6,6 +6,7 @@ import { extractAdditionalParams } from "./utils";
 export interface InsightsSearchViewObjectIDsEvent {
   eventName: string;
   userToken?: string;
+  authenticatedUserToken?: string;
   timestamp?: number;
   index: string;
 
@@ -25,6 +26,7 @@ export function viewedObjectIDs(
 export interface InsightsSearchViewFiltersEvent {
   eventName: string;
   userToken?: string;
+  authenticatedUserToken?: string;
   timestamp?: number;
   index: string;
 

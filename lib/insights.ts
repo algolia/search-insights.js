@@ -8,7 +8,10 @@ import {
   setUserToken,
   setAnonymousUserToken,
   onUserTokenChange,
-  MONTH
+  MONTH,
+  setAuthenticatedUserToken,
+  onAuthenticatedUserTokenChange,
+  getAuthenticatedUserToken
 } from "./_tokenUtils";
 import {
   clickedObjectIDsAfterSearch,
@@ -55,6 +58,7 @@ class AlgoliaAnalytics {
   _endpointOrigin = "https://insights.algolia.io";
   _anonymousUserToken = true;
   _userToken?: number | string;
+  _authenticatedUserToken?: number | string;
   _userHasOptedOut = false;
   _useCookie = false;
   _cookieDuration = 6 * MONTH;
@@ -63,6 +67,9 @@ class AlgoliaAnalytics {
   _ua: string[] = [];
 
   _onUserTokenChangeCallback?: (userToken?: number | string) => void;
+  _onAuthenticatedUserTokenChangeCallback?: (
+    authenticatedUserToken?: number | string
+  ) => void;
 
   version: string = version;
 
@@ -75,6 +82,9 @@ class AlgoliaAnalytics {
   setAnonymousUserToken: typeof setAnonymousUserToken;
   getUserToken: typeof getUserToken;
   onUserTokenChange: typeof onUserTokenChange;
+  setAuthenticatedUserToken: typeof setAuthenticatedUserToken;
+  getAuthenticatedUserToken: typeof getAuthenticatedUserToken;
+  onAuthenticatedUserTokenChange: typeof onAuthenticatedUserTokenChange;
 
   sendEvents: ReturnType<typeof makeSendEvents>;
 
@@ -104,6 +114,10 @@ class AlgoliaAnalytics {
     this.setAnonymousUserToken = setAnonymousUserToken.bind(this);
     this.getUserToken = getUserToken.bind(this);
     this.onUserTokenChange = onUserTokenChange.bind(this);
+    this.setAuthenticatedUserToken = setAuthenticatedUserToken.bind(this);
+    this.getAuthenticatedUserToken = getAuthenticatedUserToken.bind(this);
+    this.onAuthenticatedUserTokenChange =
+      onAuthenticatedUserTokenChange.bind(this);
 
     this.clickedObjectIDsAfterSearch = clickedObjectIDsAfterSearch.bind(this);
     this.clickedObjectIDs = clickedObjectIDs.bind(this);

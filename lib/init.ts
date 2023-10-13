@@ -15,6 +15,7 @@ export interface InitParams {
   cookieDuration?: number;
   region?: InsightRegion;
   userToken?: string;
+  authenticatedUserToken?: string;
   partial?: boolean;
   host?: string;
 }
@@ -70,6 +71,10 @@ You can visit https://algolia.com/events/debugger instead.`);
 
   // user agent
   this._ua = [...DEFAULT_ALGOLIA_AGENTS];
+
+  if (options.authenticatedUserToken) {
+    this.setAuthenticatedUserToken(options.authenticatedUserToken);
+  }
 
   if (options.userToken) {
     this.setUserToken(options.userToken);

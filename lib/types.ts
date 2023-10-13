@@ -4,7 +4,10 @@ import type { makeSendEvents } from "./_sendEvent";
 import type {
   getUserToken,
   setUserToken,
-  onUserTokenChange
+  onUserTokenChange,
+  onAuthenticatedUserTokenChange,
+  setAuthenticatedUserToken,
+  getAuthenticatedUserToken
 } from "./_tokenUtils";
 import type {
   clickedObjectIDsAfterSearch,
@@ -30,6 +33,11 @@ export type InsightsMethodMap = {
   setUserToken: Parameters<typeof setUserToken>;
   getUserToken: Parameters<typeof getUserToken>;
   onUserTokenChange: Parameters<typeof onUserTokenChange>;
+  setAuthenticatedUserToken: Parameters<typeof setAuthenticatedUserToken>;
+  getAuthenticatedUserToken: Parameters<typeof getAuthenticatedUserToken>;
+  onAuthenticatedUserTokenChange: Parameters<
+    typeof onAuthenticatedUserTokenChange
+  >;
   clickedObjectIDsAfterSearch: Parameters<typeof clickedObjectIDsAfterSearch>;
   clickedObjectIDs: Parameters<typeof clickedObjectIDs>;
   clickedFilters: Parameters<typeof clickedFilters>;
@@ -110,6 +118,7 @@ export type InsightsEvent = {
 
   eventName: string;
   userToken?: number | string;
+  authenticatedUserToken?: number | string;
   timestamp?: number;
   index: string;
 

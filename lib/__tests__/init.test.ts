@@ -157,6 +157,33 @@ describe("init", () => {
     setAnonymousUserToken.mockRestore();
     supportsCookies.mockRestore();
   });
+  it("should set anonymous userToken even if authenticatedUserToken is set", () => {
+    const setAuthenticatedUserToken = jest.spyOn(
+      analyticsInstance,
+      "setAuthenticatedUserToken"
+    );
+    const setUserToken = jest.spyOn(analyticsInstance, "setUserToken");
+    analyticsInstance.init({
+      apiKey: "***",
+      appId: "XXX",
+      useCookie: true,
+      authenticatedUserToken: "abc"
+    });
+    expect(setAuthenticatedUserToken).toHaveBeenCalledTimes(1);
+    expect(setAuthenticatedUserToken).toHaveBeenCalledWith("abc");
+    expect(setUserToken).toHaveBeenCalledTimes(1);
+    expect(setUserToken).toHaveBeenCalledWith(
+      expect.stringMatching(/^anonymous-/)
+    );
+
+    expect(analyticsInstance._userToken).toEqual(
+      expect.stringMatching(/^anonymous-/)
+    );
+    expect(analyticsInstance._authenticatedUserToken).toBe("abc");
+
+    setAuthenticatedUserToken.mockRestore();
+    setUserToken.mockRestore();
+  });
   it("should not set anonymous userToken if environment does not supports cookies", () => {
     const supportsCookies = jest
       .spyOn(utils, "supportsCookies")
@@ -487,6 +514,7 @@ describe("init", () => {
     });
 
     it("can set userToken manually afterwards", (done) => {
+      expect.assertions(3);
       analyticsInstance.init({ apiKey: "***", appId: "XXX", userToken: "abc" });
       analyticsInstance.setUserToken("def");
       expect(setUserToken).toHaveBeenCalledTimes(2);
@@ -494,6 +522,65 @@ describe("init", () => {
       analyticsInstance.getUserToken(null, (_err, value) => {
         expect(value).toEqual("def");
         done();
+      });
+    });
+  });
+
+  describe("authenticatedUserToken param", () => {
+    let setAuthenticatedUserToken: jest.SpyInstance<
+      number | string,
+      [authenticatedUserToken: number | string]
+    >;
+    beforeEach(() => {
+      setAuthenticatedUserToken = jest.spyOn(
+        analyticsInstance,
+        "setAuthenticatedUserToken"
+      );
+    });
+
+    afterEach(() => {
+      setAuthenticatedUserToken.mockRestore();
+    });
+
+    it("should set authenticatedUserToken", () => {
+      expect.assertions(3);
+      analyticsInstance.init({
+        apiKey: "***",
+        appId: "XXX",
+        authenticatedUserToken: "abc"
+      });
+      expect(setAuthenticatedUserToken).toHaveBeenCalledTimes(1);
+      expect(setAuthenticatedUserToken).toHaveBeenCalledWith("abc");
+      analyticsInstance.getAuthenticatedUserToken(null, (_err, value) => {
+        expect(value).toEqual("abc");
+      });
+    });
+
+    it("can set authenticatedUserToken manually afterwards", (done) => {
+      expect.assertions(3);
+      analyticsInstance.init({
+        apiKey: "***",
+        appId: "XXX",
+        authenticatedUserToken: "abc"
+      });
+      analyticsInstance.setAuthenticatedUserToken("def");
+      expect(setAuthenticatedUserToken).toHaveBeenCalledTimes(2);
+      expect(setAuthenticatedUserToken).toHaveBeenLastCalledWith("def");
+      analyticsInstance.getAuthenticatedUserToken(null, (_err, value) => {
+        expect(value).toEqual("def");
+        done();
+      });
+    });
+
+    it("should not set authenticatedUserToken if not passed", () => {
+      expect.assertions(2);
+      analyticsInstance.init({
+        apiKey: "***",
+        appId: "XXX"
+      });
+      expect(setAuthenticatedUserToken).toHaveBeenCalledTimes(0);
+      analyticsInstance.getAuthenticatedUserToken(null, (_err, value) => {
+        expect(value).toBeUndefined();
       });
     });
   });
