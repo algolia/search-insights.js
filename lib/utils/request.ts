@@ -78,3 +78,21 @@ export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
     req.end();
   });
 };
+
+export const requestWithNativeFetch: RequestFnType = (url, data) => {
+  return new Promise((resolve, reject) => {
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then((response) => {
+        resolve(response.status === 200);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};
