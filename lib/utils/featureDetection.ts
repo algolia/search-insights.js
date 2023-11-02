@@ -33,3 +33,11 @@ export const supportsNodeHttpModule = (): boolean => {
     return false;
   }
 };
+
+export const supportsNativeFetch = (): boolean => {
+  try {
+    return fetch !== undefined;
+  } catch (e) {
+    return false;
+  }
+};

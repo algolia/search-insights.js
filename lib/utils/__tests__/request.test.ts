@@ -7,7 +7,8 @@ import { Socket } from "net";
 import {
   supportsSendBeacon,
   supportsXMLHttpRequest,
-  supportsNodeHttpModule
+  supportsNodeHttpModule,
+  supportsNativeFetch
 } from "../featureDetection";
 import { getRequesterForBrowser } from "../getRequesterForBrowser";
 import { getRequesterForNode } from "../getRequesterForNode";
@@ -125,6 +126,7 @@ describe("request", () => {
     expect(setRequestHeader).not.toHaveBeenCalled();
     expect(httpRequest).not.toHaveBeenCalled();
     expect(httpsRequest).not.toHaveBeenCalled();
+    expect(fetch).not.toHaveBeenCalled();
   });
 
   it("should send with XMLHttpRequest if sendBeacon is not available", async () => {
@@ -144,6 +146,7 @@ describe("request", () => {
     expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
     expect(httpRequest).not.toHaveBeenCalled();
     expect(httpsRequest).not.toHaveBeenCalled();
+    expect(fetch).not.toHaveBeenCalled();
   });
 
   it("should fall back to XMLHttpRequest if sendBeacon returns false", async () => {
@@ -165,6 +168,7 @@ describe("request", () => {
     expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
     expect(httpRequest).not.toHaveBeenCalled();
     expect(httpsRequest).not.toHaveBeenCalled();
+    expect(fetch).not.toHaveBeenCalled();
   });
 
   it("should send with nodeHttpRequest if url does not start with https://", async () => {
@@ -181,6 +185,7 @@ describe("request", () => {
     expect(send).not.toHaveBeenCalled();
     expect(setRequestHeader).not.toHaveBeenCalled();
     expect(httpsRequest).not.toHaveBeenCalled();
+    expect(fetch).not.toHaveBeenCalled();
     expect(httpRequest).toHaveBeenLastCalledWith(
       {
         protocol: "http:",
@@ -213,6 +218,7 @@ describe("request", () => {
     expect(setRequestHeader).not.toHaveBeenCalled();
     expect(send).not.toHaveBeenCalled();
     expect(httpRequest).not.toHaveBeenCalled();
+    expect(fetch).not.toHaveBeenCalled();
     expect(httpsRequest).toHaveBeenLastCalledWith(
       {
         protocol: "https:",
@@ -229,6 +235,31 @@ describe("request", () => {
     expect(httpsRequest).toHaveBeenCalledTimes(1);
     expect(write).toHaveBeenLastCalledWith(JSON.stringify(data));
     expect(write).toHaveBeenCalledTimes(1);
+  });
+
+  it("should send with fetch if nodeHttpRequest is not available", async () => {
+    jest.mocked(supportsSendBeacon).mockImplementation(() => false);
+    jest.mocked(supportsXMLHttpRequest).mockImplementation(() => false);
+    jest.mocked(supportsNodeHttpModule).mockImplementation(() => false);
+    jest.mocked(supportsNativeFetch).mockImplementation(() => true);
+
+    const url = "https://random.url";
+    const data = { foo: "bar" };
+    const request = getRequesterForNode();
+    const sent = await request(url, data);
+    expect(sent).toBe(true);
+    expect(navigator.sendBeacon).not.toHaveBeenCalled();
+    expect(open).not.toHaveBeenCalled();
+    expect(setRequestHeader).not.toHaveBeenCalled();
+    expect(send).not.toHaveBeenCalled();
+    expect(httpRequest).not.toHaveBeenCalled();
+    expect(httpsRequest).not.toHaveBeenCalled();
+
+    expect(fetch).toHaveBeenCalledWith("https://random.url", {
+      body: '{"foo":"bar"}',
+      headers: { "Content-Type": "application/json" },
+      method: "POST"
+    });
   });
 
   it.each([

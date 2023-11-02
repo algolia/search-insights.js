@@ -1,6 +1,14 @@
-import { supportsSendBeacon, supportsXMLHttpRequest } from "./featureDetection";
+import {
+  supportsNativeFetch,
+  supportsSendBeacon,
+  supportsXMLHttpRequest
+} from "./featureDetection";
 import type { RequestFnType } from "./request";
-import { requestWithSendBeacon, requestWithXMLHttpRequest } from "./request";
+import {
+  requestWithNativeFetch,
+  requestWithSendBeacon,
+  requestWithXMLHttpRequest
+} from "./request";
 
 export function getRequesterForBrowser(): RequestFnType {
   if (supportsSendBeacon()) {
@@ -9,6 +17,10 @@ export function getRequesterForBrowser(): RequestFnType {
 
   if (supportsXMLHttpRequest()) {
     return requestWithXMLHttpRequest;
+  }
+
+  if (supportsNativeFetch()) {
+    return requestWithNativeFetch;
   }
 
   throw new Error(

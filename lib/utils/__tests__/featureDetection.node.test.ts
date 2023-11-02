@@ -6,7 +6,8 @@ import {
   supportsCookies,
   supportsSendBeacon,
   supportsXMLHttpRequest,
-  supportsNodeHttpModule
+  supportsNodeHttpModule,
+  supportsNativeFetch
 } from "../featureDetection";
 
 describe("featureDetection in node env", () => {
@@ -28,6 +29,13 @@ describe("featureDetection in node env", () => {
     it("should return false", () => {
       // it is not available in node env
       expect(supportsXMLHttpRequest()).toBe(false);
+    });
+  });
+
+  describe("supportsNativeFetch", () => {
+    it("should return true", () => {
+      // it is available in node env
+      expect(supportsNativeFetch()).toBe(true);
     });
   });
 
