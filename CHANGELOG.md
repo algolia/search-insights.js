@@ -1,3 +1,12 @@
+# [2.10.0](https://github.com/algolia/search-insights.js/compare/v2.9.0...v2.10.0) (2023-11-07)
+
+
+### Features
+
+* introduce native fetch fallback when http-module is not supported ([#515](https://github.com/algolia/search-insights.js/issues/515)) ([6a322a4](https://github.com/algolia/search-insights.js/commit/6a322a45bdf616167b2631338fbd230c11b9a627)), closes [#444](https://github.com/algolia/search-insights.js/issues/444)
+
+
+
 # [2.9.0](https://github.com/algolia/search-insights.js/compare/v2.8.3...v2.9.0) (2023-10-13)
 
 
