@@ -85,6 +85,13 @@ describe("tokenUtils", () => {
       analyticsInstance.setAuthenticatedUserToken("008");
       expect(document.cookie).toBe("");
     });
+    it("should be able to unset authenticatedUserToken", () => {
+      analyticsInstance.setAuthenticatedUserToken("008");
+      expect(analyticsInstance._authenticatedUserToken).toBe("008");
+
+      analyticsInstance.setAuthenticatedUserToken(undefined);
+      expect(analyticsInstance._authenticatedUserToken).toBeUndefined();
+    });
   });
 
   describe("getUserToken", () => {

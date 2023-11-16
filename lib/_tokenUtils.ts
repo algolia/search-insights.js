@@ -96,8 +96,8 @@ export function onUserTokenChange(
 
 export function setAuthenticatedUserToken(
   this: AlgoliaAnalytics,
-  authenticatedUserToken: number | string
-): number | string {
+  authenticatedUserToken: number | string | undefined
+): number | string | undefined {
   this._authenticatedUserToken = authenticatedUserToken;
   if (isFunction(this._onAuthenticatedUserTokenChangeCallback)) {
     this._onAuthenticatedUserTokenChangeCallback(this._authenticatedUserToken);

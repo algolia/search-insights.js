@@ -528,8 +528,8 @@ describe("init", () => {
 
   describe("authenticatedUserToken param", () => {
     let setAuthenticatedUserToken: jest.SpyInstance<
-      number | string,
-      [authenticatedUserToken: number | string]
+      number | string | undefined,
+      [authenticatedUserToken?: number | string]
     >;
     beforeEach(() => {
       setAuthenticatedUserToken = jest.spyOn(
@@ -568,6 +568,22 @@ describe("init", () => {
       expect(setAuthenticatedUserToken).toHaveBeenLastCalledWith("def");
       analyticsInstance.getAuthenticatedUserToken(null, (_err, value) => {
         expect(value).toEqual("def");
+        done();
+      });
+    });
+
+    it("can unset authenticatedUserToken afterwards", (done) => {
+      expect.assertions(3);
+      analyticsInstance.init({
+        apiKey: "***",
+        appId: "XXX",
+        authenticatedUserToken: "abc"
+      });
+      analyticsInstance.setAuthenticatedUserToken(undefined);
+      expect(setAuthenticatedUserToken).toHaveBeenCalledTimes(2);
+      expect(setAuthenticatedUserToken).toHaveBeenLastCalledWith(undefined);
+      analyticsInstance.getAuthenticatedUserToken(null, (_err, value) => {
+        expect(value).toBeUndefined();
         done();
       });
     });
