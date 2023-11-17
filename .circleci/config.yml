@@ -1,3 +1,5 @@
+version: 2.1
+
 aliases:
   - &install_yarn_version
     name: Install specific Yarn version
@@ -30,7 +32,11 @@ node_v18: &node_v18
   docker:
     - image: cimg/node:18.17-browsers
 
-version: 2
+parameters:
+  prepare_release:
+    type: boolean
+    default: false
+
 jobs:
   "build and size":
     <<: *node_v18
@@ -104,7 +110,6 @@ jobs:
             yarn run release --yes --no-browse
 
 workflows:
-  version: 2
   ci:
     jobs:
       - build and size
@@ -116,13 +121,9 @@ workflows:
               only:
                 - main
 
-  prepare_release_every_tuesday:
-    triggers:
-      - schedule:
-          cron: "0 9 * * 2"
-          filters:
-            branches:
-              only:
-                - main
+  prepare_release:
+    when:
+      equal:
+        - << pipeline.parameters.prepare_release >>
     jobs:
       - prepare release
