@@ -94,6 +94,7 @@ jobs:
             git config --global user.email "algobot@users.noreply.github.com"
             git config --global user.name "algobot"
             yarn shipjs trigger
+
   "prepare release":
     <<: *node_v18
     steps:
@@ -111,6 +112,9 @@ jobs:
 
 workflows:
   ci:
+    when:
+      equal:
+        - [ false, << pipeline.parameters.prepare_release >> ]
     jobs:
       - build and size
       - unit tests
@@ -124,10 +128,7 @@ workflows:
   prepare_release:
     when:
       equal:
-        - << pipeline.parameters.prepare_release >>
+        - [ true, << pipeline.parameters.prepare_release >> ]
+        - [ main, << pipeline.git.branch >> ]
     jobs:
-      - prepare release:
-          filters:
-            branches:
-              only:
-                - main
+      - prepare release
