@@ -24,7 +24,7 @@ This will create a pull request for the next release. After the pull request is 
 
 ### CircleCI
 
-1. Click the **Trigger Pipeline** button in the **search-insights.js** project
+1. In the **search-insights.js** project on the **main** branch, click the **Trigger Pipeline** button
 
 ![CircleCI Trigger Pipeline button](images/circleci-trigger-pipeline-button.png)
 
