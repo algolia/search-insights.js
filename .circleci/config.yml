@@ -129,6 +129,9 @@ workflows:
     when:
       equal:
         - [ true, << pipeline.parameters.prepare_release >> ]
-        - [ main, << pipeline.git.branch >> ]
     jobs:
-      - prepare release
+      - prepare release:
+          filters:
+            branches:
+              only:
+                - main
