@@ -78,13 +78,9 @@ To run the examples and the code, you need to run two separate commands:
 - `yarn dev` runs webpack and the Node.js server
 - `yarn build:dev` runs Rollup in watch mode
 
-To release, go on `main` (`git checkout main`) and use:
+### Releasing
 
-```sh
-yarn run release
-```
-
-It will create a pull request for the next release. When it's reviewed, approved and merged, then CircleCI will automatically publish it to npm.
+For information on releasing, see [RELEASE.md](./RELEASE.md).
 
 ## License
 
