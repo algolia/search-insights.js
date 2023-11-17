@@ -113,8 +113,8 @@ jobs:
 workflows:
   ci:
     when:
-      equal:
-        - [ false, << pipeline.parameters.prepare_release >> ]
+      not:
+        << pipeline.parameters.prepare_release >>
     jobs:
       - build and size
       - unit tests
@@ -127,8 +127,7 @@ workflows:
 
   prepare_release:
     when:
-      equal:
-        - [ true, << pipeline.parameters.prepare_release >> ]
+      << pipeline.parameters.prepare_release >>
     jobs:
       - prepare release:
           filters:
