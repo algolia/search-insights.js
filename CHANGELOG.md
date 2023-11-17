@@ -1,3 +1,12 @@
+# [2.11.0](https://github.com/algolia/search-insights.js/compare/v2.10.0...v2.11.0) (2023-11-17)
+
+
+### Features
+
+* enable unsetting authenticatedUserToken ([#518](https://github.com/algolia/search-insights.js/issues/518)) ([aa1198a](https://github.com/algolia/search-insights.js/commit/aa1198a1f2c4c8afc864115011cc262f3763a826))
+
+
+
 # [2.10.0](https://github.com/algolia/search-insights.js/compare/v2.9.0...v2.10.0) (2023-11-07)
 
 
