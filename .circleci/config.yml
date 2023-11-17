@@ -126,4 +126,8 @@ workflows:
       equal:
         - << pipeline.parameters.prepare_release >>
     jobs:
-      - prepare release
+      - prepare release:
+          filters:
+            branches:
+              only:
+                - main
