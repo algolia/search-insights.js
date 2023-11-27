@@ -27,12 +27,25 @@ export function convertedObjectIDsAfterSearch(
   return this.sendEvents(addEventType("conversion", events), additionalParams);
 }
 
+export interface InsightsSearchConversionSubtypeEvent {
+  eventName: string;
+  userToken?: string;
+  authenticatedUserToken?: string;
+  timestamp?: number;
+  index: string;
+
+  queryID?: string;
+  objectIDs: string[];
+  objectData?: InsightsEvent["objectData"];
+  currency?: InsightsEvent["currency"];
+}
+
 export function addedToCartObjectIDsAfterSearch(
   this: AlgoliaAnalytics,
-  ...params: Array<WithAdditionalParams<InsightsSearchConversionEvent>>
+  ...params: Array<WithAdditionalParams<InsightsSearchConversionSubtypeEvent>>
 ): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
-    extractAdditionalParams<InsightsSearchConversionEvent>(params);
+    extractAdditionalParams<InsightsSearchConversionSubtypeEvent>(params);
 
   return this.sendEvents(
     addEventTypeAndSubtype("conversion", "addToCart", events),
@@ -42,10 +55,10 @@ export function addedToCartObjectIDsAfterSearch(
 
 export function purchasedObjectIDsAfterSearch(
   this: AlgoliaAnalytics,
-  ...params: Array<WithAdditionalParams<InsightsSearchConversionEvent>>
+  ...params: Array<WithAdditionalParams<InsightsSearchConversionSubtypeEvent>>
 ): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
-    extractAdditionalParams<InsightsSearchConversionEvent>(params);
+    extractAdditionalParams<InsightsSearchConversionSubtypeEvent>(params);
 
   return this.sendEvents(
     addEventTypeAndSubtype("conversion", "purchase", events),

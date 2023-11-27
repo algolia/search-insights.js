@@ -61,9 +61,9 @@ describe("addedToCartObjectIDsAfterSearch", () => {
     index: "index1",
     eventName: "Product added to cart",
     objectIDs: ["12345"],
-    queryID: "test",
     objectData: [
       {
+        queryID: "test",
         price: "39.98",
         quantity: 2
       }
