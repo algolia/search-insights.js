@@ -61,9 +61,9 @@ describe("addedToCartObjectIDsAfterSearch", () => {
     index: "index1",
     eventName: "Product added to cart",
     objectIDs: ["12345"],
+    queryID: "test",
     objectData: [
       {
-        queryID: "test",
         price: "39.98",
         quantity: 2
       }
@@ -101,11 +101,11 @@ describe("addedToCartObjectIDsAfterSearch", () => {
 describe("purchasedObjectIDsAfterSearch", () => {
   const convertParams = {
     index: "index1",
-    eventName: "Product added to cart",
+    eventName: "Product purchased",
     objectIDs: ["12345"],
-    queryID: "test",
     objectData: [
       {
+        queryID: "query-1",
         price: 12.99,
         quantity: 2
       }
