@@ -43,7 +43,10 @@ export function addedToCartObjectIDsAfterSearch(
 export type InsightsSearchPurchaseEvent = Omit<
   InsightsSearchConversionEvent,
   "queryID"
->;
+> & {
+  /** @deprecated Use objectData.queryID instead. */
+  queryID?: string;
+};
 
 export function purchasedObjectIDsAfterSearch(
   this: AlgoliaAnalytics,
