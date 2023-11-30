@@ -40,12 +40,20 @@ export function addedToCartObjectIDsAfterSearch(
   );
 }
 
+export type InsightsSearchPurchaseEvent = Omit<
+  InsightsSearchConversionEvent,
+  "queryID"
+> & {
+  /** @deprecated Use objectData.queryID instead. */
+  queryID?: string;
+};
+
 export function purchasedObjectIDsAfterSearch(
   this: AlgoliaAnalytics,
-  ...params: Array<WithAdditionalParams<InsightsSearchConversionEvent>>
+  ...params: Array<WithAdditionalParams<InsightsSearchPurchaseEvent>>
 ): ReturnType<AlgoliaAnalytics["sendEvents"]> {
   const { events, additionalParams } =
-    extractAdditionalParams<InsightsSearchConversionEvent>(params);
+    extractAdditionalParams<InsightsSearchPurchaseEvent>(params);
 
   return this.sendEvents(
     addEventTypeAndSubtype("conversion", "purchase", events),
