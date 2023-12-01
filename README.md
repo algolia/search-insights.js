@@ -27,7 +27,7 @@ Search Insights lets you report click, conversion and view metrics using the [Al
 
 ### Cookie usage
 
-v2 introduces a breaking change which is `useCookie` being `false` by default. If it's `false`, `search-insights` doesn't generate anonymous userToken. It means no event will be sent until `setUserToken` is explicitly called.
+v2 introduces a breaking change which is `useCookie` being `false` by default.
 
 ### Payload validation
 
