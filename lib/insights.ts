@@ -28,7 +28,6 @@ import {
   convertedFilters
 } from "./conversion";
 import { init } from "./init";
-import { track } from "./track";
 import type { RequestFnType } from "./utils/request";
 import { viewedObjectIDs, viewedFilters } from "./view";
 
@@ -87,59 +86,56 @@ class AlgoliaAnalytics {
   getAuthenticatedUserToken: typeof getAuthenticatedUserToken;
   onAuthenticatedUserTokenChange: typeof onAuthenticatedUserTokenChange;
 
-  // NOTE(bhinchley): This method should be private, but is currently exposed in our public API.
   sendEvents: ReturnType<typeof makeSendEvents>;
 
-  track: typeof track;
-
   /**
-   * @deprecated Use `track` instead.
+   * @deprecated Use `sendEvents` instead.
    */
   clickedObjectIDsAfterSearch: typeof clickedObjectIDsAfterSearch;
   /**
-   * @deprecated Use `track` instead.
+   * @deprecated Use `sendEvents` instead.
    */
   clickedObjectIDs: typeof clickedObjectIDs;
   /**
-   * @deprecated Use `track` instead.
+   * @deprecated Use `sendEvents` instead.
    */
   clickedFilters: typeof clickedFilters;
 
   /**
-   * @deprecated Use `track` instead.
+   * @deprecated Use `sendEvents` instead.
    */
   convertedObjectIDsAfterSearch: typeof convertedObjectIDsAfterSearch;
   /**
-   * @deprecated Use `track` instead.
+   * @deprecated Use `sendEvents` instead.
    */
   purchasedObjectIDsAfterSearch: typeof purchasedObjectIDsAfterSearch;
   /**
-   * @deprecated Use `track` instead.
+   * @deprecated Use `sendEvents` instead.
    */
   addedToCartObjectIDsAfterSearch: typeof addedToCartObjectIDsAfterSearch;
   /**
-   * @deprecated Use `track` instead.
+   * @deprecated Use `sendEvents` instead.
    */
   convertedObjectIDs: typeof convertedObjectIDs;
   /**
-   * @deprecated Use `track` instead.
+   * @deprecated Use `sendEvents` instead.
    */
   addedToCartObjectIDs: typeof addedToCartObjectIDs;
   /**
-   * @deprecated Use `track` instead.
+   * @deprecated Use `sendEvents` instead.
    */
   purchasedObjectIDs: typeof purchasedObjectIDs;
   /**
-   * @deprecated Use `track` instead.
+   * @deprecated Use `sendEvents` instead.
    */
   convertedFilters: typeof convertedFilters;
 
   /**
-   * @deprecated Use `track` instead.
+   * @deprecated Use `sendEvents` instead.
    */
   viewedObjectIDs: typeof viewedObjectIDs;
   /**
-   * @deprecated Use `track` instead.
+   * @deprecated Use `sendEvents` instead.
    */
   viewedFilters: typeof viewedFilters;
 
@@ -158,8 +154,6 @@ class AlgoliaAnalytics {
     this.getAuthenticatedUserToken = getAuthenticatedUserToken.bind(this);
     this.onAuthenticatedUserTokenChange =
       onAuthenticatedUserTokenChange.bind(this);
-
-    this.track = track.bind(this);
 
     this.clickedObjectIDsAfterSearch = clickedObjectIDsAfterSearch.bind(this);
     this.clickedObjectIDs = clickedObjectIDs.bind(this);

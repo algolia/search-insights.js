@@ -24,7 +24,6 @@ import type {
   addedToCartObjectIDs
 } from "./conversion";
 import type { init } from "./init";
-import type { track } from "./track";
 import type { viewedObjectIDs, viewedFilters } from "./view";
 
 export type InsightsMethodMap = {
@@ -39,7 +38,6 @@ export type InsightsMethodMap = {
   onAuthenticatedUserTokenChange: Parameters<
     typeof onAuthenticatedUserTokenChange
   >;
-  track: Parameters<typeof track>;
   clickedObjectIDsAfterSearch: Parameters<typeof clickedObjectIDsAfterSearch>;
   clickedObjectIDs: Parameters<typeof clickedObjectIDs>;
   clickedFilters: Parameters<typeof clickedFilters>;
