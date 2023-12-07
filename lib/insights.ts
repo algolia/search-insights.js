@@ -28,9 +28,9 @@ import {
   convertedFilters
 } from "./conversion";
 import { init } from "./init";
+import { track } from "./track";
 import type { RequestFnType } from "./utils/request";
 import { viewedObjectIDs, viewedFilters } from "./view";
-import { track } from "./track";
 
 type Queue = {
   queue: string[][];

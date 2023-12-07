@@ -1,11 +1,15 @@
 import type AlgoliaAnalytics from "./insights";
+import type { InsightsEvent } from "./types";
 import type { WithAdditionalParams } from "./utils";
 import { extractAdditionalParams } from "./utils";
-import type {InsightsEvent} from "./types"
 
-export function track(this: AlgoliaAnalytics, event: WithAdditionalParams<InsightsEvent>) {
-  const { events, additionalParams } =
-    extractAdditionalParams<InsightsEvent>([event]);
+export function track(
+  this: AlgoliaAnalytics,
+  event: WithAdditionalParams<InsightsEvent>
+): ReturnType<AlgoliaAnalytics["sendEvents"]> {
+  const { events, additionalParams } = extractAdditionalParams<InsightsEvent>([
+    event
+  ]);
 
-  this.sendEvents(events, additionalParams);
+  return this.sendEvents(events, additionalParams);
 }

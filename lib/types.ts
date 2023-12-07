@@ -24,8 +24,8 @@ import type {
   addedToCartObjectIDs
 } from "./conversion";
 import type { init } from "./init";
+import type { track } from "./track";
 import type { viewedObjectIDs, viewedFilters } from "./view";
-import { track } from "./track";
 
 export type InsightsMethodMap = {
   init: Parameters<typeof init>;
