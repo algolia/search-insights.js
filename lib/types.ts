@@ -25,6 +25,7 @@ import type {
 } from "./conversion";
 import type { init } from "./init";
 import type { viewedObjectIDs, viewedFilters } from "./view";
+import { track } from "./track";
 
 export type InsightsMethodMap = {
   init: Parameters<typeof init>;
@@ -38,6 +39,7 @@ export type InsightsMethodMap = {
   onAuthenticatedUserTokenChange: Parameters<
     typeof onAuthenticatedUserTokenChange
   >;
+  track: Parameters<typeof track>;
   clickedObjectIDsAfterSearch: Parameters<typeof clickedObjectIDsAfterSearch>;
   clickedObjectIDs: Parameters<typeof clickedObjectIDs>;
   clickedFilters: Parameters<typeof clickedFilters>;
