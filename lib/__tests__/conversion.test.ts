@@ -68,7 +68,8 @@ describe("addedToCartObjectIDsAfterSearch", () => {
         quantity: 2
       }
     ],
-    currency: "JPY"
+    currency: "JPY",
+    value: 79.96
   };
 
   it("should call sendEvents with proper params", () => {
@@ -221,7 +222,8 @@ describe("purchasedObjectIDs", () => {
         quantity: 1
       }
     ],
-    currency: "AUD"
+    currency: "AUD",
+    value: 100
   };
 
   it("should call sendEvents with proper params", () => {
