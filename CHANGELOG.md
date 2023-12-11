@@ -1,3 +1,12 @@
+# [2.13.0](https://github.com/algolia/search-insights.js/compare/v2.12.0...v2.13.0) (2023-12-11)
+
+
+### Features
+
+* add value property to non-search-related conversion events ([#528](https://github.com/algolia/search-insights.js/issues/528)) ([e624693](https://github.com/algolia/search-insights.js/commit/e624693479cbd94122d24203b1519e1ac00c12f9))
+
+
+
 # [2.12.0](https://github.com/algolia/search-insights.js/compare/v2.11.0...v2.12.0) (2023-12-11)
 
 
