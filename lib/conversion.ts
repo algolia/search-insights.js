@@ -14,6 +14,7 @@ export interface InsightsSearchConversionEvent {
   queryID: string;
   objectIDs: string[];
   objectData?: InsightsEvent["objectData"];
+  value?: InsightsEvent["value"];
   currency?: InsightsEvent["currency"];
 }
 
