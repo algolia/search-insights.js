@@ -1,3 +1,12 @@
+# [2.12.0](https://github.com/algolia/search-insights.js/compare/v2.11.0...v2.12.0) (2023-12-11)
+
+
+### Features
+
+* add value property to conversion events ([#526](https://github.com/algolia/search-insights.js/issues/526)) ([ab761ae](https://github.com/algolia/search-insights.js/commit/ab761aeb8be360d03c506a67c0f0c27fba73ea5c))
+
+
+
 # [2.11.0](https://github.com/algolia/search-insights.js/compare/v2.10.0...v2.11.0) (2023-11-17)
 
 
