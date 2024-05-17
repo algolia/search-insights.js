@@ -6,6 +6,17 @@
   "main": "index-node.cjs.js",
   "types": "index-node.cjs.d.ts",
   "browser": "index-browser.cjs.js",
+  "module": "index-node.esm.js",
+  "exports": {
+    ".": {
+      "import": "./index-node.esm.js",
+      "require": "./index-node.cjs.js"
+    },
+    "./index-browser": {
+      "import": "./index-browser.esm.js",
+      "require": "./index-browser.cjs.js"
+    }
+  },
   "react-native": {
     "http": "./empty-module.cjs.js",
     "https": "./empty-module.cjs.js"
