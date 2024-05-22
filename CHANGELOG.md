@@ -1,3 +1,12 @@
+# [2.14.0](https://github.com/algolia/search-insights.js/compare/v2.13.0...v2.14.0) (2024-05-22)
+
+
+### Features
+
+* fast fail when sending no events ([#532](https://github.com/algolia/search-insights.js/issues/532)) ([de26c37](https://github.com/algolia/search-insights.js/commit/de26c37732d59cf2a2ec78768fed005e64dfc4c9))
+
+
+
 # [2.13.0](https://github.com/algolia/search-insights.js/compare/v2.12.0...v2.13.0) (2023-12-11)
 
 
