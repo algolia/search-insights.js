@@ -737,6 +737,14 @@ describe("sendEvents", () => {
         }
       );
     });
+
+    it("should fail fast when sending no events via sendEvents", async () => {
+      const result = analyticsInstance.sendEvents([]);
+
+      expect(result).toBeInstanceOf(Promise);
+      expect(await result).toBe(false);
+      expect(fakeRequestFn).toHaveBeenCalledTimes(0);
+    });
   });
 
   it("applies default credentials when no custom ones are provided", () => {
