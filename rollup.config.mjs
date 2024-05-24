@@ -23,7 +23,7 @@ const createPlugins = ({ format, flavor }) => [
     preventAssignment: true,
 
     __DEV__:
-      format === "umd" || format === "iife"
+      format === "umd" || format === "iife" || format === "esm"
         ? false
         : 'process.env.NODE_ENV === "development"',
     __FLAVOR__: JSON.stringify(flavor),
@@ -78,5 +78,29 @@ export default [
       file: `./dist/${LIBRARY_OUTPUT_NAME}.iife.min.js`
     },
     plugins: createPlugins({ format: "iife", flavor: "browser-iife" })
-  }
+  },
+  {
+    input: "lib/entry-browser-cjs.ts",
+    output: {
+      format: "esm",
+      file: `./dist/${LIBRARY_OUTPUT_NAME}.esm.js`
+    },
+    plugins: createPlugins({ format: "esm", flavor: "browser-esm" })
+  },
+  {
+    input: "index-browser.cjs.js",
+    output: {
+      format: "esm",
+      file: `index-browser.esm.js`
+    },
+    plugins: createPlugins({ format: "esm", flavor: "browser-esm" })
+  },
+  {
+    input: "index-node.cjs.js",
+    output: {
+      format: "esm",
+      file: `index-node.esm.js`
+    },
+    plugins: createPlugins({ format: "esm", flavor: "node-esm" })
+  },
 ];
