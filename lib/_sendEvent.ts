@@ -1,3 +1,4 @@
+import { addQueryId } from "./_addQueryId";
 import type AlgoliaAnalytics from "./insights";
 import type { InsightsAdditionalEventParams, InsightsEvent } from "./types";
 import { isUndefined } from "./utils";
@@ -26,7 +27,9 @@ export function makeSendEvents(requestFn: RequestFnType) {
       this.setAnonymousUserToken(true);
     }
 
-    const events: InsightsEvent[] = eventData.map((data) => {
+    const events: InsightsEvent[] = (
+      additionalParams?.inferQueryID ? addQueryId(eventData) : eventData
+    ).map((data) => {
       const { filters, ...rest } = data;
 
       const payload: InsightsEvent = {

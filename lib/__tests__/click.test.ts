@@ -1,4 +1,5 @@
 import AlgoliaAnalytics from "../insights";
+import { getQueryForObject } from "../utils";
 
 const credentials = {
   apiKey: "test",
@@ -20,6 +21,7 @@ beforeEach(() => {
   });
   analyticsInstance.init(credentials);
   analyticsInstance.sendEvents = jest.fn();
+  localStorage.clear();
 });
 
 describe("clickedObjectIDsAfterSearch", () => {
@@ -53,6 +55,15 @@ describe("clickedObjectIDsAfterSearch", () => {
       expect.any(Array),
       additionalParameters
     );
+  });
+
+  it("should store the queryID", () => {
+    expect(getQueryForObject("index1", "2")).toBeUndefined();
+    analyticsInstance.clickedObjectIDsAfterSearch(clickParams);
+    expect(getQueryForObject("index1", "2")).toEqual([
+      "testing",
+      expect.any(Number)
+    ]);
   });
 });
 

@@ -1,12 +1,18 @@
-import * as querystring from "querystring";
-import * as url from "url";
-
 import AlgoliaAnalytics from "../insights";
+import { storeQueryForObject } from "../utils";
 import { getRequesterForBrowser } from "../utils/getRequesterForBrowser";
 
 jest.mock("../../package.json", () => ({
   version: "1.0.1"
 }));
+
+function searchParamsToObject(params: URLSearchParams) {
+  const result: { [key: string]: string } = {};
+  for (const [key, value] of params.entries()) {
+    result[key] = value;
+  }
+  return result;
+}
 
 const credentials = {
   apiKey: "testKey",
@@ -27,6 +33,7 @@ describe("sendEvents", () => {
   let XMLHttpRequest: { open: any; send: any };
 
   beforeEach(() => {
+    localStorage.clear();
     XMLHttpRequest = {
       open: jest.spyOn((window as any).XMLHttpRequest.prototype, "open"),
       send: jest.spyOn((window as any).XMLHttpRequest.prototype, "send")
@@ -62,7 +69,7 @@ describe("sendEvents", () => {
       expect(XMLHttpRequest.open).toHaveBeenCalledTimes(1);
       const [verb, requestUrl] = XMLHttpRequest.open.mock.calls[0];
       expect(verb).toBe("POST");
-      expect(url.parse(requestUrl).pathname).toBe("/1/events");
+      expect(new URL(requestUrl).pathname).toBe("/1/events");
     });
     it("should pass over the payload with multiple events", () => {
       analyticsInstance.sendEvents([
@@ -93,11 +100,60 @@ describe("sendEvents", () => {
         }
       ]);
       const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
-      const { query } = url.parse(requestUrl);
-      expect(querystring.parse(query!)).toEqual({
+      const { searchParams } = new URL(requestUrl);
+      expect(searchParamsToObject(searchParams)).toEqual({
         "X-Algolia-API-Key": "testKey",
         "X-Algolia-Agent": "insights-js (1.0.1); insights-js-node-cjs (1.0.1)",
         "X-Algolia-Application-Id": "testId"
+      });
+    });
+    it("should infer query ids when additionalParams.inferQueryID is true", () => {
+      storeQueryForObject("my-index", "1", "clicked-query");
+      analyticsInstance.sendEvents(
+        [
+          {
+            eventType: "conversion",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"]
+          }
+        ],
+        { inferQueryID: true }
+      );
+      analyticsInstance.sendEvents([
+        {
+          eventType: "conversion",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(2);
+      const payload1 = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload1).toEqual({
+        events: [
+          {
+            eventType: "conversion",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"],
+            objectData: [{ queryID: "clicked-query" }],
+            userToken: expect.any(String),
+            objectIDsWithInferredQueryID: ["1"]
+          }
+        ]
+      });
+      const payload2 = JSON.parse(XMLHttpRequest.send.mock.calls[1][0]);
+      expect(payload2).toEqual({
+        events: [
+          {
+            eventType: "conversion",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: expect.any(String)
+          }
+        ]
       });
     });
   });
@@ -139,7 +195,7 @@ describe("sendEvents", () => {
       ]);
       const [requestURL] = sendBeacon.mock.calls[0];
 
-      expect(url.parse(requestURL).pathname).toBe("/1/events");
+      expect(new URL(requestURL).pathname).toBe("/1/events");
     });
     it("should send the correct payload", () => {
       analyticsInstance.sendEvents([
@@ -170,8 +226,8 @@ describe("sendEvents", () => {
         }
       ]);
       const requestUrl = sendBeacon.mock.calls[0][0];
-      const { query } = url.parse(requestUrl);
-      expect(querystring.parse(query!)).toEqual({
+      const { searchParams } = new URL(requestUrl);
+      expect(searchParamsToObject(searchParams)).toEqual({
         "X-Algolia-API-Key": "testKey",
         "X-Algolia-Agent": "insights-js (1.0.1); insights-js-node-cjs (1.0.1)",
         "X-Algolia-Application-Id": "testId"
@@ -761,8 +817,8 @@ describe("sendEvents", () => {
 
     {
       const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
-      const { query } = url.parse(requestUrl);
-      expect(querystring.parse(query!)).toMatchObject(
+      const { searchParams } = new URL(requestUrl);
+      expect(searchParamsToObject(searchParams)).toMatchObject(
         expect.objectContaining({
           "X-Algolia-Application-Id": credentials.appId,
           "X-Algolia-API-Key": credentials.apiKey
@@ -796,8 +852,8 @@ describe("sendEvents", () => {
 
     {
       const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
-      const { query } = url.parse(requestUrl);
-      expect(querystring.parse(query!)).toMatchObject(
+      const { searchParams } = new URL(requestUrl);
+      expect(searchParamsToObject(searchParams)).toMatchObject(
         expect.objectContaining({
           "X-Algolia-Application-Id": customAppId,
           "X-Algolia-API-Key": customApiKey
@@ -817,8 +873,8 @@ describe("sendEvents", () => {
 
     {
       const requestUrl = XMLHttpRequest.open.mock.calls[1][1];
-      const { query } = url.parse(requestUrl);
-      expect(querystring.parse(query!)).toMatchObject(
+      const { searchParams } = new URL(requestUrl);
+      expect(searchParamsToObject(searchParams)).toMatchObject(
         expect.objectContaining({
           "X-Algolia-Application-Id": credentials.appId,
           "X-Algolia-API-Key": credentials.apiKey
