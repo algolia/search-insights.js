@@ -1,4 +1,5 @@
 import AlgoliaAnalytics from "../insights";
+import { getQueryForObject } from "../utils";
 
 const credentials = {
   apiKey: "test",
@@ -20,6 +21,7 @@ beforeEach(() => {
   });
   analyticsInstance.sendEvents = jest.fn();
   analyticsInstance.init(credentials);
+  localStorage.clear();
 });
 
 describe("convertedObjectIDsAfterSearch", () => {
@@ -96,6 +98,30 @@ describe("addedToCartObjectIDsAfterSearch", () => {
       expect.any(Array),
       additionalParameters
     );
+  });
+
+  it("should store the queryID", () => {
+    expect(getQueryForObject("index1", "12345")).toBeUndefined();
+    analyticsInstance.addedToCartObjectIDsAfterSearch(convertParams);
+    expect(getQueryForObject("index1", "12345")).toEqual([
+      "test",
+      expect.any(Number)
+    ]);
+  });
+
+  it("should store the objectData.queryID if specified", () => {
+    expect(getQueryForObject("index1", "12345")).toBeUndefined();
+    analyticsInstance.addedToCartObjectIDsAfterSearch({
+      ...convertParams,
+      objectData: convertParams.objectData.map((data) => ({
+        ...data,
+        queryID: "objectData-query"
+      }))
+    });
+    expect(getQueryForObject("index1", "12345")).toEqual([
+      "objectData-query",
+      expect.any(Number)
+    ]);
   });
 });
 
@@ -208,6 +234,21 @@ describe("addedToCartObjectIDs", () => {
       expect.any(Array),
       additionalParameters
     );
+  });
+
+  it("should store the objectData.queryID if specified", () => {
+    expect(getQueryForObject("index1", "12345")).toBeUndefined();
+    analyticsInstance.addedToCartObjectIDs({
+      ...convertParams,
+      objectData: convertParams.objectData.map((data) => ({
+        ...data,
+        queryID: "objectData-query"
+      }))
+    });
+    expect(getQueryForObject("index1", "12345")).toEqual([
+      "objectData-query",
+      expect.any(Number)
+    ]);
   });
 });
 
