@@ -156,6 +156,53 @@ describe("sendEvents", () => {
         ]
       });
     });
+    it("shouldn't infer query ids when additionalParams.inferQueryID is false", () => {
+      storeQueryForObject("my-index", "1", "clicked-query");
+      analyticsInstance.sendEvents(
+        [
+          {
+            eventType: "conversion",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"]
+          }
+        ],
+        { inferQueryID: false }
+      );
+      analyticsInstance.sendEvents([
+        {
+          eventType: "conversion",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(2);
+      const payload1 = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload1).toEqual({
+        events: [
+          {
+            eventType: "conversion",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: expect.any(String)
+          }
+        ]
+      });
+      const payload2 = JSON.parse(XMLHttpRequest.send.mock.calls[1][0]);
+      expect(payload2).toEqual({
+        events: [
+          {
+            eventType: "conversion",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: expect.any(String)
+          }
+        ]
+      });
+    });
   });
 
   describe("with sendBeacon", () => {
