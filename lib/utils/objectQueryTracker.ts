@@ -30,3 +30,15 @@ export function getQueryForObject(
 ): [queryId: string, timestamp: number] | undefined {
   return getCache(index)[objectID];
 }
+
+export function removeQueryForObjects(
+  index: string,
+  objectIDs: string[]
+): void {
+  const objectQueryMap = getCache(index);
+
+  objectIDs.forEach((objectID) => {
+    delete objectQueryMap[objectID];
+  });
+  setCache(index, objectQueryMap);
+}

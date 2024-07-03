@@ -1,4 +1,8 @@
-import { storeQueryForObject, getQueryForObject } from "../objectQueryTracker";
+import {
+  storeQueryForObject,
+  getQueryForObject,
+  removeQueryForObjects
+} from "../objectQueryTracker";
 
 describe("objectQueryTracker", () => {
   beforeEach(() => {
@@ -65,6 +69,36 @@ describe("objectQueryTracker", () => {
       const storedQuery = getQueryForObject(index, objectID);
 
       expect(storedQuery).toEqual([queryID2, expect.any(Number)]);
+    });
+  });
+
+  describe("removeQueryForObject", () => {
+    it("removes a query for an object", () => {
+      const index = "myIndex";
+      const objectID1 = "123";
+      const objectID2 = "456";
+      const queryID1 = "abc";
+      const queryID2 = "def";
+
+      storeQueryForObject(index, objectID1, queryID1);
+      storeQueryForObject(index, objectID2, queryID2);
+
+      const storedQuery = JSON.parse(
+        localStorage.getItem("AlgoliaObjectQueryCache_myIndex")!
+      );
+
+      expect(storedQuery).toEqual({
+        [objectID1]: [queryID1, expect.any(Number)],
+        [objectID2]: [queryID2, expect.any(Number)]
+      });
+
+      removeQueryForObjects(index, [objectID1, objectID2]);
+
+      const storedQueryAfterRemoval = JSON.parse(
+        localStorage.getItem("AlgoliaObjectQueryCache_myIndex")!
+      );
+
+      expect(storedQueryAfterRemoval).toEqual({});
     });
   });
 });
