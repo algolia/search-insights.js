@@ -126,6 +126,7 @@ export type InsightsEvent = {
   objectIDs?: string[];
   positions?: number[];
   objectData?: InsightsEventObjectData[];
+  objectIDsWithInferredQueryID?: string[];
 
   filters?: string[];
 
@@ -135,4 +136,5 @@ export type InsightsEvent = {
 
 export type InsightsAdditionalEventParams = {
   headers?: Record<string, string>;
+  inferQueryID?: boolean;
 };

@@ -13,3 +13,4 @@ export const isFunction = (value: any): value is Function =>
 
 export * from "./extractAdditionalParams";
 export * from "./featureDetection";
+export * from "./objectQueryTracker";
