@@ -5,6 +5,7 @@ import { version } from "../../package.json";
 import { getFunctionalInterface } from "../_getFunctionalInterface";
 import AlgoliaAnalytics from "../insights";
 import type { InsightsClient } from "../types";
+import type { RequestFnType } from "../utils/request";
 
 const defaultPayload = {
   eventName: "my-event",
@@ -16,9 +17,9 @@ const defaultRequestUrl = `https://insights.algolia.io/1/events?X-Algolia-Applic
 
 describe("_sendEvent in node env", () => {
   let aa: InsightsClient;
-  let requestFn: jest.Mock<any, any>;
+  const requestFn: jest.MockedFunction<RequestFnType> = jest.fn();
   beforeEach(() => {
-    requestFn = jest.fn();
+    requestFn.mockResolvedValue(true);
     const instance = new AlgoliaAnalytics({ requestFn });
     aa = getFunctionalInterface(instance);
     aa("init", {

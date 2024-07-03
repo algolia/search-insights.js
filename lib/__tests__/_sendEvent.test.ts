@@ -331,6 +331,21 @@ describe("sendEvents", () => {
       expect(result instanceof Promise).toBe(true);
       expect(result).resolves.toBe("test");
     });
+
+    it("shouldn't error when custom requestFn doesn't return a promise", () => {
+      fakeRequestFn.mockImplementationOnce(() => false);
+
+      const result = analyticsInstance.sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
+
+      expect(result).toBe(false);
+    });
   });
 
   describe("init", () => {
