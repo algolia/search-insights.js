@@ -1,7 +1,7 @@
 import { addQueryId } from "./_addQueryId";
 import type AlgoliaAnalytics from "./insights";
 import type { InsightsAdditionalEventParams, InsightsEvent } from "./types";
-import { isUndefined } from "./utils";
+import { isPromise, isUndefined, removeQueryForObjects } from "./utils";
 import type { RequestFnType } from "./utils/request";
 
 export function makeSendEvents(requestFn: RequestFnType) {
@@ -48,7 +48,7 @@ export function makeSendEvents(requestFn: RequestFnType) {
       return Promise.resolve(false);
     }
 
-    return sendRequest(
+    const send = sendRequest(
       requestFn,
       this._ua,
       this._endpointOrigin,
@@ -57,6 +57,25 @@ export function makeSendEvents(requestFn: RequestFnType) {
       this._apiKey,
       additionalParams?.headers
     );
+    return isPromise(send) ? send.then(purgePurchased(events)) : send;
+  };
+}
+
+function purgePurchased(events: InsightsEvent[]): (value: boolean) => boolean {
+  return (sent) => {
+    if (sent) {
+      events
+        .filter(
+          ({ eventType, eventSubtype, objectIDs }) =>
+            eventType === "conversion" &&
+            eventSubtype === "purchase" &&
+            objectIDs?.length
+        )
+        .forEach(({ index, objectIDs }) =>
+          removeQueryForObjects(index, objectIDs!)
+        );
+    }
+    return sent;
   };
 }
 

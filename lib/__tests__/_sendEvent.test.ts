@@ -1,6 +1,7 @@
 import AlgoliaAnalytics from "../insights";
-import { storeQueryForObject } from "../utils";
+import { getQueryForObject, storeQueryForObject } from "../utils";
 import { getRequesterForBrowser } from "../utils/getRequesterForBrowser";
+import type { RequestFnType } from "../utils/request";
 
 jest.mock("../../package.json", () => ({
   version: "1.0.1"
@@ -202,6 +203,45 @@ describe("sendEvents", () => {
           }
         ]
       });
+    });
+    it("should remove inferred query id from store when eventSubtype is 'purchase'", async () => {
+      const requestFn: jest.MockedFunction<RequestFnType> = jest
+        .fn()
+        .mockResolvedValue(true);
+      analyticsInstance = setupInstance({
+        requestFn
+      });
+      storeQueryForObject("my-index", "1", "clicked-query");
+      const send = analyticsInstance.sendEvents(
+        [
+          {
+            eventType: "conversion",
+            eventSubtype: "purchase",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"]
+          }
+        ],
+        { inferQueryID: true }
+      );
+      expect(requestFn).toHaveBeenCalledTimes(1);
+      const [, payload] = requestFn.mock.calls[0];
+      expect(payload).toEqual({
+        events: [
+          {
+            eventType: "conversion",
+            eventSubtype: "purchase",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"],
+            objectData: [{ queryID: "clicked-query" }],
+            userToken: expect.any(String),
+            objectIDsWithInferredQueryID: ["1"]
+          }
+        ]
+      });
+      await send;
+      expect(getQueryForObject("my-index", "1")).toBeUndefined();
     });
   });
 
