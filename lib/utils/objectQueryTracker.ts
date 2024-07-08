@@ -5,7 +5,7 @@ interface ObjectQueryMap {
 }
 
 const STORE = "AlgoliaObjectQueryCache";
-const LIMIT = 5000; // 1 entry is typically no more than 100 bytes, so this is ~500KB worth of data - most browsers allow at least 5MB per origin
+const LIMIT = 5000; // 1 entry is typically no more than 100 bytes, so this is ~500kB worth of data - most browsers allow at least 5MB per origin
 const FREE = 1000;
 
 function getCache(): ObjectQueryMap {
