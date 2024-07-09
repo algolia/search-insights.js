@@ -4,19 +4,6 @@ const setItemMock = jest.spyOn(Object.getPrototypeOf(localStorage), "setItem");
 const consoleErrorSpy = jest
   .spyOn(console, "error")
   .mockImplementation(() => {});
-if (!global.navigator.storage) {
-  (global.navigator as any).storage = {
-    estimate: jest.fn()
-  };
-}
-const storageEstimateMock = jest.spyOn(
-  global.navigator.storage,
-  "estimate" as any
-);
-storageEstimateMock.mockResolvedValue({
-  usage: 0,
-  quota: 100
-});
 
 describe("LocalStorage", () => {
   beforeEach(() => {
@@ -86,23 +73,5 @@ describe("LocalStorage", () => {
 
     const result = localStorage.getItem(key);
     expect(result).toBeNull();
-  });
-
-  it("checks if the storage is nearly full", async () => {
-    expect(await LocalStorage.isNearlyFull()).toBe(false);
-
-    storageEstimateMock.mockResolvedValueOnce({
-      usage: 90,
-      quota: 100
-    });
-
-    expect(await LocalStorage.isNearlyFull()).toBe(false);
-
-    storageEstimateMock.mockResolvedValueOnce({
-      usage: 91,
-      quota: 100
-    });
-
-    expect(await LocalStorage.isNearlyFull()).toBe(true);
   });
 });

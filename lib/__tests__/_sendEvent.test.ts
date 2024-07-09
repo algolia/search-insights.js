@@ -1,6 +1,7 @@
 import AlgoliaAnalytics from "../insights";
-import { storeQueryForObject } from "../utils";
+import { getQueryForObject, storeQueryForObject } from "../utils";
 import { getRequesterForBrowser } from "../utils/getRequesterForBrowser";
+import type { RequestFnType } from "../utils/request";
 
 jest.mock("../../package.json", () => ({
   version: "1.0.1"
@@ -156,6 +157,92 @@ describe("sendEvents", () => {
         ]
       });
     });
+    it("shouldn't infer query ids when additionalParams.inferQueryID is false", () => {
+      storeQueryForObject("my-index", "1", "clicked-query");
+      analyticsInstance.sendEvents(
+        [
+          {
+            eventType: "conversion",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"]
+          }
+        ],
+        { inferQueryID: false }
+      );
+      analyticsInstance.sendEvents([
+        {
+          eventType: "conversion",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
+      expect(XMLHttpRequest.send).toHaveBeenCalledTimes(2);
+      const payload1 = JSON.parse(XMLHttpRequest.send.mock.calls[0][0]);
+      expect(payload1).toEqual({
+        events: [
+          {
+            eventType: "conversion",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: expect.any(String)
+          }
+        ]
+      });
+      const payload2 = JSON.parse(XMLHttpRequest.send.mock.calls[1][0]);
+      expect(payload2).toEqual({
+        events: [
+          {
+            eventType: "conversion",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: expect.any(String)
+          }
+        ]
+      });
+    });
+    it("should remove inferred query id from store when eventSubtype is 'purchase'", async () => {
+      const requestFn: jest.MockedFunction<RequestFnType> = jest
+        .fn()
+        .mockResolvedValue(true);
+      analyticsInstance = setupInstance({
+        requestFn
+      });
+      storeQueryForObject("my-index", "1", "clicked-query");
+      const send = analyticsInstance.sendEvents(
+        [
+          {
+            eventType: "conversion",
+            eventSubtype: "purchase",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"]
+          }
+        ],
+        { inferQueryID: true }
+      );
+      expect(requestFn).toHaveBeenCalledTimes(1);
+      const [, payload] = requestFn.mock.calls[0];
+      expect(payload).toEqual({
+        events: [
+          {
+            eventType: "conversion",
+            eventSubtype: "purchase",
+            eventName: "my-event",
+            index: "my-index",
+            objectIDs: ["1"],
+            objectData: [{ queryID: "clicked-query" }],
+            userToken: expect.any(String),
+            objectIDsWithInferredQueryID: ["1"]
+          }
+        ]
+      });
+      await send;
+      expect(getQueryForObject("my-index", "1")).toBeUndefined();
+    });
   });
 
   describe("with sendBeacon", () => {
@@ -283,6 +370,21 @@ describe("sendEvents", () => {
 
       expect(result instanceof Promise).toBe(true);
       expect(result).resolves.toBe("test");
+    });
+
+    it("shouldn't error when custom requestFn doesn't return a promise", () => {
+      fakeRequestFn.mockImplementationOnce(() => false);
+
+      const result = analyticsInstance.sendEvents([
+        {
+          eventType: "click",
+          eventName: "my-event",
+          index: "my-index",
+          objectIDs: ["1"]
+        }
+      ]);
+
+      expect(result).toBe(false);
     });
   });
 

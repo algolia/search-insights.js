@@ -50,17 +50,4 @@ export class LocalStorage {
   static remove(key: string): void {
     localStorage.removeItem(key);
   }
-
-  /**
-   * Check if the storage is nearly full.
-   *
-   * @returns A promise that resolves to a boolean indicating if the storage is > 90% full.
-   */
-  static isNearlyFull(): Promise<boolean> {
-    return navigator.storage.estimate().then(
-      ({ usage, quota }) =>
-        Boolean(usage && quota && usage / quota > LocalStorage.THRESHOLD),
-      () => false
-    );
-  }
 }

@@ -1,13 +1,14 @@
 import AlgoliaAnalytics from "../insights";
+import type { RequestFnType } from "../utils/request";
 
 jest.mock("../../package.json", () => ({ version: "1.0.1" }));
 
 describe("algoliaAgent", () => {
   let analyticsInstance: AlgoliaAnalytics;
-  let requestFn: jest.Mock<any, any>;
+  const requestFn: jest.MockedFunction<RequestFnType> = jest.fn();
 
   beforeEach(() => {
-    requestFn = jest.fn();
+    requestFn.mockResolvedValue(true);
     analyticsInstance = new AlgoliaAnalytics({ requestFn });
     analyticsInstance.init({ apiKey: "test", appId: "test" });
   });
