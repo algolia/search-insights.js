@@ -1,3 +1,13 @@
+# [2.15.0](https://github.com/algolia/search-insights.js/compare/v2.14.0...v2.15.0) (2024-07-09)
+
+
+### Features
+
+* add query id inference for conversion events based on prior clicks ([#534](https://github.com/algolia/search-insights.js/issues/534)) ([ca2f234](https://github.com/algolia/search-insights.js/commit/ca2f23454685220689cac4e48d0341a2f91fbf07))
+* query id inference pruning of purchased and oldest associations when limit is reached ([#535](https://github.com/algolia/search-insights.js/issues/535)) ([2e0ca49](https://github.com/algolia/search-insights.js/commit/2e0ca496c524bef4832595f18be4bb9cc1bfabac))
+
+
+
 # [2.14.0](https://github.com/algolia/search-insights.js/compare/v2.13.0...v2.14.0) (2024-05-22)
 
 
