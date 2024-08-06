@@ -1,3 +1,12 @@
+# [2.16.0](https://github.com/algolia/search-insights.js/compare/v2.15.0...v2.16.0) (2024-08-06)
+
+
+### Features
+
+* add esm configuration to rollup/package.json and add the node/browser output files ([#531](https://github.com/algolia/search-insights.js/issues/531)) ([bd14e19](https://github.com/algolia/search-insights.js/commit/bd14e19d0cad69dc152df85f2eb7d33e915a60c1))
+
+
+
 # [2.15.0](https://github.com/algolia/search-insights.js/compare/v2.14.0...v2.15.0) (2024-07-09)
 
 
