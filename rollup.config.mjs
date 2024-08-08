@@ -1,14 +1,14 @@
 import buble from "@rollup/plugin-buble";
-import filesize from "rollup-plugin-filesize";
-import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
-import { uglify } from "rollup-plugin-uglify";
 import json from "@rollup/plugin-json";
-import typescript from "@rollup/plugin-typescript";
+import resolve from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
+import typescript from "@rollup/plugin-typescript";
+import filesize from "rollup-plugin-filesize";
+import { uglify } from "rollup-plugin-uglify";
 
-const MODULE_NAME = "AlgoliaAnalytics",
-  LIBRARY_OUTPUT_NAME = "search-insights";
+const MODULE_NAME = "AlgoliaAnalytics";
+const LIBRARY_OUTPUT_NAME = "search-insights";
 
 const createPlugins = ({ format, flavor }) => [
   typescript(),
@@ -31,7 +31,7 @@ const createPlugins = ({ format, flavor }) => [
   }),
   buble(),
   commonjs(),
-  uglify(),
+  ...(flavor === "node-cjs" ? [] : [uglify()]),
   filesize()
 ];
 
@@ -48,23 +48,23 @@ export default [
     plugins: createPlugins({ format: "umd", flavor: "browser-umd" })
   },
   {
-    input: "lib/entry-node-cjs.ts",
+    input: "lib/entry-node.ts",
     output: {
       format: "cjs",
       exports: "named",
       name: MODULE_NAME,
-      file: `./dist/${LIBRARY_OUTPUT_NAME}-node.cjs.min.js`
+      file: `./dist/${LIBRARY_OUTPUT_NAME}-node.cjs`
     },
     external: ["http", "https"],
     plugins: createPlugins({ format: "cjs", flavor: "node-cjs" })
   },
   {
-    input: "lib/entry-browser-cjs.ts",
+    input: "lib/entry-browser.ts",
     output: {
       format: "cjs",
       exports: "named",
       name: MODULE_NAME,
-      file: `./dist/${LIBRARY_OUTPUT_NAME}-browser.cjs.min.js`
+      file: `./dist/${LIBRARY_OUTPUT_NAME}-browser.min.cjs`
     },
     external: ["http", "https"],
     plugins: createPlugins({ format: "cjs", flavor: "browser-cjs" })
@@ -80,27 +80,11 @@ export default [
     plugins: createPlugins({ format: "iife", flavor: "browser-iife" })
   },
   {
-    input: "lib/entry-browser-cjs.ts",
+    input: "lib/entry-browser.ts",
     output: {
       format: "esm",
-      file: `./dist/${LIBRARY_OUTPUT_NAME}.esm.js`
+      file: `./dist/${LIBRARY_OUTPUT_NAME}-browser.mjs`
     },
     plugins: createPlugins({ format: "esm", flavor: "browser-esm" })
-  },
-  {
-    input: "index-browser.cjs.js",
-    output: {
-      format: "esm",
-      file: `index-browser.esm.js`
-    },
-    plugins: createPlugins({ format: "esm", flavor: "browser-esm" })
-  },
-  {
-    input: "index-node.cjs.js",
-    output: {
-      format: "esm",
-      file: `index-node.esm.js`
-    },
-    plugins: createPlugins({ format: "esm", flavor: "node-esm" })
-  },
+  }
 ];
