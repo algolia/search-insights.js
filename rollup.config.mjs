@@ -31,7 +31,7 @@ const createPlugins = ({ format, flavor }) => [
   }),
   buble(),
   commonjs(),
-  ...(flavor === "node-cjs" ? [] : [uglify()]),
+  ...(["node-cjs", "node-esm"].includes(flavor) ? [] : [uglify()]),
   filesize()
 ];
 
@@ -86,5 +86,13 @@ export default [
       file: `./dist/${LIBRARY_OUTPUT_NAME}-browser.mjs`
     },
     plugins: createPlugins({ format: "esm", flavor: "browser-esm" })
+  },
+  {
+    input: "lib/entry-node.ts",
+    output: {
+      format: "esm",
+      file: `./dist/${LIBRARY_OUTPUT_NAME}-node.mjs`
+    },
+    plugins: createPlugins({ format: "esm", flavor: "node-esm" })
   }
 ];
