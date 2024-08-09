@@ -3,32 +3,32 @@
   "description": "Library for reporting click, conversion and view metrics using the Algolia Insights API",
   "version": "2.16.0",
   "jsdelivr": "dist/search-insights.min.js",
-  "main": "index-node.cjs.js",
-  "types": "index-node.cjs.d.ts",
-  "browser": "index-browser.cjs.js",
-  "module": "index-node.esm.js",
+  "main": "index-node.cjs",
+  "types": "index-node.d.ts",
+  "browser": "index-browser.cjs",
+  "module": "index-node.cjs",
   "exports": {
-    ".": {
-      "import": "./index-node.esm.js",
-      "require": "./index-node.cjs.js"
+    "node": {
+      "default": "./index-node.cjs",
+      "types": "./index-node.d.ts"
     },
-    "./index-browser": {
-      "import": "./index-browser.esm.js",
-      "require": "./index-browser.cjs.js"
+    "default": {
+      "import": "./index-browser.mjs",
+      "types": "./index-browser.d.ts",
+      "require": "./index-browser.cjs"
     }
   },
   "react-native": {
-    "http": "./empty-module.cjs.js",
-    "https": "./empty-module.cjs.js"
+    "http": "./empty-module.cjs",
+    "https": "./empty-module.cjs"
   },
   "files": [
     "dist",
     "lib",
     "!**/__tests__/**",
-    "empty-module.cjs.js",
-    "empty-module.cjs.d.ts",
-    "index-browser.cjs.d.ts",
-    "index-node.cjs.d.ts"
+    "empty-module.*",
+    "index-browser.*",
+    "index-node.*"
   ],
   "scripts": {
     "build": "rollup --environment NODE_ENV:'production' -c rollup.config.mjs && tsc --build tsconfig.declaration.json",
