@@ -1,3 +1,12 @@
+## [2.16.1](https://github.com/algolia/search-insights.js/compare/v2.16.0...v2.16.1) (2024-08-09)
+
+
+### Bug Fixes
+
+* include esm builds in dist files ([#544](https://github.com/algolia/search-insights.js/issues/544)) ([3bff866](https://github.com/algolia/search-insights.js/commit/3bff866cf5db4b75d8a0e4d1902ab9b48379e820)), closes [#543](https://github.com/algolia/search-insights.js/issues/543)
+
+
+
 # [2.16.0](https://github.com/algolia/search-insights.js/compare/v2.15.0...v2.16.0) (2024-08-06)
 
 
