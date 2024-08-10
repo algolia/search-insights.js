@@ -1,3 +1,12 @@
+## [2.16.2](https://github.com/algolia/search-insights.js/compare/v2.16.1...v2.16.2) (2024-08-09)
+
+
+### Bug Fixes
+
+* correct order of exports ([#546](https://github.com/algolia/search-insights.js/issues/546)) ([f208a56](https://github.com/algolia/search-insights.js/commit/f208a56c12d497aa5df1201fa72322a889b21ec4))
+
+
+
 ## [2.16.1](https://github.com/algolia/search-insights.js/compare/v2.16.0...v2.16.1) (2024-08-09)
 
 
