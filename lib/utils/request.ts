@@ -66,7 +66,7 @@ export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
       }
     });
 
-    req.on("error", (error: any) => {
+    req.on("error", (error) => {
       /* eslint-disable no-console */
       console.error(error);
       /* eslint-enable */
@@ -91,7 +91,7 @@ export const requestWithNativeFetch: RequestFnType = (url, data) => {
       .then((response) => {
         resolve(response.status === 200);
       })
-      .catch((e) => {
+      .catch((e: Error) => {
         reject(e);
       });
   });
