@@ -7,5 +7,5 @@ module.exports = {
     return true;
   },
   buildCommand: () => "yarn build && /bin/bash ./pre-deploy.sh",
-  pullRequestTeamReviewers: ["event-experiences"]
+  pullRequestTeamReviewers: ["events-platform"]
 };
