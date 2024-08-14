@@ -2,7 +2,7 @@
  * A utility class for safely interacting with localStorage.
  */
 export class LocalStorage {
-  static readonly THRESHOLD = 0.9;
+  static store: Storage | undefined = globalThis.localStorage;
 
   /**
    * Safely get a value from localStorage.
@@ -12,14 +12,14 @@ export class LocalStorage {
    * @returns Null if the key is not found or unable to be parsed, the value otherwise.
    */
   static get<T>(key: string): T | null {
-    const val = localStorage.getItem(key);
+    const val = this.store?.getItem(key);
     if (!val) {
       return null;
     }
 
     try {
       return JSON.parse(val) as T;
-    } catch (e) {
+    } catch {
       return null;
     }
   }
@@ -33,7 +33,7 @@ export class LocalStorage {
    */
   static set(key: string, value: any): void {
     try {
-      localStorage.setItem(key, JSON.stringify(value));
+      this.store?.setItem(key, JSON.stringify(value));
     } catch {
       // eslint-disable-next-line no-console
       console.error(
@@ -48,6 +48,6 @@ export class LocalStorage {
    * @param key - String value of the key.
    */
   static remove(key: string): void {
-    localStorage.removeItem(key);
+    this.store?.removeItem(key);
   }
 }
