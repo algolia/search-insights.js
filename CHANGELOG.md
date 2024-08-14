@@ -1,3 +1,12 @@
+## [2.16.3](https://github.com/algolia/search-insights.js/compare/v2.16.2...v2.16.3) (2024-08-14)
+
+
+### Bug Fixes
+
+* test for localStorage before using it and enable it to be shimmed with a Storage-compatible interface ([#550](https://github.com/algolia/search-insights.js/issues/550)) ([c3982f5](https://github.com/algolia/search-insights.js/commit/c3982f597c7b8cb5749df2dd6ca4f59fb78f4e2e)), closes [#541](https://github.com/algolia/search-insights.js/issues/541)
+
+
+
 ## [2.16.2](https://github.com/algolia/search-insights.js/compare/v2.16.1...v2.16.2) (2024-08-09)
 
 
