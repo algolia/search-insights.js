@@ -1,3 +1,12 @@
+# [2.17.0](https://github.com/algolia/search-insights.js/compare/v2.16.3...v2.17.0) (2024-08-23)
+
+
+### Features
+
+* update getFunctionalInterface to return the method being passed instead of just executing ([#552](https://github.com/algolia/search-insights.js/issues/552)) ([ebb41f8](https://github.com/algolia/search-insights.js/commit/ebb41f8a365bdd6bc0339f8585189168c6213c3c)), closes [#524](https://github.com/algolia/search-insights.js/issues/524)
+
+
+
 ## [2.16.3](https://github.com/algolia/search-insights.js/compare/v2.16.2...v2.16.3) (2024-08-14)
 
 
