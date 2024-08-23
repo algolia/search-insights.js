@@ -9,9 +9,9 @@ export function makeSendEvents(requestFn: RequestFnType) {
     this: AlgoliaAnalytics,
     eventData: InsightsEvent[],
     additionalParams?: InsightsAdditionalEventParams
-  ): Promise<boolean> | undefined {
+  ): Promise<boolean> {
     if (this._userHasOptedOut) {
-      return undefined;
+      return Promise.resolve(false);
     }
     const hasCredentials =
       (!isUndefined(this._apiKey) && !isUndefined(this._appId)) ||
