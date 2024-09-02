@@ -140,7 +140,11 @@ describe("request", () => {
     expect(sent).toBe(true);
     expect(navigator.sendBeacon).not.toHaveBeenCalled();
     expect(open).toHaveBeenCalledTimes(1);
-    expect(setRequestHeader).toHaveBeenCalledTimes(2);
+    expect(setRequestHeader).toHaveBeenCalledTimes(1);
+    expect(setRequestHeader).toHaveBeenCalledWith(
+      "Content-Type",
+      "application/json"
+    );
     expect(open).toHaveBeenLastCalledWith("POST", url);
     expect(send).toHaveBeenCalledTimes(1);
     expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
@@ -162,7 +166,7 @@ describe("request", () => {
     expect(navigator.sendBeacon).toHaveBeenCalledTimes(1);
 
     expect(open).toHaveBeenCalledTimes(1);
-    expect(setRequestHeader).toHaveBeenCalledTimes(2);
+    expect(setRequestHeader).toHaveBeenCalledTimes(1);
     expect(open).toHaveBeenLastCalledWith("POST", url);
     expect(send).toHaveBeenCalledTimes(1);
     expect(send).toHaveBeenLastCalledWith(JSON.stringify(data));
