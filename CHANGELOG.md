@@ -1,3 +1,12 @@
+## [2.17.1](https://github.com/algolia/search-insights.js/compare/v2.17.0...v2.17.1) (2024-09-03)
+
+
+### Bug Fixes
+
+* don't set Content-Length in XMLHttpRequest fn ([#554](https://github.com/algolia/search-insights.js/issues/554)) ([e3aaa8e](https://github.com/algolia/search-insights.js/commit/e3aaa8e370d8a404d7fecf0e2a2b76c716d03a39)), closes [/github.com/algolia/search-insights.js/pull/358#issuecomment-2324026184](https://github.com//github.com/algolia/search-insights.js/pull/358/issues/issuecomment-2324026184)
+
+
+
 # [2.17.0](https://github.com/algolia/search-insights.js/compare/v2.16.3...v2.17.0) (2024-08-23)
 
 
