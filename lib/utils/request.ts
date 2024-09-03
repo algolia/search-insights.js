@@ -24,7 +24,6 @@ export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
     req.addEventListener("timeout", () => resolve(false));
     req.open("POST", url);
     req.setRequestHeader("Content-Type", "application/json");
-    req.setRequestHeader("Content-Length", `${serializedData.length}`);
     req.send(serializedData);
   });
 };
