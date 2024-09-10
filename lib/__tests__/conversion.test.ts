@@ -123,6 +123,32 @@ describe("addedToCartObjectIDsAfterSearch", () => {
       expect.any(Number)
     ]);
   });
+
+  it("shouldn't store the queryID when user has opted out", () => {
+    const aa = new AlgoliaAnalytics({
+      requestFn: jest.fn().mockResolvedValue(true)
+    });
+    aa.init({ ...credentials, userHasOptedOut: true });
+    expect(getQueryForObject("index1", "12345")).toBeUndefined();
+    aa.addedToCartObjectIDsAfterSearch(convertParams);
+    expect(getQueryForObject("index1", "12345")).toBeUndefined();
+  });
+
+  it("shouldn't store the objectData.queryID if specified when user has opted out", () => {
+    const aa = new AlgoliaAnalytics({
+      requestFn: jest.fn().mockResolvedValue(true)
+    });
+    aa.init({ ...credentials, userHasOptedOut: true });
+    expect(getQueryForObject("index1", "12345")).toBeUndefined();
+    aa.addedToCartObjectIDsAfterSearch({
+      ...convertParams,
+      objectData: convertParams.objectData.map((data) => ({
+        ...data,
+        queryID: "objectData-query"
+      }))
+    });
+    expect(getQueryForObject("index1", "12345")).toBeUndefined();
+  });
 });
 
 describe("purchasedObjectIDsAfterSearch", () => {

@@ -23,8 +23,9 @@ export function clickedObjectIDsAfterSearch(
     extractAdditionalParams<InsightsSearchClickEvent>(params);
 
   events.forEach(({ index, queryID, objectIDs }) =>
-    objectIDs.forEach((objectID) =>
-      storeQueryForObject(index, objectID, queryID)
+    objectIDs.forEach(
+      (objectID) =>
+        !this._userHasOptedOut && storeQueryForObject(index, objectID, queryID)
     )
   );
 
