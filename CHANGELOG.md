@@ -1,3 +1,13 @@
+## [2.17.2](https://github.com/algolia/search-insights.js/compare/v2.17.1...v2.17.2) (2024-09-11)
+
+
+### Bug Fixes
+
+* check if localStorage is usable before using it ([#558](https://github.com/algolia/search-insights.js/issues/558)) ([eb460a8](https://github.com/algolia/search-insights.js/commit/eb460a82e907537054d631f1e1de261ee9b8f1ce)), closes [#556](https://github.com/algolia/search-insights.js/issues/556)
+* don't store query/object associations when userHasOptedOut is true ([#557](https://github.com/algolia/search-insights.js/issues/557)) ([7c4ab3a](https://github.com/algolia/search-insights.js/commit/7c4ab3a690fbc53485d8341be9d0ab827538cda7))
+
+
+
 ## [2.17.1](https://github.com/algolia/search-insights.js/compare/v2.17.0...v2.17.1) (2024-09-03)
 
 
