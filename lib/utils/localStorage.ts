@@ -2,7 +2,7 @@
  * A utility class for safely interacting with localStorage.
  */
 export class LocalStorage {
-  static store: Storage | undefined = globalThis.localStorage;
+  static store: Storage | undefined = ensureLocalStorage();
 
   /**
    * Safely get a value from localStorage.
@@ -49,5 +49,16 @@ export class LocalStorage {
    */
   static remove(key: string): void {
     this.store?.removeItem(key);
+  }
+}
+
+function ensureLocalStorage(): Storage | undefined {
+  try {
+    const testKey = "__test_localStorage__";
+    globalThis.localStorage.setItem(testKey, testKey);
+    globalThis.localStorage.removeItem(testKey);
+    return globalThis.localStorage;
+  } catch {
+    return undefined;
   }
 }
