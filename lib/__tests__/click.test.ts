@@ -65,6 +65,16 @@ describe("clickedObjectIDsAfterSearch", () => {
       expect.any(Number)
     ]);
   });
+
+  it("shouldn't store the queryID when user has opted out", () => {
+    const aa = new AlgoliaAnalytics({
+      requestFn: jest.fn().mockResolvedValue(true)
+    });
+    aa.init({ ...credentials, userHasOptedOut: true });
+    expect(getQueryForObject("index1", "2")).toBeUndefined();
+    aa.clickedObjectIDsAfterSearch(clickParams);
+    expect(getQueryForObject("index1", "2")).toBeUndefined();
+  });
 });
 
 describe("clickedObjectIDs", () => {

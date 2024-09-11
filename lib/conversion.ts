@@ -38,7 +38,8 @@ export function addedToCartObjectIDsAfterSearch(
   events.forEach(({ index, queryID, objectIDs, objectData }) =>
     objectIDs.forEach((objectID, i) => {
       const objQueryID = objectData?.[i]?.queryID ?? queryID;
-      if (objQueryID) storeQueryForObject(index, objectID, objQueryID);
+      if (!this._userHasOptedOut && objQueryID)
+        storeQueryForObject(index, objectID, objQueryID);
     })
   );
 
@@ -102,7 +103,8 @@ export function addedToCartObjectIDs(
   events.forEach(({ index, objectIDs, objectData }) =>
     objectIDs.forEach((objectID, i) => {
       const queryID = objectData?.[i]?.queryID;
-      if (queryID) storeQueryForObject(index, objectID, queryID);
+      if (!this._userHasOptedOut && queryID)
+        storeQueryForObject(index, objectID, queryID);
     })
   );
 
