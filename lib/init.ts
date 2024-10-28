@@ -1,5 +1,5 @@
 import { DEFAULT_ALGOLIA_AGENTS } from "./_algoliaAgent";
-import { MONTH } from "./_tokenUtils";
+import { checkIfAnonymousToken, MONTH } from "./_tokenUtils";
 import type AlgoliaAnalytics from "./insights";
 import { isUndefined, isNumber } from "./utils";
 
@@ -25,6 +25,7 @@ export interface InitParams {
  *
  * @param options - InitParams.
  */
+// eslint-disable-next-line complexity
 export function init(this: AlgoliaAnalytics, options: InitParams = {}): void {
   if (
     !isUndefined(options.region) &&
@@ -80,6 +81,13 @@ You can visit https://algolia.com/events/debugger instead.`);
     this.setUserToken(options.userToken);
   } else if (!this._userToken && !this._userHasOptedOut && this._useCookie) {
     this.setAnonymousUserToken();
+  } else if (
+    this._userToken &&
+    checkIfAnonymousToken(this._userToken) &&
+    this._useCookie &&
+    !this._userHasOptedOut
+  ) {
+    this.saveTokenAsCookie();
   }
 }
 

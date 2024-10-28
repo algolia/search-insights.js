@@ -31,6 +31,24 @@ export const getCookie = (name: string): string => {
   return "";
 };
 
+export function checkIfAnonymousToken(token: number | string): boolean {
+  if (typeof token === "number") {
+    return false;
+  }
+
+  return token.indexOf("anonymous-") === 0;
+}
+
+export function saveTokenAsCookie(this: AlgoliaAnalytics): void {
+  const foundToken = getCookie(COOKIE_KEY);
+  if (
+    this._userToken &&
+    (!foundToken || foundToken === "" || foundToken.indexOf("anonymous-") !== 0)
+  ) {
+    setCookie(COOKIE_KEY, this._userToken, this._cookieDuration);
+  }
+}
+
 export function setAnonymousUserToken(
   this: AlgoliaAnalytics,
   inMemory = false
