@@ -1,6 +1,7 @@
 import { getCookie, MONTH } from "../_tokenUtils";
 import AlgoliaAnalytics from "../insights";
 import * as utils from "../utils";
+import { createUUID } from "../utils/uuid";
 
 jest.mock("../utils", () => ({
   __esModule: true,
@@ -246,7 +247,7 @@ describe("init", () => {
       appId: "XXX"
     });
 
-    analyticsInstance.setUserToken("anonymous-123123123");
+    analyticsInstance.setUserToken(`anonymous-${createUUID()}`);
 
     analyticsInstance.init({
       partial: true,
