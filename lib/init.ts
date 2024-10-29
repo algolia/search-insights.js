@@ -25,7 +25,6 @@ export interface InitParams {
  *
  * @param options - InitParams.
  */
-// eslint-disable-next-line complexity
 export function init(this: AlgoliaAnalytics, options: InitParams = {}): void {
   if (
     !isUndefined(options.region) &&
@@ -81,12 +80,7 @@ You can visit https://algolia.com/events/debugger instead.`);
     this.setUserToken(options.userToken);
   } else if (!this._userToken && !this._userHasOptedOut && this._useCookie) {
     this.setAnonymousUserToken();
-  } else if (
-    this._userToken &&
-    checkIfAnonymousToken(this._userToken) &&
-    this._useCookie &&
-    !this._userHasOptedOut
-  ) {
+  } else if (checkIfTokenNeedsToBeSaved(this)) {
     this.saveTokenAsCookie();
   }
 }
@@ -116,5 +110,17 @@ function setOptions(
       (acc, key) => ({ ...acc, [`_${key}`]: options[key] }),
       {}
     )
+  );
+}
+
+function checkIfTokenNeedsToBeSaved(target: AlgoliaAnalytics): boolean {
+  if (target._userToken === undefined) {
+    return false;
+  }
+
+  return (
+    checkIfAnonymousToken(target._userToken) &&
+    target._useCookie &&
+    !target._userHasOptedOut
   );
 }
