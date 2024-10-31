@@ -1,6 +1,7 @@
 import { getCookie, MONTH } from "../_tokenUtils";
 import AlgoliaAnalytics from "../insights";
 import * as utils from "../utils";
+import { createUUID } from "../utils/uuid";
 
 jest.mock("../utils", () => ({
   __esModule: true,
@@ -239,6 +240,23 @@ describe("init", () => {
     expect(setUserToken).toHaveBeenCalledTimes(2);
 
     setUserToken.mockRestore();
+  });
+  it("should save anonymous userToken as cookie when useCookie is set to true later", () => {
+    analyticsInstance.init({
+      apiKey: "***",
+      appId: "XXX"
+    });
+
+    analyticsInstance.setUserToken(`anonymous-${createUUID()}`);
+
+    analyticsInstance.init({
+      partial: true,
+      useCookie: true
+    });
+
+    expect(document.cookie).toEqual(
+      expect.stringMatching(/^_ALGOLIA=anonymous-/)
+    );
   });
   it("should replace existing options when called again", () => {
     analyticsInstance.init({

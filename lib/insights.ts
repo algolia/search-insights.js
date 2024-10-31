@@ -11,7 +11,8 @@ import {
   MONTH,
   setAuthenticatedUserToken,
   onAuthenticatedUserTokenChange,
-  getAuthenticatedUserToken
+  getAuthenticatedUserToken,
+  saveTokenAsCookie
 } from "./_tokenUtils";
 import {
   clickedObjectIDsAfterSearch,
@@ -78,6 +79,7 @@ class AlgoliaAnalytics {
   getVersion: typeof getVersion;
   addAlgoliaAgent: typeof addAlgoliaAgent;
 
+  saveTokenAsCookie: typeof saveTokenAsCookie;
   setUserToken: typeof setUserToken;
   setAnonymousUserToken: typeof setAnonymousUserToken;
   getUserToken: typeof getUserToken;
@@ -110,6 +112,7 @@ class AlgoliaAnalytics {
 
     this.addAlgoliaAgent = addAlgoliaAgent.bind(this);
 
+    this.saveTokenAsCookie = saveTokenAsCookie.bind(this);
     this.setUserToken = setUserToken.bind(this);
     this.setAnonymousUserToken = setAnonymousUserToken.bind(this);
     this.getUserToken = getUserToken.bind(this);
