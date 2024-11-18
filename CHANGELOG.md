@@ -1,3 +1,12 @@
+## [2.17.3](https://github.com/algolia/search-insights.js/compare/v2.17.2...v2.17.3) (2024-11-05)
+
+
+### Bug Fixes
+
+* save existing anon tokens for multiple init calls  ([#562](https://github.com/algolia/search-insights.js/issues/562)) ([86164bb](https://github.com/algolia/search-insights.js/commit/86164bb95ca111e53336d88c849f2a5adb874d88))
+
+
+
 ## [2.17.2](https://github.com/algolia/search-insights.js/compare/v2.17.1...v2.17.2) (2024-09-11)
 
 
