@@ -90,19 +90,55 @@ class AlgoliaAnalytics {
 
   sendEvents: ReturnType<typeof makeSendEvents>;
 
+  /**
+   * @deprecated Use `sendEvents` instead.
+   */
   clickedObjectIDsAfterSearch: typeof clickedObjectIDsAfterSearch;
+  /**
+   * @deprecated Use `sendEvents` instead.
+   */
   clickedObjectIDs: typeof clickedObjectIDs;
+  /**
+   * @deprecated Use `sendEvents` instead.
+   */
   clickedFilters: typeof clickedFilters;
 
+  /**
+   * @deprecated Use `sendEvents` instead.
+   */
   convertedObjectIDsAfterSearch: typeof convertedObjectIDsAfterSearch;
+  /**
+   * @deprecated Use `sendEvents` instead.
+   */
   purchasedObjectIDsAfterSearch: typeof purchasedObjectIDsAfterSearch;
+  /**
+   * @deprecated Use `sendEvents` instead.
+   */
   addedToCartObjectIDsAfterSearch: typeof addedToCartObjectIDsAfterSearch;
+  /**
+   * @deprecated Use `sendEvents` instead.
+   */
   convertedObjectIDs: typeof convertedObjectIDs;
+  /**
+   * @deprecated Use `sendEvents` instead.
+   */
   addedToCartObjectIDs: typeof addedToCartObjectIDs;
+  /**
+   * @deprecated Use `sendEvents` instead.
+   */
   purchasedObjectIDs: typeof purchasedObjectIDs;
+  /**
+   * @deprecated Use `sendEvents` instead.
+   */
   convertedFilters: typeof convertedFilters;
 
+  /**
+   * @deprecated Use `sendEvents` instead.
+   */
   viewedObjectIDs: typeof viewedObjectIDs;
+  /**
+   * @deprecated Use `sendEvents` instead.
+   */
   viewedFilters: typeof viewedFilters;
 
   constructor({ requestFn }: { requestFn: RequestFnType }) {
