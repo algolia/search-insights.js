@@ -47,11 +47,6 @@ export function init(this: AlgoliaAnalytics, options: InitParams = {}): void {
     );
   }
 
-  /* eslint-disable no-console */
-  if (__DEV__) {
-    console.info(`Since v2.0.4, search-insights no longer validates event payloads.
-You can visit https://algolia.com/events/debugger instead.`);
-  }
   /* eslint-enable */
 
   setOptions(this, options, {
