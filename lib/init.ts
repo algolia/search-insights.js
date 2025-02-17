@@ -47,8 +47,6 @@ export function init(this: AlgoliaAnalytics, options: InitParams = {}): void {
     );
   }
 
-  /* eslint-enable */
-
   setOptions(this, options, {
     _userHasOptedOut: Boolean(options.userHasOptedOut),
     _region: options.region,
