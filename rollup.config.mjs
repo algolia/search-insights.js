@@ -3,9 +3,9 @@ import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import resolve from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
+import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import filesize from "rollup-plugin-filesize";
-import { uglify } from "rollup-plugin-uglify";
 
 const MODULE_NAME = "AlgoliaAnalytics";
 const LIBRARY_OUTPUT_NAME = "search-insights";
@@ -31,7 +31,9 @@ const createPlugins = ({ format, flavor }) => [
   }),
   buble(),
   commonjs(),
-  ...(["node-cjs", "node-esm"].includes(flavor) ? [] : [uglify()]),
+  ...(["node-cjs", "node-esm"].includes(flavor)
+    ? []
+    : [terser({ format: { comments: false } })]),
   filesize()
 ];
 
