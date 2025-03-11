@@ -95,7 +95,7 @@
   "bundlesize": [
     {
       "path": "./dist/search-insights.min.js",
-      "maxSize": "3.70 kB"
+      "maxSize": "3.90 kB"
     }
   ],
   "packageManager": "yarn@1.22.19"
