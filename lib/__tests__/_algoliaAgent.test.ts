@@ -40,7 +40,7 @@ describe("algoliaAgent", () => {
     ]);
   });
 
-  it("should be joined and encoded in headers", () => {
+  it("should be in headers", () => {
     analyticsInstance.addAlgoliaAgent("other string");
     analyticsInstance.sendEvents([
       {
