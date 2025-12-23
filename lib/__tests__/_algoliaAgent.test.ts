@@ -40,7 +40,7 @@ describe("algoliaAgent", () => {
     ]);
   });
 
-  it("should be joined and encoded for URL", () => {
+  it("should be joined and encoded in headers", () => {
     analyticsInstance.addAlgoliaAgent("other string");
     analyticsInstance.sendEvents([
       {
@@ -52,7 +52,13 @@ describe("algoliaAgent", () => {
     ]);
 
     expect(requestFn.mock.calls[0][0]).toEqual(
-      "https://insights.algolia.io/1/events?X-Algolia-Application-Id=test&X-Algolia-API-Key=test&X-Algolia-Agent=insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)%3B%20other%20string"
+      "https://insights.algolia.io/1/events"
+    );
+    expect(requestFn.mock.calls[0][2]).toEqual(
+      expect.objectContaining({
+        "X-Algolia-Agent":
+          "insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)%3B%20other%20string"
+      })
     );
   });
 });

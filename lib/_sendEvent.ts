@@ -94,7 +94,7 @@ function sendRequest(
     "X-Algolia-API-Key": providedApiKey,
     ...restHeaders
   } = additionalHeaders;
-  // Auth query
+  // Build headers with credentials
   const headers: Record<string, string> = {
     "X-Algolia-Application-Id": providedAppId ?? appId,
     "X-Algolia-API-Key": providedApiKey ?? apiKey,
@@ -102,10 +102,6 @@ function sendRequest(
     ...restHeaders
   };
 
-  const queryParameters = Object.keys(headers)
-    .map((key) => `${key}=${headers[key]}`)
-    .join("&");
-
-  const reportingURL = `${endpointOrigin}/1/events?${queryParameters}`;
-  return requestFn(reportingURL, { events });
+  const reportingURL = `${endpointOrigin}/1/events`;
+  return requestFn(reportingURL, { events }, headers);
 }

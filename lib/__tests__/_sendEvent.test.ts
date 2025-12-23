@@ -7,14 +7,6 @@ jest.mock("../../package.json", () => ({
   version: "1.0.1"
 }));
 
-function searchParamsToObject(params: URLSearchParams) {
-  const result: { [key: string]: string } = {};
-  for (const [key, value] of params.entries()) {
-    result[key] = value;
-  }
-  return result;
-}
-
 const credentials = {
   apiKey: "testKey",
   appId: "testId"
@@ -96,7 +88,7 @@ describe("sendEvents", () => {
         ]
       });
     });
-    it("should include X-Algolia-* query parameters", () => {
+    it("should include X-Algolia-* headers", () => {
       analyticsInstance.sendEvents([
         {
           eventType: "click",
@@ -105,13 +97,18 @@ describe("sendEvents", () => {
           objectIDs: ["1"]
         }
       ]);
-      const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
-      const { searchParams } = new URL(requestUrl);
-      expect(searchParamsToObject(searchParams)).toEqual({
-        "X-Algolia-API-Key": "testKey",
-        "X-Algolia-Agent": "insights-js (1.0.1); insights-js-node-cjs (1.0.1)",
-        "X-Algolia-Application-Id": "testId"
-      });
+      expect(XMLHttpRequest.setRequestHeader).toHaveBeenCalledWith(
+        "X-Algolia-API-Key",
+        "testKey"
+      );
+      expect(XMLHttpRequest.setRequestHeader).toHaveBeenCalledWith(
+        "X-Algolia-Agent",
+        "insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)"
+      );
+      expect(XMLHttpRequest.setRequestHeader).toHaveBeenCalledWith(
+        "X-Algolia-Application-Id",
+        "testId"
+      );
     });
     it("should infer query ids when additionalParams.inferQueryID is true", () => {
       storeQueryForObject("my-index", "1", "clicked-query");
@@ -308,7 +305,9 @@ describe("sendEvents", () => {
         ]
       });
     });
-    it("should include X-Algolia-* query parameters", () => {
+    it("should send to /1/events endpoint without query parameters", () => {
+      // Note: sendBeacon doesn't support custom headers, so credentials
+      // cannot be sent. This is a known limitation of the sendBeacon API.
       analyticsInstance.sendEvents([
         {
           eventType: "click",
@@ -318,12 +317,7 @@ describe("sendEvents", () => {
         }
       ]);
       const requestUrl = sendBeacon.mock.calls[0][0];
-      const { searchParams } = new URL(requestUrl);
-      expect(searchParamsToObject(searchParams)).toEqual({
-        "X-Algolia-API-Key": "testKey",
-        "X-Algolia-Agent": "insights-js (1.0.1); insights-js-node-cjs (1.0.1)",
-        "X-Algolia-Application-Id": "testId"
-      });
+      expect(requestUrl).toBe("https://insights.algolia.io/1/events");
     });
   });
 
@@ -346,7 +340,7 @@ describe("sendEvents", () => {
       ]);
 
       expect(fakeRequestFn).toHaveBeenCalledWith(
-        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)",
+        "https://insights.algolia.io/1/events",
         {
           events: [
             {
@@ -357,6 +351,11 @@ describe("sendEvents", () => {
               userToken: "mock-user-id"
             }
           ]
+        },
+        {
+          "X-Algolia-Application-Id": "testId",
+          "X-Algolia-API-Key": "testKey",
+          "X-Algolia-Agent": "insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)"
         }
       );
     });
@@ -840,7 +839,7 @@ describe("sendEvents", () => {
       );
 
       expect(fakeRequestFn).toHaveBeenCalledWith(
-        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)",
+        "https://insights.algolia.io/1/events",
         {
           events: [
             {
@@ -858,6 +857,11 @@ describe("sendEvents", () => {
               userToken: "mock-user-id"
             }
           ]
+        },
+        {
+          "X-Algolia-Application-Id": "testId",
+          "X-Algolia-API-Key": "testKey",
+          "X-Algolia-Agent": "insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)"
         }
       );
     });
@@ -879,7 +883,7 @@ describe("sendEvents", () => {
       ]);
 
       expect(fakeRequestFn).toHaveBeenCalledWith(
-        "https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)",
+        "https://insights.algolia.io/1/events",
         {
           events: [
             {
@@ -897,6 +901,11 @@ describe("sendEvents", () => {
               userToken: "mock-user-id"
             }
           ]
+        },
+        {
+          "X-Algolia-Application-Id": "testId",
+          "X-Algolia-API-Key": "testKey",
+          "X-Algolia-Agent": "insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)"
         }
       );
     });

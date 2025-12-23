@@ -3,10 +3,15 @@ import type { UrlWithStringQuery } from "url";
 
 export type RequestFnType = (
   url: string,
-  data: Record<string, unknown>
+  data: Record<string, unknown>,
+  headers?: Record<string, string>
 ) => Promise<boolean>;
 
-export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
+export const requestWithXMLHttpRequest: RequestFnType = (
+  url,
+  data,
+  headers
+) => {
   return new Promise((resolve, reject) => {
     const serializedData = JSON.stringify(data);
     const req = new XMLHttpRequest();
@@ -24,17 +29,31 @@ export const requestWithXMLHttpRequest: RequestFnType = (url, data) => {
     req.addEventListener("timeout", () => resolve(false));
     req.open("POST", url);
     req.setRequestHeader("Content-Type", "application/json");
+
+    // Apply custom headers
+    if (headers) {
+      Object.keys(headers).forEach((key) => {
+        req.setRequestHeader(key, headers[key]);
+      });
+    }
+
     req.send(serializedData);
   });
 };
 
-export const requestWithSendBeacon: RequestFnType = (url, data) => {
+export const requestWithSendBeacon: RequestFnType = (url, data, headers) => {
   const serializedData = JSON.stringify(data);
   const beacon = navigator.sendBeacon(url, serializedData);
-  return Promise.resolve(beacon ? true : requestWithXMLHttpRequest(url, data));
+  return Promise.resolve(
+    beacon ? true : requestWithXMLHttpRequest(url, data, headers)
+  );
 };
 
-export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
+export const requestWithNodeHttpModule: RequestFnType = (
+  url,
+  data,
+  headers
+) => {
   return new Promise((resolve, reject) => {
     const serializedData = JSON.stringify(data);
     /* eslint-disable @typescript-eslint/no-var-requires */
@@ -48,7 +67,8 @@ export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Content-Length": serializedData.length
+        "Content-Length": serializedData.length,
+        ...headers
       }
     };
 
@@ -78,13 +98,14 @@ export const requestWithNodeHttpModule: RequestFnType = (url, data) => {
   });
 };
 
-export const requestWithNativeFetch: RequestFnType = (url, data) => {
+export const requestWithNativeFetch: RequestFnType = (url, data, headers) => {
   return new Promise((resolve, reject) => {
     fetch(url, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        ...headers
       }
     })
       .then((response) => {

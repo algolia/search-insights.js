@@ -13,7 +13,12 @@ const defaultPayload = {
   objectIDs: ["1"]
 };
 
-const defaultRequestUrl = `https://insights.algolia.io/1/events?X-Algolia-Application-Id=testId&X-Algolia-API-Key=testKey&X-Algolia-Agent=insights-js%20(${version})%3B%20insights-js-node-cjs%20(${version})`;
+const defaultRequestUrl = "https://insights.algolia.io/1/events";
+const defaultHeaders = {
+  "X-Algolia-Application-Id": "testId",
+  "X-Algolia-API-Key": "testKey",
+  "X-Algolia-Agent": `insights-js%20(${version})%3B%20insights-js-node-cjs%20(${version})`
+};
 
 describe("_sendEvent in node env", () => {
   let aa: InsightsClient;
@@ -39,17 +44,22 @@ describe("_sendEvent in node env", () => {
       ]);
     }).not.toThrowError();
 
-    expect(requestFn).toHaveBeenCalledWith(defaultRequestUrl, {
-      events: [
-        {
-          eventName: "my-event",
-          eventType: "click",
-          index: "my-index",
-          objectIDs: ["1"],
-          userToken: undefined
-        }
-      ]
-    });
+    expect(requestFn).toHaveBeenCalledWith(
+      defaultRequestUrl,
+      {
+        events: [
+          {
+            eventName: "my-event",
+            eventType: "click",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: undefined,
+            authenticatedUserToken: undefined
+          }
+        ]
+      },
+      defaultHeaders
+    );
   });
 
   it("does not throw when user token is included", () => {
@@ -63,16 +73,21 @@ describe("_sendEvent in node env", () => {
       ]);
     }).not.toThrowError();
 
-    expect(requestFn).toHaveBeenCalledWith(defaultRequestUrl, {
-      events: [
-        {
-          eventName: "my-event",
-          eventType: "click",
-          index: "my-index",
-          objectIDs: ["1"],
-          userToken: "aaa"
-        }
-      ]
-    });
+    expect(requestFn).toHaveBeenCalledWith(
+      defaultRequestUrl,
+      {
+        events: [
+          {
+            eventName: "my-event",
+            eventType: "click",
+            index: "my-index",
+            objectIDs: ["1"],
+            userToken: "aaa",
+            authenticatedUserToken: undefined
+          }
+        ]
+      },
+      defaultHeaders
+    );
   });
 });
