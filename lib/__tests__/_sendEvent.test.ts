@@ -31,19 +31,24 @@ function setupInstance({
 }
 
 describe("sendEvents", () => {
-  let XMLHttpRequest: { open: any; send: any };
+  let XMLHttpRequest: { open: any; send: any; setRequestHeader: any };
 
   beforeEach(() => {
     localStorage.clear();
     XMLHttpRequest = {
       open: jest.spyOn((window as any).XMLHttpRequest.prototype, "open"),
-      send: jest.spyOn((window as any).XMLHttpRequest.prototype, "send")
+      send: jest.spyOn((window as any).XMLHttpRequest.prototype, "send"),
+      setRequestHeader: jest.spyOn(
+        (window as any).XMLHttpRequest.prototype,
+        "setRequestHeader"
+      )
     };
   });
 
   afterEach(() => {
     XMLHttpRequest.open.mockClear();
     XMLHttpRequest.send.mockClear();
+    XMLHttpRequest.setRequestHeader.mockClear();
   });
 
   describe("with XMLHttpRequest", () => {
@@ -917,16 +922,14 @@ describe("sendEvents", () => {
       }
     ]);
 
-    {
-      const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
-      const { searchParams } = new URL(requestUrl);
-      expect(searchParamsToObject(searchParams)).toMatchObject(
-        expect.objectContaining({
-          "X-Algolia-Application-Id": credentials.appId,
-          "X-Algolia-API-Key": credentials.apiKey
-        })
-      );
-    }
+    expect(XMLHttpRequest.setRequestHeader).toHaveBeenCalledWith(
+      "X-Algolia-Application-Id",
+      credentials.appId
+    );
+    expect(XMLHttpRequest.setRequestHeader).toHaveBeenCalledWith(
+      "X-Algolia-API-Key",
+      credentials.apiKey
+    );
   });
 
   it("applies custom credentials when provided", () => {
@@ -952,16 +955,17 @@ describe("sendEvents", () => {
       }
     );
 
-    {
-      const requestUrl = XMLHttpRequest.open.mock.calls[0][1];
-      const { searchParams } = new URL(requestUrl);
-      expect(searchParamsToObject(searchParams)).toMatchObject(
-        expect.objectContaining({
-          "X-Algolia-Application-Id": customAppId,
-          "X-Algolia-API-Key": customApiKey
-        })
-      );
-    }
+    expect(XMLHttpRequest.setRequestHeader).toHaveBeenCalledWith(
+      "X-Algolia-Application-Id",
+      customAppId
+    );
+    expect(XMLHttpRequest.setRequestHeader).toHaveBeenCalledWith(
+      "X-Algolia-API-Key",
+      customApiKey
+    );
+
+    // Clear the mock to check subsequent calls
+    XMLHttpRequest.setRequestHeader.mockClear();
 
     // Subsequent calls should use the original credentials
     analyticsInstance.sendEvents([
@@ -973,16 +977,14 @@ describe("sendEvents", () => {
       }
     ]);
 
-    {
-      const requestUrl = XMLHttpRequest.open.mock.calls[1][1];
-      const { searchParams } = new URL(requestUrl);
-      expect(searchParamsToObject(searchParams)).toMatchObject(
-        expect.objectContaining({
-          "X-Algolia-Application-Id": credentials.appId,
-          "X-Algolia-API-Key": credentials.apiKey
-        })
-      );
-    }
+    expect(XMLHttpRequest.setRequestHeader).toHaveBeenCalledWith(
+      "X-Algolia-Application-Id",
+      credentials.appId
+    );
+    expect(XMLHttpRequest.setRequestHeader).toHaveBeenCalledWith(
+      "X-Algolia-API-Key",
+      credentials.apiKey
+    );
   });
 
   it("should throw if no default or custom credentials are provided", () => {
