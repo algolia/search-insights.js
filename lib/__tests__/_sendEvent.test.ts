@@ -355,7 +355,8 @@ describe("sendEvents", () => {
         {
           "X-Algolia-Application-Id": "testId",
           "X-Algolia-API-Key": "testKey",
-          "X-Algolia-Agent": "insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)"
+          "X-Algolia-Agent":
+            "insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)"
         }
       );
     });
@@ -861,7 +862,8 @@ describe("sendEvents", () => {
         {
           "X-Algolia-Application-Id": "testId",
           "X-Algolia-API-Key": "testKey",
-          "X-Algolia-Agent": "insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)"
+          "X-Algolia-Agent":
+            "insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)"
         }
       );
     });
@@ -905,7 +907,8 @@ describe("sendEvents", () => {
         {
           "X-Algolia-Application-Id": "testId",
           "X-Algolia-API-Key": "testKey",
-          "X-Algolia-Agent": "insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)"
+          "X-Algolia-Agent":
+            "insights-js%20(1.0.1)%3B%20insights-js-node-cjs%20(1.0.1)"
         }
       );
     });
