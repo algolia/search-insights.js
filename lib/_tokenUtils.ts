@@ -13,7 +13,9 @@ const setCookie = (
   const d = new Date();
   d.setTime(d.getTime() + duration);
   const expires = `expires=${d.toUTCString()}`;
-  document.cookie = `${name}=${value};${expires};path=/`;
+  const isSecure = location.protocol === 'https:';
+  const secureFlag = isSecure ? ';Secure' : '';
+  document.cookie = `${name}=${value};${expires};path=/${secureFlag}`;
 };
 
 export const getCookie = (name: string): string => {
