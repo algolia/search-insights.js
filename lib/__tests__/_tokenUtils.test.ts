@@ -162,7 +162,8 @@ describe("tokenUtils", () => {
       // Clear all cookies before each test
       document.cookie.split(";").forEach((cookie) => {
         const eqPos = cookie.indexOf("=");
-        const name = eqPos > -1 ? cookie.substring(0, eqPos).trim() : cookie.trim();
+        const name =
+          eqPos > -1 ? cookie.substring(0, eqPos).trim() : cookie.trim();
         document.cookie = `${name}=;expires=Thu, 01-Jan-1970 00:00:01 GMT;path=/`;
       });
 
