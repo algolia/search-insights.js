@@ -30,6 +30,8 @@ Search Insights lets you report click, conversion and view metrics using the [Al
 
 v2 introduces a breaking change which is `useCookie` being `false` by default.
 
+The `_ALGOLIA` cookie automatically includes the `Secure` flag when used on HTTPS sites for enhanced security.
+
 ### Payload validation
 
 Since v2.0.4, search-insights no longer validates event payloads.
