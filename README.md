@@ -30,7 +30,7 @@ Search Insights lets you report click, conversion and view metrics using the [Al
 
 v2 introduces a breaking change which is `useCookie` being `false` by default.
 
-The `_ALGOLIA` cookie automatically includes the `Secure` flag when used on HTTPS sites for enhanced security.
+The `_ALGOLIA` cookie automatically includes the `Secure` flag on HTTPS sites, ensuring it's only sent over encrypted connections.
 
 ### Payload validation
 
