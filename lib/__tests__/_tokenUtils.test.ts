@@ -153,4 +153,149 @@ describe("tokenUtils", () => {
       );
     });
   });
+
+  describe("cookie security flags", () => {
+    const originalLocation = window.location;
+    let cookieSetter: jest.SpyInstance;
+
+    beforeEach(() => {
+      // Clear all cookies before each test
+      document.cookie.split(";").forEach((cookie) => {
+        const eqPos = cookie.indexOf("=");
+        const name =
+          eqPos > -1 ? cookie.substring(0, eqPos).trim() : cookie.trim();
+        document.cookie = `${name}=;expires=Thu, 01-Jan-1970 00:00:01 GMT;path=/`;
+      });
+
+      cookieSetter = jest.spyOn(
+        Object.getPrototypeOf(document),
+        "cookie",
+        "set"
+      );
+    });
+
+    afterEach(() => {
+      Object.defineProperty(window, "location", {
+        configurable: true,
+        writable: true,
+        value: originalLocation
+      });
+
+      cookieSetter.mockRestore();
+    });
+
+    describe("on HTTPS", () => {
+      beforeEach(() => {
+        // HTTPS mock
+        delete (window as any).location;
+        window.location = { ...originalLocation, protocol: "https:" } as any;
+      });
+
+      it("should set Secure flag when creating anonymous token on HTTPS", () => {
+        analyticsInstance.setAnonymousUserToken();
+
+        expect(cookieSetter).toHaveBeenCalled();
+
+        const cookieString = cookieSetter.mock.calls[0][0];
+
+        expect(cookieString).toContain("_ALGOLIA=anonymous-mock-uuid-1");
+        expect(cookieString).toContain(";Secure");
+        expect(cookieString).toContain("expires=");
+        expect(cookieString).toContain("path=/");
+      });
+
+      it("should set all cookie attributes on HTTPS", () => {
+        analyticsInstance.setAnonymousUserToken();
+
+        const cookieString = cookieSetter.mock.calls[0][0];
+
+        expect(cookieString).toContain(";Secure");
+        expect(cookieString).toContain("_ALGOLIA=anonymous-mock-uuid-1");
+        expect(cookieString).toContain("expires=");
+        expect(cookieString).toContain("path=/");
+      });
+    });
+
+    describe("on HTTP", () => {
+      beforeEach(() => {
+        // HTTP mock
+        delete (window as any).location;
+        window.location = { ...originalLocation, protocol: "http:" } as any;
+      });
+
+      it("should NOT set Secure flag when creating anonymous token on HTTP", () => {
+        analyticsInstance.setAnonymousUserToken();
+
+        expect(cookieSetter).toHaveBeenCalled();
+
+        const cookieString = cookieSetter.mock.calls[0][0];
+
+        expect(cookieString).toContain("_ALGOLIA=anonymous-mock-uuid-1");
+        expect(cookieString).not.toContain(";Secure");
+        expect(cookieString).not.toContain("Secure");
+      });
+
+      it("should still set basic cookie attributes on HTTP", () => {
+        analyticsInstance.setAnonymousUserToken();
+
+        const cookieString = cookieSetter.mock.calls[0][0];
+
+        expect(cookieString).toContain("_ALGOLIA=anonymous-mock-uuid-1");
+        expect(cookieString).toContain("expires=");
+        expect(cookieString).toContain("path=/");
+
+        expect(document.cookie).toContain("_ALGOLIA=anonymous-mock-uuid-1");
+      });
+    });
+
+    describe("protocol detection", () => {
+      it("should correctly detect HTTPS protocol", () => {
+        delete (window as any).location;
+        window.location = { ...originalLocation, protocol: "https:" } as any;
+
+        analyticsInstance.setAnonymousUserToken();
+
+        const cookieString = cookieSetter.mock.calls[0][0];
+        expect(cookieString).toContain(";Secure");
+      });
+
+      it("should correctly detect HTTP protocol", () => {
+        delete (window as any).location;
+        window.location = { ...originalLocation, protocol: "http:" } as any;
+
+        analyticsInstance.setAnonymousUserToken();
+
+        const cookieString = cookieSetter.mock.calls[0][0];
+        expect(cookieString).not.toContain(";Secure");
+      });
+
+      it("should handle localhost with HTTPS", () => {
+        delete (window as any).location;
+        window.location = {
+          ...originalLocation,
+          protocol: "https:",
+          hostname: "localhost"
+        } as any;
+
+        analyticsInstance.setAnonymousUserToken();
+
+        const cookieString = cookieSetter.mock.calls[0][0];
+        expect(cookieString).toContain(";Secure");
+      });
+
+      it("should handle localhost with HTTP", () => {
+        delete (window as any).location;
+        window.location = {
+          ...originalLocation,
+          protocol: "http:",
+          hostname: "localhost"
+        } as any;
+
+        analyticsInstance.setAnonymousUserToken();
+
+        const cookieString = cookieSetter.mock.calls[0][0];
+        expect(cookieString).not.toContain(";Secure");
+      });
+    });
+  });
 });
