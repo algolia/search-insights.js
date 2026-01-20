@@ -1,3 +1,12 @@
+# [2.18.0](https://github.com/algolia/search-insights.js/compare/v2.17.3...v2.18.0) (2026-01-20)
+
+
+### Features
+
+* add Secure flag to _ALGOLIA cookie on HTTPS sites ([#569](https://github.com/algolia/search-insights.js/issues/569)) ([bfdbaf6](https://github.com/algolia/search-insights.js/commit/bfdbaf62a68ce00c71b9fa09b392648b3438f6bc))
+
+
+
 ## [2.17.3](https://github.com/algolia/search-insights.js/compare/v2.17.2...v2.17.3) (2024-11-05)
 
 
